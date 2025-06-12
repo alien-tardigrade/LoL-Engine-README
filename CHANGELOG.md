@@ -5,7 +5,7 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.0-alpha] - 2024-06-09
+## [0.2.0-alpha] - 2025-06-09
 
 ### 🎉 Major Features Added
 - **Audio System Overhaul**: Complete rewrite of audio management system
@@ -15,6 +15,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Comprehensive audio handle management with memory leak prevention
   - Custom AudioServiceInspector for runtime debugging
   - Performance optimizations: replaced Update() loops with coroutines
+
+## [0.3.1-preview] - 2025-06-11
+
+### 🎉 Major Features Added
+- **Audio System Overhaul**: Complete rewrite of audio management system 
+- **Comprehensive Character System**: Added a reusable and extensible character framework.  
+  - Base character classes (`Character`, `PlayerCharacter`, `NonPlayableCharacter`).
+  - Component-based design for Health, Stats, and other character aspects.
+  - `CharacterFactory` for streamlined creation of different character types (Player, Enemy, NPC).
+  - Robust Data Persistence integration (`PersistableCharacterComponent`, `CharacterPersistenceManager`, specialized `CharacterSaveData`).
+  - Support for object pooling of characters via `CharacterFactory`.
+  - Interface-driven design (`IPersistableCharacter`, `ICombatant`, `IDamageable`, `ICharacterAI`, `IInteractable`, `IMovable`) for flexibility.
+  - Hooks for AI and custom behaviors.
 
 ### 🏗️ Architecture Improvements
 - **Service Locator Pattern**: Implemented comprehensive dependency injection

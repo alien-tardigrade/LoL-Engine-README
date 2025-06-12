@@ -1,7 +1,7 @@
 # LoL Engine - Labour of Love Game Framework
 
 [![Unity Version](https://img.shields.io/badge/Unity-6000.1%2B-blue.svg)]() 
-[![Version](https://img.shields.io/badge/Version-0.2.0--alpha-orange.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.3.1--preview-yellow.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
 
 A comprehensive Unity game development framework providing essential systems for modern game development. Built with performance, modularity, and ease of use in mind.
@@ -30,7 +30,15 @@ The LoL Engine provides a suite of interconnected services and tools designed to
     *   `Time Management`: Pause, slow-motion, and custom time scaling.
     *   `Notification System`: In-game messaging and alerts.
     *   Encryption & Compression services.
-    *   Various helper classes and extension methods.
+    *   Various helper classes and extension methods. 
+*   **Essential Game Systems:**
+    *   `Audio System`: ... ([Docs](Documentation~/audio-readme.md))
+    *   `Resource Management`: ... ([Docs](Documentation~/resource-management-readme.md))
+    *   `Object Pooling`: ... ([Docs](Documentation~/object-pool-readme.md))
+    *   `Event System`: ... ([Docs](Documentation~/events-readme.md))
+    *   `Data Persistence`: ... ([Docs](Documentation~/data-persistence-readme.md))
+    *   `Character System`: Reusable character implementation with stats, health, AI hooks, persistence, and factory pattern. ([Docs](Documentation~/character-system-readme.md)) 
+    *   `Localization System`: ... ([Docs](Documentation~/localization-readme.md)) 
 
 ## 📋 Requirements
 
@@ -160,6 +168,34 @@ The LoL Engine provides a suite of interconnected services and tools designed to
     // ServiceLocator.Instance.Get<IEventManager>().TriggerEvent(new PlayerScoreChangedEvent { NewScore = 100 });
     ```
 
+6.  **Character Creation (Basic Example):**
+    (Ensure `CharacterFactory` and related services are configured.)
+    ```csharp
+    using LoLEngine.Scripts.Core.ServiceManagement.Service;
+    using LoLEngine.Scripts.GameObjects.Characters.Factory;
+    using LoLEngine.Scripts.GameObjects.Characters.Interfaces; // For ICharacter
+    using UnityEngine;
+
+    public class CharacterSpawner : MonoBehaviour
+    {
+        public GameObject enemyPrefab; // Assign in Inspector
+
+        void Start()
+        {
+            CharacterFactory characterFactory = ServiceLocator.Instance.Get<CharacterFactory>();
+            if (characterFactory != null && enemyPrefab != null)
+            {
+                // Assuming CharacterData or similar config is handled by the factory or passed in
+                ICharacter newEnemy = characterFactory.CreateEnemy(enemyPrefab, transform.position, Quaternion.identity, null /* CharacterData */, true /* usePooling */);
+                if (newEnemy != null)
+                {
+                    Debug.Log($"Created enemy: {newEnemy.CharacterId}");
+                }
+            }
+        }
+    }
+    ```
+
 ## ⚙️ Configuration Deep Dive
 
 The LoL Engine's flexibility comes from its data-driven configuration:
@@ -198,6 +234,8 @@ The framework uses a **Service Locator Pattern** with dependency injection:
 - `IGameStateManagerService` : Game State Service
 - `INotificationService` : Notification Service
 - `IDataSerializer` : Serialization Service
+- `CharacterFactory`: For creating and managing character instances.
+- `CharacterPersistenceManager`: Handles saving and loading of character states.
 
 ### Configuration
 Services are configured via ScriptableObject assets in `Resources/Configs/`:
@@ -207,6 +245,7 @@ Services are configured via ScriptableObject assets in `Resources/Configs/`:
 - `DefaultLocalizationConfig`: Localization settings
 - `DefaultResourceManagementConfig`: Resource Management Settings
 - `DefaultSaveConfig`: Save Load Settings
+- `DefaultCharacterConfig` (or similar): Defines character archetypes, stats, and persistence settings.
 
 ## 📞 Support
 
