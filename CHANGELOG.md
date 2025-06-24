@@ -5,22 +5,21 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.0-alpha] - 2025-06-09
+## [0.4.0-preview] - 2025-06-23
+- **Addressable Support**: Added support for Addressables in ResourceManager
+- Updated **AudioService** to use Addressables for audio asset loading
 
-### 🎉 Major Features Added
-- **Audio System Overhaul**: Complete rewrite of audio management system
-  - Advanced AudioService with object pooling and 3D audio support
-  - AudioMixer integration with parameter validation
-  - Asynchronous audio loading with fallback mechanisms
-  - Comprehensive audio handle management with memory leak prevention
-  - Custom AudioServiceInspector for runtime debugging
-  - Performance optimizations: replaced Update() loops with coroutines
+## [0.3.2-preview] - 2025-06-22
+- **GameObject**: New Character and Non Playable Character Extendable classes added,
+  - Bug Fixes
+  - Conflict Fixes
+- **Unity Version**: Upgraded to 6.1.8f1
 
 ## [0.3.1-preview] - 2025-06-11
 
 ### 🎉 Major Features Added
-- **Audio System Overhaul**: Complete rewrite of audio management system 
-- **Comprehensive Character System**: Added a reusable and extensible character framework.  
+- **Audio System Overhaul**: Complete rewrite of audio management system
+- **Comprehensive Character System**: Added a reusable and extensible character framework.
   - Base character classes (`Character`, `PlayerCharacter`, `NonPlayableCharacter`).
   - Component-based design for Health, Stats, and other character aspects.
   - `CharacterFactory` for streamlined creation of different character types (Player, Enemy, NPC).
@@ -65,6 +64,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Assembly Definitions**: Proper module separation and compilation optimization
 - **Test Coverage**: Comprehensive unit and integration tests
 - **Error Handling**: Detailed logging and graceful fallback mechanisms
+
+
+## [0.2.0-alpha] - 2025-06-09
+
+### 🎉 Major Features Added
+- **Audio System Overhaul**: Complete rewrite of audio management system
+  - Advanced AudioService with object pooling and 3D audio support
+  - AudioMixer integration with parameter validation
+  - Asynchronous audio loading with fallback mechanisms
+  - Comprehensive audio handle management with memory leak prevention
+  - Custom AudioServiceInspector for runtime debugging
+  - Performance optimizations: replaced Update() loops with coroutines
 
 ## [0.1.18-alpha] - Previous Version
 

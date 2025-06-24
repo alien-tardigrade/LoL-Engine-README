@@ -1,7 +1,7 @@
 # LoL Engine - Labour of Love Game Framework
 
 [![Unity Version](https://img.shields.io/badge/Unity-6000.1%2B-blue.svg)]() 
-[![Version](https://img.shields.io/badge/Version-0.3.1--preview-yellow.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.4.0--preview-yellow.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
 
 A comprehensive Unity game development framework providing essential systems for modern game development. Built with performance, modularity, and ease of use in mind.
@@ -12,13 +12,19 @@ The LoL Engine provides a suite of interconnected services and tools designed to
 
 ## 🚀 Features
 
+### 🎯 **NEW: Addressables Integration**
+*   **Seamless Asset Loading**: Automatic Addressables support with Resources fallback
+*   **No Code Changes**: Existing ResourceService calls automatically benefit from Addressables
+*   **Performance**: Async-first loading, better memory management, and remote content support
+*   **Future-Proof**: Ready for downloadable content and asset streaming
+
 *   **Service Management:**
     *   `Service Locator`: Centralized dependency management.
     *   `ImprovedGameInitializer`: Orchestrates engine startup.
     *   `Configuration System`: Highly flexible setup using `ServiceConfiguration` and `ResourcePathConfig` ScriptableObjects to enable/disable services and link their specific configurations.
 *   **Essential Game Systems:**
     *   `Audio System`: Advanced audio playback, mixing, 3D spatialization, track management, and `AudioSource` pooling. ([Docs](Documentation~/audio-readme.md))
-    *   `Resource Management`: Unified asset loading supporting Resources, Addressables, and object pooling integration. ([Docs](Documentation~/resource-management-readme.md))
+    *   `Resource Management`: Unified asset loading with **first-class Addressables support**, Resources fallback, and object pooling integration. ([Docs](Documentation~/resource-management-readme.md))
     *   `Object Pooling`: High-performance pooling for GameObjects and components. ([Docs](Documentation~/object-pool-readme.md))
     *   `Event System`: Type-safe, centralized event handling with automatic listener management. ([Docs](Documentation~/events-readme.md))
     *   `Data Persistence`: Robust save/load system with slots, async operations, compression, and encryption. ([Docs](Documentation~/data-persistence-readme.md))
@@ -26,26 +32,20 @@ The LoL Engine provides a suite of interconnected services and tools designed to
     *   `Scene Management`: Flexible scene loading, transitions, and management. ([Docs](Documentation~/scene-management-readme.md))
     *   `Input System`: Unified input handling for various devices. ([Docs](Documentation~/input-readme.md))
     *   `UI System`: Structured approach for managing UI screens and dialogs. ([Docs](Documentation~/ui-readme.md))
+    *   `Character System`: Reusable character implementation with stats, health, AI hooks, persistence, and factory pattern. ([Docs](Documentation~/character-system-readme.md))
 *   **Utilities & Advanced:**
     *   `Time Management`: Pause, slow-motion, and custom time scaling.
     *   `Notification System`: In-game messaging and alerts.
     *   Encryption & Compression services.
     *   Various helper classes and extension methods. 
-*   **Essential Game Systems:**
-    *   `Audio System`: ... ([Docs](Documentation~/audio-readme.md))
-    *   `Resource Management`: ... ([Docs](Documentation~/resource-management-readme.md))
-    *   `Object Pooling`: ... ([Docs](Documentation~/object-pool-readme.md))
-    *   `Event System`: ... ([Docs](Documentation~/events-readme.md))
-    *   `Data Persistence`: ... ([Docs](Documentation~/data-persistence-readme.md))
-    *   `Character System`: Reusable character implementation with stats, health, AI hooks, persistence, and factory pattern. ([Docs](Documentation~/character-system-readme.md)) 
-    *   `Localization System`: ... ([Docs](Documentation~/localization-readme.md)) 
 
 ## 📋 Requirements
 
 - **Unity**: 6000.0 or later
 - **Dependencies**: 
     *   `com.unity.inputsystem` 
-    *   `com.unity.nuget.newtonsoft-json` 
+    *   `com.unity.nuget.newtonsoft-json`
+    *   `com.unity.addressables` (2.5.0+) - Integrated for advanced asset loading 
 
 ## 🛠️ Installation
 
@@ -68,6 +68,11 @@ The LoL Engine provides a suite of interconnected services and tools designed to
     *   Add the `ImprovedGameInitializer` component to this GameObject.
     *   Assign your created `ServiceConfiguration` and `ResourcePathConfig` assets to the respective fields on the `ImprovedGameInitializer` component in the Inspector.
     *   Customize the `ServiceConfiguration` asset to enable the services your game needs and link to their specific configuration assets (e.g., `AudioConfig`, `SaveConfig`). Many services require their own config assets to be created and assigned here.
+    *   **Optional - Enable Addressables** (Recommended):
+        *   Go to `Window > Asset Management > Addressables > Groups`
+        *   Click "Create Addressables Settings" if prompted
+        *   Mark your assets as Addressable and set meaningful addresses (e.g., "Audio/BackgroundMusic01")
+        *   In your `ResourceManagementConfig`, set `enableAddressables = true`
 
 2.  **Accessing Services:**
     Once initialized, services can be accessed via the `ServiceLocator`:
@@ -109,7 +114,7 @@ The LoL Engine provides a suite of interconnected services and tools designed to
     };
     this.PlaySound("BackgroundMusic", options);
     ```
-4.  **Resource Loading:**
+4.  **Resource Loading with Addressables:**
     (Ensure `ResourceService` is enabled in `ServiceConfiguration`.)
     ```csharp
     using LoLEngine.Scripts.Core.ServiceManagement.Service;
@@ -123,14 +128,17 @@ The LoL Engine provides a suite of interconnected services and tools designed to
         {
             IResourceService resourceService = ServiceLocator.Instance.Get<IResourceService>();
             
-            // Synchronous loading (use with caution for large assets)
-            AudioClip audioClip = resourceService.Load<AudioClip>("Sounds/MySound");
+            // Automatic Addressables loading (if asset is marked Addressable)
+            // Falls back to Resources if not found in Addressables
+            AudioClip audioClip = await resourceService.LoadAsync<AudioClip>("Audio/BackgroundMusic01");
+            
+            // Synchronous loading (use with caution - Addressables will warn)
+            AudioClip syncClip = resourceService.Load<AudioClip>("Audio/UIClick");
 
-            // Asynchronous loading (recommended)
-            AudioClip clipAsync = await resourceService.LoadAsync<AudioClip>("Sounds/MySound_AddressableKey");
-            if (clipAsync != null)
+            // The service automatically chooses: Addressables -> Resources -> AssetBundles
+            if (audioClip != null)
             {
-                // Use clipAsync
+                // Use audioClip - loaded via best available method
             }
         }
     }
@@ -243,7 +251,7 @@ Services are configured via ScriptableObject assets in `Resources/Configs/`:
 - `ServiceConfiguration`: Controls which services are enabled
 - `DefaultAudioConfig`: Audio system settings
 - `DefaultLocalizationConfig`: Localization settings
-- `DefaultResourceManagementConfig`: Resource Management Settings
+- `DefaultResourceManagementConfig`: Resource Management Settings (includes Addressables configuration)
 - `DefaultSaveConfig`: Save Load Settings
 - `DefaultCharacterConfig` (or similar): Defines character archetypes, stats, and persistence settings.
 
