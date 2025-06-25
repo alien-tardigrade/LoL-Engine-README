@@ -5,6 +5,12 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.3-preview] - 2025-06-25
+- Fixed Critical issue where Some of the Services were being accessed before they were intitilized, causing a Null Pointer issue sometimes
+- Upgraded to Version 9f1 for Unity
+- Fixed issue with Asynch and synch mismatches causing the project to hang when running
+- Introduced `ServiceAwaiter` in the Helpers
+
 ## [0.4.0-preview] - 2025-06-23
 - **Addressable Support**: Added support for Addressables in ResourceManager
 - Updated **AudioService** to use Addressables for audio asset loading
