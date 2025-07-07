@@ -5,6 +5,28 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0-alpha] - 2025-07-07
+
+- Upgraded to Unity 2025.1.0f1
+
+### Critical Thread Safety & Memory Management Fixes
+- Eliminated dangerous lazy evaluation in `AudioService` that could cause deadlocks during service initialization
+- Implemented `ReaderWriterLockSlim` for better concurrent access performance and fixed double-checked locking issues
+- Added comprehensive handle tracking and release mechanisms to prevent memory leaks and Addressables system instability
+- Added proper memory barriers in `ServiceLocator` singleton pattern for thread-safe initialization
+- All Addressables `AsyncOperationHandle` objects are now properly tracked and released
+- Improved shutdown procedures with automatic handle cleanup in `ResourceService` and `AddressableResourceLoader`
+
+### Bug Fixes
+- **AudioService**: Replaced `Lazy<T>` evaluation with direct dependency injection during Initialize()
+- **ServiceLocator**: Fixed race conditions in service registration and retrieval
+- **ResourceService**: Added thread-safe AssetReference handle tracking
+- **AddressableResourceLoader**: Implemented proper handle-to-asset mapping with safe cleanup
+
+### Monitoring & Debugging
+- Added methods to monitor active Addressables handles for debugging
+- Enhanced ResourceStats to include handle tracking information
+- All critical sections now use appropriate locking mechanisms
 
 ## [0.4.4-preview] - 2025-07-03
 - Fixed warnings when using the LoL Engine with a new Project. No more warnings about missing services.
