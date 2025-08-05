@@ -1,7 +1,7 @@
 # LoL Engine - Labour of Love Game Framework
 
 [![Unity Version](https://img.shields.io/badge/Unity-6000.1%2B-blue.svg)]() 
-[![Version](https://img.shields.io/badge/Version-0.5.1--alpha-gold.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.5.2--alpha-gold.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
 
 A comprehensive Unity game development framework providing essential systems for modern game development. Built with performance, modularity, and ease of use in mind.
@@ -12,7 +12,8 @@ The LoL Engine provides a suite of interconnected services and tools designed to
 
 ## 🚀 Features
 
-### 🎯 **NEW: Addressables Integration**
+### 🎯 **NEW: Enhanced Addressables Integration**
+*   **✨ AssetReference Support**: Type-safe asset loading with Unity's AssetReference system
 *   **Seamless Asset Loading**: Automatic Addressables support with Resources fallback
 *   **No Code Changes**: Existing ResourceService calls automatically benefit from Addressables
 *   **Performance**: Async-first loading, better memory management, and remote content support
@@ -116,6 +117,8 @@ The LoL Engine provides a suite of interconnected services and tools designed to
     ```
 4.  **Resource Loading with Addressables:**
     (Ensure `ResourceService` is enabled in `ServiceConfiguration`.)
+    
+    **String-Based Loading (Traditional):**
     ```csharp
     using LoLEngine.Scripts.Core.ServiceManagement.Service;
     using LoLEngine.Scripts.Core.ResourceManagement.Interfaces;
@@ -140,6 +143,40 @@ The LoL Engine provides a suite of interconnected services and tools designed to
             {
                 // Use audioClip - loaded via best available method
             }
+        }
+    }
+    ```
+    
+    **✨ NEW: AssetReference Loading (Recommended - Type-Safe):**
+    ```csharp
+    using UnityEngine;
+    #if UNITY_ADDRESSABLES
+    using UnityEngine.AddressableAssets;
+    #endif
+
+    public class TypeSafeAssetLoader : MonoBehaviour
+    {
+        [Header("Drag assets here in Inspector")]
+        #if UNITY_ADDRESSABLES
+        [SerializeField] private AssetReference musicAssetRef;
+        [SerializeField] private AssetReference playerPrefabRef;
+        #endif
+
+        async Task LoadAssetsWithReferences()
+        {
+            IResourceService resourceService = ServiceLocator.Instance.Get<IResourceService>();
+            
+            #if UNITY_ADDRESSABLES
+            // Type-safe loading with compile-time validation
+            if (musicAssetRef != null && musicAssetRef.RuntimeKeyIsValid())
+            {
+                AudioClip music = await resourceService.LoadAsync<AudioClip>(musicAssetRef);
+                // Use music...
+            }
+            
+            // Cleanup when done
+            resourceService.Release(musicAssetRef);
+            #endif
         }
     }
     ```

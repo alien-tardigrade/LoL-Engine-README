@@ -5,10 +5,14 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.2-alpha] - 2025-08-04
+- Upgraded to latest Unity Version 6.1.41f
+
 ## [0.5.1-alpha] - 2025-07-08
 - Fixed `ImprovedDependencyInjection` to look for the correct `ResourceManagementConfig` instance
 - Fixed The issue is that `DontDestroyOnLoad(gameObject)` is being called on a GameObject that's not at the root level.
-- Fixed the misleading warning message. The warning now correctly indicates that system language is being used because `useSystemLanguage` is enabled in the config.
+- Fixed the misleading warning message. The warning now correctly indicates that system language is being used because useSystemLanguage is enabled in the
+  config.
 
 ## [0.5.0-alpha] - 2025-07-07
 
@@ -58,7 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.3.1-preview] - 2025-06-11
 
-### 🎉 Major Features Added
+### Major Features Added
 - **Audio System Overhaul**: Complete rewrite of audio management system
 - **Comprehensive Character System**: Added a reusable and extensible character framework.
   - Base character classes (`Character`, `PlayerCharacter`, `NonPlayableCharacter`).
@@ -69,38 +73,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Interface-driven design (`IPersistableCharacter`, `ICombatant`, `IDamageable`, `ICharacterAI`, `IInteractable`, `IMovable`) for flexibility.
   - Hooks for AI and custom behaviors.
 
-### 🏗️ Architecture Improvements
+### Architecture Improvements
 - **Service Locator Pattern**: Implemented comprehensive dependency injection
 - **ImprovedGameInitializer**: New reflection-based service initialization system
 - **ConfigurableServiceInitializer**: ScriptableObject-based service configuration
 - **Enhanced Event System**: Type-safe centralized event handling
 - **Resource Management**: Unified interface supporting Resources and Addressables
 
-### ⚡ Performance Optimizations
+### Performance Optimizations
 - **Object Pooling**: AudioSource pooling for reduced garbage collection
 - **Coroutine-based Cleanup**: Eliminated performance-heavy Update() loops
 - **Smart Cache Management**: Automatic cache invalidation and memory management
 - **Optimized Inspector Repainting**: Intelligent UI update throttling
 
-### 🛠️ Technical Improvements
+### Technical Improvements
 - **Static Cache Safety**: Domain reload handling and stale reference prevention
 - **Memory Leak Prevention**: Comprehensive event unsubscription and cleanup
 - **Async Resource Loading**: Non-blocking asset loading with reflection fallbacks
 - **Mixer Parameter Validation**: Automatic AudioMixer parameter checking
 
-### 🐛 Bug Fixes
+### Bug Fixes
 - Fixed NullReferenceException during AudioService shutdown
 - Resolved static cache stale reference issues in AudioExtensions
 - Fixed double-disposal problems in audio handle management
 - Corrected synchronous blocking issues during initialization
 - Fixed memory leaks in event subscription management
 
-### 📚 Documentation
+### Documentation
 - **Comprehensive README**: Installation, usage, and API documentation
 - **Code Comments**: Extensive inline documentation for all public APIs
 - **Best Practices**: Performance and maintainability guidelines
 
-### 🔧 Developer Experience
+### Developer Experience
 - **Custom Inspectors**: Runtime debugging tools for audio system
 - **Assembly Definitions**: Proper module separation and compilation optimization
 - **Test Coverage**: Comprehensive unit and integration tests
@@ -109,7 +113,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.0-alpha] - 2025-06-09
 
-### 🎉 Major Features Added
+### Major Features Added
 - **Audio System Overhaul**: Complete rewrite of audio management system
   - Advanced AudioService with object pooling and 3D audio support
   - AudioMixer integration with parameter validation
