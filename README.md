@@ -1,6 +1,6 @@
 # LoL Engine - Labour of Love Game Framework
 
-[![Unity Version](https://img.shields.io/badge/Unity-6000.2%2B-blue.svg)]() 
+[![Unity Version](https://img.shields.io/badge/Unity-6000.1%2B-blue.svg)]() 
 [![Version](https://img.shields.io/badge/Version-0.5.2--alpha-gold.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
 

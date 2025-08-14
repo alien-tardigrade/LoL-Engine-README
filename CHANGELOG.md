@@ -5,6 +5,11 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.1-alpha] - 2025-08-18
+- Downgraded the Unity Version to Version 6.1.15f1 due to Unity Version Unresolved issue with the Addressables and UI
+- Modified and added external Factory Services for Characters to prevent cyclical issues with Assembly references
+- Introduced external Factory Service checking to the Dependency checker and initializer
+
 ## [0.6.0-alpha] - 2025-08-18
 - Upgraded to Unity Version 6.2.0f1
 
