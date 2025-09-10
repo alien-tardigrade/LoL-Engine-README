@@ -1,7 +1,7 @@
 # LoL Engine - Labour of Love Game Framework
 
 [![Unity Version](https://img.shields.io/badge/Unity-6000.2%2B-blue.svg)]() 
-[![Version](https://img.shields.io/badge/Version-0.6.2--alpha-gold.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.7I need.0--alpha-gold.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
 
 A comprehensive Unity game development framework providing essential systems for modern game development. Built with performance, modularity, and ease of use in mind.
@@ -12,7 +12,15 @@ The LoL Engine provides a suite of interconnected services and tools designed to
 
 ## 🚀 Features
 
-### 🎯 **NEW: Enhanced Addressables Integration**
+### 🎯 **NEW: Boot Screen System**
+*   **Customizable Boot Screens**: Professional loading screens with progress bars, status text, and animated spinners
+*   **Service Integration**: Tracks engine initialization progress and provides visual feedback
+*   **Flexible Configuration**: ScriptableObject-based configuration for timing, UI elements, and transitions
+*   **Scene Management**: Automatic scene transitions after boot completion with fade effects
+*   **Error Handling**: Graceful error display and recovery mechanisms
+*   **Performance Monitoring**: Debug tools for tracking boot times and optimization
+
+### 🎯 **Enhanced Addressables Integration**
 *   **✨ AssetReference Support**: Type-safe asset loading with Unity's AssetReference system
 *   **Seamless Asset Loading**: Automatic Addressables support with Resources fallback
 *   **No Code Changes**: Existing ResourceService calls automatically benefit from Addressables
@@ -24,16 +32,16 @@ The LoL Engine provides a suite of interconnected services and tools designed to
     *   `ImprovedGameInitializer`: Orchestrates engine startup.
     *   `Configuration System`: Highly flexible setup using `ServiceConfiguration` and `ResourcePathConfig` ScriptableObjects to enable/disable services and link their specific configurations.
 *   **Essential Game Systems:**
-    *   `Audio System`: Advanced audio playback, mixing, 3D spatialization, track management, and `AudioSource` pooling. ([Docs](Documentation~/audio-readme.md))
-    *   `Resource Management`: Unified asset loading with **first-class Addressables support**, Resources fallback, and object pooling integration. ([Docs](Documentation~/resource-management-readme.md))
-    *   `Object Pooling`: High-performance pooling for GameObjects and components. ([Docs](Documentation~/object-pool-readme.md))
-    *   `Event System`: Type-safe, centralized event handling with automatic listener management. ([Docs](Documentation~/events-readme.md))
-    *   `Data Persistence`: Robust save/load system with slots, async operations, compression, and encryption. ([Docs](Documentation~/data-persistence-readme.md))
-    *   `Localization System`: Comprehensive multi-language support with dynamic switching. ([Docs](Documentation~/localization-readme.md))
-    *   `Scene Management`: Flexible scene loading, transitions, and management. ([Docs](Documentation~/scene-management-readme.md))
-    *   `Input System`: Unified input handling for various devices. ([Docs](Documentation~/input-readme.md))
-    *   `UI System`: Structured approach for managing UI screens and dialogs. ([Docs](Documentation~/ui-readme.md))
-    *   `Character System`: Reusable character implementation with stats, health, AI hooks, persistence, and factory pattern. ([Docs](Documentation~/character-system-readme.md))
+    *   `Boot Screen System`: Professional loading screens with progress tracking and scene transitions. ([Docs](Documentation~/BootSystem.md))
+    *   `Audio System`: Advanced audio playback, mixing, 3D spatialization, track management, and `AudioSource` pooling. ([Docs](Documentation~/Audio.md))
+    *   `Resource Management`: Unified asset loading with **first-class Addressables support**, Resources fallback, and object pooling integration. ([Docs](Documentation~/ResourceManagement.md))
+    *   `Object Pooling`: High-performance pooling for GameObjects and components. ([Docs](Documentation~/ObjectPool.md))
+    *   `Event System`: Type-safe, centralized event handling with automatic listener management. ([Docs](Documentation~/Events.md))
+    *   `Data Persistence`: Robust save/load system with slots, async operations, compression, and encryption. ([Docs](Documentation~/DataPersistence.md))
+    *   `Localization System`: Comprehensive multi-language support with dynamic switching. ([Docs](Documentation~/Localization.md))
+    *   `Scene Management`: Flexible scene loading, transitions, and management. ([Docs](Documentation~/SceneManagement.md))
+    *   `Input System`: Unified input handling for various devices. ([Docs](Documentation~/Input.md))
+    *   `UI System`: Structured approach for managing UI screens and dialogs. ([Docs](Documentation~/UI.md))
 *   **Utilities & Advanced:**
     *   `Time Management`: Pause, slow-motion, and custom time scaling.
     *   `Notification System`: In-game messaging and alerts.
@@ -69,6 +77,11 @@ The LoL Engine provides a suite of interconnected services and tools designed to
     *   Add the `ImprovedGameInitializer` component to this GameObject.
     *   Assign your created `ServiceConfiguration` and `ResourcePathConfig` assets to the respective fields on the `ImprovedGameInitializer` component in the Inspector.
     *   Customize the `ServiceConfiguration` asset to enable the services your game needs and link to their specific configuration assets (e.g., `AudioConfig`, `SaveConfig`). Many services require their own config assets to be created and assigned here.
+    *   **Optional - Enable Boot Screen** (Recommended for professional games):
+        *   In your `ServiceConfiguration`, enable `Enable Boot Screen`
+        *   Create a `BootConfiguration` asset: Right-click → `Create` → `LoLEngine` → `Boot Configuration`
+        *   Set up a boot scene with `BootScreenController` and `BootScreenUI` components
+        *   Configure timing, progress weights, and target scene in the BootConfiguration
     *   **Optional - Enable Addressables** (Recommended):
         *   Go to `Window > Asset Management > Addressables > Groups`
         *   Click "Create Addressables Settings" if prompted
@@ -268,6 +281,7 @@ The framework uses a **Service Locator Pattern** with dependency injection:
 - **Access**: Via `ServiceLocator.Instance.Get<TService>()`
 
 ### Key Services
+- `IBootScreenService`: Boot screen progress tracking and visual feedback
 - `IAudioService`: Audio playback and management
 - `IResourceService`: Asset loading and caching
 - `IEventManager`: Event handling and dispatching
@@ -286,6 +300,7 @@ The framework uses a **Service Locator Pattern** with dependency injection:
 Services are configured via ScriptableObject assets in `Resources/Configs/`:
 - `ResourcePathConfig`: Resource Configurations
 - `ServiceConfiguration`: Controls which services are enabled
+- `DefaultBootConfiguration`: Boot screen timing, UI settings, and scene transitions
 - `DefaultAudioConfig`: Audio system settings
 - `DefaultLocalizationConfig`: Localization settings
 - `DefaultResourceManagementConfig`: Resource Management Settings (includes Addressables configuration)

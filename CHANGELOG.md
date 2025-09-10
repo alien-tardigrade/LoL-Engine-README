@@ -5,6 +5,15 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0-alpha] - 2025-09-12
+- Upgraded vFolders
+- Built BootSystem and added the BootSystem to the GameInitializer
+- Added BootSystem to the Dependency Checker and Initializer
+- Added BootSystem to the Service Locator
+- Added BootSystem to the Service Configuration
+- Upgraded to Unity Version 6.2.3f1
+- Documentation Updated for README and CHANGELOG
+
 ## [0.6.4-alpha] - 2025-09-05
 - Upgraded to Unity Version 6.2.2f1
 
