@@ -5,6 +5,31 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.1-alpha] - 2025-09-18
+Testing Infrastructure Improvements
+- **Relaxed Legacy Service Initialization**: Tests can now run with minimal configuration
+- **Graceful Service Degradation**: Missing optional services log warnings instead of throwing
+- **Improved Test Isolation**: Unit tests no longer fail due to unrelated service dependencies
+- **Better Error Reporting**: Clear logging shows exactly which services are missing/skipped
+Unity Editor Compatibility Fixes 
+- **ObjectPoolService**: Added EditMode test support
+- Skip `DontDestroyOnLoad()` in EditMode (not supported by Unity)
+- Use `DestroyImmediate()` for proper cleanup in EditMode tests 
+- Prevents test failures and memory leaks during unit testing
+Service Locator Enhancements
+- Added `TryGet<T>(out T, key)` for safe, no-throw lookups
+- Added `Require<T>(key)` to fail fast with clear errors when mandatory
+- `Get<T>()` now uses `TryGet<T>` internally for consistency
+- New unit test: `ServiceLocatorBasicTests`
+Serialization Robustness
+- JSON: Null input no longer throws; returns `{}` (compressed if requested)
+- Encrypted: Empty input short-circuits to null (no decryption attempt)
+- AES: `DecryptString`/`DecryptStringAsync` handle empty input gracefully
+Additional EditMode Compatibility
+- **AudioService**: Guard `DontDestroyOnLoad` in play mode only
+- **ResourcePool**: EditMode-safe initialization and cleanup
+- **NotificationHelper**: Avoid `DontDestroyOnLoad` when not playing 
+
 ## [0.7.0-alpha] - 2025-09-12
 - Upgraded vFolders
 - Built BootSystem and added the BootSystem to the GameInitializer
