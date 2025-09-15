@@ -5,6 +5,21 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.3-alpha] - 2025-09-14
+Ordering
+- Initial attribute-based dependency annotations to demonstrate new optional topo-sorting
+    - `AudioService` optionally depends on `IEventManager` and `IResourceService`
+    - `LocalizationService` optionally depends on `IEventManager` and `IResourceService`
+    - `UIService` optionally depends on `IEventManager`, `IObjectPoolService`, `IResourceService`, and `IInputService`
+    - `AutoSaveService` depends on `ISaveSystem` (Feature phase; ensures `ISaveSystem` initializes first)
+    - `QuickSaveService` depends on `ISaveSystem` (Feature phase)
+    - `NotificationService` optionally depends on `IEventManager`
+    - `GameStateManagerService` optionally depends on `IEventManager`
+    - `SceneService` optionally depends on `IResourceService` and `IEventManager`
+    - `JsonDataSerializer` optionally depends on `ICompressionService`
+    - `AesEncryptionService` marked independent (uses LoLEngineConfig internally without ordering)
+    - `SaveSystem` optionally depends on `ICompressionService` and `IEncryptionService` (in addition to requiring `IDataSerializer`)
+
 ## [0.7.2-alpha] - 2025-09-14
 Startup Diagnostics, Boot UX polish, and docs refresh
 Added

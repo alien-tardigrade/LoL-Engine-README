@@ -1,7 +1,7 @@
 # LoL Engine - Labour of Love Game Framework
 
 [![Unity Version](https://img.shields.io/badge/Unity-6000.2%2B-blue.svg)]() 
-[![Version](https://img.shields.io/badge/Version-0.7.2--alpha-gold.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.7.3--alpha-gold.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
 
 A comprehensive Unity game development framework providing essential systems for modern game development. Built with performance, modularity, and ease of use in mind.
@@ -51,6 +51,17 @@ The LoL Engine provides a suite of interconnected services and tools designed to
 Diagnostics build flag
 - Per-service startup diagnostics compile in Editor/Development builds by default and can be enabled in Release with `LOL_STARTUP_DIAGNOSTICS`.
 - See Boot Screen docs for usage and boot UI display toggle.
+
+Service dependency ordering
+- The engine supports optional, attribute-based dependencies with a topological sort within phases (Core → Feature → Game → Custom).
+- Add `[ServiceDependency(typeof(IMyDependency), Optional = true/false)]` on concrete service classes to hint ordering.
+- Missing/optional or cross-phase dependencies are ignored; cycles fall back to manual order with a warning.
+- See Documentation~/ServiceDependencies.md for details and examples.
+
+Independent services
+- Core: `EventService`, `ObjectPoolService`, `TimeService`, `ResourceService`, `CoroutineRunner`
+- Feature: `CompressionService`, `AesEncryptionService` (uses `LoLEngineConfig` internally)
+- Game: `BootScreenService`
 
 ## 📋 Requirements
 
