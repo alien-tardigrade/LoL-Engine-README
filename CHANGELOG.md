@@ -5,7 +5,34 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.7.1-alpha] - 2025-09-18
+## [0.7.2-alpha] - 2025-09-14
+Startup Diagnostics, Boot UX polish, and docs refresh
+Added
+- Per‑service startup timing and health reporting
+  - New `StartupDiagnostics` utility tracks init duration and success for each service
+  - Summary report logged at boot completion under `LogChannel.Boot`
+  - Optional on‑screen diagnostics display (toggle in `BootConfiguration`)
+- Engine controller for games
+  - New `HybridBootController` (inherits `BootScreenController`) for scene drop‑in
+  - `BootScreenController` now exposes `onBeforeBootSequence` and `onAfterBootComplete` UnityEvents
+- EditMode tests
+  - `StartupDiagnosticsTests` verifies basic record and report
+Changed
+- Boot flow hardening
+  - `BootScreenController` now null‑safe: proceeds without UI/config to avoid NREs
+  - Auto‑loads default `BootConfiguration` from `Resources/Configs/DefaultBootConfiguration` if unassigned
+  - Shows diagnostics report on boot screen when enabled (with status‑text fallback)
+- Conditional compilation for zero‑cost release builds
+  - Diagnostics compile only for `UNITY_EDITOR`, `DEVELOPMENT_BUILD`, or when `LOL_STARTUP_DIAGNOSTICS` is defined
+Documentation
+- BootSystem.md: “New Game Quick Start” with clear, no‑code setup using engine components
+- BootMigration.md: Migration guide to consolidate game boot scripts into engine controllers
+- README: Note about `LOL_STARTUP_DIAGNOSTICS` flag
+Fixed
+- Resolved NullReferenceExceptions during boot when UI or config references were missing
+- Resolved preprocessor compile error by removing in‑file `#define` and using proper `#if` guards
+
+## [0.7.1-alpha] - 2025-09-13
 Testing Infrastructure Improvements
 - **Relaxed Legacy Service Initialization**: Tests can now run with minimal configuration
 - **Graceful Service Degradation**: Missing optional services log warnings instead of throwing
@@ -28,7 +55,9 @@ Serialization Robustness
 Additional EditMode Compatibility
 - **AudioService**: Guard `DontDestroyOnLoad` in play mode only
 - **ResourcePool**: EditMode-safe initialization and cleanup
-- **NotificationHelper**: Avoid `DontDestroyOnLoad` when not playing 
+- **NotificationHelper**: Avoid `DontDestroyOnLoad` when not playing
+Configuration
+- Explicit defaults in `ServiceConfiguration.CreateDefault()` and `CreateMinimal()` to match docs
 
 ## [0.7.0-alpha] - 2025-09-12
 - Upgraded vFolders

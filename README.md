@@ -1,7 +1,7 @@
 # LoL Engine - Labour of Love Game Framework
 
 [![Unity Version](https://img.shields.io/badge/Unity-6000.2%2B-blue.svg)]() 
-[![Version](https://img.shields.io/badge/Version-0.7.1--alpha-gold.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.7.2--alpha-gold.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
 
 A comprehensive Unity game development framework providing essential systems for modern game development. Built with performance, modularity, and ease of use in mind.
@@ -47,6 +47,10 @@ The LoL Engine provides a suite of interconnected services and tools designed to
     *   `Notification System`: In-game messaging and alerts.
     *   Encryption & Compression services.
     *   Various helper classes and extension methods. 
+
+Diagnostics build flag
+- Per-service startup diagnostics compile in Editor/Development builds by default and can be enabled in Release with `LOL_STARTUP_DIAGNOSTICS`.
+- See Boot Screen docs for usage and boot UI display toggle.
 
 ## 📋 Requirements
 
