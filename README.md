@@ -1,7 +1,7 @@
 # LoL Engine - Labour of Love Game Framework
 
 [![Unity Version](https://img.shields.io/badge/Unity-6000.2%2B-blue.svg)]() 
-[![Version](https://img.shields.io/badge/Version-0.7.3--alpha-gold.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.8.2--alpha-gold.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
 
 A comprehensive Unity game development framework providing essential systems for modern game development. Built with performance, modularity, and ease of use in mind.

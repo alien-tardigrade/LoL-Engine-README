@@ -5,6 +5,32 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.2-alpha] - 2025-09-24
+- Upgrade Unity Version to Version 6.2.5f1
+
+## [0.8.1-alpha] - 2025-09-16
+Boot debug banner, production checklist, and build-time guard
+Added
+- Boot banner in `BootScreenController` when Debug Mode or Simulate Slow Loading are enabled
+    - Prints configuration, build context, diagnostics status, and a production checklist
+    - Logged on `LogChannel.Boot` at Warning level for visibility with Warning sensitivity
+- Editor build validator blocks production builds with debug flags enabled
+    - File: `Assets/LoLEngine/Editor/Build/BootDebugBuildValidator.cs`
+    - Scans enabled scenes for Boot/HybridBootController instances; blocks on `DebugMode/SimulateSlowLoading`
+    - Logs clear errors for each offending scene/object and a summary with fix steps
+- Validator menu: `LoLEngine/Validate Production Readiness`
+    - File: `Assets/LoLEngine/Editor/Build/BootDebugValidationMenu.cs`
+    - Runs the same checks without starting a build, opens the first offending scene and selects the controller
+Changed
+- Banner severity raised to Warning and includes explicit production checklist
+Fixed
+- Editor validator no longer attempts to unload the last open scene; only closes scenes it opened
+
+## [0.8.0-alpha] - 2025-09-14
+- Added tests for AudioService
+- Added the UIScreenAudioPlayer
+- Unity Version upgraded to 6.2.4f1
+
 ## [0.7.3-alpha] - 2025-09-14
 Ordering
 - Initial attribute-based dependency annotations to demonstrate new optional topo-sorting
