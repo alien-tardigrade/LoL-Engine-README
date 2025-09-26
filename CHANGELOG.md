@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 nd this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0-alpha] - 2025-09-25 
+- Assembly Architecture Redesign: Restructured assembly dependencies to eliminate circular references
+- Namespace Changes: Moved core infrastructure classes to lower-level assemblies
+    - LoLEngine.Helpers.Logger → LoLEngine.Runtime.Logger
+    - LoLEngine.Helpers (ServiceAwaiter, IEngineInitializationProvider) → LoLEngine.Runtime
+    - LoLEngine.Helpers.Extensions.ColorExtension → LoLEngine.Runtime.Extensions.ColorExtension
+    - LoLEngine.Utility.LRUCache → LoLEngine.Runtime.Utility.LRUCache
+- New Assembly Hierarchy:
+  LoLEngine-Runtime (base)
+  ├── LoLEngine-Core → Runtime
+  ├── LoLEngine-Helpers → Runtime + Core
+  ├── LoLEngine-Utility → Runtime + Core
+  ├── LoLEngine-GameObjects → Runtime + Core + Helpers
+  └── Tests → Multiple assemblies
+    - Infrastructure Consolidation: Moved essential utilities (Logger, ServiceAwaiter, LRUCache, ColorExtension) to Runtime layer
+    - Engine Color System: Enhanced SampleEventListener to use LoLEngineConstants.Colors for config-driven color management
+- Logger Optimization: Replaced TimeExtension dependency with inline time formatting to eliminate external dependencies
+- Cache Management: Cleared Unity build artifacts and assembly caches to prevent stale reference issues
+- Namespace Consistency: Updated all using statements across codebase to reflect new assembly structure
+
 ## [0.8.3-alpha] - 2025-09-25
 - Added SimpleAudiPlayer to helpers/audio for common audio scenarios. These are convenience utilities that wrap the Core AudioService not part of the Core framework itself
 
