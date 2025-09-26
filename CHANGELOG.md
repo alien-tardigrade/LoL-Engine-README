@@ -4,6 +4,10 @@ All notable changes to the LoL Engine package will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+nd this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.8.3-alpha] - 2025-09-25
+- Added SimpleAudiPlayer to helpers/audio for common audio scenarios. These are convenience utilities that wrap the Core AudioService not part of the Core framework itself
 
 ## [0.8.2-alpha] - 2025-09-24
 - Upgrade Unity Version to Version 6.2.5f1
