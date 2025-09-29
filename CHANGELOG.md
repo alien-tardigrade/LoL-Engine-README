@@ -6,6 +6,71 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 nd this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [0.9.3-alpha] - 2025-09-29
+### Added
+- Robust fallback logic for SceneAudioManager when automatic music fails
+  - Intelligent fallback from GameMusicMapConfig to manual music ID
+  - Multi-layer fallback: AudioOrchestratorService → Basic AudioService
+  - Clear error reporting with emoji indicators for easy debugging
+### Changed
+- **BREAKING**: AudioOrchestratorService.SetMusicContext now returns `Task<IAudioHandle>` instead of `Task`
+  - Enables proper error detection and fallback logic
+  - Returns null when music loading fails (instead of silently swallowing errors)
+  - Updated IAudioOrchestratorService interface to match
+### Fixed
+- SceneAudioManager now properly handles invalid audio IDs in GameMusicMapConfig
+  - No longer crashes the entire audio system on invalid Addressable keys
+  - Provides clear warning messages and attempts fallback to manual music
+  - Prevents silent failures that left users without audio
+### Improved
+- Enhanced error logging in AudioOrchestratorService with specific failure reasons
+- Better debugging experience with clear success/warning/error indicators
+- More resilient audio system that gracefully handles configuration mistakes
+
+## [0.9.2-alpha] - 2025-09-29
+### Added
+- SceneAudioManager: Clean scene-based audio management component
+  - Automatic music playback based on scene mappings in GameMusicMapConfig
+  - Manual music override support with proper fallback handling
+  - Graceful degradation from AudioOrchestratorService to basic AudioService
+### Fixed
+- AudioOrchestratorService: Fixed MusicMapConfig loading path to use game-specific configs
+  - Now loads from `Configs/GameMusicMapConfig` instead of engine-internal path
+  - Proper separation of engine framework from game-specific audio configurations
+- AudioSourcePool: Fixed Unity warning when resetting AudioSource time without clip
+  - Added null check before setting `audioSource.time = 0f`
+  - Eliminates "Attempting to set 'time' on an audio source..." warningwarning
+### Changed
+- MusicMapConfig: Architecture improvement for game-specific audio configurations
+  - Moved from LoLEngine internal folder to game project Resources folder
+  - Enables per-game customization of scene-to-music mappings
+- Reduced debug logging verbosity in ConfigurableServiceInitializer
+  - Cleaner console output during service initialization
+### Removed
+- Debug components: SimpleAudioTester and AudioSourceDetector
+  - Temporary debugging utilities removed after successful implementation
+
+## [0.9.1-alpha] - 2025-09-25
+- AudioOrchestratorService: New audio service implementing ILoLEngineService
+  - Priority-based voice management with intelligent voice stealing policies (Oldest, Quietest, LowestPriority)   
+  - Smart preloading with memory management for instant critical audio playback
+- AudioPriorityConfig: ScriptableObject for voice limits, ducking rules, and platform overrides
+  - Configurable category rules (Music, SFX, UI, Voice, Ambient)
+- MusicMapConfig: Scene-to-music mapping with crossfade settings
+  - Context-aware music switching (combat, exploration, menus)
+- AudioPreloadProfile: Critical audio preloading profiles for loading screens
+- SceneAudioPlayer: Simple drop-in component for basic audio needs
+  - Auto-detects AudioOrchestratorService with graceful fallback to basic AudioService
+- AdvancedAudioPlayer: Full-featured component for complex audio scenarios
+  - Smart loading strategies (Always Async/Sync, PreloadThenSync, Smart)
+- AudioPreloadManager: Singleton manager for audio asset preloading 
+- ServiceConfiguration Integration: Added enableAudioOrchestrator toggle
+- ConfigurableServiceInitializer : Automatic service registration via reflection
+- SceneAudioManager: Clean scene-based audio management component
+- Fixed AudioOrchestratorService: Fixed MusicMapConfig loading path to use game-specific configs
+- AudioSourcePool: Fixed Unity warning when resetting AudioSource time without clip
+
 ## [0.9.0-alpha] - 2025-09-25 
 - Assembly Architecture Redesign: Restructured assembly dependencies to eliminate circular references
 - Namespace Changes: Moved core infrastructure classes to lower-level assemblies
