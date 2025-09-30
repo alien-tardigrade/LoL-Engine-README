@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 nd this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [0.9.4] - 2025-09-30
+### Added
+- Audio: Resource-level preloading in `AudioOrchestratorService` using `IResourceService` with explicit retain/release of `AudioClip` assets.
+- Audio: Budget-aware, concurrent preloading driven by `AudioPreloadProfile` (respects `memoryBudgetMB`, `maxConcurrentLoads`, and `loadingTimeoutSeconds`).
+- Tests (EditMode): `AudioOrchestratorPreloadTests`
+    - Budget respected when requests exceed memory budget
+    - Concurrency is capped to configured limit
+    - Slow loads time out and are skipped
+### Changed
+- Audio: Preloading no longer “plays at volume 0 then stops” (avoids `AudioSource` churn and mixer side effects). Assets are retained via resource service instead.
+- Audio: Concurrency workers now run via awaited async tasks (no `Task.Run`) to keep Unity API calls on the main thread.
+- Audio: Platform overrides for preloading are selected at runtime (`Application.platform`), and in Editor the enabled override (mobile or console) is honored for easier testing/tuning.
+### Fixed
+- Audio: Avoided background-thread Unity API usage during preloading (e.g., `AudioClip.Create`), preventing main-thread violations in tests and editor.
+- Audio: Resolved ambiguous `PreloadRequest` type references by removing the symbol from orchestrator worker signatures.
+- Tests: Aligned fake interfaces and service locator usage with current engine APIs to compile cleanly.
 
 ## [0.9.3-alpha] - 2025-09-29
 ### Added
