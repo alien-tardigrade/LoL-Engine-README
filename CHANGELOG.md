@@ -6,7 +6,40 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 nd this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# [0.9.4] - 2025-09-30
+## [0.9.5] - 2025-10-02
+### Major Save System Overhaul
+- **SECURITY**: Removed committed encryption keys from repository and added security warnings
+- **ARCHITECTURE**: Consolidated duplicate configuration sources - encryption/compression settings now centralized in LoLEngineConfig
+- **PRODUCTION**: Fixed save location hygiene - saves now properly use Application.persistentDataPath for builds
+- **FLEXIBILITY**: Replaced hardcoded file extensions with dynamic detection from settings
+- **SCENE-AWARE**: AutoSave service now excludes menu/boot/loading scenes with configurable scene filtering
+- **API ENHANCEMENT**: Added comprehensive save management methods (ListSavesAsync, DeleteAsync, GetLatestAsync, HasAnySavesAsync)
+- **VERSION SUPPORT**: Added save version validation and migration framework foundation
+- **INTERFACE CONSISTENCY**: Clarified ISaveSystem vs IAutoSaveService naming patterns
+### Added
+- SaveFileInfo class for file system metadata (separate from game-specific SaveMetadata)
+- Scene-based autosave filtering with configurable excluded scenes list
+- SaveSettings.GetSaveFilePath() method ensuring proper persistent data paths
+- SaveSettings.GetFileExtension() method for dynamic extension selection
+- Atomic save file writes using temporary files for corruption prevention
+- Version validation with placeholder migration system
+- Enhanced SaveConfig focused on game-specific behavior (slots, intervals, UI settings)
+### Changed
+- SaveConfig no longer contains encryption/compression settings (moved to LoLEngineConfig)
+- AutoSaveService constructor now uses SaveSettings parameter instead of float interval
+- SaveSystem file detection now uses settings-based extensions instead of hardcoded patterns
+- AutoSaveService now subscribes to scene changes for intelligent start/stop behavior
+### Fixed
+- Namespace conflicts between SaveMetadata classes resolved
+- ServiceInitializer compatibility with new AutoSaveService constructor
+- ConfigurableServiceInitializer proper dependency injection for AutoSaveService
+- GameSaveData.GetDataVersion() method calls instead of non-existent DataVersion property
+### Security
+- Replaced production encryption keys with dev-only placeholders
+- Added clear warnings about security practices in configuration tooltips
+- Documented proper production key injection via environment variables
+
+## [0.9.4] - 2025-09-30
 ### Added
 - Audio: Resource-level preloading in `AudioOrchestratorService` using `IResourceService` with explicit retain/release of `AudioClip` assets.
 - Audio: Budget-aware, concurrent preloading driven by `AudioPreloadProfile` (respects `memoryBudgetMB`, `maxConcurrentLoads`, and `loadingTimeoutSeconds`).
