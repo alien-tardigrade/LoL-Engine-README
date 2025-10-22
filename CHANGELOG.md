@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 nd this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.8-alpha] - 2025-10-18
+### Engine Core [0.9.8]
+- Preparing for BattleEngine Release
+- Added a new File for the LoLEngine Version to manage the Battle Engine and the Core Engine versions.
+- Updated ImprovedGameInitializer to add in the Version Details Printed
+- Updated LoLLogger to add LogEmphasis
+
+## [0.9.7] - 2025-10-18
+- Upgraded unity Version to 6.2.8f1 
+
+## [0.9.6] - 2025-10-03
+- Upgraded to Unity Version 6.2.6f1 to take care of critical security bugs in the Unity Engine
+
 ## [0.9.5] - 2025-10-02
 ### Major Save System Overhaul
 - **SECURITY**: Removed committed encryption keys from repository and added security warnings
