@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 nd this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.2-alpha] - 2025-11-05
+### Engine Core [0.9.10]
+- Upgraded Unity Version to 6.2.10f1
+- Cleanup of empty folders left behind by previous builds
+
+## [0.10.1-alpha] - 2025-10-28
+### Engine Core [0.9.9]
+- Upgraded Unity Version to 6.2.9f1
+
+## [0.10.0-alpha] - 2025-10-18
+### Battle Engine 
+- Setting up the Battle Engine for defining the Battle System for use within the Game.
+
 ## [0.9.8-alpha] - 2025-10-18
 ### Engine Core [0.9.8]
 - Preparing for BattleEngine Release

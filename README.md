@@ -1,18 +1,23 @@
 # LoL Engine - Labour of Love Game Framework
 
 [![Unity Version](https://img.shields.io/badge/Unity-6000.2%2B-blue.svg)]() 
-[![Version](https://img.shields.io/badge/Version-0.9.8--alpha-gold.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.10.2--alpha-gold.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
+
+| Project |                                                                            Version | Notes |
+|---|-----------------------------------------------------------------------------------:|---|
+| LoL Core | [![Version](https://img.shields.io/badge/Version-0.9.10-yellow.svg)](CHANGELOG.md) | Core engine systems (Event, Resource, Pool, Time) |
+| LoLEngine | [![Version](https://img.shields.io/badge/Version-0.10.0-orange.svg)](CHANGELOG.md) | Full framework package with features (Audio, Saves, BootScreen) |
 
 A comprehensive Unity game development framework providing essential systems for modern game development. Built with performance, modularity, and ease of use in mind.
 
-## 📖 Overview
+## Overview
 
 The LoL Engine provides a suite of interconnected services and tools designed to accelerate game development in Unity. It emphasizes a clean architecture through a service locator pattern, data-driven configuration, and robust implementations of common game systems.
 
-## 🚀 Features
+## Features
 
-### 🎯 **NEW: Boot Screen System**
+### **NEW: Boot Screen System**
 *   **Customizable Boot Screens**: Professional loading screens with progress bars, status text, and animated spinners
 *   **Service Integration**: Tracks engine initialization progress and provides visual feedback
 *   **Flexible Configuration**: ScriptableObject-based configuration for timing, UI elements, and transitions
@@ -20,7 +25,7 @@ The LoL Engine provides a suite of interconnected services and tools designed to
 *   **Error Handling**: Graceful error display and recovery mechanisms
 *   **Performance Monitoring**: Debug tools for tracking boot times and optimization
 
-### 🎯 **Enhanced Addressables Integration**
+### **Enhanced Addressables Integration**
 *   **✨ AssetReference Support**: Type-safe asset loading with Unity's AssetReference system
 *   **Seamless Asset Loading**: Automatic Addressables support with Resources fallback
 *   **No Code Changes**: Existing ResourceService calls automatically benefit from Addressables
@@ -63,7 +68,7 @@ Independent services
 - Feature: `CompressionService`, `AesEncryptionService` (uses `LoLEngineConfig` internally)
 - Game: `BootScreenService`
 
-## 📋 Requirements
+## Requirements
 
 - **Unity**: 6000.0 or later
 - **Dependencies**: 
@@ -71,7 +76,7 @@ Independent services
     *   `com.unity.nuget.newtonsoft-json`
     *   `com.unity.addressables` (2.5.0+) - Integrated for advanced asset loading 
 
-## 🛠️ Installation
+## Installation
 
 ### From Local Disk (For Development/Testing)
 1.  Download or clone the package repository to your local machine.
@@ -79,7 +84,7 @@ Independent services
 3.  Click the `+` button and select `Add package from disk...`.
 4.  Navigate to the root folder of the cloned package (the one containing `package.json`) and select it.
 
-## 🚀 Quick Start
+## Quick Start
 
 1.  **Initial Engine Setup:**
     *   **Choose Your Configuration Approach:**
@@ -306,7 +311,7 @@ Independent services
     }
     ```
 
-## ⚙️ Configuration Deep Dive
+## Configuration Deep Dive
 
 The LoL Engine's flexibility comes from its data-driven configuration:
 
@@ -370,7 +375,7 @@ The engine automatically validates service dependencies:
 ### Quick Reference: Default Service Status
 
 | Service Category | Service Name | Default | Minimal | Purpose |
-|---|---|---|---|---|
+|---|---|---|
 | **Core Services** | EventManager | ✅ | ✅ | Event handling system |
 |  | ResourceService | ✅ | ✅ | Asset loading and management |
 |  | ObjectPool | ✅ | ✅ | GameObject recycling |
@@ -432,7 +437,7 @@ config.enableAutoSaveService = false;      // Manual saves only
 Refer to the detailed documentation for each service (linked in the Features section) for specifics on their configuration assets.
 
 
-## 📖 Documentation
+## Documentation
 
 ### Core Architecture
 The framework uses a **Service Locator Pattern** with dependency injection:
@@ -468,7 +473,7 @@ Services are configured via ScriptableObject assets in `Resources/Configs/`:
 - `DefaultSaveConfig`: Save Load Settings
 - `DefaultCharacterConfig` (or similar): Defines character archetypes, stats, and persistence settings.
 
-## 📞 Support
+## Support
 
 - **Website**: [https://moomoo.games](https://moomoo.games) 
 - **Email**: Contact via website
