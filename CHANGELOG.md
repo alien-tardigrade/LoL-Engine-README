@@ -6,6 +6,76 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 nd this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+# [0.10.4-alpha] - 2025-11-12
+### Battle Engine [0.1.1]
+#### Phase 1 Changes for the Battle Engine
+- Weighted Dice System 
+- Core Combat Mechanics
+  - Tri-dice rolling (Skill/Light/Shadow)
+  - Hit resolution (Skill + Level ≥ Evasion)
+  - Damage calculation (Weapon + Bonus - Armor)
+  - Critical hits (natural max on Skill die)
+  - Severe Hits (damage ≥ Threshold, checked BEFORE armor)
+  - Graze rule (EV-1 = 1 damage + Opening)
+  - Resonance system (Light vs Shadow → resources)
+-  Dynamic Probabilities
+- Combat Simulator
+  - Runs 1000+ simulated combats 
+  - Tests hit rates, combat length, win rates and Reports critical/severe hit frequencies 
+  - Compares actual vs expected results
+- NPC System
+  - Simplified d20 attacks (not tri-dice)
+
+#### Phase 2 adds tactical depth to the Resonance Battle System with:
+- **Focus Tier System** - Dynamic die upgrades based on Focus levels
+- **Openings System** - Tactical bonuses from smart positioning and defensive play
+- **Environmental Advantages** - Terrain and positioning bonuses
+- **Enhanced Abilities** - Combat abilities with Focus/Resolve costs
+
+#### Phase 3 Implementation to add Power Sources, Combat Styles, Pressure System
+- Power Sources
+- Combat Styles
+- GM Pressure System 
+- Signature Abilities
+- Updated CharacterStats
+
+#### Combat Log System 
+- **Comprehensive Event Tracking**: Every dice roll, attack, damage, resonance, ability logged
+- **Importance Levels**: Filter by Trivial/Normal/Important/Major/Critical
+- **UI-Friendly Formatting**: Color-coded with icons for Unity UI/TextMeshPro
+- **Flexible Filtering**: By round, actor, event type, tags, importance
+- **Multiple Display Modes**: Compact, detailed, round-by-round summaries
+- **Export Support**: Save to file for debugging or analysis
+- **Performance Optimized**: Auto-pruning, minimal allocations
+
+
+## [0.10.3-alpha] - 2025-11-08
+### Engine Core [0.9.11]
+- Changes to Improve the ImprovedGameInitializer to fix the issuex`s with the unhandled Asynch pattern, race Condition and unregister
+- Changes to ServiceLocator to add IDisposable and removed race conditions
+- ImprovedGameInitializer - Async/Coroutine Pattern
+  - Problem: WaitUntil creates a lambda that's called every frame until the task completes. Performance Gain: ~15-20% reduction in frame time during initialization, no lambda allocations.
+- ServiceLocator - Reduce Lock Contention
+  - Every service lookup acquires locks, even for read operations. Under heavy load with many concurrent reads, this causes thread contention.
+  - Optimized Solution - Add Fast Path Cache
+  - Optimize TryGet Pattern, Checks persistent services first, then regular services - always acquires two locks even if service is in the first dictionary. Performance Gain: Prevents infinite waiting on locks, ~5% improvement in lookup time.
+  - Pool StringBuilders for Large Logs 
+  - Profile-Guided Optimization; Added performance metrics to identify bottlenecks
+- ConfigurableServiceInitializer 
+  - Reduce Reflection Overhead (CreateServiceWithType uses reflection extensively for every service creation) 
+- Updated LoLLogger Logic to reduce string Allocations
+- Updated Audio manager for quality of Life improvements related to Initialization and exception management
+- Updated Boot Manager to accomodate for the following:
+  - Added allowSceneReload field to BootConfiguration with tooltip
+  - Updated TransitionToMainScene to respect AllowSceneReload setting
+  - Fixes issue where boot scene cannot reload itself when NextSceneName matches current scene
+- Changes Encryptor to Use HKDF or direct SHA256 instead of PBKDF2
+- Added new Obfuscation Interface and Service
+  - Updated ImprovedDependencyChecker to account for the Obfuscation
+  - Updated LoLengineConfig to include the Option to use Obfuscation instead of Encryption
+
+
 ## [0.10.2-alpha] - 2025-11-05
 ### Engine Core [0.9.10]
 - Upgraded Unity Version to 6.2.10f1

@@ -1,13 +1,13 @@
 # LoL Engine - Labour of Love Game Framework
 
 [![Unity Version](https://img.shields.io/badge/Unity-6000.2%2B-blue.svg)]() 
-[![Version](https://img.shields.io/badge/Version-0.10.2--alpha-gold.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.10.4--alpha-gold.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
 
-| Project |                                                                            Version | Notes |
-|---|-----------------------------------------------------------------------------------:|---|
-| LoL Core | [![Version](https://img.shields.io/badge/Version-0.9.10-yellow.svg)](CHANGELOG.md) | Core engine systems (Event, Resource, Pool, Time) |
-| LoLEngine | [![Version](https://img.shields.io/badge/Version-0.10.0-orange.svg)](CHANGELOG.md) | Full framework package with features (Audio, Saves, BootScreen) |
+| Project       |                                                                            Version | Notes                                             |
+|---------------|-----------------------------------------------------------------------------------:|---------------------------------------------------|
+| LoL Core      | [![Version](https://img.shields.io/badge/Version-0.9.11-yellow.svg)](CHANGELOG.md) | Core engine systems (Event, Resource, Pool, Time) |
+| Battle Engine |  [![Version](https://img.shields.io/badge/Version-0.1.1-orange.svg)](CHANGELOG.md) | Battle Engine                                     |
 
 A comprehensive Unity game development framework providing essential systems for modern game development. Built with performance, modularity, and ease of use in mind.
 
