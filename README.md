@@ -1,13 +1,13 @@
 # LoL Engine - Labour of Love Game Framework
 
 [![Unity Version](https://img.shields.io/badge/Unity-6000.2%2B-blue.svg)]() 
-[![Version](https://img.shields.io/badge/Version-0.10.4--alpha-gold.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.10.21--alpha-gold.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
 
-| Project       |                                                                            Version | Notes                                             |
-|---------------|-----------------------------------------------------------------------------------:|---------------------------------------------------|
-| LoL Core      | [![Version](https://img.shields.io/badge/Version-0.9.11-yellow.svg)](CHANGELOG.md) | Core engine systems (Event, Resource, Pool, Time) |
-| Battle Engine |  [![Version](https://img.shields.io/badge/Version-0.1.1-orange.svg)](CHANGELOG.md) | Battle Engine                                     |
+| Project       |                                                                             Version | Notes                                             |
+|---------------|------------------------------------------------------------------------------------:|---------------------------------------------------|
+| LoL Core      | [![Version](https://img.shields.io/badge/Version-0.10.15-yellow.svg)](CHANGELOG.md) | Core engine systems (Event, Resource, Pool, Time) |
+| Battle Engine |   [![Version](https://img.shields.io/badge/Version-0.1.1-orange.svg)](CHANGELOG.md) | Battle Engine                                     |
 
 A comprehensive Unity game development framework providing essential systems for modern game development. Built with performance, modularity, and ease of use in mind.
 
@@ -43,6 +43,9 @@ The LoL Engine provides a suite of interconnected services and tools designed to
     *   `Object Pooling`: High-performance pooling for GameObjects and components. ([Docs](Documentation~/ObjectPool.md))
     *   `Event System`: Type-safe, centralized event handling with automatic listener management. ([Docs](Documentation~/Events.md))
     *   `Data Persistence`: Robust save/load system with slots, async operations, compression, and encryption. ([Docs](Documentation~/DataPersistence.md))
+    *   `Character Customization`: Comprehensive character appearance system with body parts, colors, blend shapes, equipment visuals, and presets. ([Docs](Documentation~/CharacterCustomization.md))
+    *   `Achievement & Progression System`: Complete achievement tracking, statistics, player progression with XP/leveling, and UI components. ([Docs](Documentation~/AchievementSystem.md))
+    *   `Tutorial & Onboarding System`: Flexible tutorial creation with multiple step types, automatic progress tracking, event-driven architecture, and rich UI components. ([Docs](Documentation~/TutorialSystem.md))
     *   `Localization System`: Comprehensive multi-language support with dynamic switching. ([Docs](Documentation~/Localization.md))
     *   `Scene Management`: Flexible scene loading, transitions, and management. ([Docs](Documentation~/SceneManagement.md))
     *   `Input System`: Unified input handling for various devices. ([Docs](Documentation~/Input.md))

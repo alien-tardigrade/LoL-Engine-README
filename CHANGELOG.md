@@ -4,10 +4,1025 @@ All notable changes to the LoL Engine package will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-nd this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.10.21-alpha] - 2025-11-30
+### Engine Core [0.10.15]
+
+#### Tutorial System
+- Multiple tutorial step types (tooltips, highlights, prompts, interactive, etc.)
+- Sequential and non-linear tutorial sequences
+- Automatic progress persistence
+- Flexible trigger conditions
+- Event driven architecture
+- Rich UI components for display
+- Reward system integration
+- Skip and replay functionality
+
+#### Bug Fixes
+- Fixed the Implementation of the SerializableDictionary class to make sure it can be used as a Core Dependency
+
+---
+
+## [0.10.20-alpha] - 2025-11-29
+### Engine Core [0.10.14]
+
+#### Achievement & Progression System
+- Achievement Definition & StatDefinition ScriptableObjects
+- Achievement Service - Centralized service with IAchievementService interface
+- Achievement ProgressData & StatisticsData - PersistableData classes
+- Achievement Tracker - Automatic event-based tracking
+- Stat Tracker - Manual stat tracking component
+- Progression Controller - XP-based leveling system
+- Achievement NotificationUI - Popup toast notifications
+- Achievement JournalUI & AchievementListItem - Full achievement list
+- Achievement types
+- Achievement categories 
+- Event system integration  
+- DataPersistence integration with automatic save/load
+- Reward system
+
+## [0.10.19-alpha] - 2025-11-26
+### Engine Core [0.10.13]
+
+#### Character Customization
+- **Body Part Customization**: Swap heads, hair, facial features, and more
+- **Color Customization**: Skin tones, hair colors, eye colors, clothing colors
+- **Blend Shapes**: Facial morphing for detailed facial features
+- **Equipment Visuals**: Visual representation of equipped items
+- **Preset System**: Save and load complete character appearances
+- **Random Generation**: Procedural character appearance generation
+- **Persistence**: Full save/load integration
 
 
-# [0.10.4-alpha] - 2025-11-12
+## [0.10.18-alpha] - 2025-11-25
+### Engine Core [0.10.12]
+
+#### Character Relationships System
+- **Core.Relationships** - Data structures, enums, ScriptableObjects
+- **Core.Relationships.Service** - IReputationService interface and implementation
+- **Core.Events.GameEvents** - Relationship change events
+- **GameObjects.Relationships** - MonoBehaviour components 
+
+#### Integration Points With Existing Systems
+
+1. **Dialogue System** 
+    - DialogueCondition checks relationship/faction
+    - DialogueData filters by relationship
+    - Dialogue choices can modify relationships
+
+2. **Quest System** 
+    - Quest completion modifies relationships
+    - Quest rewards can include reputation
+    - Quest prerequisites can require relationships
+
+3. **Inventory System** 
+    - Gift-giving modifies relationships
+    - Shop prices affected by relationship standing
+
+4. **AI & Pathfinding** 
+    - CompanionController uses PathAgent 
+
+5. **Combat System** 
+    - Helping in combat improves relationship
+    - Companions fight alongside player 
+
+6. **Event System** 
+    - All relationship changes fire events 
+
+#### Character Persistence Enhancements
+
+**Key Features:**
+- **Character State Persistence**: Health, stats, position, equipment, abilities
+- **Inventory Persistence**: Items, equipment, currency, durability
+- **Quest State Persistence**: Active/completed quests, objectives, timers
+- **Relationship Persistence**: NPC relationships, faction reputation, companions
+
+- **Character Persistence Integration** - Character-specific persistence (NEW - DEF-013)
+    - CharacterPersistentData
+    - InventoryPersistentData
+    - QuestPersistentData
+    - RelationshipPersistentData
+    - Integration examples
+  
+## [0.10.17-alpha] - 2025-11-24
+### Engine Code [0.10.11]
+
+#### Advanced Character Upgrades
+
+    Advanced Movement Controllers
+    - WalJumpController.cs - Wall jump/slide mechanics
+    - ClimbingController.cs - Ladder/rope climbing
+    - SwimmingController.cs - Swimming, diving, oxygen management
+
+    Skill Tree System
+    - SkillNodeData.cs - ScriptableObject for skill definitions
+    - SkillTreeData.cs - Complete tree configuration
+    - SkillTreeController.cs - Runtime skill management
+
+    Character Progression
+    - CharacterLevelingController.cs - XP/leveling with AnimationCurve-based progression
+
+
+## [0.10.16-alpha] - 2025-11-21
+### Engine Core [0.10.10]
+
+### Dialogue, Environmental, and Map Systems
+
+**Dialogue System (Core.Dialogue)**
+
+    - Dialogue Data (ScriptableObject) - Complete dialogue tree definition
+    - Dialogue Node - Individual conversation node
+    - Dialogue Choice - Player choice in conversation
+    - Dialogue Condition - Condition evaluation system
+    - Dialogue Action - Actions during dialogue
+    - Dialogue Service (IDialogueService) - Dialogue state management
+    - Dialogue UI (UIScreen) - Dialogue display 
+    - Dialogue NPC (MonoBehaviour, IInteractable) - NPC conversations
+    - DialogueEvents - Event system integration
+        * DialogueStartedEvent - Fired when conversation begins
+        * DialogueEndedEvent - Fired when conversation ends
+        * DialogueNodeDisplayedEvent - Fired when node is shown
+        * DialogueChoiceMadeEvent - Fired when player makes choice
+        * DialogueActionExecutedEvent - Fired when action executes
+        * DialogueVariableChangedEvent - Fired when variable changes
+
+**Environmental Systems (Core.Environment)**
+
+    - TimeOfDay enum - 7 time periods (Dawn, Morning, Noon, Afternoon, Dusk, Night, Midnight)
+    - WeatherType enum - 11 weather types (Clear, Cloudy, LightRain, HeavyRain, Thunderstorm, LightSnow, HeavySnow, Blizzard, Fog, Sandstorm, Windy)
+    - DayNightCycleConfig (ScriptableObject) - Day/night configuration
+    - DayNightCycleService (IDayNightCycleService) - Time progression
+    - WeatherConfig (ScriptableObject) - Weather configuration
+    - WeatherPreset - Individual weather configuration
+    - WeatherService (IWeatherService) - Weather management
+    - EnvironmentManager (MonoBehaviour) - Update driver
+    - EnvironmentalHazard (Base Class) - Hazard foundation
+    - EnvironmentEvents - Event system integration
+        * TimeOfDayChangedEvent - Fired when time period changes
+        * DayNightCycleUpdateEvent - Fired each frame with time data
+        * WeatherChangedEvent - Fired when weather changes
+        * WeatherTransitionStartedEvent - Fired when transition begins
+        * WeatherTransitionCompletedEvent - Fired when transition ends
+        * WeatherUpdateEvent - Fired each frame with weather data
+
+**Map & Navigation UI (Core.Map)**
+
+    - MapMarkerType enum - 14 marker types (Player, QuestObjective, QuestGiver, Waypoint, POI, Enemy, Ally, Vendor, CraftingStation, Treasure, Dungeon, Boss, FastTravel, Custom)
+    - MapConfig (ScriptableObject) - Map configuration
+    - MapMarker - Map marker data
+    - MapService (IMapService) - Map state management
+    - Fog of War System - Dynamic exploration
+    - MinimapUI (MonoBehaviour) - Minimap display
+    - CompassUI (MonoBehaviour) - Directional compass
+    - MapEvents - Event system integration
+        * MapMarkerAddedEvent - Fired when marker is added
+        * MapMarkerRemovedEvent - Fired when marker is removed
+        * MapMarkerUpdatedEvent - Fired when marker is updated
+        * MapMarkerTrackedEvent - Fired when marker tracking changes
+        * FogOfWarRevealedEvent - Fired when fog is revealed
+        * AreaDiscoveredEvent - Fired when new area is discovered
+
+## [0.10.15-alpha] - 2025-11-21
+### Engine Core [0.10.9]
+
+**Status Effect System (Core.Combat & GameObjects.Characters.Combat)**
+
+    - StatusEffectType enum - 11 built-in effect types (Poison, Burn, Bleed, Regeneration, Frost, Stun, Weaken, Brittle, Empowered, Haste, Custom)
+    - EffectBehavior enum - 5 behaviors (DamageOverTime, HealOverTime, StatModifier, CrowdControl, Hybrid)
+    - StackingBehavior enum - 5 stacking modes (NoStack, RefreshDuration, StackIntensity, ExtendDuration, Independent)
+
+    - StatusEffectData (ScriptableObject) - Comprehensive status effect definition
+        * Identity (effectId, effectName, description, effectType, behavior, stackingBehavior)
+        * Duration & Timing (duration, tickRate, tickImmediately, maxStacks)
+        * Damage/Healing (damagePerTick, healPerTick, damageType, canCrit)
+        * Stat Modifiers (modifiesStats, modifiedStat, modifierType, modifierValue)
+        * Crowd Control (causesStun, causesRoot, causesSilence)
+        * Visual & Audio (applyVfxId, loopingVfxId, expireVfxId, icon, effectColor)
+        * Advanced (canBeDispelled, priority, removeOnDeath)
+
+    - ActiveStatusEffect - Runtime status effect instance
+        * Duration tracking with tick timing
+        * Stack management with automatic stacking behavior
+        * Stat modifier integration
+        * Tick value calculation with stack multipliers
+
+    - StatusEffectController (MonoBehaviour) - Status effect manager
+        * Effect application with automatic stacking
+        * Effect removal (individual, by type, dispel all)
+        * Automatic duration and tick updates
+        * DOT/HOT execution with combat integration
+        * Stat modifier application/removal
+        * Crowd control state queries (IsStunned, IsRooted, IsSilenced)
+        * Event firing (OnEffectApplied, OnEffectRemoved, OnEffectTicked)
+        * Death event integration (auto-remove effects on death)
+
+    - StatusEffectPresets - Factory class for common effects
+        * Poison (5 dmg/sec, 5s, 3 stacks)
+        * Burn (8 dmg/tick, 4s, refresh duration)
+        * Bleed (3 dmg/sec, 6s, 5 stacks)
+        * Regeneration (5 heal/sec, 10s)
+        * Frost (-50% speed, 3s)
+        * Weaken (-30% damage, 5s)
+        * Empowered (+50% damage, 8s)
+        * Haste (+50% speed, 5s)
+        * Brittle (-20 armor, 4s, 3 stacks)
+        * Stun (2s, full disable)
+        * CreateHybridEffect() for custom combinations
+
+**Combat Modifier System (GameObjects.Characters.Combat)**
+
+    - CombatModifierController (MonoBehaviour) - Buff/debuff manager
+        * Temporary stat modifications with automatic expiration
+        * Convenience methods (AddDamageBoost, AddSpeedBoost, AddArmorBoost, AddCriticalChanceBoost)
+        * Custom modifier support (AddCustomModifier)
+        * Source tracking for bulk removal
+        * Modifier queries (GetModifiersFromSource, GetModifiersForStat)
+        * Events (OnModifierAdded, OnModifierRemoved)
+        * Max modifiers limit (default: 50)
+
+**Knockback System (GameObjects.Characters.Combat)**
+
+    - KnockbackController (MonoBehaviour) - Physics-based knockback
+        * 2D and 3D physics support (auto-detects Rigidbody type)
+        * Knockback resistance (0-1 scale)
+        * Minimum force threshold
+        * Upward force component (launch effects)
+        * Duration-based movement disable
+        * Direction-based and position-based knockback
+        * Convenience methods (ApplyKnockbackFromPosition, ApplyKnockbackFromSource)
+        * Recovery system (automatic and manual)
+        * Events (OnKnockbackApplied, OnKnockbackRecovered)
+        * Configurable force modes (Impulse, Force, etc.)
+
+**Stun System (GameObjects.Characters.Combat)**
+
+    - StunController (MonoBehaviour) - Crowd control manager
+        * Stun resistance (0-1 scale)
+        * Minimum/maximum duration limits
+        * Duration stacking support
+        * Visual indicator with VFX spawn
+        * Duration reduction method
+        * Force recovery (cleanse)
+        * Events (OnStunApplied, OnStunRecovered)
+        * Progress tracking (RecoveryProgress property)
+
+**Critical Hit Enhancements (Existing CombatCharacterComponent)**
+
+    - Enhanced TakeDamageEnhanced() method
+    - Critical hit calculation with configurable chance/multiplier
+    - DamageResult struct with detailed feedback
+    - Automatic critical hit event firing
+    - Damage type resistance calculations
+
+**Events Integration (Core.Events.GameEvents - Already existed)**
+
+    - CharacterCriticalHitEvent - Critical hit notifications
+    - StatusEffectAppliedEvent - Effect applied notifications
+    - StatusEffectRemovedEvent - Effect removed notifications
+    - StatusEffectTickedEvent - DOT/HOT tick notifications
+
+**Example Scenes**
+
+    - CombatEnhancementsExamples.cs - Comprehensive interactive examples
+        * 5 scene setups (Status Effects, Modifiers, Knockback, Stun, Complete Demo)
+        * 7 runtime test methods (Poison, Burn, Frost, Buffs, Knockback, Stun, Full Combat)
+        * Event listeners for all combat events
+        * Auto-setup with visual markers
+
+### Character Audio Integration System
+
+#### Added
+
+**Core Audio Components (GameObjects.Characters.Audio)**
+    
+    - CharacterFootstepHandler- Surface-aware footstep audio
+        * 15 surface types with automatic detection via raycast
+        * Tag, physics material, and terrain texture detection
+        * Random variation (multiple clips, pitch/volume randomization)
+        * 3D spatial audio support
+        * Configurable cooldowns and manual surface override
+        * Virtual methods for custom surface detection
+
+    - CharacterCombatAudioHandler- Event-driven combat audio
+        * Attack sounds (melee, ranged, magic, special)
+        * Hit reaction sounds with severity detection (light, medium, heavy, critical)
+        * Blocked/dodged sounds
+        * Death and kill celebration sounds
+        * Audio cooldowns to prevent spam
+        * Hit severity based on damage percentage of max HP
+
+      - CharacterAnimationAudioBridge - Animation event audio mapping
+          * Animation event → audio ID mapping system
+          * Multiple audio IDs per event with random selection
+          * Per-mapping pitch/volume randomization
+          * 3D spatial audio support
+          * Runtime mapping management (add/remove/clear)
+
+      - EnvironmentalAudioTrigger - Zone-based ambient audio
+          * Looping ambient sounds with fade in/out
+          * Random one-shot sounds at configurable intervals
+          * Music zone transitions
+          * Multiple zone configurations
+          * Trigger-based activation
+
+**Configuration Assets (Core.Audio)**
+    
+    - FootstepAudioConfig - ScriptableObject for footstep configuration
+        * Per-surface audio settings (volume, pitch, 3D audio, track)
+        * Surface detection settings (distance, layer mask, terrain)
+
+    - FootstepSurfaceConfig - Per-surface configuration
+        * Multiple audio IDs for variation
+        * Volume/pitch randomization ranges
+        * 3D audio and track settings
+
+    - CombatAudioConfig - ScriptableObject for combat audio
+        * Attack sounds by type (melee, ranged, magic, special)
+        * Hit reactions by severity with configurable thresholds
+        * Healing, death, and kill sounds
+        * Volume scaling and audio settings
+
+    - SurfaceType enum - 15 surface types (Grass, Stone, Wood, Metal, Water, Mud, Sand, Snow, Gravel, Carpet, Tile, Concrete, Dirt, Ice, Default)
+
+**Audio System Updates**
+- Added AmbientTrack property to AudioExtensions (matching Music, SFX, UI, Voice)
+- Updated CharacterDeathHandler to use AudioService instead of legacy Unity audio
+
+### Combat Enhancements System
+#### Added
+
+**Critical Hit System (GameObjects.Characters.Combat)**
+- DamageResult struct - Detailed damage calculation results
+- Enhanced CombatCharacterComponent 
+
+- DamageType enum (Core.Combat) - 4 damage types
+    * Physical (reduced by Armor)
+    * Magic (reduced by MagicResistance)
+    * True (ignores resistances)
+    * Environmental (reduced by Armor * 0.5)
+
+- CharacterCriticalHitEvent - Event for critical hit notifications
+
+**Damage-Scaled Knockback (GameObjects.Characters.Knockback)**
+- Enhanced KnockbackController with damage scaling
+
+**Status Effect System (Core.Combat.StatusEffects)**
+    
+    - StatusEffectData - ScriptableObject with 100+ configuration options
+        * Identity (effectId, displayName, icon, description)
+        * Duration and tick settings
+        * 4 stack behaviors (None, RefreshDuration, IncreaseIntensity, AddInstance)
+        * Stat modifier system (20+ stat types, 3 modifier types)
+        * DoT/HoT configuration with damage/healing scaling
+        * Crowd control settings (movement, actions, turning restrictions)
+        * VFX and audio integration
+        * Immunity and dispel configuration
+        * Expiration behaviors (Remove, FadeOut, Burst, Transform)
+
+    - ActiveStatusEffect - Runtime effect tracking
+
+    - StatusEffectManager- Main status effect component
+      * Effect application with automatic stacking
+      * Effect removal with cleanup
+      * DoT/HoT tick system (processes every frame)
+      * Crowd control state management (IsStunned, IsRooted, IsSilenced, CanMove, CanAct)
+      * Freeze implementation (isKinematic, velocity = 0)
+      * Ragdoll implementation (physics-based stun)
+      * VFX integration points
+      * Audio integration (apply, tick, remove sounds)
+      * Immunity system
+      * Dispel system (by priority)
+
+**Status Effect Enums (Core.Combat.StatusEffects)**
+- StatusEffectCategory (5): Buff, Debuff, CrowdControl, DamageOverTime, HealOverTime
+- StatusEffectType (30+): Poison, Burn, Bleed, Regeneration, Shield, Stun, Root, Freeze, etc.
+- StackBehavior (4): None, RefreshDuration, IncreaseIntensity, AddInstance
+- ExpirationBehavior (4): Remove, FadeOut, Burst, Transform
+- EffectDisplayStyle (6): Icon, IconWithTimer, IconWithStacks, IconWithBoth, ProgressBar, None
+- StatModifierType (20+): AttackDamage, Armor, MoveSpeed, CriticalChance, etc.
+- ModifierType (3): Flat, PercentageAdditive, PercentageMultiplicative
+
+**Status Effect Events (Core.Events.GameEvents)**
+- StatusEffectAppliedEvent - Fired when effect is applied
+- StatusEffectRemovedEvent - Fired when effect is removed/expires
+- StatusEffectTickedEvent - Fired when DoT/HoT ticks
+
+**Status Effect Presets**
+    
+    - StatusEffectPresetGenerator - Editor utility
+        * Tools > LoLEngine > Combat > Generate Status Effect Presets
+        * 12 preset status effects:
+            - Poison (DoT, 5 dmg/sec, 10s, stacking)
+            - Burn (DoT, 8 dmg/sec, 5s)
+            - Bleed (DoT, 3 dmg/sec, 15s, high stacks)
+            - Regeneration (HoT, 5 heal/sec, 10s)
+            - Shield (+50% armor, 5s)
+            - AttackBoost (+30% damage, 8s)
+            - SpeedBoost (+50% speed, 6s)
+            - Weakness (-30% damage, 6s)
+            - Vulnerability (-25% armor, 5s)
+            - Slow (-50% speed, 4s)
+            - Stun (prevents all, 2s, ragdoll)
+            - Freeze (prevents movement/turning, 3s)
+
+**Stat Modifier System (Core.Combat.StatusEffects)**
+- StatModifierConfig - Stat modification configuration
+    * 20+ stat types (combat, movement, health/mana)
+    * 3 modifier types (Flat, PercentageAdditive, PercentageMultiplicative)
+
+#### Fixed
+- Moved DamageType enum from GameObjects to Core assembly to prevent circular dependency
+- Fixed audio track assignments to use AudioService.GetTrack() instead of string
+- Fixed event subscription to use IEventManager.AddListener instead of non-existent GameEventBus
+- Fixed audio method calls to use StopSound instead of Stop
+- Fixed combat audio to use Vigor instead of MaxHP for Resonance-Battle system
+- Fixed event handler method names to use OnGameEvent instead of OnEvent
+---
+## [0.10.14-alpha] - 2025-11-20
+### Engine Core [0.10.8]
+
+### Spawn Management System
+
+**Phase 1 & 2: Core Spawning and Wave System**
+
+    Core Components (Core.Spawning):
+        - SpawnEnums - All spawn-related enumerations (SpawnPattern, SpawnConditionType, WaveState, SpawnResult, WaveCompletionCondition, SpawnTriggerMode)
+        - SpawnConfiguration - ScriptableObject for spawn settings (prefab, counts, timing, respawn, limits, conditions, position)
+        - SpawnData - Runtime spawn instance tracking (entity, timing, respawn count, statistics)
+        - WaveConfiguration - ScriptableObject for wave definitions (spawn entries, timing, completion, difficulty scaling)
+        - WaveData - Runtime wave instance tracking (entities, statistics, completion tracking)
+
+    Event System (Core.Events.GameEvents):
+        - SpawnEvents - Comprehensive event system
+            * EntitySpawnedEvent - Entity spawned notification
+            * EntityDespawnedEvent - Entity despawned notification
+            * WaveStartedEvent - Wave started notification
+            * WaveCompletedEvent - Wave completed notification
+            * AllWavesCompletedEvent - All waves completed notification
+            * WaveFailedEvent - Wave failed notification
+            * FormationSpawnedEvent - Formation spawned notification
+
+    GameObject Components (GameObjects.Spawning):
+        - SpawnPoint - Single-entity spawn point with patterns, respawn, cooldowns, conditions, pooling
+        - SpawnZone - Area-based spawning with shapes, random distribution, auto-maintain
+        - WaveSpawner - Wave-based spawning with progression, difficulty scaling, completion conditions
+
+**Phase 3: Advanced Spawning Features**
+
+    Spawn Conditions (Core.Spawning.Conditions):
+        - SpawnCondition - Abstract base class for extensible condition system
+        - DistanceCondition - Min/max distance from target
+        - LevelCondition - Player level requirements with virtual GetPlayerLevel()
+        - TimeCondition - Time-of-day spawning with virtual GetCurrentTime()
+        - FlagCondition - Game state flag checking with virtual GetFlagValue()
+
+    Formation System (Core.Spawning):
+        - FormationPattern - ScriptableObject for formation patterns
+            * 6 Formation Shapes: Line, Circle, Grid, V-Formation, Random, Custom
+            * Configurable spacing, rotation, scaling
+            * Position calculation engine for squad spawning
+
+    Spawn Service (Core.Spawning.Service):
+        - ISpawnService - Service interface for centralized spawn management
+        - SpawnService - Service implementation
+            * Spawner registration/tracking
+            * Entity tracking with spawner references
+            * Global spawn limits and budget enforcement
+            * Pause/resume spawning control
+            * Statistics tracking (total spawns, despawns, active entities)
+
+    GameObject Components (GameObjects.Spawning):
+        - FormationSpawner - Formation-based squad spawning with leader support
+        - SpawnTrigger - Event-based spawning (OnEnter, OnExit, Manual modes)
+
+#### Fixed
+
+    Event System Integration:
+        - Fixed all spawn components to use correct IEventListener<CharacterDeathEvent> pattern
+        - Updated SpawnPoint, SpawnZone, WaveSpawner to implement IEventListener interface
+        - Changed event subscription to use EventStartListening/EventStopListening extension methods
+        - Removed non-existent GameEvent.AddListener/RemoveListener static method calls
+
+    Architectural Violations:
+        - Fixed LevelCondition to not depend on GameObjects.Characters.Base.Character
+        - Fixed TimeCondition to not depend on non-existent Time.Service namespace
+        - Removed duplicate FormationShape enum definition from SpawnEnums
+        - All conditions now use virtual methods for extensibility without assembly dependencies
+
+    Event Signatures:
+        - Fixed FormationSpawner.SpawnFormation() to call FormationSpawned with correct parameters
+        - Updated to pass GameObject[] array, spawner, formationName string, and count
+
+#### Architecture Notes
+
+    Proper Assembly Separation:
+        - Core assembly contains all data structures, conditions, service interfaces 
+        - GameObjects assembly contains all MonoBehaviour components 
+        - No Core → GameObjects dependencies maintained throughout
+        - Spawn conditions use virtual methods for game-specific integration
+        - SpawnService tracks without controlling to avoid assembly dependencies
+
+---
+
+## [0.10.13-alpha] - 2025-11-19
+### Engine Core [0.10.7]
+
+#### Bug Fixes
+
+Fixing Service Locator Pattern Violations
+- ConfigurableServiceInitializer
+- Refactored CameraManagerService to CameraService
+- 
+
+## [0.10.12-alpha] - 2025-11-18
+### Engine Core [0.10.6]
+
+#### Enhanced Interaction UI System
+
+New
+- InteractionUIConfig.cs - ScriptableObject for centralized configuration 
+- InteractionPromptUI.cs - Animated interaction prompts
+- InteractionProgressUI.cs - Progress bars for hold-to-interact actions
+- InteractionUIManager.cs - Centralized UI orchestration
+
+Existing
+- InteractionManager.cs: Added InteractionUIManager integration
+
+
+## [0.10.12-alpha] - 2025-11-18
+### Engine Core [0.10.5]
+
+#### Quest System
+
+Core Assembly:
+- Quest Data System - ScriptableObject-based quest and objective definitions
+- Quest Runtime Logic - Quest state tracking, objective progress, time limits
+- Quest Service - Centralized quest management with IQuestService interface
+- Quest Events - 8 game events for quest lifecycle (accepted, completed, objectives, etc.)
+- Quest Rewards - Multi-currency, items, and experience rewards
+
+GameObjects Assembly:
+- QuestTrackerComponent - Player quest tracking with automatic objective updates
+- QuestGiverComponent - NPC quest-giving functionality
+- QuestTrackerUI - Simple UI for displaying tracked quests
+- Updated QuestNPC - Integrated with new Quest System
+
+Sample Scripts:
+1. QuestSystemSampleManager.cs - Main demo controller with 8 interactive examples via context menu:
+- Example 1: Basic Quest Flow
+- Example 2: Simulate Objective Progress
+- Example 3: Complete Active Quest
+- Example 4: Timed Quest with countdown
+- Example 5: Quest Chain with prerequisites
+- Example 6: Quest Journal view 
+- Example 7: Quest Events logging 
+- Example 8: Abandon Quest
+
+## [0.10.12-alpha] - 2025-11-17
+### Engine Core [0.10.4]
+
+#### Inventory and Item System
+
+- Item management with 6 item categories
+- Slot-based inventory with weight limits
+- Equipment with automatic stat modifiers
+- Consumables with effects and buffs
+- Loot drops from enemies
+- Interactive loot containers
+- Multiple currency types
+- Fully functional shop system
+- Complete event system integration
+- Full serialization for save/load
+
+
+    1. Core Item System
+       - ItemData - ScriptableObject for item definitions with rarity, categories, weight, value
+       - Item - Runtime instances with stacking, GUID tracking, custom data, serialization
+       - ItemDatabase - Centralized registry with fast lookup, search, validation
+       - ItemEnums - Categories, Rarity levels, EquipmentSlots
+       - IUsable - Interface for consumable items
+
+    2. Inventory System
+       - Inventory - Slot-based with capacity/weight limits, auto-stacking, sorting
+       - InventorySlot - Individual slots with locking support
+       - InventoryComponent - MonoBehaviour wrapper with events and persistence
+       - InventoryEvents - Complete event system (ItemAdded, ItemRemoved, ItemUsed, etc.)
+
+    3. Equipment System
+       - EquipmentData - Equipment with stat modifiers and level requirements
+       - CharacterEquipment - Equip/unequip with automatic stat application
+       - Two-handed weapon support
+       - Equipment visuals with attachment points
+       - Full serialization for save/load
+
+    4. Consumables System
+       - ConsumableData - Base class for all consumables
+       - PotionData - Health/Mana/Stamina restoration (instant or over time)
+       - FoodData - Health restoration + temporary stat buffs
+       - VFX and audio integration
+
+    5. ShopkeeperNPC Integration
+       - ProcessPurchase() - Now adds items to player's InventoryComponent
+       - ProcessSale() - Now removes items from player's inventory
+       - Full validation (space, weight, database lookups)
+
+--- 
+## [0.10.11-alpha] - 2025-11-17
+### Engine Code [0.10.3]
+
+#### Combat VFX Integration System
+- **Event-Driven VFX** - Automatically triggers effects based on CharacterEvents
+- **CombatVFXController** - One-component setup for automatic VFX integration
+- **Status Effect VFX** - Looping effects with duration management
+- **Customizable Effects** - Configure VFX IDs and offsets per event type
+- **Performance Optimized** - Uses VFX pooling for efficient instantiation
+- **Easy Integration** - Works with existing CombatCharacterComponent
+
+---
+
+## [0.10.10-alpha] - 2025-11-17
+### Engine Core [0.10.2]
+
+Implemented comprehensive AI & Pathfinding system with NavMesh integration,
+perception, behavior trees, and state machines.
+
+#### Pathfinding (Core/AI/)
+- IPathfindingService - Interface for pathfinding operations
+- PathfindingService - NavMesh wrapper with path calculation, sampling
+- PathAgent - Character component for NavMesh navigation
+
+#### Perception (Core/Perception/)
+- AIPerception - Vision cone, hearing, target tracking with memory
+- LineOfSightChecker - LOS utility for 2D and 3D
+- PerceivedTarget - Target tracking with confidence decay
+
+#### Behavior Trees (Core/AI/BehaviorTree/)
+- BehaviorTree - Main tree component with blackboard
+- Blackboard - Shared data storage for AI
+- CompositeNodes - Sequence, Selector, Parallel
+- DecoratorNodes - Inverter, Repeater, Conditional, Timeout, Cooldown
+- LeafNodes - Action, Condition, Wait, Log, Random
+
+#### State Machine (GameObjects/Characters/AI/)
+- AIStateMachine - Generic state machine controller
+- AIStateBase - Base class for custom states
+- Built-in states: Idle, Patrol, Chase, Attack
+- SimpleAIController - Easy one-component AI setup
+
+### Examples
+- AIExamples.cs - Comprehensive examples component with 4 scene setups:
+- Basic AI Scene - SimpleAIController with 3 enemies
+- Behavior Tree Scene - Custom decision tree AI (Flee/Attack/Chase/Patrol)
+- State Machine Scene - Custom states and transitions
+- Perception Test Scene - Vision cone and hearing visualization
+
+---
+
+## [0.10.9-alpha] - 2025-11-17
+
+### Engine Core [0.10.1]
+
+#### Animation System
+
+1. AnimationController
+    - Low-level wrapper around Unity's Animator
+    - Simplified API for parameter setting (Bool, Float, Int, Trigger)
+    - Automatic parameter hash caching for performance
+    
+2. AnimationEventHandler.cs (~250 lines)
+    - Handles animation events from Unity's Animation window
+    - Pre-defined event types:
+        Footstep events (left/right foot)
+        Attack events (with attack type)
+        Weapon swing, projectile spawn, VFX spawn, sounds
+        Custom events with parameters
+
+3. CharacterAnimator.cs (~500 lines)
+    - High-level character animation controller
+    - Standard parameters (Speed, VelocityX/Y, IsGrounded, IsCrouching, etc.)
+    - Convenience methods (TriggerJump, TriggerAttack, TriggerDamage, etc.)
+
+4. Character Integration
+
+#### BUG RESOLVED: 
+- CRITICAL: Removed deprecated Health component and completed migration to two-tier stats system.
+- Removed incorrect ServiceLocator.IsServiceRegistered<T>() calls
+
+### Health.cs Removed
+- Moved to Assets/LoLEngine/Deprecated/v0.10.8/Health.cs.deprecated
+- Created deprecation README explaining removal
+
+### New Helper Components
+1. InvincibilityController.cs
+    - Replaces Health invincibility system
+    - Configurable i-frames duration
+    - Visual feedback (sprite flashing)
+    - Events: OnDamageTaken, OnDamageBlocked, OnInvincibilityStarted/Ended
+    - Works with both CharacterStatsComponent and CombatCharacterComponent
+
+2. CharacterDeathHandler.cs
+    - Replaces Health death handling
+    - Features: DestroyOnDeath, DisableCollidersOnDeath, ChangeLayerOnDeath
+    - VFX and audio integration
+    - Death animation support
+    - Events: OnBeforeDeathHandled, OnDeathHandled
+
+#### Additional Changes
+
+1. DamageType Namespace Collision
+    - Deleted duplicate DamageType.cs from Stats namespace
+    - Updated CharacterStats.cs to use existing enum from Interfaces namespace
+    - Fixed: DamageType.Magical → DamageType.Magic 
+    - Added DamageType.Environmental case handling
+
+2. ServiceLocator Namespace Errors - DamageFeedbackController.cs
+    - Removed incorrect Core.ServiceManagement.ServiceLocator reference
+    - Correct namespace: Core.ServiceManagement.Service.ServiceLocator
+    - Removed incorrect Core.Camera.ICameraService reference
+    - Correct namespace: Core.Camera.Interfaces.ICameraService
+    - Simplified camera shake to log-only with TODO for future integration
+
+### Event Management Changes
+
+Added new Character Events
+- CharacterDamagedEvent
+- CharacterHealedEvent
+- CharacterDeathEvent
+- CharacterAttackEvent
+- CharacterKillEvent
+- ItemPurchasedEvent
+- ItemSoldEvent
+- ShopOpenedEvent
+- ShopClosedEvent
+- CharacterEvents
+
+---
+
+## [0.10.8-alpha] - 2025-11-16
+
+### Engine Core [0.10.0]
+
+#### Bug Fixes
+
+    NonPlayableCharacter - Fixed incorrect CharacterType return value
+
+**Major Architectural Change:** Migrated to two-tier stats system for tactical turn-based games.
+
+    Combat Characters (PlayerCharacter, EnemyNPC):
+        - Now use `LoLEngine.Combat.Resolution.CharacterStats` (Resonance-Battle system)
+        - Full tactical combat: CurrentHP, Vigor, Defense, Evasion, Focus, Openings, Combat Styles
+        - New `CombatCharacterComponent` for Unity integration
+        - No longer use `Health` component
+
+    Non-Combat NPCs (QuestNPC, ShopkeeperNPC, InteractableNPC):
+        - Now use extended `LoLEngine.GameObjects.Characters.Stats.CharacterStats`
+        - NEW: CurrentHealth/CurrentMana/CurrentStamina tracking
+        - NEW: TakeDamage(), Heal() methods
+        - NEW: OnDamaged, OnHealed, OnDeath events
+        - Lightweight - no tactical combat overhead
+        - No longer use `Health` component
+
+**Deprecated/Removed:**
+    
+- `Health` component marked `[Obsolete]`
+
+#### **Character Stats Extension**
+- `CharacterStats.CurrentHealth` - Current HP tracking (was missing)
+- `CharacterStats.CurrentMana` - Current mana tracking (was missing)
+- `CharacterStats.CurrentStamina` - Current stamina tracking (was missing)
+- `CharacterStats.IsAlive` - Alive/dead status
+- `CharacterStats.TakeDamage(float, GameObject)` - Damage handling with source tracking
+- `CharacterStats.Heal(float)` - Healing with overflow prevention
+- `CharacterStats.RestoreToFull()` - Full HP/Mana/Stamina restoration
+- `CharacterStats.SpendMana(float)` / `RestoreMana(float)` - Mana management
+- `CharacterStats.SpendStamina(float)` / `RestoreStamina(float)` - Stamina management
+- `CharacterStats.OnHealthChanged` - Event for HP changes (old, new values)
+- `CharacterStats.OnManaChanged` - Event for mana changes
+- `CharacterStats.OnStaminaChanged` - Event for stamina changes
+- `CharacterStats.OnDamaged` - Event for damage taken (amount, source)
+- `CharacterStats.OnHealed` - Event for healing received
+- `CharacterStats.OnDeath` - Event for character death
+
+#### **Combat Character Component**
+- `CombatCharacterComponent` - MonoBehaviour wrapper for Combat.CharacterStats
+- Provides Unity component interface for Resonance-Battle combat system
+- Integrates with AttackResolver for damage calculation
+- Supports VFX integration via `CombatVFXIntegration`
+
+#### **Interface Updates**
+- `ICharacter.GetCombatStats()` - Access combat stats for combat characters
+- `ICharacter.GetHealth()` marked `[Obsolete]` with migration guidance
+
+#### **Documentation**
+- `CharacterSystem-HealthStats-ImpactAnalysis.md` - Comprehensive migration impact analysis
+- `CharacterSystem-MigrationGuide.md` - Step-by-step migration guide (TODO)
+- Updated `CharacterSystem-ActionPlan.md` - Marked BUG-002 as resolved
+- Updated `ReusableComponents-Status.md` - Character system status updated
+
+### Changed
+
+#### **PlayerCharacter**
+- **BREAKING:** Now uses `CombatCharacterComponent` instead of `Health`
+- Automatically initializes with Combat.CharacterStats on Start()
+- Default: Level 1, Balanced style, Martial power source
+- Access via: `player.GetComponent<CombatCharacterComponent>().CombatStats`
+
+#### **EnemyNPC**
+- **BREAKING:** Now uses `CombatCharacterComponent` instead of `Health`
+- Automatically initializes with Combat.CharacterStats on Start()
+- Configurable enemy level and tier (Minion, Elite, Boss, etc.)
+- ICombatant interface now delegates to Combat.CharacterStats
+- Access via: `enemy.GetComponent<CombatCharacterComponent>().CombatStats`
+
+#### **NonPlayableCharacter** (and derived: QuestNPC, ShopkeeperNPC, InteractableNPC)
+- **BREAKING:** Now uses extended `CharacterStatsComponent` instead of `Health`
+- `CharacterStatsComponent` now has CurrentHP tracking
+- Damage/heal methods available via stats component
+- Access via: `npc.GetStats().CurrentHealth` or `npc.GetStats().TakeDamage(10f)`
+
+#### **Character (Base Class)**
+- Removed required Health component dependency
+- `GetHealth()` marked `[Obsolete]`
+- `IsAlive` now checks appropriate stats system (Combat or GameObject)
+- Initialization updated to work with new stats systems
+
+#### **CharacterStatsComponent**
+- **BREAKING:** Now delegates CurrentHealth/Mana/Stamina properties
+- **BREAKING:** Now delegates TakeDamage/Heal methods
+- **BREAKING:** Now exposes OnDamaged/OnHealed/OnDeath events
+- Backward compatible: existing stat modifiers unchanged
+
+#### **Character Factory**
+- Updated `CreatePlayer()` to use Combat.CharacterStats
+- Updated `CreateEnemy()` to use Combat.CharacterStats
+- Updated `CreateQuestNPC()` to use extended CharacterStatsComponent
+- Updated `CreateShopkeeper()` to use extended CharacterStatsComponent
+- **BREAKING:** No longer adds Health component to any characters
+
+### Deprecated
+
+- `Health` component - Use `CharacterStatsComponent` for non-combat or `CombatCharacterComponent` for combat
+- `ICharacter.GetHealth()` - Use `GetStats()` or `GetCombatStats()` instead
+
+---
+
+## [0.10.7-alpha] - 2025-11-15
+
+### Engine Core [0.9.14]
+
+#### Bug Fixes
+
+    ObjectPool
+        - Modify ObjectPool.Clear() to also destroy its own root GameObject.
+
+#### Camera System
+
+    Camera Behaviors (5 types):
+        - FollowCamera - Smooth following with look-ahead, deadzones, and boundaries
+        - OrbitCamera - Third-person orbital camera with collision detection and zoom
+        - TopDownCamera - Strategy/isometric view with edge panning and rotation
+        - SideScrollCamera - 2D platformer camera with look-ahead and deadzones
+        - FirstPersonCamera - FPS camera with mouse look and head bob
+    Camera Effects:
+        - CameraShake - 5 presets (Light, Medium, Heavy, Explosion, Earthquake) + custom
+        - CameraZoom - Smooth FOV/orthographic transitions
+    Management:
+        - CameraManagerService - Centralized camera switching and transitions
+        - CameraZone - Automatic camera switching on trigger
+        - CameraConfiner - Keep cameras within boundaries
+
+#### VFX Management System
+    
+    Components:
+        - VFXController - Base class with lifecycle management
+        - PooledParticleSystem - Automatic pooling integration
+        - VFXSpawner - Spawning manager with preloading
+        - VFXService - Centralized VFX management
+        - VFXLibrary - ScriptableObject asset organization
+        - HitEffect - Combat impacts with camera shake
+        - ExplosionEffect - Explosions with light flash
+        - TrailEffect - Movement trails
+        - HealthVFXIntegration - Auto-spawn on damage/heal/death
+   
+    Documentation: VFXSystem.md
+
+#### Interaction and Trigger System
+    
+    Trigger System (7 components)
+        - BaseTrigger - Base class with layer/tag filtering and debug visualization
+        - GenericTrigger - Flexible trigger with UnityEvents (enter/exit/stay)
+        - ConditionalTrigger - 5 condition types (custom, component check, tag, velocity, count)
+        - DelayedTrigger - Timed activation with progress tracking
+        - OneShotTrigger - Single-use trigger for cutscenes/events
+        - ReusableTrigger - Multi-use with cooldown and max activations
+        - TriggerGroup - Coordinate multiple triggers (All/Any/Sequential/Exactly modes)
+    
+    Interaction System (4 components)
+        - BaseInteractable - IInteractable implementation with highlighting
+        - InteractionZone - Proximity detection with priority system
+        - InteractionManager - Centralized service for input handling
+        - InteractionPrompt - UI display with world/screen space support
+    
+    Common Interactables (7 components)
+        - PressurePlate - Weight-activated with visual feedback
+        - Button - 3 modes: OneShot, Toggle, Hold
+        - Lever - Multi-state control (2+ positions)
+        - Door - 4 types: Sliding, Swinging, Animation, Custom
+        - Chest - Loot container with lock/key system
+        - PickupItem - Collectibles (automatic/manual pickup)
+        - ExamineObject - Multi-page inspection system
+
+#### Samples added
+
+    - Camera Samples added
+    - Interactables Samples added
+    - VFX Samples Added
+
+---
+
+## [0.10.6-alpha] - 2025-11-15
+
+### Engine Core [0.9.13]
+
+#### Added new test Suites for the following
+
+        1. ObjectPoolServiceTests (60+ tests)
+            - Initialization and shutdown
+            - Get/Return operations
+            - Pool statistics
+            - Callbacks and preloading
+            - Memory management
+            - Edge cases and stress tests
+
+        2. TimeServiceTests (50+ tests)
+            - Time scaling (global and channel-specific)
+            - Pause/resume functionality
+            - Timer creation and management (countdown, stopwatch, periodic)
+            - Time channels with independent scaling
+            - Event triggering
+
+        3. EventServiceTests (45+ tests)
+            - Listener management (add/remove)
+            - Event triggering and distribution
+            - Subscription validation
+            - Thread safety
+
+        4. GameStateManagerServiceTests (35+ tests)
+            - State registration and retrieval
+            - State transitions
+            - Update/FixedUpdate lifecycle
+
+        5. NotificationServiceTests (40+ tests)
+            - Notification sending and receiving
+            - Category-based and ID-based subscriptions
+            - Active notifications management
+            - Notification history
+            - Category enable/disable
+
+#### Coverage Improvements:
+    ObjectPool: 0% → ~90% coverage
+    TimeManagement: 0% → ~88% coverage
+    Events: ~30% → ~92% coverage
+    GameState: 0% → ~87% coverage
+    Notifications: 0% → ~89% coverage
+
+## [0.10.5-alpha] - 2025-11-15
+### Engine Core [0.9.12]
+    - Upgraded Unity Version to 6.2.11f1
+    - Updated documentation for 
+        - GameInitializer.md
+        - GameState.md
+        - Input.md (Completely Rewritten)
+        - Localization.md (Transformed from Spec to User Guide)
+        - Notifications.md
+    - New Documentation added for ImprovedGameInitializer.md 
+#### Critical Fixes:
+    - Object Pool - Added Thread Safety
+        - Added _lock object for synchronization 
+        - Protected all Count properties with locks 
+        - Synchronized Get(), Return(), Clear(), PreloadItems(), UpdateMaxSize()
+        - Optimized lock duration by moving Unity API calls outside locks 
+        - Callbacks execute outside locks to prevent deadlocks
+    - Scene Management - Circular Dependency Detection. Added dependency chain tracking in SceneService.cs
+    - Service Manager - Added configurable LOCK_TIMEOUT_MS constant, Improved code clarity and maintainability
+    - Time Management
+        - Optimized UpdateAllTimers() - 33% faster, zero GC allocations
+        - Added time scale validation (negative values, physics warnings)
+    - UI System
+        - Added UICoroutineRunner for async operations
+    - Helpers
+        - Fixed ShuffleBag edge cases (size=1 bags, empty validation)
+        - Implemented proper Fisher-Yates shuffle algorithm
+#### Documentation Improvements:
+    - Added comprehensive limitations section to Serialization.md
+    - Updated documentation for ObjectPool, SceneManagement and Serialization.
+#### Unit Tests
+    - Added ObjectPoolThreadSafetyTests.cs to validate thread-safe operations
+    - Added SceneManagementCircularDependencyTests.cs to verify circular dependency detection
+
+---
+
+## [0.10.4-alpha] - 2025-11-12
 ### Battle Engine [0.1.1]
 #### Phase 1 Changes for the Battle Engine
 - Weighted Dice System 
@@ -75,7 +1090,6 @@ nd this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
   - Updated ImprovedDependencyChecker to account for the Obfuscation
   - Updated LoLengineConfig to include the Option to use Obfuscation instead of Encryption
 
-
 ## [0.10.2-alpha] - 2025-11-05
 ### Engine Core [0.9.10]
 - Upgraded Unity Version to 6.2.10f1
@@ -135,7 +1149,7 @@ nd this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.
 - Added clear warnings about security practices in configuration tooltips
 - Documented proper production key injection via environment variables
 
-## [0.9.4] - 2025-09-30
+# [0.9.4] - 2025-09-30
 ### Added
 - Audio: Resource-level preloading in `AudioOrchestratorService` using `IResourceService` with explicit retain/release of `AudioClip` assets.
 - Audio: Budget-aware, concurrent preloading driven by `AudioPreloadProfile` (respects `memoryBudgetMB`, `maxConcurrentLoads`, and `loadingTimeoutSeconds`).
