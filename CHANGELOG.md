@@ -5,6 +5,551 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.18.0-beta] - 2026-04-17
+### Engine Core [0.18.0]
+#### Added
+- **`IMusicPlaylistService`** — new first-class service that orchestrates back-to-back music playback on top of `IAudioService`. Hand it a `MusicPlaylist` ScriptableObject (or a runtime `IReadOnlyList<string>` of addressable IDs) and it handles auto-advance via `IAudioHandle.OnComplete`, shuffle (Fisher-Yates with a guard against repeating the just-played track on reshuffle), crossfade (overlapping `FadeIn`/`FadeOut` on the Music track — requires `maxConcurrentSounds >= 2`), and themed playlist swaps via `SwitchTo`. Mute semantics are exposed two ways: `MuteMode.PauseOnMute` (default) preserves playback position via `PauseTrack`/`ResumeTrack`, while `MuteMode.SilenceOnly` keeps tracks advancing inaudibly via `SetTrackMute`; the settings UI binds to a single `IsMuted` toggle regardless of mode. `GlobalCrossfadeEnabled` is a settings-bindable kill-switch that short-circuits crossfade to instant cut. New types in `LoLEngine.Core.Audio`: `IMusicPlaylistService`, `MusicPlaylistService` (plain C# class, not MonoBehaviour), `MusicPlaylist` (`[CreateAssetMenu]`), `PlaylistPlayOptions`, `PlaylistPlaybackMode { Sequential, Shuffle, RepeatOne }`, `MuteMode { PauseOnMute, SilenceOnly }`, and `PlaylistEvents.{PlaylistStarted, PlaylistTrackChanged, PlaylistStopped, PlaylistSwitched, PlaylistCompleted}`. `AudioConfig` gained `defaultCrossfadeDuration`, `defaultPlaybackMode`, `globalCrossfadeEnabledDefault`, and `defaultMuteMode`. `ServiceConfiguration` gained `enableMusicPlaylistService` (defaults to `true`; requires Audio Service). The service resolves `IAudioService` in `LateInitialize()` per ADR-007 and warns if the Music track's `maxConcurrentSounds < 2` (crossfade falls back to instant cut in that case). Sample in `Samples~/Scripts/11_MusicPlaylistSample.cs` and PlayMode tests in `Tests/PlayMode/Core/Audio/MusicPlaylistServiceTests.cs`.
+
+## [0.17.8-beta] - 2026-04-14
+### Engine Core [0.17.6] 
+#### Added
+- ObserveFault(this Task task, string context) as a sibling helper to the randomization extensions
+
+## [0.17.7-beta] - 2026-04-14
+### Engine Core [0.17.5]
+#### Added
+- **Audio randomization helpers** for per-call pitch/volume jitter and pool-based variant selection. New types in `LoLEngine.Core.Audio.Data`: `PlayRandomization` (serializable struct with min/max pitch and volume ranges plus an `avoidImmediateRepeat` flag, and `Default` / `None` presets) and `RandomAudioPool` (stateful picker that remembers the last index so successive picks can avoid immediate repeats). New extension methods in `LoLEngine.Core.Audio.Extensions.AudioExtensions`: `PlayOptions.WithRandomization(in PlayRandomization)` returns a copy of options with re-rolled pitch/volume; `IAudioService.PlayRandomAsync(RandomAudioPool, PlayOptions, PlayRandomization)` and `IAudioService.PlayRandomAsync(string, PlayOptions, PlayRandomization)` pick (optionally) and play with jitter via the existing `PlaySoundAsync` path. `IAudioService` and `AudioService` are unchanged — the feature composes from existing primitives. Intended for UI click variation, footstep variants, and similar "same action repeated rapidly should not sound identical" cases that previously required per-game boilerplate. Sample updated in `Samples~/Scripts/06_AudioSystemSample.cs` with a `Play Randomized UI Click` context menu.
+
+## [0.17.6-beta] - 2026-04-13
+### Engine Core [0.17.4]
+#### Fixed
+- **`UnityPrivateFieldContractResolver` now actually serializes `[SerializeField]` private fields**: the resolver's only override was `CreateProperty`, which Newtonsoft only invokes for members that `GetSerializableMembers` has already decided to include — and by default that list does not contain private fields with just `[SerializeField]`. The override was silent dead code. As a result, `GameSaveData.checksum`, `gameName`, `gameVersion`, and `dataVersion` were never written to save files, so on every load `checksum` deserialized to `null` and `SaveSystem.LoadGameInternal` logged `"Save file {name} failed integrity check. Data may be corrupted."` on every load — confirmed by decoding `Tangrams-Masterpieces/Saves/save1.osav` and observing that only `_timestamp` and `_serializedData` (the two fields marked `[JsonProperty]`) were present in the JSON. The resolver now overrides `GetSerializableMembers` as well, walking the type hierarchy with `BindingFlags.DeclaredOnly` so inherited private `[SerializeField]` fields are included too. Added `JsonSerializer_PrivateSerializeFieldFields_ShouldRoundTrip` regression test that asserts private field names appear in the JSON and round-trip cleanly — the previous test suite only covered `[SerializeField] public` fields, which is why the bug went unnoticed. Existing save files written before this fix will emit the integrity warning once on first load (load still proceeds) and will be rewritten with the full field set on the next save.
+
+## [0.17.5-beta] - 2026-04-13
+### Engine Core [0.17.3]
+#### Fixed
+- **`GameEvent` static facade now wired at startup**: `ConfigurableServiceInitializer.InitializeCoreServicesAsync()` now calls `GameEvent.Initialize(eventManager)` immediately after creating `EventService`, before any feature service (SaveSystem, AutoSaveService, etc.) comes up. Previously, callers routing through `GameEvent.Trigger<T>` / `Subscribe<T>` / `Unsubscribe<T>` — including `SaveSystem` via `SaveEvents.OnSaveBegin/OnSaveComplete` — threw `InvalidOperationException: EventManager not initialized. Call Initialize first.` on every save, even with `EnableEventManagerService` enabled. The only workaround was a manual `GameEvent.Initialize(...)` from the game initializer. `GameEvent.Initialize(...)` was also changed to overwrite unconditionally instead of warn-and-skip, so edit-mode test runs that re-boot the engine without a domain reload don't hold a stale reference to a disposed `EventService`.
+
+## [0.17.4-beta] - 2026-04-10
+
+- Upgraded Unity to Version 6.4.2f1
+
+## [0.17.3-beta] - 2026-04-10
+### Engine Core [0.17.2]
+#### P0 - URGENT Fixes and Improvements
+- Hardening SaveSystem against registry mutatuin during save/load
+- Guaranteed TimeService ticking at runtime
+- Aligned docs with actual toggles/runtime behavior
+
+#### P1 Fixes
+- QuickSave dependency validation
+- Autosave startup fix
+
+#### P2 Fixes
+- Notification service diagnostics + hygiene
+- Resource cache entry cap configurability
+
+## [0.17.2-beta] - 2026-04-02 
+- Upgraded Unity to Version 6.4.1f1
+
+## [0.17.1-beta] - 2026-03-28
+### Engine Core [0.17.1]
+
+#### Fixed — Tier 1 Correctness (H-025 through H-028)
+- **H-025 — Task.Delay eliminated from all runtime code**: `AudioOrchestratorService.PreloadResourceAsync` timeout path now uses `MainThreadDelay` (Task.Yield loop) instead of `Task.Delay`. `AdvancedAudioPlayer` (3 occurrences: load timeout, fade wait, retry delay) and `AssetUpdaterService` (progress polling) updated identically. Zero thread-pool timer usage remains in runtime code — all async delays stay on the Unity main thread.
+- **H-026 — Hardcoded config path decoupled**: `LoLEngineConstants` and `ImprovedDependencyChecker` both hardcoded `Resources.Load("Configs/DefaultLoLEngineConfig")`. Both now try to resolve the path via `ResourcePathConfig` first (respecting project-specific layout), falling back to the prior hardcoded path for backward compatibility. `ImprovedDependencyChecker` also applies the same treatment to `DefaultSaveConfig`.
+- **H-027 — Notification auto-dismiss via TimeService**: `NotificationService.ScheduleAutoDismiss()` now uses `ITimeService.Scheduler.Schedule()` when TimeService is available (resolved in `LateInitialize()`), eliminating the hidden `NotificationHelper` MonoBehaviour dependency. The coroutine fallback remains for contexts where TimeService is not registered. Manual `DismissNotification()` cancels any pending auto-dismiss task via tracked `_autoDismissTaskIds`.
+- **H-028 — GameState re-entrant transition guard**: `GameStateManagerService.ChangeState()` previously had no guard against re-entrant calls from `Enter()`, `Exit()`, or event handlers, risking stack overflows and undefined state. Added `_isTransitioning` bool flag and `_pendingTransitions` queue. Re-entrant calls are queued; the outermost transition drains the queue on completion. `try/finally` guarantees the flag is always cleared.
+
+#### Fixed — Tier 2 Hardening (H-029 through H-030)
+- **H-029 — Logger bounded queue and crash-safe flush**: `FileSink` was backed by an unbounded `ConcurrentQueue` that could OOM under log storms. Added `LoggerConfig.FileMaxQueueSize` (default 10,000) — when the queue is full, `Emit()` increments `DroppedCount` and returns instead of enqueueing. Added crash-safe flush hooks: `AppDomain.CurrentDomain.ProcessExit` and `AppDomain.CurrentDomain.UnhandledException` both flush sinks on abnormal exit. `Shutdown()` unhooks all handlers to prevent double-flush. `FileSink.DroppedCount` is a public diagnostic property.
+- **H-030 — Service registrar conflict detection**: `RunExternalRegistrars()` now wraps `IServiceLocator` in a `RegistrationTracker` proxy for each registrar. The tracker records which registrar registered each service type; if a second registrar registers the same type, `LoLLogger.Error` is emitted identifying both the incumbent and the challenger. The overwrite still proceeds to preserve flexibility, but silent service replacement is now an observable error.
+
+#### Changed
+- **`ServiceConfiguration`**: `NotificationService.LateInitialize()` now resolves `ITimeService` for scheduler-based dismiss (no API change; behavior improves when TimeService is registered).
+- **`GameStateManagerService`**: `ChangeState(GameStateType)` and `ChangeState(IGameState)` delegate to new private `ChangeStateInternal()`. Public API unchanged.
+---
+
+## [0.17.0-beta] - 2026-03-27
+- Upgraded Unity to version 6.4
+- Newtonsoft added as a package manager dependency
+
+## [0.16.4-beta] - 2026-03-15
+### Engine Core [0.16.3]
+#### Added
+- **Service Extensibility**: `IServiceRegistrar` auto-discovery — implement the interface in your game assembly and engine picks it up automatically during init
+- **LateInitialize lifecycle hook**: `ILoLEngineService.LateInitialize()` called after ALL services are registered, safe for cross-dependency resolution
+- **ServiceRegistrationInfo validation**: `Validate()` checks both interface and implementation types resolve correctly at runtime
+- **Sample**: `10_GameServiceRegistrarSample.cs` showing WalletService registration pattern
+
+#### Fixed
+- **Custom service registration bug**: Services registered via `ServiceRegistrationInfo` were stored under `typeof(object)` making them unretrievable via `Get<IMyService>()`. Now registers under the specified interface type.
+
+#### Changed
+- **`IServiceRegistrar`**: Parameter typed as `ServiceConfiguration` instead of `object`, added `Priority` property for ordering
+- **`ServiceRegistrationInfo`**: Split `assemblyQualifiedTypeName` into `interfaceTypeName` + `implementationTypeName` (old property marked `[Obsolete]`)
+- **`CreateCustomService`**: Now uses `CreateServiceWithType()` for proper MonoBehaviour lifecycle support
+
+## [0.16.3-beta] - 2026-03-14
+- Upgraded Unity to Version 6.3.11f1
+
+## [0.16.2-beta] - 2026-02-23
+### Engine Core [0.16.2]
+- ResourcePathConfig path mismatch — the wizard now derives engineResourceRoot and configsPath from the actual output directory. For the default Assets/Resources/Configs/, this sets
+  engineResourceRoot = "" and configsPath = "Configs/", so Resources.Load("Configs/DefaultAudioConfig") correctly resolves to Assets/Resources/Configs/DefaultAudioConfig.asset
+
+## [0.16.1-beta] - 2026-02-23
+### Engine Core [0.16.1]
+Added Setup Wizard to the Editor to Make Setup of the LoLEngine Easier.
+
+## [0.15.15-beta] - 2026-02-23
+### Engine Core [0.15.42]
+Fixed AudioSource Memory Leak
+
+## [0.15.14-beta] - 2026-02-23
+### Engine Core [0.15.41]
+Updated from Debug.* to LoLLogger
+
+## [0.15.13-beta] - 2026-02-22
+### Engine Core [0.15.40]
+Both APIs work now:
+- Old way: settings.musicVolume = 0.8f
+- New way (data-driven): settings.SetTrackVolume("Music", 0.8f) or settings.SetTrackVolume("MyCustomTrack", 0.5f)
+
+## [0.15.12-beta] - 2026-02-22
+### Engine Core [0.15.39]
+- Fixed Configuration paths
+- Track volume sync uses hardcoded string matching
+- AudioSettings bypass the save system 
+- Fixed Save System with respect to Obfuscation, encryption
+
+## [0.15.11-beta] - 2026-02-22
+### Engine Core [0.15.38]
+
+**AudioService.cs — CleanupAllHandles():**
+- Changed List<IAudioHandle> to HashSet<IAudioHandle> so handles that exist in multiple collections (e.g. a persistent sound in both _activeHandles and _persistentHandles) are only cleaned up    
+  once. This eliminates the double-return to ObjectPool that caused the warning spam.
+**ImprovedGameInitializer.cs — removed all dead commented-out code:**
+- Line 25: removed //[SerializeField] private bool createServiceManager = true;
+- Line 36: removed // private bool _isShuttingDown; (the old bool comment above the int)
+- Line 79: removed //if (_instance == this && !_isShuttingDown)
+- Line 138: removed //yield return new WaitUntil(() => task.IsCompleted);
+- Lines 187-194: removed the 3 commented-out lines (//if, //return, //_isShuttingDown = true;) and the redundant _isShuttingDown = 1; assignment after Interlocked.Exchange already set it
+- Line 217: removed //_isShuttingDown = false;
+
+## [0.15.10-beta] - 2026-02-20
+- Upgraded Unity to Version 6.3.9f1
+
+## [0.15.9-beta] - hotfix - 2026-02-20
+### Engine Core [0.15.37]
+#### Audio Service
+##### Fixed
+- **AudioConfig.defaultVolume ignored on first run**: `LoadSettings()` was creating `new AudioSettings()` (hardcoded `1f` for all tracks) when no PlayerPrefs existed, then `ApplySettings()` overwrote the correct track volumes already set by `CreateDefaultTracks()`. First-run settings are now seeded from `AudioConfig.trackConfigs[].defaultVolume` via the new `CreateSettingsFromConfig()` helper. When `AudioConfig` is unavailable, behavior falls back to `1f` as before.
+- **Player volume changes not persisted to PlayerPrefs**: `SetTrackVolume()` and `SetTrackMute()` updated the in-memory `AudioTrack` objects and the AudioMixer but never wrote back to `_currentSettings`. `SaveSettings()` serializes `_currentSettings`, so every player-changed volume was silently discarded — subsequent sessions always loaded startup values. Both methods now call `SyncTrackVolumeToSettings()` / `SyncTrackMuteToSettings()` to keep `_currentSettings` in sync before the auto-save or shutdown persists it.
+
+## [0.15.8-beta] - 2026-02-13
+### Engine Core [0.15.35]
+#### JsonDataSerializer:
+- Removed the using CompressionService import — no more silently creating a fallback
+#### SaveSystem:
+- Both compressionService variables in SaveSystem were dead code — fetched but never used anywhere in the method bodies
+- Corrected DependencyChecker Save Config Parameters
+#### LocalizationService:
+- Swapped Get<LocalizedFontConfig>() → TryGet(out _fontConfig) — no warning, the existing fallback logic on lines 74-81 handles the rest
+
+## [0.15.7-beta] - 2026-02-12
+- Upgraded unity to version 6.3.8f1
+
+## [0.15.6-beta] - 2026-02-12
+### Engine Core [0.15.31]
+### Fixed — Performance
+- **EventService.TriggerEvent per-trigger allocation**: Replaced `list.ToArray()` (allocated a new array on every event trigger) with a reusable static dispatch buffer using `List.CopyTo()`. Zero allocations in steady state; buffer only grows when subscriber count exceeds previous peak.
+
+## [0.15.5-beta] - 2026-02-12
+### Engine Core [0.15.30]
+### Fixed — Design Violations (H-007, H-009, H-010, H-011, H-013)
+- **H-007 — IServiceInitializer contract**: `IServiceInitializer` now declares `Task InitializeServicesAsync()` + `Shutdown()`. Removed two throw-only methods from `ConfigurableServiceInitializer`. Deleted dead `EngineConfiguration` class. Removed dead private `InitializeServices()` from `ImprovedGameInitializer`.
+- **H-009 — AutoSaveService excluded scenes**: Hardcoded scene list moved to `SaveConfig.excludedSceneNames` (inspector-configurable `string[]`). Engine defaults: MainMenu/Boot/Loading/Splash/Settings/Credits. Game-specific names removed from engine defaults.
+- **H-010 — GameStateType game-specific values**: Enum trimmed to None=0, Bootstrap=1, Loading=2. Game projects extend via `const GameStateType X = (GameStateType)100+`. Added `Samples~/GameState/SampleGameStateType.cs` demonstrating the pattern.
+- **H-011 — LoLEngineConfig encapsulation**: All public mutable fields → `[SerializeField] private` with PascalCase read-only properties. `defaultCharacterGravityScale` (game-specific) deleted. Asset serialization backward-compat preserved.
+- **H-013 — SaveConfig hardcoded resource load**: `SaveConfig.ToRuntimeSettings()` accepts `LoLEngineConfig` as injected parameter. `ConfigurableServiceInitializer` retrieves registered config from `ServiceLocator` and passes it in.
+
+## [0.15.4-beta] - 2026-02-12
+### Removed Battle Engine [0.2.0]
+- **Battle Engine (BattleEngine.asmdef)**: Entire VoidRiders-specific combat assembly removed (~42 files). Included `Dice`, `Abilities`, `Pressure`, `Signatures`, `Resonance`, `CombatLog`, `TacticalSystems`, `PowerSources`, `CombatStyle`, `Resolution`, `FocusSystem`, and `CombatSimulator`. This was a game-specific TTRPG combat system that had no place in a generic engine — it was never integrated as an engine service.
+- **`CombatAudioConfig.cs`**: Already-obsoleted ScriptableObject removed with the Battle Engine.
+- **`Editor/Combat/DifficultyPresetCreator.cs`**: Editor tool for battle engine difficulty presets removed.
+- **VoidRiders combat documentation**: `ResonanceCombatSystem.cs`, `VoidRiders_Combat_Packet_v2.pdf`, `VoidRiders_Combat_Packet_v2_Resolve.pdf`, `VoidRiders_BattleSystem_Part1_LightShadow.md`, `VoidRiders_BalanceGrid_Resolve_L1-10.csv`, `VoidRiders_QuickCard_Resolve_v2.pdf`, `VoidRider_Implementation_Part4_Combat.md` removed.
+- **Deprecated combat docs**: `CombatEnhancements.md`, `Combat-VFX-Integration.md`, `CombatSystemAnalysis.md`, `CombatExample.cs` removed.
+
+## [0.15.3-beta] - 2026-02-10
+### Engine Core [0.15.21]
+### Dead Feature Fixes (H-001 through H-008)
+- **TimeChannel / Scheduler (H-001 CRITICAL)**: `TimeChannel._accumulatedTime` was never advanced because `TimeChannel.Update()` was never called at runtime. `TimeService.UpdateAllTimers()` now updates all registered channels each frame before ticking timers — `channel.Time` (used by `Scheduler` for delay/periodic tasks) now correctly reflects elapsed engine time.
+- **TimeChannel.SetTimeScale smooth transition (H-002)**: Smooth time-scale transitions (`duration > 0`) created a `new Timer()` directly, which was never tracked by `TimeService._timers` and therefore never updated. Timer is now created via `_timeService.CreateTimer()` (registered and ticked automatically) and uses the "Unscaled" channel for real-time speed, matching the behavior of `TimeService.SetTimeScale`.
+- **QuickSaveService.RefreshQuickSaveList (H-003)**: Stub replaced with a real async implementation using `ISaveSystem.ListSavesAsync()`. Scans for slots prefixed `quicksave_`, orders newest-first, respects `MaxQuickSaves`. Fire-and-forget from `Initialize()` so startup is non-blocking. Oldest slot deletion now calls `ISaveSystem.DeleteAsync()` instead of leaving a dangling TODO.
+- **ResourcePool.PooledCount (H-005)**: Always returned `0`. `ResourcePool` now tracks all pool IDs it has created and aggregates `InactiveCount` from `IObjectPoolService.GetPoolStats()` across them. `ResourceStats.PooledInstanceCount` reflects actual inactive pooled objects.
+- **AssetBundleLoader.Release(string) (H-006)**: Returned `true` without doing anything. Now tracks per-bundle asset reference counts (incremented on successful load, decremented on release). When the count for a bundle reaches zero, `UnloadBundle(bundleName, false)` is called — the bundle is unloaded while in-use instantiated objects remain alive.
+- **ResourceService memory budget enforcement (H-004)**: `StartMemoryMonitoring()` was an empty stub; `maxMemoryBudgetMB` config had no effect. Empty method removed. Budget is now enforced inline in `CacheAsset()` via `EnforceMemoryBudget()`, which evicts the oldest non-pinned cache entries after each new asset load until usage is under the configured budget. No periodic monitor needed — enforcement happens at the point of pressure.
+- **IScheduler.ScheduleCron (H-008)**: Removed silent stub that returned `Guid.Empty` from both `IScheduler` interface and `Scheduler` implementation. Callers will now get a compile-time error rather than a silently useless handle.
+
+## [0.15.2-beta]
+### Engine Core [0.15.20]
+### Localization System Overhaul
+
+#### Fixed
+- **LocalizationConfig**: Replaced unserializable `Dictionary<SystemLanguage, SystemLanguage>` fallback field with serializable `List<LanguageFallback>` structs — fallback chains now actually work in the Inspector and at runtime
+- **LocalizedText / LocalizedImage**: Added `ServiceAwaiter` retry pattern — components no longer silently fail if enabled before service initialization
+- **LocalizationService**: String cache now cleared on language switch — prevents stale LRU entries from wasting capacity
+- **CSVStringProvider**: Header line now parsed with `SplitCSV()` instead of naive `Split(',')` — consistent with data row parsing
+
+#### Added
+- **Font Localization (Phase 1)**
+  - `LocalizedFontConfig` ScriptableObject — per-language font mapping with TMP, legacy font, fallback chains, and size scale
+  - `LocalizedFontApplier` component — standalone font switching for dynamic text (chat, logs)
+  - `LocalizedFontConfigEditor` — custom inspector with validation (missing defaults, duplicate languages, zero scale)
+  - `LocalizedText` now automatically applies per-language font and size scale on language switch
+  - `LocalizationConfig` gains optional `fontConfig` reference field
+  - `ILocalizationService` — new methods: `GetFontForCurrentLanguage()`, `GetLegacyFontForCurrentLanguage()`, `GetFontSizeScale()`, `FontConfig` property
+- **Case Transforms (Phase 2)**
+  - `TextTransform` enum: `None`, `UpperCase`, `LowerCase`, `UpperFirst`, `TitleCase`
+  - `LocalizedText` applies transform after text lookup using `CultureInfo` (handles Turkish İ/i)
+- **Plural Rules (Phase 2)**
+  - `PluralRules.Resolve(SystemLanguage, int)` — CLDR plural categories for 30+ languages
+  - 6 categories: `Zero`, `One`, `Two`, `Few`, `Many`, `Other`
+  - `GetPluralText(key, count)` on `ILocalizationService` — looks up `key[category]`, falls back to bare key
+  - `"KEY".LocalizePlural(count)` extension method
+- **Per-Language Memory Management (Phase 3)**
+  - `CSVStringProvider` now loads per-language files first (`StringTable_English.csv`), falls back to monolithic CSV
+  - `UnloadLanguage()` on `IStringProvider` — removes dictionary and loaded flag to free memory
+  - `LocalizationService` automatically unloads previous non-default language on switch
+  - `Resources.UnloadAsset()` called after CSV parsing to free native TextAsset memory
+  - `LanguageSplitter` editor tool (menu: LoLEngine > Localization > Split CSV by Language)
+  - `LanguageSplitBuildPreprocessor` — auto-splits CSV before every build via `IPreprocessBuildWithReport`
+- **Localized Audio (Phase 4)**
+  - `LocalizedAudio` component — loads `GetLocalizedAsset<AudioClip>()` on language change, assigns to `AudioSource`
+  - `SetLocalizedAudio(this AudioSource, string key)` extension method
+- **RTL Support (Phase 5)**
+  - `IsCurrentLanguageRTL` property on `ILocalizationService` (Arabic, Hebrew)
+  - `LocalizedText` auto-sets `isRightToLeftText` on TMP and flips alignment (Left↔Right) for RTL languages
+  - `LocalizedLayoutGroup` component — flips `HorizontalLayoutGroup.reverseArrangement` and child alignment for RTL
+- **Tests**: 30+ new EditMode tests covering fallbacks, cache invalidation, plural rules, font config, memory unloading, RTL alignment flipping
+
+## [0.15.1-beta]
+### Engine Core [0.15.11]
+#### Fixed
+- Updated Category for PlaySfx options to be a non Constant so they can be overriden.
+
+## [0.15.0-beta]
+### Engine Core [0.15.10]
+#### Changed
+- **LoLLogger**: Rewritten as static facade over sink pipeline (ADR-006)
+  - `UnityConsoleSink`: Rich-text formatting with level-based colors, frame count, timestamps
+  - `FileSink`: Asynchronous batched file writes on background thread (was synchronous per-call)
+  - `HistorySink`: O(1) ring buffer replacing O(n) List with RemoveAt(0)
+  - `LoggerConfig`: Centralized configuration replacing PlayerPrefs-backed scattered fields
+  - Converted from `MonoBehaviour` to `static class` (zero MonoBehaviour usage existed)
+  - `LogLevel` enum extracted to its own file (`LogLevel.cs`)
+  - `LogEvent` struct extended with `FrameCount`, `GameTime`, `CallerClassName` for sink formatting
+- **LoLLogger**: Replaced `new StackTrace()` per log call with zero-cost `[CallerMemberName]`, `[CallerFilePath]`, `[CallerLineNumber]` compiler attributes on all 12 public logging methods
+- **LoLLogger**: Added `[Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]` to `Log`, `DebugLog`, and `LogEmphasis` methods (6 overloads) — entire call site (including argument evaluation) is stripped in release builds. `Warning` and `Error` remain unconditional.
+
+#### Fixed
+- **LoLLogger**: Channel filtering now functional — `LogChannel` overloads check bitmask before dispatch (was non-functional: channels were string-prepended, never filtered)
+- **LoLLogger**: `LOGChannels` property no longer shares `_logLevelValueIsSet` flag with `LOGLevel` (shared flag caused whichever was accessed second to return uninitialized defaults)
+- **LoLLogger**: `IsMainThread()` now always correct — initialized via `[RuntimeInitializeOnLoadMethod(SubsystemRegistration)]` instead of first-call capture (which could be wrong if first call was off main thread)
+- **LoLLogger**: Removed broken `CallerCache` (key `threadId * 100000 + stackFrameCount` systematically mislabeled callers at same stack depth)
+- **LoLLogger**: Eliminated `new StackTrace()` per log call — replaced with `[CallerMemberName]` / `[CallerFilePath]` / `[CallerLineNumber]` (zero runtime cost, compiler-injected)
+- Ensured **Ambient** is distinct from **Music** in the Audio Manager 
+- **VectorExtensions**: Fixed Debug Spamming
+**ServiceLocator Fast Cache Race Condition**
+- ClearAllServices(): Moved _fastCache.Clear() inside both write locks, after dictionaries are cleared. No window for stale cache re-population.
+- ClearServices(): Added missing _fastCache.Clear() inside the write lock — was previously leaving stale cached entries for cleared services.
+**Event Pooling Bugs**
+- Non-generic ReleaseEvent(GameEvent): Added MAX_POOL_SIZE check (was missing, pool grew unboundedly)
+- Trigger<T>(string, Dictionary): Now copies the dictionary instead of assigning by reference — ReleaseEvent calling .Clear() no longer destroys the caller's data
+- Added null-safety on Parameters?.Clear() in both ReleaseEvent overloads
+  Fix #2: SaveSystem sync deadlock (SaveSystem.cs)
+  Was: Task.Run(async () => await SaveGameAsync()).GetAwaiter().GetResult() — blocks main thread, callbacks fire on thread pool, deadlock risk if Unity's SynchronizationContext leaks.
+  Now: Truly synchronous implementations using File.WriteAllText/File.ReadAllText. No Task.Run, no await, no deadlock. Events and progress callbacks fire on the calling thread as expected.
+**ObjectPool split-lock (ObjectPool.cs)**
+Lock 1 atomically checks AND removes from _active. Second concurrent Return(obj) fails the Contains check and bails. Still two lock acquisitions (needed to keep Unity API calls outside the lock), but the race condition is eliminated.
+**NotificationService thread safety (NotificationService.cs)**
+- Subscriber lists locked in Subscribe/Unsubscribe/Send (lock-per-list pattern)
+- Send takes a locked snapshot before iterating
+- _notificationHistory protected by _historyLock
+**SaveSystem sync deadlock (SaveSystem.cs)**
+Truly synchronous implementations using File.WriteAllText/File.ReadAllText. No Task.Run, no await, no deadlock. Events and progress callbacks fire on the calling thread as expected.
+**ServiceLocator**
+- Fixed ServiceLocator inconsistent lock timeouts
+
+#### Added
+- **LoLLogger**: `GetLogHistory()` — public API replacing reflection access to private `_logHistory`
+- **LoLLogger**: `ClearLogHistory()` — public API replacing reflection invocation of private method
+- **Documentation**: `Documentation~/Logger.md` — user guide for sink-based logging
+- **Architecture**: ADR-006 in `ARCHITECTURE_NOTES.md` — Sink-Based Logger Architecture
+
+#### Cleanup and Optimization
+- **AudioServices**: Cleanup of the LoLLogger and the inclusion of DEBUG Specific BLOCKS to prevent the code getting to Runtime Builds
+- **Compression**: Cleanup of LoLLogger
+- **Config**: Cleanup of LoLLogger
+- **DependencyChecker**: Optimization + LoLLogger Cleanup
+- **Events**: Cleanup of LoLLogger
+- **Game Initializer**: Optimization + LoLLogger Cleanup
+
+#### Removed
+- **Input Service**: Deleted entirely — game-specific (InputConstants with hardcoded Player actions, UI components, handler classes). Removed from ServiceConfiguration, ConfigurableServiceInitializer, ResourcePathConfig, BaseGameState, ImprovedDependencyChecker, tests, samples, and .asset files.
+
+#### DEPRECATED
+- **FootstepAudio**
+- **SurfaceAudio**
+- **CombatAudio**
+- **Extensions** : TimeExtensions, MathExtensions, VectorExtensions, GeometryExtensions, StringExtensions.
+
+## [0.14.1-beta] - 2026-02-05
+- Upgraded Unity to version 6.3.7f1
+
+## [0.14.0-beta] - 2026-02-05
+### Engine Core [0.14.0]
+### Removed — Mass Deprecation of Game-Specific Systems
+Removed 19 game-specific/wrapper systems from Core, the entire GameObjects assembly,
+related events, persistence data, samples, tests, and documentation to keep the engine
+focused on reusable infrastructure.
+
+**Tier 1 — Game-Specific Systems (19 Core directories removed):**
+- **Interaction** — Trigger system, interactables, interaction manager
+- **Dialogue** — Dialogue service, data, conditions, actions
+- **Quests** — Quest service, data, tracker, rewards
+- **Combat** (Core) — Status effects, damage types, combat modifiers (Battle Engine in Runtime kept)
+- **Achievements** — Achievement service, tracker, definitions
+- **Currency** — Currency service
+- **Relationships** — Reputation service, faction data
+- **Tutorials** — Tutorial service, steps, sequences
+- **Items** — Inventory, equipment, consumables, shops, loot
+- **AI** — Pathfinding service, behavior trees, state machines
+- **Map** — Map service, fog of war, minimap, compass
+- **Environment** — Day/night cycle, weather service
+- **Stats** — Character stats (game-specific layer)
+- **CharacterCustomization** — Body parts, colors, presets
+- **Perception** — AI vision, hearing, target tracking
+- **Character** — Character service, persistence, factory
+
+**Tier 2 — Thin Wrapper Services (4 registered services removed):**
+- **VFX Service** — VFX controller, pooled particles, VFX library
+- **Camera Service** — Camera behaviors, effects, zones
+- **Quest Service** — Removed from ServiceManager Update loop
+- **Spawn Service** — Spawn points, waves, formations
+
+**GameObjects Assembly — Entirely removed:**
+- Characters, NPCs, Combat components, AI state machines, Abilities
+- Achievement/Quest/Tutorial/Relationship components
+- Character customization, Animation, Audio bridges
+- `LoLEngine-GameObjects.asmdef`
+
+**Events removed** (12 event files from Core/Events/GameEvents/):
+- AchievementEvents, CharacterEvents, CombatEvents, CurrencyEvents,
+  ExplorationEvents, InventoryEvents, PlayerEvents, QuestEvents,
+  RelationshipEvents, SpawnEvents, TutorialEvents, WorldEvents
+
+**Persistence data removed:**
+- CharacterPersistentData, InventoryPersistentData, QuestPersistentData,
+  RelationshipPersistentData, Achievements/, Tutorials/
+
+**ServiceConfiguration changes:**
+- Removed: `enableCharacterPersistenceService`, `enableCharacterFactoryService`,
+  `enableVFXService`, `enableCameraService`, `enableQuestService`, `enableSpawnService`
+- Kept: All core/feature service toggles, `enableAssetUpdaterService`
+
+**ConfigurableServiceInitializer changes:**
+- Removed VFX, Camera, Quest, Spawn factory registrations and Create methods
+- Removed `RegisterExternalAssemblyServices()` (GameObjects assembly bridge)
+
+**Legacy ServiceInitializer changes:**
+- Removed `InitializeDialogueService()`, `InitializeEnvironmentServices()`, `InitializeMapService()`
+
+**ServiceManager changes:**
+- Removed QuestService Update loop from `Update()`
+
+**Samples removed:** 7 directories + 7 scripts for deprecated systems
+**Tests removed:** `Tests/Edit/GameObjects/` directory
+**Documentation:** 30+ files moved to `Documentation~/Deprecated/`
+
+**Obsolete legacy code removed:**
+- `ServiceInitializer.cs` — replaced by `ConfigurableServiceInitializer`
+- `GameInitializer.cs` — replaced by `ImprovedGameInitializer`
+- `DependencyChecker.cs` — replaced by `ImprovedDependencyChecker` / `RuntimeDependencyValidator`
+
+**Sample game states moved to Samples~/GameState/:**
+- `GameplayState.cs`, `MainMenuState.cs`, `PausedState.cs` — tutorial examples, not engine infrastructure
+
+**LogChannel cleanup:**
+- Removed unused enum values: `UI`, `AI`, `Animation`, `Scene`, `Characters`, `Gameplay`, `Effects`
+
+**What's KEPT (not touched):**
+- Core: Events (base), ServiceManagement, Config, ImprovedGameInitializer, ObjectPool,
+  ResourceManagement, DataPersistence (base classes), Serialization, Compression,
+  Encryption, Obfuscation, ImprovedDependencyChecker, Helpers, Input, Localization,
+  TimeManagement, Notifications, GameState (base + manager), Audio
+- Runtime: Logger, Singletons, Extensions, ServiceAwaiter, FrameRateLimiter,
+  Combat/BattleEngine (separate assembly)
+- AssetUpdaterService (ResourceManagement feature)
+- All Helpers and Utility assemblies
+
+## [0.13.1-beta] - 2026-02-05
+### Engine Core [0.13.1]
+### Removed
+- **UIService**: Deprecated and removed entire UI management system
+  - Deleted `Runtime/Scripts/Core/UI/` folder (interfaces, service, config, events, base classes, animation, navigation)
+  - Deleted `Samples~/UISystem/` folder
+  - Removed `enableUIService` from `ServiceConfiguration`
+  - Removed `uiConfigName` from `ResourcePathConfig`
+  - Removed UI service registration from `ConfigurableServiceInitializer`
+- **DialogueUI**: Removed UI component that depended on UIScreen base class
+  - DialogueService remains available for manual registration
+- **UIScreenAudioPlayer**: Removed convenience component that coupled Audio to UI events
+  - Use AudioService directly in MonoBehaviours instead
+
+## [0.13.0-beta] - 2026-02-04
+### Engine Core [0.13.0]
+### Removed
+- **SceneService**: Deprecated and removed entire SceneManagement system
+  - Not useful for real-world Boot and MainMenu scenarios
+  - Use Unity's native `UnityEngine.SceneManagement.SceneManager` directly
+  - Deleted `Runtime/Scripts/Core/SceneManagement/` folder (all interfaces, services, configs, events, extensions, transitions, providers, UI)
+  - Deleted `Samples~/SceneManagement/` folder
+  - Deleted `Tests/Edit/Core/SceneManagement/` folder
+  - Removed `enableSceneService` from `ServiceConfiguration`
+  - Removed `sceneConfigName` from `ResourcePathConfig`
+  - Removed scene service registration from `ConfigurableServiceInitializer`
+
+## [0.12.7-beta] - 2026-02-02
+### Engine Core [0.12.5]
+### Removed
+- **Boot Screen System** - Completely removed from the framework. Users should implement their own loading/splash screens.
+    - Deleted `Runtime/Scripts/Core/BootSystem/` folder (all interfaces, services, controllers, UI components)
+    - Deleted `BootScreenService`, `BootScreenController`, `HybridBootController`, `BootScreenUI`, `LoadingSpinner`
+    - Deleted `BootConfiguration` ScriptableObject and `DefaultBootConfiguration.asset`
+    - Deleted `StartupDiagnostics` class and related tests
+    - Deleted `Editor/Build/BootDebugBuildValidator.cs` and `BootDebugValidationMenu.cs`
+    - Removed `enableBootScreen` from `ServiceConfiguration`
+    - Removed boot screen registration from `ConfigurableServiceInitializer`
+    - Simplified diagnostic code blocks in service initialization
+    - Documentation moved to `Documentation~/Deprecated/`
+- Updated README.md and all documentation to remove Boot Screen references
+- Updated sample code to remove Boot Screen references
+
+## [0.12.6-beta] - 2026-02-02
+### Added
+- **SETUP_GUIDE.md** - New unified setup guide for developers new to LoL Engine
+
+## [0.12.5-beta] - 2026-02-01
+- Upgraded unity to version 6.3.6f1
+
+## [0.12.4-beta] - 2026-01-23
+### Engine Code [0.12.4]
+- Changes to modify the PlayerInputController to take into account the newly modified InputConstants
+
+
+## [0.12.3-beta] - 2026-01-23
+- Corrections made to the  Implementation plans for the Input Constants and Added Plans to not use the Boot Screen from the LoLEngine
+### Engine Code [0.12.3]
+- Changes to modify the InputConstants to accomodate the separation of LoLEngine Specific Constants and GameSpecific Input Constants
+
+## [0.12.2-beta] - 2026-01-20
+- Performed Monthly Code review - 2026/01 - High Defects and Findings
+### Engine Code [0.12.2] 
+- InputService Event Unsubscription in InputService.cs
+- AudioService Periodic Cleanup in AudioService.cs
+- ResourceService Callback Leak in ResourceService.cs
+- LocalizationService Shutdown in LocalizationService.cs
+
+## [0.12.1-beta] - 2026-01-19
+- Performed Monthly Code review - 2026/01
+### Engine Code [0.12.1]
+- Updated ResourceService to properly implement iLoLEngineService
+
+## [0.11.15-beta] - 2026-01-19 
+- Upgraded Unity Version to Version 6.3.4f1
+
+## [0.11.14-beta] - 2025-12-30
+### Engine Core [0.11.6]
+- Spinner configuration is 100% self-contained on the LoadingSpinner component
+- No more dual configuration - just set it in the Inspector on the spinner
+- Auto-starts when the GameObject becomes active
+
+## [0.11.13-beta] - 2025-12-30
+### Engine Core [0.11.5]
+- Removed Start() method from LoadingSpinner - no more auto-start
+
+## [0.11.12-beta] - 2025-12-29
+### Engine Core [0.11.4]
+- Updated to Clarify that the Rotation Speed in the loading Spinner Component is a failback only
+
+## [0.11.11-beta] - 2025-12-24
+### Engine Core [0.11.3]
+- Hotfix to fix all configs now use ResourcePathConfig consistently:
+
+  | Config                   | Before Hotfix        | After Hotfix         | Status           |
+  |--------------------------|----------------------|----------------------|------------------|
+  | LoLEngineConfig          | ✅ ResourcePathConfig | ✅ ResourcePathConfig | No change needed |
+  | AudioConfig              | ✅ ResourcePathConfig | ✅ ResourcePathConfig | No change needed |
+  | LocalizationConfig       | ✅ ResourcePathConfig | ✅ ResourcePathConfig | No change needed |
+  | ResourceManagementConfig | ✅ ResourcePathConfig | ✅ ResourcePathConfig | No change needed |
+  | UIConfig                 | ✅ ResourcePathConfig | ✅ ResourcePathConfig | No change needed |
+  | SceneConfig              | ❌ Hardcoded          | ✅ ResourcePathConfig | FIXED ✨          |
+  | SaveConfig               | ❌ Hardcoded          | ✅ ResourcePathConfig | FIXED ✨          |
+
+
+## [0.11.10-beta] - 2025-12-23
+### Engine Core [0.11.2]
+- DifficultyPresetCreator.cs was in Runtime/Scripts/Runtime/Combat/Editor/, moved to Editor/Combat/DifficultyPresetCreator.cs
+- Removed the empty Editor folder from Runtime
+
+## [0.11.9-beta] - 2025-12-21
+### Engine Core [0.11.1]
+- Fixed the Initialization related issue with the Scene Audio Manager.
+- Updated instructions for Audio service to ensure the addressable for the Audio mixer is correctly set.
+
+## [0.11.8-beta] - 2025-12-18
+
+- Upgraded unity to version 6.3.2f1
+
+## [0.11.7-beta] - 2025-12-03
+
+- Fixed warnings with unused fields
+
+## [0.11.5-beta] - 2025-12-02
+
+- Updated manifest files
+
+## [0.11.4-beta] - 2025-12-01
+
+- Fixed the release automation shell script to adhere to the release branching strategy
+
+## [0.11.3-beta] - 2025-12-01
+
+- Fixed the release automation shell script to take care in case a release branch already exists.
+
+## [0.11.2-beta] - 2025-12-01
+
+- Cleanup of the folder structures to ensure proper organization, removal of additional unused folders.
+
+## [0.11.1-beta] - 2025-12-01
+
+- Upgraded unity to version 6.2.14f1
+
+## [0.11.0-beta] - 2025-11-30
+
+- Instructions provided for Versioning Strategy
+- Instructions for incorporating the LoLEngine into custom games following standards used in AAA studios.
+- Added scripts for creating releases, backport commits etc
+- Baselined Engine Core and Battle Engine
+
+### Engine Core [0.11.0]
+### Battle Engine [0.2.0]
+
+---
+
 ## [0.10.21-alpha] - 2025-11-30
 ### Engine Core [0.10.15]
 

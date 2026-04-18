@@ -1,13 +1,12 @@
 # LoL Engine - Labour of Love Game Framework
 
-[![Unity Version](https://img.shields.io/badge/Unity-6000.2%2B-blue.svg)]() 
-[![Version](https://img.shields.io/badge/Version-0.10.21--alpha-gold.svg)](CHANGELOG.md)
+[![Unity Version](https://img.shields.io/badge/Unity-6000.4%2B-blue.svg)]() 
+[![Version](https://img.shields.io/badge/Version-0.18.0--beta-gold.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
 
-| Project       |                                                                             Version | Notes                                             |
-|---------------|------------------------------------------------------------------------------------:|---------------------------------------------------|
-| LoL Core      | [![Version](https://img.shields.io/badge/Version-0.10.15-yellow.svg)](CHANGELOG.md) | Core engine systems (Event, Resource, Pool, Time) |
-| Battle Engine |   [![Version](https://img.shields.io/badge/Version-0.1.1-orange.svg)](CHANGELOG.md) | Battle Engine                                     |
+| Project       |                                                                          Version | Notes                                             |
+|---------------|---------------------------------------------------------------------------------:|---------------------------------------------------|
+| LoL Core      | [![Version](https://img.shields.io/badge/Version-0.18.0-gold.svg)](CHANGELOG.md) | Core engine systems (Event, Resource, Pool, Time) |
 
 A comprehensive Unity game development framework providing essential systems for modern game development. Built with performance, modularity, and ease of use in mind.
 
@@ -16,14 +15,6 @@ A comprehensive Unity game development framework providing essential systems for
 The LoL Engine provides a suite of interconnected services and tools designed to accelerate game development in Unity. It emphasizes a clean architecture through a service locator pattern, data-driven configuration, and robust implementations of common game systems.
 
 ## Features
-
-### **NEW: Boot Screen System**
-*   **Customizable Boot Screens**: Professional loading screens with progress bars, status text, and animated spinners
-*   **Service Integration**: Tracks engine initialization progress and provides visual feedback
-*   **Flexible Configuration**: ScriptableObject-based configuration for timing, UI elements, and transitions
-*   **Scene Management**: Automatic scene transitions after boot completion with fade effects
-*   **Error Handling**: Graceful error display and recovery mechanisms
-*   **Performance Monitoring**: Debug tools for tracking boot times and optimization
 
 ### **Enhanced Addressables Integration**
 *   **✨ AssetReference Support**: Type-safe asset loading with Unity's AssetReference system
@@ -37,19 +28,13 @@ The LoL Engine provides a suite of interconnected services and tools designed to
     *   `ImprovedGameInitializer`: Orchestrates engine startup.
     *   `Configuration System`: Highly flexible setup using `ServiceConfiguration` and `ResourcePathConfig` ScriptableObjects to enable/disable services and link their specific configurations.
 *   **Essential Game Systems:**
-    *   `Boot Screen System`: Professional loading screens with progress tracking and scene transitions. ([Docs](Documentation~/BootSystem.md))
     *   `Audio System`: Advanced audio playback, mixing, 3D spatialization, track management, and `AudioSource` pooling. ([Docs](Documentation~/Audio.md))
     *   `Resource Management`: Unified asset loading with **first-class Addressables support**, Resources fallback, and object pooling integration. ([Docs](Documentation~/ResourceManagement.md))
     *   `Object Pooling`: High-performance pooling for GameObjects and components. ([Docs](Documentation~/ObjectPool.md))
     *   `Event System`: Type-safe, centralized event handling with automatic listener management. ([Docs](Documentation~/Events.md))
     *   `Data Persistence`: Robust save/load system with slots, async operations, compression, and encryption. ([Docs](Documentation~/DataPersistence.md))
-    *   `Character Customization`: Comprehensive character appearance system with body parts, colors, blend shapes, equipment visuals, and presets. ([Docs](Documentation~/CharacterCustomization.md))
-    *   `Achievement & Progression System`: Complete achievement tracking, statistics, player progression with XP/leveling, and UI components. ([Docs](Documentation~/AchievementSystem.md))
-    *   `Tutorial & Onboarding System`: Flexible tutorial creation with multiple step types, automatic progress tracking, event-driven architecture, and rich UI components. ([Docs](Documentation~/TutorialSystem.md))
     *   `Localization System`: Comprehensive multi-language support with dynamic switching. ([Docs](Documentation~/Localization.md))
-    *   `Scene Management`: Flexible scene loading, transitions, and management. ([Docs](Documentation~/SceneManagement.md))
     *   `Input System`: Unified input handling for various devices. ([Docs](Documentation~/Input.md))
-    *   `UI System`: Structured approach for managing UI screens and dialogs. ([Docs](Documentation~/UI.md))
 *   **Utilities & Advanced:**
     *   `Time Management`: Pause, slow-motion, and custom time scaling.
     *   `Notification System`: In-game messaging and alerts.
@@ -58,7 +43,6 @@ The LoL Engine provides a suite of interconnected services and tools designed to
 
 Diagnostics build flag
 - Per-service startup diagnostics compile in Editor/Development builds by default and can be enabled in Release with `LOL_STARTUP_DIAGNOSTICS`.
-- See Boot Screen docs for usage and boot UI display toggle.
 
 Service dependency ordering
 - The engine supports optional, attribute-based dependencies with a topological sort within phases (Core → Feature → Game → Custom).
@@ -69,15 +53,14 @@ Service dependency ordering
 Independent services
 - Core: `EventService`, `ObjectPoolService`, `TimeService`, `ResourceService`, `CoroutineRunner`
 - Feature: `CompressionService`, `AesEncryptionService` (uses `LoLEngineConfig` internally)
-- Game: `BootScreenService`
 
 ## Requirements
 
-- **Unity**: 6000.0 or later
+- **Unity**: 6000.3 or later
 - **Dependencies**: 
     *   `com.unity.inputsystem` 
     *   `com.unity.nuget.newtonsoft-json`
-    *   `com.unity.addressables` (2.5.0+) - Integrated for advanced asset loading 
+    *   `com.unity.addressables` - Integrated for advanced asset loading 
 
 ## Installation
 
@@ -93,7 +76,7 @@ Independent services
     *   **Choose Your Configuration Approach:**
         *   **Option A - Use Default Configuration (Recommended for most games):**
             *   In code: `var config = ServiceConfiguration.CreateDefault();`
-            *   **Includes:** All core services + common game features (Audio, Input, Saves, Localization, BootScreen)
+            *   **Includes:** All core services + common game features (Audio, Input, Saves, Localization)
             *   **Perfect for:** Production games with standard features
         *   **Option A2 - Use Minimal Configuration (For testing/prototypes):**
             *   In code: `var config = ServiceConfiguration.CreateMinimal();`
@@ -110,11 +93,6 @@ Independent services
     *   Add the `ImprovedGameInitializer` component to this GameObject
     *   Assign your `ServiceConfiguration` and `ResourcePathConfig` assets to the respective fields
     *   Create and assign service-specific config assets (e.g., `AudioConfig`, `SaveConfig`) as needed by your enabled services
-    *   **Optional - Enable Boot Screen** (Recommended for professional games):
-        *   In your `ServiceConfiguration`, enable `Enable Boot Screen`
-        *   Create a `BootConfiguration` asset: Right-click → `Create` → `LoLEngine` → `Boot Configuration`
-        *   Set up a boot scene with `BootScreenController` and `BootScreenUI` components
-        *   Configure timing, progress weights, and target scene in the BootConfiguration
     *   **Optional - Enable Addressables** (Recommended):
         *   Go to `Window > Asset Management > Addressables > Groups`
         *   Click "Create Addressables Settings" if prompted
@@ -138,8 +116,6 @@ Independent services
             
             // Option B: Customize from default
             var customConfig = ServiceConfiguration.CreateDefault();
-            customConfig.enableUIService = true;           // Enable UI management
-            customConfig.enableSceneService = true;        // Enable scene management
             customConfig.enableLocalizationService = false; // Disable for single-language game
             
             // Assign to game initializer (or create ResourcePathConfig similarly)
@@ -246,7 +222,6 @@ Independent services
                 AudioClip music = await resourceService.LoadAsync<AudioClip>(musicAssetRef);
                 // Use music...
             }
-            
             // Cleanup when done
             resourceService.Release(musicAssetRef);
             #endif
@@ -286,34 +261,6 @@ Independent services
     // ServiceLocator.Instance.Get<IEventManager>().TriggerEvent(new PlayerScoreChangedEvent { NewScore = 100 });
     ```
 
-7.  **Character Creation (Basic Example):**
-    (CharacterFactory is disabled by default - enable it in your ServiceConfiguration if needed.)
-    ```csharp
-    using LoLEngine.Scripts.Core.ServiceManagement.Service;
-    using LoLEngine.Scripts.GameObjects.Characters.Factory;
-    using LoLEngine.Scripts.GameObjects.Characters.Interfaces; // For ICharacter
-    using UnityEngine;
-
-    public class CharacterSpawner : MonoBehaviour
-    {
-        public GameObject enemyPrefab; // Assign in Inspector
-
-        void Start()
-        {
-            CharacterFactory characterFactory = ServiceLocator.Instance.Get<CharacterFactory>();
-            if (characterFactory != null && enemyPrefab != null)
-            {
-                // Assuming CharacterData or similar config is handled by the factory or passed in
-                ICharacter newEnemy = characterFactory.CreateEnemy(enemyPrefab, transform.position, Quaternion.identity, null /* CharacterData */, true /* usePooling */);
-                if (newEnemy != null)
-                {
-                    Debug.Log($"Created enemy: {newEnemy.CharacterId}");
-                }
-            }
-        }
-    }
-    ```
-
 ## Configuration Deep Dive
 
 The LoL Engine's flexibility comes from its data-driven configuration:
@@ -328,13 +275,12 @@ var config = ServiceConfiguration.CreateDefault();
 ```
 **Enabled Services:**
 - **Core Services:** EventManager, ResourceService, ObjectPool, TimeService
-- **Feature Services:** AudioService, LocalizationService, InputService, CompressionService, EncryptionService, SerializationService, DataPersistence, NotificationService, AutoSaveService
+- **Feature Services:** AudioService, LocalizationService, CompressionService, EncryptionService, SerializationService, DataPersistence, NotificationService, AutoSaveService
 - **Game Services:** GameStateManager
-- **Boot System:** BootScreen
 
-**Disabled Services:** UIService, SceneService, CharacterPersistence, CharacterFactory, AssetUpdater, QuickSaveService
+**Disabled Services:** AssetUpdater, QuickSaveService
 
-*Perfect for most production games requiring common features like audio, saves, localization, and professional boot screens.*
+*Perfect for most production games requiring common features like audio, saves, and localization.*
 
 #### 2. **Minimal Configuration**
 ```csharp
@@ -351,8 +297,6 @@ var config = ServiceConfiguration.CreateMinimal();
 Create your own configuration by starting with a preset and modifying:
 ```csharp
 var config = ServiceConfiguration.CreateDefault();
-config.enableUIService = true;        // Enable UI management
-config.enableBootScreen = false;      // Disable boot screen
 config.enableLocalizationService = false; // Single language game
 ```
 
@@ -385,7 +329,6 @@ The engine automatically validates service dependencies:
 |  | TimeService | ✅ | ✅ | Time management and scaling |
 | **Feature Services** | AudioService | ✅ | ❌ | Sound and music playback |
 |  | LocalizationService | ✅ | ❌ | Multi-language support |
-|  | InputService | ✅ | ❌ | Player input handling |
 |  | SerializationService | ✅ | ❌ | JSON data serialization |
 |  | DataPersistenceService | ✅ | ❌ | Save/load functionality |
 |  | CompressionService | ✅ | ❌ | Data compression |
@@ -393,10 +336,6 @@ The engine automatically validates service dependencies:
 |  | NotificationService | ✅ | ❌ | In-game notifications |
 |  | AutoSaveService | ✅ | ❌ | Automatic saving |
 | **Game Services** | GameStateManager | ✅ | ❌ | Game state management |
-|  | BootScreen | ✅ | ❌ | Professional loading screens |
-|  | UIService | ❌ | ❌ | UI management (project-specific) |
-|  | SceneService | ❌ | ❌ | Scene transitions |
-|  | CharacterFactory | ❌ | ❌ | Character creation system |
 |  | QuickSaveService | ❌ | ❌ | F5/F9 quick save/load |
 
 ### Customizing Service Configuration
@@ -405,14 +344,8 @@ The engine automatically validates service dependencies:
 // Start with defaults and customize
 var config = ServiceConfiguration.CreateDefault();
 
-// Enable additional services
-config.enableUIService = true;
-config.enableSceneService = true;
-config.enableCharacterFactoryService = true;
-
 // Disable services you don't need
 config.enableLocalizationService = false;  // Single language game
-config.enableBootScreen = false;           // Skip loading screen
 config.enableAutoSaveService = false;      // Manual saves only
 ```
 
@@ -421,7 +354,6 @@ config.enableAutoSaveService = false;      // Manual saves only
 **Use `CreateDefault()`** when:
 - Building a production game
 - Need common features (audio, saves, input, localization)
-- Want professional boot screens
 - Building a complete game experience
 
 **Use `CreateMinimal()`** when:
@@ -450,31 +382,26 @@ The framework uses a **Service Locator Pattern** with dependency injection:
 - **Access**: Via `ServiceLocator.Instance.Get<TService>()`
 
 ### Key Services
-- `IBootScreenService`: Boot screen progress tracking and visual feedback
 - `IAudioService`: Audio playback and management
 - `IResourceService`: Asset loading and caching
 - `IEventManager`: Event handling and dispatching
 - `IObjectPoolService`: Object pooling and recycling
 - `ILocalizationService`: Multi-language support
 - `IDataPersistance`: Data Persistance
-- `IInputService` : Input Service
+
 - `IEncryptionService` : Encryption Service
 - `IGameStateManagerService` : Game State Service
 - `INotificationService` : Notification Service
 - `IDataSerializer` : Serialization Service
-- `CharacterFactory`: For creating and managing character instances.
-- `CharacterPersistenceManager`: Handles saving and loading of character states.
 
 ### Configuration
 Services are configured via ScriptableObject assets in `Resources/Configs/`:
 - `ResourcePathConfig`: Resource Configurations
 - `ServiceConfiguration`: Controls which services are enabled
-- `DefaultBootConfiguration`: Boot screen timing, UI settings, and scene transitions
 - `DefaultAudioConfig`: Audio system settings
 - `DefaultLocalizationConfig`: Localization settings
 - `DefaultResourceManagementConfig`: Resource Management Settings (includes Addressables configuration)
 - `DefaultSaveConfig`: Save Load Settings
-- `DefaultCharacterConfig` (or similar): Defines character archetypes, stats, and persistence settings.
 
 ## Support
 
@@ -483,3 +410,4 @@ Services are configured via ScriptableObject assets in `Resources/Configs/`:
 ---
 
 *Made with ❤️ by MooMoo Games*
+
