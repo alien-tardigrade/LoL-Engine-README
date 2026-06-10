@@ -5,10 +5,162 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-rc-5] - 2026-06-09
+### Fixed
+- **`link.xml` moved from `Runtime/` to the package root.** Unity only honors `link.xml` files at a package's root folder (or under the project's `Assets/`); at `Runtime/link.xml` it was silently ignored, so IL2CPP builds at Managed Stripping Level Medium/High stripped the reflection-only constructors of every plain-C# engine service. Symptom: a wall of `Cannot register null service of type I…` at boot with no exception (confirmed in a consuming project at High stripping). Projects on rc.4 or earlier must preserve the four `LoLEngine-*` assemblies in their own `Assets/link.xml`.
+- **`ConfigurableServiceInitializer` now fails loudly when constructors are stripped.** `CreateServiceWithType` previously returned null without logging when `GetConstructors()` came back empty, leaving only a generic "Cannot register null service" downstream. It now logs the type, the likely linker cause, and the assembly to preserve in `link.xml`.
+
+## [1.0.0-rc.4] - 2026-06-08
+### Asset Store readiness
+- **IL2CPP stripping protection**: added `Runtime/link.xml` preserving all four `LoLEngine-*` runtime assemblies (engine services are created via reflection and are invisible to the managed linker). New buyer-facing doc `Documentation~/IL2CPP.md`; `[Preserve]` added to the sample `GameServiceRegistrar`; IL2CPP/High-stripping verification gate added to `RELEASE_CHECKLIST.md` (section 7b).
+- **Platform support matrix declared** in package README and documentation index: Desktop + iOS/Android supported; **WebGL not supported in 1.0** (async save/load, async obfuscation, and the file log sink use `Task.Run`, which WebGL lacks).
+- **Hardened setup validation**: `ImprovedGameInitializer` now pre-flight checks that each enabled service's config asset resolves through `ResourcePathConfig` (warns with the exact Resources path attempted), validates inspector-driven custom service entries, and throws actionable errors when dependency toggles are inconsistent. The `Validate Setup` context menu runs the full report.
+- **PlayMode smoke tests** (`Tests/PlayMode/SmokeTests.cs`): full engine boot with default configs + core service resolution, object pool get/return/recycle, and a save→load round-trip through the real `LocalFileSaveStore`.
+- **Script-only samples labelled**: GameState, NotificationSystem, and ResourceManagement samples are now explicitly marked as script-only (no scene) in `Samples~/README.md` and the `package.json` sample descriptions, with usage instructions for each.
+- **Singleton duplicate handling now logs**: `Singleton<T>` and `PersistentSingleton<T>` emit a `LoLLogger.Warning` when destroying a duplicate instance (previously silent commented-out code).
+- **Docs moved out of the runtime tree**: `AudioHelpers.md` and `AAA-Audio-System-Guide.md` relocated from `Runtime/Scripts/Helpers/Audio/` to `Documentation~/` (indexed in the docs README); duplicate logger README removed.
+- **Version metadata consolidated**: concrete version strings now live only in `package.json` (canonical), `LoLEngineVersion.cs`, the README badges, and `CHANGELOG.md`. All setup guides, the samples README, and the release checklist use `vX.Y.Z` placeholders or point at `package.json`, so releases no longer require a doc-wide version sweep. A verification grep was added to `RELEASE_CHECKLIST.md` section 1.
+
+## [1.0.0-rc.3] - 2026-05-29
+- Fixed documentation to add references to UPM installation and remove stale references to deleted systems and APIs.
+
+## [1.0.0-rc.2] - 2026-05-29
+### Fixed
+- **Declared the missing `com.unity.modules.audio` dependency in `package.json`.** Without it, a clean UPM consumer hit 81 `CS1069` errors (AudioSource/AudioClip/AudioMixer types forwarded to `UnityEngine.AudioModule`). The dev project masked this because its manifest includes every built-in module. Verified via a clean-room batchmode import.
+
+### Documentation
+- Removed stale references to systems deleted before 1.0 (Character System, UI System, `IInputService`, `ISceneService`) from `CHEATSHEET-How-To-Use.md`, `Troubleshooting.md`, `Config.md`, `GettingStarted.md`, `Notifications.md`, and `ServiceLocator.md`.
+- Rewrote the `ServiceConfiguration` checklists in the cheatsheet to match the real `enable*` toggles (added Rng, Music Playlist, Audio Orchestrator, Asset Updater).
+
+## [1.0.0-rc.1] - 2026-05-29
+### Release candidate
+- First release candidate for the Unity Asset Store. API is considered stable; only bug fixes are expected before `1.0.0`.
+- **Lowered minimum Unity to `6000.0`** (was `6000.4`) to support the Unity 6.0 LTS install base. Re-verify a clean compile against your minimum supported editor before final.
+- Bumped version metadata across `package.json`, `LoLEngineVersion.cs`, READMEs, and documentation baselines.
+- Renamed `PersistantSingleton<T>` → `PersistentSingleton<T>` (corrected spelling of a public type before the API freezes at 1.0).
+- Unified all editor menu items under a single `Tools/LoL Engine/…` submenu (removed top-level menu entries and a mismatched `Tools/LoLEngine` path).
+- Removed stray files from the shipping tree (`.DS_Store`, leftover `.meta` files inside `Documentation~/`).
+
+## [0.22.6-beta] - 2026-05-06
+### Asset Store readiness
+- Added `Third Party Notices.md` and `Documentation~/PackageShipping.md` (shipping boundary and maintainer checklist)
+- Renamed test assemblies to `LoLEngine-Tests-Edit` and `LoLEngine-Tests-PlayMode` to avoid buyer-project name collisions
+- Aligned repo-root and samples README version metadata with `package.json` (0.22.6-beta, Unity 6000.4+)
+- **Documentation (P2):** `Input.md` (Unity Input System — no `IInputService`), `RELEASE_CHECKLIST.md`, quickstart/samples clarify bundled vs regenerated scenes, fixed stale Now-Playing sample numbering and removed obsolete API-reference script references
+- Cleanup of code to prepare the package for release to the Unity Asset Store
+
+## [0.22.5-beta] - 2026-04-27
+### Highlights
+- **Structured localized text** — every localization callsite can now use `LocString` for dynamic variables and pluralization. Old `GetText(key)` calls still work but are marked `[Obsolete]` (no compile errors, just warnings).
+
+### Changed
+- Localization callsites switched to `LocString` + `Format()` API for dynamic variables and richer formatting.
+- Updated localization docs with `LocString` and `DynamicVar` usage examples (see `Documentation~/Localization.md` and `LOCALIZATION_MIGRATION.md`).
+
+### Migration
+- No breaking changes. `GetText(key)` remains functional; migrate at your own pace per `LOCALIZATION_MIGRATION.md`.
+
+## [0.22.4-beta] - 2026-04-26
+### Highlights
+- **Quieter default logs in production** — engine logs default to `Warning` (was `Debug`), so shipping builds aren't flooded by engine-internal messages. Game-side logs still default to `Debug`.
+- **`GameLogger` for game code** — new game-facing logger so your game code can stay verbose without touching engine log levels.
+
+### Added
+- `LoLEngineConfig.EngineLogLevel` and `GameLogLevel` — independent thresholds for engine vs. game logs.
+- `GameLogger` — game-facing facade using the same sink pipeline as `LoLLogger`.
+- `LogSource` field on `LogEvent` — distinguishes engine-originated from game-originated entries in log history.
+
+### Changed
+- `ImprovedGameInitializer` reads both log levels from config at startup.
+- File log sink now uses the same threshold rules as console and history sinks.
+
+### Fixed
+- `ImprovedDependencyChecker` honours the configured engine log level instead of forcing `Debug`.
+- Project-level `Assets/Resources/...` configs now correctly override bundled package fallbacks at the same path.
+- `Warning` threshold no longer accidentally allows `Emphasis` messages through (enum-ordering bug).
+
+## [0.22.3-beta] - 2026-04-25
+### Fixed
+- LoLLogger correctly loads its default configuration on first use.
+
+## [0.22.2-beta] - 2026-04-25
+### Fixed
+- LoLLogger now respects the Logging Level set in its configuration asset (previously it logged everything regardless of the config).
+
+## [0.22.1-beta] - 2026-04-24
+### Changed
+- Bumped supported Unity version to **6.4.4f1**.
+
+## [0.22.0-beta] - 2026-04-23
+### Engine Core [0.22.0]
+#### Added
+- **`TypedPoolBag<TKey, TItem>`** — Genre-neutral typed pool with per-bucket shuffled draw, `IsAllowed` predicate filter, automatic cascade on exhaustion, and `PoolExhaustedException` on full exhaustion. Pass `ref Rng` to `Shuffle()`; serialize remaining items via `GetRemainingItems(key)`. ADR-013 added. New files: `Runtime/Scripts/Utility/TypedPoolBag.cs`, `Runtime/Scripts/Utility/Odds/PoolExhaustedException.cs`.
+- **`AbstractOdds<TOutcome>`** — Base class for probabilistic systems with persistent state. Holds an injected `Rng` substream and a `CurrentValue` counter. `RestoreState(int)` + `ReplaceRng(Rng)` enable save/load round-trips without losing pity state. ADR-014 added. New file: `Runtime/Scripts/Utility/Odds/AbstractOdds.cs`.
+- **`AntiPityOdds<T>`** — Engine-shipped implementation of `AbstractOdds<T>`. Weighted roll where the pity target's effective weight increases by `pityIncrement` per consecutive miss and resets on hit. `EffectiveWeight(i)` and `TotalEffectiveWeight()` exposed for tooltip/UI display of current odds. New file: `Runtime/Scripts/Utility/Odds/AntiPityOdds.cs`.
+- Unit tests: `Tests/Edit/Utility/TypedPoolBagTests.cs` (draw, cascade, filter, exhaustion, shuffle coverage) and `Tests/Edit/Utility/AntiPityOddsTests.cs` (counter mechanics, save-load round-trip, statistical distribution sanity check).
+#### Fixed (bug fixes from Phase 3 code review)
+- **HIGH** — Per-domain migration/deserialization failures in `SaveSystem` now caught per-domain; the load continues with remaining domains and `LastLoadReport` reflects partial success instead of propagating an exception.
+- **MEDIUM** — `InMemorySaveStore.List()` now correctly filters by extension suffix extracted from the glob pattern (`*.sav` → `.sav`); previously returned all files regardless of extension.
+- **MEDIUM** — `ISaveStore` extended with `GetLastModified(string)` and `GetFileSize(string)`; `ListSavesAsync()` and `HasAnySavesAsync()` no longer call `Directory.Exists` or `new FileInfo()` directly — fully routed through the store abstraction.
+- **LOW** — `SaveLoadReport.DomainResult.WasMigrated` is now a stored `bool` set only when a migration step actually ran; previously derived from version arithmetic, causing false positives when a chain was missing.
+#### Changed
+- **`ILocalizationService.GetText()` and `GetTextFormatted()` marked `[Obsolete]`** — Both methods now carry `[Obsolete("Prefer LocString + Format(). See Documentation~/LOCALIZATION_MIGRATION.md. Will not be hard-removed per ADR-011.")]`. The deprecation was scheduled in ADR-011 (v0.23.0-beta). Neither method is removed or functionally altered. Callers get a compiler warning; all callsites in existing projects continue to compile and run unchanged.
+#### Documentation
+- **ADR-015: Fluent Option Builder Pattern** — Documents the `With*` method-chain pattern used by `PlayOptions`, `PlaylistPlayOptions`, and `ResourceLoadOptions`. Explains when to prefer it over constructor overloads and when a builder class is more appropriate. Added to `ARCHITECTURE_NOTES.md`.
+- **ADR-016: ExtraFields Kitchen Drawer** — Documents the `Dictionary<string, object> ExtraFields` pattern on mutable `AbstractModel` subclasses for one-off game-specific flags that don't warrant a real field. Includes save/load contract and rules for when to graduate a field out of the drawer. Added to `ARCHITECTURE_NOTES.md`.
+- **ADR-017: Null-Object Pattern for Optional Scope** — Documents the `NullFoo.Instance` pattern that eliminates call-site null checks when a scope is validly absent at runtime (e.g. no active run in the main menu). Distinguishes "validly absent" from "programmer error". Added to `ARCHITECTURE_NOTES.md`.
+- **ADR-018: Test-Only Escape-Hatch Naming Convention** — Formalises the `NeverEverCallThisOutsideOfTests_*` prefix convention used throughout the engine. Documents existing examples, preferred visibility (`internal` + `InternalsVisibleTo`), and compiler-level enforcement via `#if` guards. Added to `ARCHITECTURE_NOTES.md`.
+- **`ARCHITECTURE_NOTES.md` summary updated** — ADR index in the summary section updated to include ADR-008 through ADR-018 (previously the summary listed only ADR-001 through ADR-007). Validation date bumped to 2026-04-23.
+
+## [0.21.0-beta] - 2026-04-23
+### Engine Core [0.21.0]
+#### Added
+- **`ISaveStore` — pluggable save I/O backend** — Abstracts all file reads, writes, deletes, directory listing, and quarantine operations. `LocalFileSaveStore` (default) wraps `File.*` with atomic write-via-temp; `InMemorySaveStore` is a dictionary-backed backend for integration tests (no disk, no ServiceLocator). `SaveSystem` constructor accepts optional `ISaveStore` and `saveBaseDirectory` override to make save paths test-controllable. ADR-012 added to `ARCHITECTURE_NOTES.md`. New files: `Interfaces/ISaveStore.cs`, `Service/LocalFileSaveStore.cs`, `Service/InMemorySaveStore.cs`.
+- **Per-domain schema versioning (`IDomainMigration`)** — `PersistableData.SchemaVersion` (virtual, default 1) lets each domain declare its own schema version. `GameSaveData` now records `_domainSchemaVersions` per domain at save time (included in integrity checksum). On load, if stored version < current version the registered `IDomainMigration` chain runs on the raw JSON string before deserialization. Migrations chain: register one `IDomainMigration` per version step per domain (e.g. v1→v2, v2→v3). Stored version 0 (pre-domain-version save) loads as-is — no spurious migration chains when the feature is first introduced. New interface: `Interfaces/IDomainMigration.cs`. `ISaveSystem.RegisterDomainMigration(IDomainMigration)` added.
+- **Corrupt-file quarantine** — On load failure, instead of silently returning `false`, `SaveSystem` moves the bad file to `{saveDir}/Quarantine/{timestamp}_{reason}_{filename}.bak`. Reason codes: `JSN` (JSON parse failure), `CHK` (checksum mismatch), `SCH` (incompatible bundle schema version). File is recoverable from quarantine; no data is destroyed. `LocalFileSaveStore.Quarantine()` implements the move; `InMemorySaveStore.Quarantine()` moves the entry to a test-inspectable list.
+- **`SaveLoadReport`** — Describes the outcome of every `LoadGame` call. Exposed via `ISaveSystem.LastLoadReport`. Quarantined saves return `Quarantined(reason)` with `Success=false`. Per-domain results in `DomainResults`: `DomainId`, `Loaded`, `StoredVersion`, `CurrentVersion`, `WasMigrated`. New file: `Data/SaveLoadReport.cs`.
+- **`SaveSystem` test seam** — `NeverEverCallThisOutsideOfTests_InjectSerializer(IDataSerializer)` bypasses ServiceLocator serializer resolution; pairs with `InMemorySaveStore` for fully controlled integration tests.
+- Integration tests: `Tests/Edit/Core/DataPersistence/SaveSystemIntegrationTests.cs` — 6 tests covering JSN quarantine, CHK quarantine, missing-file handling, per-domain migration, report contents, pre-domain-version compatibility.
+
+## [0.20.0-beta] - 2026-04-22
+### Engine Core [0.20.0]
+#### Added
+- **`AbstractModel` canonical/mutable boundary** — Base class that enforces the template-vs-instance split. Canonical instances (registered in `ModelDb`) have `IsMutable = false`; calling any mutating method while canonical throws `InvalidOperationException` via `AssertMutable()`. `MutableClone()` creates a live runtime instance with `IsMutable = true`. `ClonePreservingMutability()` returns `this` for canonicals (no allocation). Engine-default `MutableClone()` uses `MemberwiseClone`; subclasses override for deep-clone. Pairs with `ModelDb` for the full content/instance lifecycle. ADR-010 added to `ARCHITECTURE_NOTES.md`. New file: `Runtime/Scripts/Runtime/Models/AbstractModel.cs`.
+- **`LocString` + `DynamicVar` — structured localized text values** — `LocString` is a value object `(LocTable table, string key, DynamicVar[] vars)` that resolves via `ILocalizationService.Format(locString)`. Tokens `{varName}` / `{varName:specifier}` are substituted at resolution time using `DynamicVar.CalculatedValue`. `DynamicVar` has three layers: `BaseValue` (authoring constant), `CalculatedValue` (runtime override), `PreviewValue` (upgrade preview), plus `WasJustUpgraded` flag for UI highlights and `Upgrade(delta)` to accumulate bonuses. Unresolved tokens render as `{varName}`. Custom specifiers handled by `ILocStringFormatter` chain registered via `locService.AddLocStringFormatter(...)`. `LocTable` predefined constants: `UI`, `Common`, `Items`, `Enemies`, `Cards`; custom via `LocTable.From(name)`. Backwards compatible — existing `GetText(key)` unchanged. ADR-011 added to `ARCHITECTURE_NOTES.md`. New files: `Runtime/Scripts/Core/Localization/LocString/`.
+- **`LocValidator` editor tool** — `Tools > LoLEngine > Validate Localization Tables` reports every key missing a translation in any language column. Callable as `LocValidator.ValidateAll()` from CI build scripts. New file: `Editor/Localization/LocValidator.cs`.
+- **`TestMode` gate** — `TestMode.IsOn` static flag signals automated-test runs. `AssertOn()` / `AssertOff()` throw typed exceptions. Set once at boot via `TestMode.Enable()`. New file: `Runtime/Scripts/Runtime/Testing/TestMode.cs`.
+- **RNG override injection (`#if UNITY_EDITOR || LOL_TESTS_ENABLED`)** — `IRngService` gains `InjectNextInt/Float/Bool(streamIndex, forcedValue)`, `ClearOverrides(streamIndex)`, `ClearAllOverrides()`. Each override fires once then auto-clears. Zero production overhead (preprocessor-gated).
+- `ILocalizationService` extended with `Format(LocString)` and `AddLocStringFormatter(ILocStringFormatter)`.
+- `Documentation~/LOCALIZATION_MIGRATION.md` — before/after migration examples for all scenarios.
+
+#### Deprecated (not yet removed)
+- `GetText(string key)` for strings with variable substitution — prefer `LocString + Format()`. Deprecation `[Obsolete]` planned for v0.23.0-beta per ADR-011 timeline.
+
+## [0.19.0-beta] - 2026-04-22
+### Engine Core [0.19.0]
+#### Added
+- **Deterministic RNG service (`IRngService`)** — SplitMix64-backed named stream system. Projects define streams via `IRngStreamSet` (enum-shaped); the service vends one independent `Rng` per stream, all seeded from a single root seed with zero inter-stream correlation. `Rng` is a value-type struct with `.Int()`, `.Float()`, `.Bool()`, `.Weighted<T>()`, `.Shuffle<T>()`, `.Pick<T>()`, `.AdvanceBy()`, `Snapshot()`/`Restore()`. `RngServiceSnapshot` is fully serializable for mid-session save/load. Enabled via `ServiceConfiguration.enableRngService` (default `true`). ADR-008 added to `ARCHITECTURE_NOTES.md`. New files: `Runtime/Scripts/Core/Rng/Rng.cs`, `IRngService.cs`, `IRngStreamSet.cs`, `RngService.cs`, `RngServiceSnapshot.cs`.
+- **`ModelDb` — string-keyed content registry** — Static registry mapping `ModelId → canonical object`. `ModelId` is a two-part `(Category, Entry)` struct (`"Enemy/goblin"`) that is stable across serialization. Registration is explicit (`ModelDb.Register<T>(id, instance)`) — no reflection at runtime, so IL2CPP/AOT builds are safe. `GetByIdOrNull<T>` returns null on miss; `Require<T>` throws. `GetAll<T>` enumerates by type. Domain reloads clear the registry via `[RuntimeInitializeOnLoadMethod]`. `RegisterInModelDbAttribute` is a documentation marker only (no auto-wiring). ADR-009 added to `ARCHITECTURE_NOTES.md`. New files: `Runtime/Scripts/Runtime/Models/ModelDb.cs`, `ModelId.cs`, `RegisterInModelDbAttribute.cs`.
+
+## [0.18.2-beta] - 2026-04-18
+### Engine Core [0.18.2]
+#### Added
+- **Gapless crossfade via look-ahead preload + early-start** — `MusicPlaylistService` now spins up a hidden `MusicPlaylistPump` MonoBehaviour during `LateInitialize()` that calls a per-frame `Tick()`. While the current track plays, `Tick()` warms the next clip in the resource cache via `IResourceService.LoadAsync<AudioClip>` once `remaining <= defaultPreloadLookaheadSeconds` (default 3 s). When `remaining <= crossfadeDuration` and the preload is ready, `AdvanceBy` fires early so both clips genuinely overlap. If the preload has not finished, `OnCurrentTrackComplete` fires the advance as before (backward-compatible fallback, no regression).
+- **Equal-power crossfade curve** — New `FadeCurve` enum (`Linear`, `EqualPower`) in `LoLEngine.Core.Audio.Data`. `AudioFadeController` gains `FadeIn(handle, duration, targetVolume, FadeCurve)` and `FadeOut(handle, duration, stopAfterFade, FadeCurve)` overloads; existing parameterless overloads delegate to `Linear`. `IAudioService` and `AudioService` expose matching overloads. `MusicPlaylistService` uses `EqualPower` for playlist transitions; `AudioConfig.defaultPlaylistCrossfadeCurve` (default `EqualPower`) lets projects switch back to `Linear` per-config.
+- **Per-track gain** — `PlaylistTrackEntry` (new serializable class in `LoLEngine.Core.Audio.Data`) carries `addressableId`, `gainDb` (0 = neutral, recommended −12 to +6 dB), `displayTitle`, `artist`, and `coverArt (Sprite)`. `MusicPlaylist` gains a `List<PlaylistTrackEntry> tracks` field and migrates the legacy `List<string> addressableIds` field via `OnValidate`. When starting a track, `gainDb` is converted to a linear multiplier (`Mathf.Pow(10, gainDb/20)`) and applied to `PlayOptions.volume` ahead of the Music track volume.
+- **Now-Playing metadata + event** — `IMusicPlaylistService` gains `PlaylistTrackEntry CurrentTrackEntry`, `event Action<PlaylistTrackEntry> OnTrackEntryChanged`, and a new `Play(IReadOnlyList<PlaylistTrackEntry>)` overload for runtime playlists with metadata. The existing `OnTrackChanged(string)` event is unaffected. Sample `Samples~/Scripts/11_NowPlayingSample.cs` binds `TMP_Text` and `UnityEngine.UI.Image` fields to the event.
+- **`PlaylistPlayOptions.preloadLookaheadSeconds`** — per-call override for the look-ahead window; `0` uses `AudioConfig.defaultPreloadLookaheadSeconds`.
+- **`AudioConfig.defaultPreloadLookaheadSeconds`** (default `3f`) and **`AudioConfig.defaultPlaylistCrossfadeCurve`** (default `EqualPower`) — new inspector fields on the Music Playlist header.
+- Five new PlayMode tests in `MusicPlaylistServiceTests`: `EarlyStartCrossfade_NextStartsBeforeCurrentEnds`, `PreloadFallback_UsesOnCompletePath_WhenCrossfadeIsZero`, `PerTrackGain_AppliedToHandle`, `Shuffle_CoversEveryTrackOncePerCycle`, `OnTrackEntryChanged_FiresWithMetadata`.
+
+## [0.18.1-beta] - 2026-04-18
+### Engine Core [0.18.1]
+- Asynch support for Playlist audio
+
 ## [0.18.0-beta] - 2026-04-17
 ### Engine Core [0.18.0]
 #### Added
-- **`IMusicPlaylistService`** — new first-class service that orchestrates back-to-back music playback on top of `IAudioService`. Hand it a `MusicPlaylist` ScriptableObject (or a runtime `IReadOnlyList<string>` of addressable IDs) and it handles auto-advance via `IAudioHandle.OnComplete`, shuffle (Fisher-Yates with a guard against repeating the just-played track on reshuffle), crossfade (overlapping `FadeIn`/`FadeOut` on the Music track — requires `maxConcurrentSounds >= 2`), and themed playlist swaps via `SwitchTo`. Mute semantics are exposed two ways: `MuteMode.PauseOnMute` (default) preserves playback position via `PauseTrack`/`ResumeTrack`, while `MuteMode.SilenceOnly` keeps tracks advancing inaudibly via `SetTrackMute`; the settings UI binds to a single `IsMuted` toggle regardless of mode. `GlobalCrossfadeEnabled` is a settings-bindable kill-switch that short-circuits crossfade to instant cut. New types in `LoLEngine.Core.Audio`: `IMusicPlaylistService`, `MusicPlaylistService` (plain C# class, not MonoBehaviour), `MusicPlaylist` (`[CreateAssetMenu]`), `PlaylistPlayOptions`, `PlaylistPlaybackMode { Sequential, Shuffle, RepeatOne }`, `MuteMode { PauseOnMute, SilenceOnly }`, and `PlaylistEvents.{PlaylistStarted, PlaylistTrackChanged, PlaylistStopped, PlaylistSwitched, PlaylistCompleted}`. `AudioConfig` gained `defaultCrossfadeDuration`, `defaultPlaybackMode`, `globalCrossfadeEnabledDefault`, and `defaultMuteMode`. `ServiceConfiguration` gained `enableMusicPlaylistService` (defaults to `true`; requires Audio Service). The service resolves `IAudioService` in `LateInitialize()` per ADR-007 and warns if the Music track's `maxConcurrentSounds < 2` (crossfade falls back to instant cut in that case). Sample in `Samples~/Scripts/11_MusicPlaylistSample.cs` and PlayMode tests in `Tests/PlayMode/Core/Audio/MusicPlaylistServiceTests.cs`.
+- **`IMusicPlaylistService`** — new first-class service that orchestrates back-to-back music playback on top of `IAudioService`. Hand it a `MusicPlaylist` ScriptableObject (or a runtime `IReadOnlyList<string>` of addressable IDs) and it handles auto-advance via `IAudioHandle.OnComplete`, shuffle (Fisher-Yates with a guard against repeating the just-played track on reshuffle), crossfade (overlapping `FadeIn`/`FadeOut` on the Music track — requires `maxConcurrentSounds >= 2`), and themed playlist swaps via `SwitchTo`. Mute semantics are exposed two ways: `MuteMode.PauseOnMute` (default) preserves playback position via `PauseTrack`/`ResumeTrack`, while `MuteMode.SilenceOnly` keeps tracks advancing inaudibly via `SetTrackMute`; the settings UI binds to a single `IsMuted` toggle regardless of mode. `GlobalCrossfadeEnabled` is a settings-bindable kill-switch that short-circuits crossfade to instant cut. New types in `LoLEngine.Core.Audio`: `IMusicPlaylistService`, `MusicPlaylistService` (plain C# class, not MonoBehaviour), `MusicPlaylist` (`[CreateAssetMenu]`), `PlaylistPlayOptions`, `PlaylistPlaybackMode { Sequential, Shuffle, RepeatOne }`, `MuteMode { PauseOnMute, SilenceOnly }`, and `PlaylistEvents.{PlaylistStarted, PlaylistTrackChanged, PlaylistStopped, PlaylistSwitched, PlaylistCompleted}`. `AudioConfig` gained `defaultCrossfadeDuration`, `defaultPlaybackMode`, `globalCrossfadeEnabledDefault`, and `defaultMuteMode`. `ServiceConfiguration` gained `enableMusicPlaylistService` (defaults to `true`; requires Audio Service). The service resolves `IAudioService` in `LateInitialize()` per ADR-007 and warns if the Music track's `maxConcurrentSounds < 2` (crossfade falls back to instant cut in that case). Sample in `Samples~/Scripts/10_MusicPlaylistSample.cs` and PlayMode tests in `Tests/PlayMode/Core/Audio/MusicPlaylistServiceTests.cs`.
 
 ## [0.17.8-beta] - 2026-04-14
 ### Engine Core [0.17.6] 

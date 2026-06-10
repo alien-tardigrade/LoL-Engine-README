@@ -1,56 +1,62 @@
-# End User License Agreement (“EULA”) for LoL Engine for Unity (“Software”)
-Please read this End-User License Agreement ("Agreement") carefully before purchasing, downloading, or using LoL Engine for Unity ("Software").
+# End User License Agreement ("EULA") for LoL Engine for Unity ("Software")
 
-By purchasing, downloading or using the Software, you, the individual or entity (“End-User”), agree to be bound by this EULA as well as by our Terms and Conditions.
+Please read this End User License Agreement ("Agreement") carefully before purchasing, downloading, or using LoL Engine for Unity ("Software").
 
-If End-User does not agree to the terms of this Agreement, do not purchase, download or use the Software.
+By purchasing, downloading, or using the Software, you, the individual or entity ("End-User"), agree to be bound by the terms of this Agreement. If End-User does not agree to these terms, do not purchase, download, or use the Software.
 
-The subject matter of this EULA is the licensing of the Software to End-User. The Software is licensed, not sold.
+The Software is licensed, not sold.
 
-## License
-MooMoo Games (“Licensor”) grants End-User a revocable, non-exclusive, worldwide, non-transferable, limited license to download, install and use the Software for personal and commercial purposes in accordance with the terms of this Agreement and the terms set out in the Terms and Conditions.
+## License Grant
 
-The Software is owned and copyrighted by MooMoo Games. Your license confers no title or ownership in the Software and should not be construed as a sale of any right in the Software.
+MooMoo Games ("Licensor") grants End-User a non-exclusive, worldwide, non-transferable license to use the Software for personal and commercial purposes, subject to the terms of this Agreement and the Unity Asset Store End User License Agreement.
 
-The Software is protected by copyright law and international treaty provisions. You acknowledge that no ownership of the intellectual property in the Software is transferred to you. You further acknowledge that MooMoo Games retains full ownership rights to the Software, and you will not acquire any rights to the Software except as outlined in this license. You agree that any copies of the Software will include the same proprietary notices found on and within the original Software.
+All title, ownership rights, and intellectual property rights in and to the Software remain with MooMoo Games. This Agreement confers no ownership of the Software and should not be construed as a sale of any rights therein. Any copies of the Software must include the same proprietary notices found in the original.
 
-## End-User's Rights and Obligations
-End-User may use the licensed Software only for its intended purpose. End-User may not modify, reproduce, distribute, sublicense, rent, lease or lend the Software.
+## Permitted Uses
 
-End-User agrees that they will do their damned best to complete the games they have started on and leave the nay sayers behind. The world needs more games, and more game developers following their passions and dreams. 
+End-User may:
 
-End-User may use the Software to create, develop, and distribute software applications, including but not limited to video games, educational software, and other interactive applications. 
+- Integrate and use the Software in personal and commercial Unity projects, including video games, educational software, and other interactive applications.
+- Modify the Software's source code for the purpose of integration into End-User's own projects.
+- Distribute compiled applications and games that incorporate the Software, provided the Software itself is not separately extractable or redistributable from those applications.
+- Create extensions, plugins, and scripts that build upon the Software, provided they do not violate the terms of this Agreement.
 
-End-User may use the Software to create and distribute content that is compatible with the Unity game engine. This includes creating assets, scripts, and other components that can be used within Unity projects.
+## Restrictions
 
-End-User may use the Software for personal and commercial projects, including but not limited to game development, educational purposes, and other software development activities. 
+End-User may not:
 
-Each active license allows End-User to install and use the Software on a maximum of upto 3 devices associated with one specific Unity seat. End-User may not share the Software with any third party.
+- Redistribute, resell, sublicense, rent, lease, or lend the Software or its source code as a standalone product, asset, package, or tool, in original or modified form.
+- Publish, upload, or otherwise make the Software or its source code available to third parties outside of compiled application binaries.
+- Remove or alter any proprietary notices, labels, or marks on the Software.
+- Use the Software in any manner that could damage, disable, overburden, or impair it, or interfere with any other party's use of the Software.
+- Use the Software for any purpose prohibited by applicable law, including the development, design, manufacture, or production of weapons of mass destruction.
 
-You may not modify the Software or disable any licensing or control features of the Software without express permission from the Licensor. You agree that you will not attempt to reverse compile, modify, translate, or disassemble the Software in whole or in part. You can however extend the functionality of the Software by creating your own scripts and plugins, provided that such extensions do not violate the terms of this Agreement.
+End-User agrees to comply with all applicable laws and regulations in connection with use of the Software.
 
-End-User may not use the Software in any manner that could damage, disable, overburden, or impair the Software or interfere with any other party's use of the Software. 
+## Updates and License Term
 
-End-User agrees to comply with all applicable laws and regulations in connection with End-User's use of the Software.
-
-Once End-User's active license is terminated, End-User will not receive any new updates to the Software, and may not download, install, integrate or otherwise use versions of the Software released at any time hereafter, unless a license is activated.
-
-You also agree that you will not use this engine for any purposes prohibited by "Human" law, including, without limitation, the development, design, manufacture or production of nuclear, missiles, or chemical or biological weapons.
+Once End-User's active license is terminated, End-User will not receive further updates to the Software, and may not download, install, or use versions of the Software released thereafter, unless a new license is activated.
 
 ## Termination
-This EULA will terminate automatically if End-User fails to comply with any of the terms and conditions of this Agreement. In such event, End-User must immediately stop using the Software and destroy all copies of the Software in End-User's possession.
+
+This Agreement will terminate automatically if End-User fails to comply with any of its terms. Upon termination, End-User must immediately cease using the Software and destroy all copies in End-User's possession or control.
 
 ## Governing Law
-This EULA shall be governed by the laws of the country in which the Licensor is headquartered without regard to its conflict of law provisions. We reserve the right to terminate or suspend your account, without notice or liability, for any reason, including breach of the Terms and Conditions and/or EULA. 
+
+This Agreement shall be governed by the laws of the United States of America, without regard to its conflict of law provisions. Licensor reserves the right to terminate or suspend End-User's license, without notice or liability, for breach of this Agreement.
 
 ## Limitation of Liability
-MooMoo Games and its affiliates shall not be held liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your use of or inability to use the Service, any conduct or content of any third party on the Service, any content obtained from the Service, or unauthorized access or alteration of your transmissions or content. This limitation applies regardless of whether the damages are based on warranty, contract, tort (including negligence), or any other legal theory, and even if we have been advised of the possibility of such damages.
+
+To the maximum extent permitted by applicable law, MooMoo Games and its affiliates shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation loss of profits, data, goodwill, or other intangible losses, arising from End-User's use of or inability to use the Software. This limitation applies regardless of the legal theory on which a claim is based, even if MooMoo Games has been advised of the possibility of such damages.
 
 ## Disclaimer of Warranties
-The Service is provided on an "as is" and "as available" basis without any warranties of any kind, either express or implied. We do not warrant that the Service will be uninterrupted or error-free, or that any defects will be corrected. We also do not guarantee that the Service will meet your requirements.
+
+The Software is provided "as is" and "as available" without warranties of any kind, either express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement. MooMoo Games does not warrant that the Software will be uninterrupted, error-free, or free of defects.
 
 ## Waiver and Severability
-Our failure to enforce any right or provision of this EULA will not be deemed a waiver of such right or provision. In the event that any provision of these EULA is held to be invalid or unenforceable, the remaining provisions will remain in full force and effect.
+
+Failure by Licensor to enforce any provision of this Agreement shall not constitute a waiver of that provision. If any provision of this Agreement is held invalid or unenforceable, the remaining provisions shall remain in full force and effect.
 
 ## Entire Agreement
-This EULA constitutes the entire agreement between End-User and Licensor regarding the use of the Software and supersedes all prior agreements and understandings, whether written or oral.
+
+This Agreement, together with the Unity Asset Store End User License Agreement, constitutes the entire agreement between End-User and Licensor regarding the Software and supersedes all prior agreements and understandings, whether written or oral.

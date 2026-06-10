@@ -1,12 +1,12 @@
 # LoL Engine - Labour of Love Game Framework
 
-[![Unity Version](https://img.shields.io/badge/Unity-6000.4%2B-blue.svg)]() 
-[![Version](https://img.shields.io/badge/Version-0.18.0--beta-gold.svg)](CHANGELOG.md)
+[![Unity Version](https://img.shields.io/badge/Unity-6000.0%2B-blue.svg)]() 
+[![Version](https://img.shields.io/badge/Version-1.0.0--rc.5-gold.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
 
-| Project       |                                                                          Version | Notes                                             |
-|---------------|---------------------------------------------------------------------------------:|---------------------------------------------------|
-| LoL Core      | [![Version](https://img.shields.io/badge/Version-0.18.0-gold.svg)](CHANGELOG.md) | Core engine systems (Event, Resource, Pool, Time) |
+| Project       |                                                                                Version | Notes                                             |
+|---------------|---------------------------------------------------------------------------------------:|---------------------------------------------------|
+| LoL Core      | [![Version](https://img.shields.io/badge/Version-1.0.0--rc.5-gold.svg)](CHANGELOG.md) | Core engine systems (Event, Resource, Pool, Time, RNG, ModelDb, LocString, SaveSystem, TypedPoolBag, AbstractOdds) |
 
 A comprehensive Unity game development framework providing essential systems for modern game development. Built with performance, modularity, and ease of use in mind.
 
@@ -32,10 +32,18 @@ The LoL Engine provides a suite of interconnected services and tools designed to
     *   `Resource Management`: Unified asset loading with **first-class Addressables support**, Resources fallback, and object pooling integration. ([Docs](Documentation~/ResourceManagement.md))
     *   `Object Pooling`: High-performance pooling for GameObjects and components. ([Docs](Documentation~/ObjectPool.md))
     *   `Event System`: Type-safe, centralized event handling with automatic listener management. ([Docs](Documentation~/Events.md))
-    *   `Data Persistence`: Robust save/load system with slots, async operations, compression, and encryption. ([Docs](Documentation~/DataPersistence.md))
+    *   `Data Persistence`: Robust save/load system with slots, async operations, compression, encryption, **per-domain schema migration**, **corrupt-file quarantine**, and **pluggable `ISaveStore` backends** (local file + in-memory test store). ([Docs](Documentation~/DataPersistence.md))
     *   `Localization System`: Comprehensive multi-language support with dynamic switching. ([Docs](Documentation~/Localization.md))
-    *   `Input System`: Unified input handling for various devices. ([Docs](Documentation~/Input.md))
+    *   `Input`: Use Unity's Input System package directly in game code ([Docs](Documentation~/Input.md)); no engine `IInputService`.
+*   **Determinism & Content:**
+    *   `Deterministic RNG` (`IRngService`): Named, independent random streams seeded from a single root seed. Reproducible replays, testable outcomes, IL2CPP-safe. Snapshot/restore for save-game resume.
+    *   `ModelDb`: Static string-keyed content registry (`ModelId → canonical object`). IL2CPP/AOT-safe explicit registration. Thread-safe reads post-bootstrap.
+    *   `AbstractModel`: Canonical/mutable boundary base class. Prevents silent template mutation. `AssertMutable()` / `AssertCanonical()` / `MutableClone()` enforce the template-vs-instance split.
+    *   `LocString` + `DynamicVar`: Structured localized text with runtime variable substitution. Tokens `{varName}` / `{varName:specifier}` resolved at display time. Custom formatters via `ILocStringFormatter`. Upgrade-preview support and CI validation via `LocValidator`.
+    *   `TestMode`: Static flag + assertion helpers for automated test runs. RNG override injection (Editor/test builds) lets tests force specific roll outcomes.
 *   **Utilities & Advanced:**
+    *   `TypedPoolBag<TKey, TItem>`: Genre-neutral typed pool with per-bucket shuffle, `IsAllowed` filter, automatic cascade on exhaustion, and loud `PoolExhaustedException` on full depletion. Deterministic with injected `Rng`.
+    *   `AbstractOdds<TOutcome>` / `AntiPityOdds<T>`: Probabilistic systems as first-class objects with persistent `CurrentValue` counters. Anti-pity mechanics (pity target weight grows on miss, resets on hit) with full save/load round-trip support.
     *   `Time Management`: Pause, slow-motion, and custom time scaling.
     *   `Notification System`: In-game messaging and alerts.
     *   Encryption & Compression services.
@@ -56,13 +64,42 @@ Independent services
 
 ## Requirements
 
-- **Unity**: 6000.3 or later
-- **Dependencies**: 
-    *   `com.unity.inputsystem` 
-    *   `com.unity.nuget.newtonsoft-json`
-    *   `com.unity.addressables` - Integrated for advanced asset loading 
+- **Unity**: 6000.0 or later
+
+### Platform Support
+
+| Platform | Status |
+|---|---|
+| Windows / macOS / Linux (Mono & IL2CPP) | ✅ Supported |
+| iOS / Android (IL2CPP) | ✅ Supported — read [Documentation~/IL2CPP.md](Documentation~/IL2CPP.md) before shipping (managed code stripping) |
+| WebGL | ❌ Not supported in 1.0 (async save/load and the file log sink use background threads, which WebGL lacks) |
+
+The package ships a root-level `link.xml` that protects engine assemblies from IL2CPP
+managed code stripping. Game-side `IServiceRegistrar` implementations and string-named
+custom services need their own `[Preserve]` — see [Documentation~/IL2CPP.md](Documentation~/IL2CPP.md).
+
+### Required Dependencies (declared in `package.json`)
+
+| Package | Version | Purpose |
+|---|---|---|
+| `com.unity.addressables` | 2.5.0+ | Asset loading via `IResourceService` |
+| `com.unity.nuget.newtonsoft-json` | 3.2.1+ | JSON serialization for `ISaveSystem` |
+
+### Optional Dependencies (graceful degradation)
+
+| Package | If installed | If absent |
+|---|---|---|
+| `com.unity.inputsystem` | Use in game code with `InputActionAsset` / `PlayerInput` | Not required for engine init or bundled demo scenes |
+| `com.unity.textmeshpro` | Sample scene UI uses TMP labels | Falls back to legacy `UnityEngine.UI.Text` |
+
+> ℹ️ The compile-time symbol `ENABLE_INPUT_SYSTEM` (defined automatically by Unity when the Input System package is present) gates input-related code.
 
 ## Installation
+
+### From Unity Package Manager (Recommended)
+1.  Open **Window > Package Manager**.
+2.  Add LoL Engine from the release source provided for this UPM package.
+3.  Confirm the package appears as **LoL Engine** in Package Manager.
 
 ### From Local Disk (For Development/Testing)
 1.  Download or clone the package repository to your local machine.
@@ -146,8 +183,8 @@ Independent services
 4.  **Basic Audio Usage:**
     (AudioService is enabled by default in `ServiceConfiguration.CreateDefault()` - just ensure an `AudioConfig` is created and assigned.)
     ```csharp
-    using LoLEngine.Scripts.Core.Audio.Extensions;
-    using LoLEngine.Scripts.Core.Audio.Data; // For PlayOptions
+    using LoLEngine.Core.Audio.Extensions;
+    using LoLEngine.Core.Audio.Data; // For PlayOptions
 
     // Simple 2D sound playback from a MonoBehaviour
     this.PlaySound("UI_Click");
@@ -169,8 +206,8 @@ Independent services
     
     **String-Based Loading (Traditional):**
     ```csharp
-    using LoLEngine.Scripts.Core.ServiceManagement.Service;
-    using LoLEngine.Scripts.Core.ResourceManagement.Interfaces;
+    using LoLEngine.Core.ServiceManagement.Service;
+    using LoLEngine.Core.ResourceManagement.Interfaces;
     using UnityEngine; // For AudioClip
     using System.Threading.Tasks;
 
@@ -233,14 +270,14 @@ Independent services
     (EventManager is enabled by default in `ServiceConfiguration.CreateDefault()`.)
     ```csharp
     // Define an event
-    public class PlayerScoreChangedEvent : LoLEngine.Scripts.Core.Events.GameEvent
+    public class PlayerScoreChangedEvent : LoLEngine.Core.Events.GameEvent
     {
         public int NewScore { get; set; }
     }
 
     // Listener
-    using LoLEngine.Scripts.Core.Events.Interfaces; // For IEventListener
-    using LoLEngine.Scripts.Core.Events.Extensions; // For EventStartListening
+    using LoLEngine.Core.Events.Interfaces; // For IEventListener
+    using LoLEngine.Core.Events.Extensions; // For EventStartListening
     using UnityEngine;
 
     public class ScoreDisplay : MonoBehaviour, IEventListener<PlayerScoreChangedEvent>
@@ -374,6 +411,9 @@ Refer to the detailed documentation for each service (linked in the Features sec
 
 ## Documentation
 
+- **[Third Party Notices](<Third Party Notices.md>)** — Unity package dependencies, optional packages, and sample attributions
+- **[Input](Documentation~/Input.md)** — Unity Input System in game code (no engine `IInputService`)
+
 ### Core Architecture
 The framework uses a **Service Locator Pattern** with dependency injection:
 
@@ -403,11 +443,18 @@ Services are configured via ScriptableObject assets in `Resources/Configs/`:
 - `DefaultResourceManagementConfig`: Resource Management Settings (includes Addressables configuration)
 - `DefaultSaveConfig`: Save Load Settings
 
+## Next Steps
+
+➡️ **New here? Read [`Documentation~/01_QUICKSTART.md`](Documentation~/01_QUICKSTART.md)** — a 5-minute walkthrough that takes you from install to a working sound playing.
+
+After the quickstart, the documentation index ([`Documentation~/README.md`](Documentation~/README.md)) covers every system in depth.
+
 ## Support
 
-- **Website**: [https://moomoo.games](https://moomoo.games) 
-- **Email**: Contact via website
+- **Website**: [https://moomoo.games](https://moomoo.games)
+- **Email**: alien.tardigrade@gmail.com
+- **Documentation**: [Documentation~/README.md](Documentation~/README.md)
+
 ---
 
 *Made with ❤️ by MooMoo Games*
-
