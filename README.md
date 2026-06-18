@@ -1,12 +1,12 @@
 # LoL Engine - Labour of Love Game Framework
 
 [![Unity Version](https://img.shields.io/badge/Unity-6000.0%2B-blue.svg)]() 
-[![Version](https://img.shields.io/badge/Version-1.0.0--rc.5-gold.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-1.0.0--rc.9-gold.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-green.svg)](LICENSE.md)
 
-| Project       |                                                                                Version | Notes                                             |
-|---------------|---------------------------------------------------------------------------------------:|---------------------------------------------------|
-| LoL Core      | [![Version](https://img.shields.io/badge/Version-1.0.0--rc.5-gold.svg)](CHANGELOG.md) | Core engine systems (Event, Resource, Pool, Time, RNG, ModelDb, LocString, SaveSystem, TypedPoolBag, AbstractOdds) |
+| Project       |                                                                               Version | Notes                                             |
+|---------------|--------------------------------------------------------------------------------------:|---------------------------------------------------|
+| LoL Core      | [![Version](https://img.shields.io/badge/Version-1.0.0--rc.9-gold.svg)](CHANGELOG.md) | Core engine systems (Event, Resource, Pool, Time, RNG, ModelDb, LocString, SaveSystem, TypedPoolBag, AbstractOdds) |
 
 A comprehensive Unity game development framework providing essential systems for modern game development. Built with performance, modularity, and ease of use in mind.
 
@@ -452,7 +452,7 @@ After the quickstart, the documentation index ([`Documentation~/README.md`](Docu
 ## Support
 
 - **Website**: [https://moomoo.games](https://moomoo.games)
-- **Email**: alien.tardigrade@gmail.com
+- **Email**: unitysupport@moomoo.games
 - **Documentation**: [Documentation~/README.md](Documentation~/README.md)
 
 ---

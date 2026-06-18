@@ -5,6 +5,36 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-rc.9] - 2026-06-15
+### Fixed
+- **Package failed to compile on Unity 6 (`CS7036`) — regression introduced in `1.0.0-rc.7`.** The rc.7 change dropped the **required** `FindObjectsSortMode` argument from every `FindObjectsByType` call on the mistaken premise that a single-argument `FindObjectsByType<T>(FindObjectsInactive)` overload exists; it does not — both Unity overloads require `sortMode`. Restored `FindObjectsSortMode.None` on all 8 call sites (`RegulatorSingleton`, `RuntimeDependencyValidator` ×3, `ImprovedDependencyChecker` ×2, `RuntimePlayModeSingletonTests` ×2), matching the pre-rc.7 behavior. **`1.0.0-rc.7` and `1.0.0-rc.8` do not compile and should not be used** — upgrade to this release. No `#if` version gating is needed: the two-argument signature is stable across the entire supported range (Unity 6000.0+).
+
+### Changed
+- **Notification System sample now surfaces its Console output by default.** `NotificationExample.Start()` lowers the engine log threshold to `LogLevel.Info` (`LoLLogger.LOGLevel`) so the sample's `subscribed…`/`received…` messages are visible out of the box; previously they were hidden because the engine threshold defaults to `Warning`. Sample-only convenience — your own game manages `LoLLogger.LOGLevel` as it sees fit.
+
+## [1.0.0-rc.8] - 2026-06-15
+### Added
+- **Notification System sample upgraded to an interactive scene (`Samples~/NotificationSystem/`).** New `Notifications.unity` scene with bundled `NotificationSampleServiceConfiguration` (Notification Service enabled), a `NotificationExample` controller (auto-save, damage, power-up, level conditions, simple, clear) wired to UI buttons, a standard `README.md`, and a `12_NotificationSample.cs` context-menu reference under `Samples~/Scripts/`. `SampleSceneBuilder` gains a `CreateScene_Notification` step plus a **Tools → LoL Engine → Create Sample Scenes (Notification Only)** menu item / `CreateNotificationSceneBatch` entry that regenerates only this scene. The four existing typed notification classes are unchanged. Replaces the old script-only `notification-system-usage-readme.md`.
+
+## [1.0.0-rc.7] - 2026-06-14
+### Fixed
+- **Unity 6 `CS0618` deprecation warnings eliminated.** Dropped the deprecated `FindObjectsSortMode` parameter from all `FindObjectsByType` calls (`RuntimeDependencyValidator`, `ImprovedDependencyChecker`, `RegulatorSingleton`, singleton tests) — the parameterless `FindObjectsByType<T>(FindObjectsInactive.Exclude)` overload is the forward-compatible form in Unity 6.0+, so no version gating or `EntityId` migration is needed (`GetInstanceID()` is not deprecated).
+  > ⚠️ **Correction:** this change was incorrect and broke compilation (`CS7036`) — no single-argument `FindObjectsByType<T>(FindObjectsInactive)` overload exists; `sortMode` is required. `1.0.0-rc.7` and `1.0.0-rc.8` do not compile. Fixed in the next release (see Unreleased › Fixed).
+- **Localization service no longer warns about its own `[Obsolete]` API.** Extracted a non-obsolete internal `LookupTemplate()` primitive so `Format()` and `GetTextFormatted()` no longer call the obsolete `GetText()`; the genuine legacy bridges (`LocalizationExtensions`, `LocalizedText`) and the legacy test fixture wrap their intentional obsolete calls in `#pragma warning disable CS0618`. These bridges take `params object[]`/`Dictionary<string,string>` and cannot map onto the numeric `LocString`/`DynamicVar` API without breaking public signatures. No behavior change.
+
+## [1.0.0-rc-6] - 2026-06-10
+### Added
+- **Deterministic RNG sample (`Samples~/Rng/`).** New interactive scene `RngDemo.unity` with bundled `RngSampleServiceConfiguration` (Rng Service enabled), `RngExample` controller (d100, crit check, map shuffle, weighted loot, pity rarity, seed replay), README, and `SampleSceneBuilder` wiring. Listed in `package.json` samples.
+- **`Tools → LoL Engine → Import Sample → Deterministic RNG (Override)`** — force re-import with `OverridePreviousImports` when Package Manager leaves a partial sample (missing scene/README).
+
+### Changed
+- **`ImprovedGameInitializer.SetupLogging()`** — uses the more verbose of `LoLEngineConfig.EngineLogLevel` and the scene's `logLevel` field so demo scenes can show Info-level init logs when the project config is Warning.
+
+### Fixed
+- **Getting Started sample showed only a ResourcePathConfig warning, no service-init logs.**  
+- **RNG sample missing scene/README after Package Manager import.** Regenerated all `Samples~/Rng/**/*.meta` GUIDs  
+- **Localization sample namespace shadowing `LocString`.** 
+
 ## [1.0.0-rc-5] - 2026-06-09
 ### Fixed
 - **`link.xml` moved from `Runtime/` to the package root.** Unity only honors `link.xml` files at a package's root folder (or under the project's `Assets/`); at `Runtime/link.xml` it was silently ignored, so IL2CPP builds at Managed Stripping Level Medium/High stripped the reflection-only constructors of every plain-C# engine service. Symptom: a wall of `Cannot register null service of type I…` at boot with no exception (confirmed in a consuming project at High stripping). Projects on rc.4 or earlier must preserve the four `LoLEngine-*` assemblies in their own `Assets/link.xml`.
