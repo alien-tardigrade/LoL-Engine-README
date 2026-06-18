@@ -1,0 +1,3401 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Modular Unity 6 game framework — audio, saves, events, localization, deterministic RNG, and more.">
+      
+      
+        <meta name="author" content="MooMoo Games">
+      
+      
+        <link rel="canonical" href="https://alien-tardigrade.github.io/LoL-Engine-README/ResourceManagement/">
+      
+      
+        <link rel="prev" href="../LOCALIZATION_MIGRATION/">
+      
+      
+        <link rel="next" href="../Input/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Resource Management - LoL Engine Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#resource-management-system" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="LoL Engine Documentation" class="md-header__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LoL Engine Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Resource Management
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="LoL Engine Documentation" class="md-nav__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LoL Engine Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_QUICKSTART/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart (5 min)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Full Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-SERVICES-CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHEATSHEET-How-To-Use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceLocator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Locator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImprovedGameInitializer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Initializer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceDependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AudioHelpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio Helpers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DataPersistence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Persistence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Serialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCALIZATION_MIGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization Migration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assetreference-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AssetReference Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thread-safety-memory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread Safety &amp; Memory Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loading Assets
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Loading Assets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#string-based-loading-traditional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        String-Based Loading (Traditional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assetreference-loading-recommended-type-safe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AssetReference Loading (Recommended - Type-Safe)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-pooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Pooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versioning-and-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versioning and Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integrating-in-your-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integrating in Your Game
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Integrating in Your Game">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-integration-current-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Integration (Current System)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-custom-game-init-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced: Custom Game Init Logic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-configure-memory-budgets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Configure Memory Budgets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-organize-your-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Organize Your Resources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-take-advantage-of-object-pooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Take Advantage of Object Pooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-set-up-asset-versioning-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Set Up Asset Versioning (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thread-safety-handle-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread Safety &amp; Handle Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thread Safety &amp; Handle Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enhanced-thread-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enhanced Thread Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handle-leak-prevention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handle Leak Prevention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debugging-handle-leaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debugging Handle Leaks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Pitfalls
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#addressables-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressables Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Addressables Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-addressables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting Up Addressables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-priority" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loading priority
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#addressables-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressables Benefits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-from-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration from Resources
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-asset-loaders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom asset loaders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-budget-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Budget Tuning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vr-specific-resource-management-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VR-SPECIFIC RESOURCE MANAGEMENT RECOMMENDATIONS
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VR-SPECIFIC RESOURCE MANAGEMENT RECOMMENDATIONS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#critical-vr-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critical VR Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asset-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asset Not Found
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slow-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slow Loading
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Input/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilities
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ObjectPool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Pool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TimeManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GameState/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HelperUtilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helper Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Logger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IL2CPP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IL2CPP & Code Stripping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assetreference-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AssetReference Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thread-safety-memory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread Safety &amp; Memory Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loading Assets
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Loading Assets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#string-based-loading-traditional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        String-Based Loading (Traditional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assetreference-loading-recommended-type-safe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AssetReference Loading (Recommended - Type-Safe)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-pooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Pooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versioning-and-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versioning and Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integrating-in-your-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integrating in Your Game
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Integrating in Your Game">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-integration-current-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Integration (Current System)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-custom-game-init-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced: Custom Game Init Logic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-configure-memory-budgets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Configure Memory Budgets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-organize-your-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Organize Your Resources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-take-advantage-of-object-pooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Take Advantage of Object Pooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-set-up-asset-versioning-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Set Up Asset Versioning (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thread-safety-handle-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread Safety &amp; Handle Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thread Safety &amp; Handle Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enhanced-thread-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enhanced Thread Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handle-leak-prevention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handle Leak Prevention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debugging-handle-leaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debugging Handle Leaks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Pitfalls
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#addressables-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressables Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Addressables Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-addressables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting Up Addressables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-priority" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loading priority
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#addressables-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressables Benefits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-from-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration from Resources
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-asset-loaders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom asset loaders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-budget-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Budget Tuning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vr-specific-resource-management-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VR-SPECIFIC RESOURCE MANAGEMENT RECOMMENDATIONS
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VR-SPECIFIC RESOURCE MANAGEMENT RECOMMENDATIONS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#critical-vr-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critical VR Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asset-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asset Not Found
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slow-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slow Loading
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="resource-management-system">Resource Management System<a class="headerlink" href="#resource-management-system" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The Resource Management System is a robust framework for loading, caching, and managing game assets in Unity projects built with the LoL Engine. It provides a unified interface for handling different asset types and loading methods, efficient memory management, object pooling, and optional asset versioning and updates.</p>
+<h2 id="key-features">Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Unified Asset Loading API</strong> - Load assets from Resources, AssetBundles, or Addressables with a single API</li>
+<li><strong>AssetReference Support</strong> - Type-safe asset loading with Unity's AssetReference system</li>
+<li><strong>Thread-Safe Operations</strong> - Production-ready thread safety with ReaderWriterLockSlim for concurrent access</li>
+<li><strong>Handle Leak Prevention</strong> - Comprehensive Addressables handle tracking prevents memory leaks</li>
+<li><strong>Addressables Integration</strong> - First-class support for Unity Addressables with automatic initialization</li>
+<li><strong>Asynchronous Loading</strong> - Full support for asynchronous operations using Tasks</li>
+<li><strong>Reference Counting</strong> - Intelligent asset caching with reference counting</li>
+<li><strong>Memory Management</strong> - Budget-based memory management with asset unloading</li>
+<li><strong>Object Pooling</strong> - Efficient GameObject recycling to reduce instantiation overhead</li>
+<li><strong>Asset Versioning</strong> - Track asset versions and dependencies</li>
+<li><strong>Update System</strong> - Download and manage asset updates at runtime</li>
+<li><strong>Event Notifications</strong> - Integration with the engine's event system</li>
+<li><strong>Editor Tools</strong> - Asset versioning and management utilities</li>
+</ul>
+<h3 id="assetreference-features">AssetReference Features<a class="headerlink" href="#assetreference-features" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Type Safety</strong>: Compile-time validation of asset references</li>
+<li><strong>Inspector Integration</strong>: Drag-and-drop asset assignment in Unity Inspector</li>
+<li><strong>Automatic Validation</strong>: <code>RuntimeKeyIsValid()</code> checks prevent invalid references</li>
+<li><strong>Seamless Integration</strong>: Works with existing ResourceService caching and events</li>
+<li><strong>Memory Management</strong>: Proper release handling for AssetReference-loaded assets</li>
+</ul>
+<h3 id="thread-safety-memory-management">Thread Safety &amp; Memory Management<a class="headerlink" href="#thread-safety-memory-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Thread-Safe Handle Tracking</strong>: All Addressables AsyncOperationHandle objects are tracked thread-safely</li>
+<li><strong>Leak Prevention</strong>: Comprehensive handle lifecycle management prevents memory leaks</li>
+<li><strong>Concurrent Access</strong>: ReaderWriterLockSlim enables multiple concurrent readers for better performance</li>
+<li><strong>Resource Cleanup</strong>: Automatic handle cleanup during service shutdown</li>
+<li><strong>Handle Monitoring</strong>: Debug handle counts and detect potential leaks early</li>
+</ul>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
+<p>The Resource Management System consists of several key components:</p>
+<ol>
+<li><strong>Resource Service</strong> - The main entry point for loading and managing assets</li>
+<li><strong>Resource Loaders</strong> - Strategy pattern for different loading methods</li>
+<li><strong>Resource Pool</strong> - GameObject pooling for efficient reuse</li>
+<li><strong>Version Catalog</strong> - Tracks asset versions and updates</li>
+<li><strong>Asset Updater</strong> - Handles downloading and applying updates</li>
+<li><strong>Configuration</strong> - Configurable settings for resource management</li>
+</ol>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<h3 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Enable Resource Service</strong> in your ServiceConfiguration asset:</li>
+<li>
+<p>[x] Enable Resource Service</p>
+</li>
+<li>
+<p><strong>Create ResourceManagementConfig</strong> asset:</p>
+</li>
+<li>Right-click in Project → Create → LoLEngine → Config → Resource Management Config</li>
+<li>Save at: <code>Assets/[YourProject]/Resources/Configs/DefaultResourceManagementConfig.asset</code></li>
+<li>
+<p><strong>CRITICAL</strong>: Must be in <code>Resources/Configs/</code> folder for auto-discovery</p>
+</li>
+<li>
+<p><strong>Configure ResourceManagementConfig Settings</strong>:</p>
+</li>
+<li><strong>enableAddressables</strong> (true) - Use Addressables as primary loading system</li>
+<li><strong>preferredSource</strong> (Addressables) - Which loader to try first</li>
+<li><strong>fallbackToResources</strong> (true) - Fall back to Resources folder if Addressables fails</li>
+<li><strong>maxMemoryBudgetMB</strong> (512f) - Maximum cached assets memory in MB<ul>
+<li><strong>VR RECOMMENDATION</strong>: Set to 256MB or lower for VR projects</li>
+</ul>
+</li>
+<li><strong>remoteCatalogUrl</strong> - URL for version catalog (for asset updates)</li>
+<li>
+<p><strong>assetDownloadSubPath</strong> - Where to download updated assets</p>
+</li>
+<li>
+<p><strong>Add ImprovedGameInitializer</strong> to your first scene:</p>
+</li>
+<li>Assign ServiceConfiguration asset</li>
+<li>Services auto-register via ConfigurableServiceInitializer</li>
+</ol>
+<h3 id="configuration-details">Configuration Details<a class="headerlink" href="#configuration-details" title="Permanent link">&para;</a></h3>
+<p><strong>ResourceManagementConfig Fields</strong> (actual implementation):</p>
+<div class="highlight"><pre><span></span><code><span class="na">[Header(&quot;Asset Updater Settings&quot;)]</span>
+<span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">remoteCatalogUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://moomoo.games/LoLEngine/version.json&quot;</span><span class="p">;</span>
+<span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">localCatalogFileName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;version_catalog.json&quot;</span><span class="p">;</span>
+<span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">assetDownloadSubPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;UpdatedAssets&quot;</span><span class="p">;</span>
+
+<span class="na">[Header(&quot;Addressables Settings&quot;)]</span>
+<span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">enableAddressables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="k">public</span><span class="w"> </span><span class="n">ResourceSource</span><span class="w"> </span><span class="n">preferredSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ResourceSource</span><span class="p">.</span><span class="n">Addressables</span><span class="p">;</span>
+<span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">fallbackToResources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+
+<span class="na">[Header(&quot;Resource Service Settings&quot;)]</span>
+<span class="k">public</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">maxMemoryBudgetMB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">512f</span><span class="p">;</span><span class="w">  </span><span class="c1">// Set to 0 or negative for unlimited</span>
+</code></pre></div>
+<p><strong>Path Requirements</strong>:
+- Config MUST be at: <code>Assets/Resources/Configs/DefaultResourceManagementConfig.asset</code>
+- Or configure custom path in ResourcePathConfig asset
+- Engine auto-loads config from Resources folder on initialization</p>
+<h3 id="loading-assets">Loading Assets<a class="headerlink" href="#loading-assets" title="Permanent link">&para;</a></h3>
+<h4 id="string-based-loading-traditional">String-Based Loading (Traditional)<a class="headerlink" href="#string-based-loading-traditional" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ResourceManagement.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyGameController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IResourceService</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">AreServicesReady</span><span class="p">())</span>
+<span class="w">            </span><span class="n">OnServicesReady</span><span class="p">();</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">WaitForServices</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesReady</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesTimeout</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesReady</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_resourceService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IResourceService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesTimeout</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&quot;Timed out waiting for services&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Synchronous loading (simple assets)</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadTexture</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Texture2D</span><span class="w"> </span><span class="n">texture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">Load</span><span class="o">&lt;</span><span class="n">Texture2D</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Textures/MyTexture&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">texture</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Use the texture</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Asynchronous loading (recommended)</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadModelAsync</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">GameObject</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">GameObject</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Models/MyModel&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">model</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Use the model</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// With options</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadWithOptions</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ResourceLoadOptions</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Priority</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ResourceLoadPriority</span><span class="p">.</span><span class="n">High</span><span class="p">,</span>
+<span class="w">            </span><span class="n">KeepInMemory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<span class="w">            </span><span class="n">FallbackIds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;Fallback1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Fallback2&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="n">AudioClip</span><span class="w"> </span><span class="n">sound</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">AudioClip</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Sounds/MySound&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="assetreference-loading-recommended-type-safe">AssetReference Loading (Recommended - Type-Safe)<a class="headerlink" href="#assetreference-loading-recommended-type-safe" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ResourceManagement.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="cp">#if UNITY_ADDRESSABLES</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine.AddressableAssets</span><span class="p">;</span>
+<span class="cp">#endif</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">AssetReferenceGameController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="na">[Header(&quot;Asset References - Drag assets here in Inspector&quot;)]</span>
+<span class="cp">#if UNITY_ADDRESSABLES</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">AssetReference</span><span class="w"> </span><span class="n">playerPrefabRef</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">AssetReference</span><span class="w"> </span><span class="n">backgroundMusicRef</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">AssetReference</span><span class="w"> </span><span class="n">uiTextureRef</span><span class="p">;</span>
+<span class="cp">#endif</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IResourceService</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">AreServicesReady</span><span class="p">())</span>
+<span class="w">            </span><span class="n">OnServicesReady</span><span class="p">();</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">WaitForServices</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesReady</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesTimeout</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesReady</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_resourceService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IResourceService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesTimeout</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&quot;Timed out waiting for services&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="cp">#if UNITY_ADDRESSABLES</span>
+<span class="w">    </span><span class="c1">// Type-safe AssetReference loading</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadPlayerPrefab</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">playerPrefabRef</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">playerPrefabRef</span><span class="p">.</span><span class="n">RuntimeKeyIsValid</span><span class="p">())</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">GameObject</span><span class="w"> </span><span class="n">playerPrefab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">GameObject</span><span class="o">&gt;</span><span class="p">(</span><span class="n">playerPrefabRef</span><span class="p">);</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">playerPrefab</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Instantiate player at spawn point</span>
+<span class="w">                </span><span class="n">Instantiate</span><span class="p">(</span><span class="n">playerPrefab</span><span class="p">,</span><span class="w"> </span><span class="n">Vector3</span><span class="p">.</span><span class="n">zero</span><span class="p">,</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// AssetReference with options</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadBackgroundMusic</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">backgroundMusicRef</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">backgroundMusicRef</span><span class="p">.</span><span class="n">RuntimeKeyIsValid</span><span class="p">())</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ResourceLoadOptions</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">KeepInMemory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span><span class="w">  </span><span class="c1">// Keep music in memory</span>
+<span class="w">                </span><span class="n">Priority</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ResourceLoadPriority</span><span class="p">.</span><span class="n">High</span>
+<span class="w">            </span><span class="p">};</span>
+
+<span class="w">            </span><span class="n">AudioClip</span><span class="w"> </span><span class="n">music</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">AudioClip</span><span class="o">&gt;</span><span class="p">(</span><span class="n">backgroundMusicRef</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">);</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">music</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Play background music</span>
+<span class="w">                </span><span class="kt">var</span><span class="w"> </span><span class="n">audioSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetComponent</span><span class="o">&lt;</span><span class="n">AudioSource</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">                </span><span class="n">audioSource</span><span class="p">.</span><span class="n">clip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">music</span><span class="p">;</span>
+<span class="w">                </span><span class="n">audioSource</span><span class="p">.</span><span class="n">Play</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Proper cleanup with AssetReference</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Release AssetReference resources</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_resourceService</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">playerPrefabRef</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">Release</span><span class="p">(</span><span class="n">playerPrefabRef</span><span class="p">);</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">backgroundMusicRef</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">Release</span><span class="p">(</span><span class="n">backgroundMusicRef</span><span class="p">);</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">uiTextureRef</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">Release</span><span class="p">(</span><span class="n">uiTextureRef</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="cp">#endif</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="object-pooling">Object Pooling<a class="headerlink" href="#object-pooling" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ResourceManagement.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">EnemySpawner</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">enemyPrefabId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Prefabs/Enemy&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IResourceService</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">AreServicesReady</span><span class="p">())</span>
+<span class="w">            </span><span class="n">OnServicesReady</span><span class="p">();</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">WaitForServices</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesReady</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesTimeout</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesReady</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_resourceService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IResourceService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesTimeout</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&quot;Timed out waiting for services&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Spawn an enemy</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SpawnEnemy</span><span class="p">(</span><span class="n">Vector3</span><span class="w"> </span><span class="n">position</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">GameObject</span><span class="w"> </span><span class="n">enemy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">Instantiate</span><span class="p">(</span><span class="n">enemyPrefabId</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// The enemy is either newly instantiated or recycled from the pool</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Return an enemy to the pool</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">RecycleEnemy</span><span class="p">(</span><span class="n">GameObject</span><span class="w"> </span><span class="n">enemy</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">Recycle</span><span class="p">(</span><span class="n">enemy</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// The enemy is now inactive and back in the pool</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="versioning-and-updates">Versioning and Updates<a class="headerlink" href="#versioning-and-updates" title="Permanent link">&para;</a></h3>
+<p><strong>Note</strong>: Asset versioning and updates are optional advanced features. Most games won't need this.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ResourceManagement.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">GameUpdater</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IAssetUpdaterService</span><span class="w"> </span><span class="n">_assetUpdater</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">AreServicesReady</span><span class="p">())</span>
+<span class="w">            </span><span class="n">OnServicesReady</span><span class="p">();</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">WaitForServices</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesReady</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesTimeout</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesReady</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// AssetUpdaterService is registered under its interface when enabled in ServiceConfiguration.</span>
+<span class="w">        </span><span class="n">_assetUpdater</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAssetUpdaterService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_assetUpdater</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogWarning</span><span class="p">(</span><span class="s">&quot;IAssetUpdaterService not available — enable it in ServiceConfiguration.&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesTimeout</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&quot;Timed out waiting for services&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Check for updates</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">CheckForUpdates</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">updateCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_assetUpdater</span><span class="p">.</span><span class="n">CheckForUpdates</span><span class="p">();</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">updateCount</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Found {updateCount} updates available&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Download all updates</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">DownloadUpdates</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="n">IProgress</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">progress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">success</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_assetUpdater</span><span class="p">.</span><span class="n">DownloadAllUpdates</span><span class="p">(</span><span class="n">progress</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Updates downloaded successfully&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="event-handling">Event Handling<a class="headerlink" href="#event-handling" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Events.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Events.Providers</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ResourceManagement.Events</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ResourceMonitor</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span><span class="p">,</span>
+<span class="w">    </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">ResourceEvents</span><span class="p">.</span><span class="n">ResourceLoaded</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">ResourceEvents</span><span class="p">.</span><span class="n">ResourceLoadFailed</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">AreServicesReady</span><span class="p">())</span>
+<span class="w">            </span><span class="n">OnServicesReady</span><span class="p">();</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">WaitForServices</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesReady</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesTimeout</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesReady</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">EventStartListening</span><span class="o">&lt;</span><span class="n">ResourceEvents</span><span class="p">.</span><span class="n">ResourceLoaded</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">EventStartListening</span><span class="o">&lt;</span><span class="n">ResourceEvents</span><span class="p">.</span><span class="n">ResourceLoadFailed</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesTimeout</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&quot;Timed out waiting for services&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDisable</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">EventStopListening</span><span class="o">&lt;</span><span class="n">ResourceEvents</span><span class="p">.</span><span class="n">ResourceLoaded</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">EventStopListening</span><span class="o">&lt;</span><span class="n">ResourceEvents</span><span class="p">.</span><span class="n">ResourceLoadFailed</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnGameEvent</span><span class="p">(</span><span class="n">ResourceEvents</span><span class="p">.</span><span class="n">ResourceLoaded</span><span class="w"> </span><span class="n">evt</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Resource loaded: {evt.ResourceId} of type {evt.AssetType.Name}&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnGameEvent</span><span class="p">(</span><span class="n">ResourceEvents</span><span class="p">.</span><span class="n">ResourceLoadFailed</span><span class="w"> </span><span class="n">evt</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">$&quot;Resource load failed: {evt.ResourceId}, Error: {evt.Error}&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="integrating-in-your-game">Integrating in Your Game<a class="headerlink" href="#integrating-in-your-game" title="Permanent link">&para;</a></h2>
+<h3 id="automatic-integration-current-system">Automatic Integration (Current System)<a class="headerlink" href="#automatic-integration-current-system" title="Permanent link">&para;</a></h3>
+<p>The Resource Management System integrates automatically via <strong>ImprovedGameInitializer</strong> and <strong>ServiceConfiguration</strong>.</p>
+<p><strong>No manual service registration needed!</strong> Services auto-register when you:</p>
+<ol>
+<li>Enable "Enable Resource Service" in ServiceConfiguration asset</li>
+<li>Create ResourceManagementConfig at <code>Assets/Resources/Configs/DefaultResourceManagementConfig.asset</code></li>
+<li>Add ImprovedGameInitializer to your scene</li>
+</ol>
+<p><strong>That's it!</strong> The engine handles all service initialization automatically.</p>
+<h3 id="advanced-custom-game-init-logic">Advanced: Custom Game Init Logic<a class="headerlink" href="#advanced-custom-game-init-logic" title="Permanent link">&para;</a></h3>
+<p>If you need custom logic during initialization:</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.GameInitializer</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ResourceManagement.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyGameController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IResourceService</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Wait for automatic service initialization</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">AreServicesReady</span><span class="p">())</span>
+<span class="w">            </span><span class="n">OnServicesReady</span><span class="p">();</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">WaitForServices</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesReady</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesTimeout</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesReady</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Access services after automatic initialization</span>
+<span class="w">        </span><span class="n">_resourceService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IResourceService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Your custom initialization logic here</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;ResourceService is ready!&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesTimeout</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&quot;Services failed to initialize&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="step-1-configure-memory-budgets">Step 1: Configure Memory Budgets<a class="headerlink" href="#step-1-configure-memory-budgets" title="Permanent link">&para;</a></h3>
+<p>Adjust memory budgets based on your target platform:</p>
+<p><strong>Desktop/Console</strong>: 512MB-1GB (default 512MB)
+<strong>Mobile</strong>: 256MB-384MB
+<strong>VR (Quest)</strong>: 128MB-256MB <strong>CRITICAL for VR</strong>
+<strong>VR (PC)</strong>: 256MB-384MB</p>
+<p>Edit in ResourceManagementConfig asset or via code:</p>
+<div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesReady</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_resourceService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IResourceService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Platform-specific memory budgets</span>
+<span class="w">    </span><span class="cp">#if UNITY_STANDALONE || UNITY_EDITOR</span>
+<span class="w">        </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">SetMemoryBudget</span><span class="p">(</span><span class="mi">512</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span><span class="w"> </span><span class="c1">// 512MB desktop</span>
+<span class="w">    </span><span class="cp">#elif UNITY_ANDROID || UNITY_IOS</span>
+<span class="w">        </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">SetMemoryBudget</span><span class="p">(</span><span class="mi">256</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span><span class="w"> </span><span class="c1">// 256MB mobile</span>
+<span class="w">    </span><span class="cp">#endif</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="step-2-organize-your-resources">Step 2: Organize Your Resources<a class="headerlink" href="#step-2-organize-your-resources" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Put assets in the appropriate folders:</li>
+<li><code>Resources</code> folder for direct loading</li>
+<li>AssetBundles for grouped loading</li>
+<li>
+<p><strong>Addressables</strong> for modern async loading with remote capabilities</p>
+</li>
+<li>
+<p><strong>Set up Addressables</strong> (recommended):</p>
+</li>
+<li>Window &gt; Asset Management &gt; Addressables &gt; Groups</li>
+<li>Mark assets as Addressable</li>
+<li>
+<p>Set meaningful Address names (e.g., "Audio/BackgroundMusic01")</p>
+</li>
+<li>
+<p>Use consistent naming conventions for resource IDs</p>
+</li>
+</ol>
+<h3 id="step-4-take-advantage-of-object-pooling">Step 4: Take Advantage of Object Pooling<a class="headerlink" href="#step-4-take-advantage-of-object-pooling" title="Permanent link">&para;</a></h3>
+<p>For frequently instantiated and destroyed objects (bullets, enemies, particles, etc.), use the pooling system to improve performance.</p>
+<h3 id="step-5-set-up-asset-versioning-optional">Step 5: Set Up Asset Versioning (Optional)<a class="headerlink" href="#step-5-set-up-asset-versioning-optional" title="Permanent link">&para;</a></h3>
+<p>If you need asset updates:</p>
+<ol>
+<li>Set up a server to host your version catalog and assets</li>
+<li>Use the Asset Versioning Tool to generate version information</li>
+<li>Implement update checking and downloading in your game</li>
+</ol>
+<h2 id="thread-safety-handle-management">Thread Safety &amp; Handle Management<a class="headerlink" href="#thread-safety-handle-management" title="Permanent link">&para;</a></h2>
+<h3 id="enhanced-thread-safety">Enhanced Thread Safety<a class="headerlink" href="#enhanced-thread-safety" title="Permanent link">&para;</a></h3>
+<p>The ResourceService and AddressableResourceLoader now provide production-ready thread safety:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// All operations are thread-safe and can be called from any thread</span>
+<span class="k">private</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">LoadAssetsFromMultipleThreads</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">tasks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Task</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Safe to call from multiple threads simultaneously</span>
+<span class="w">    </span><span class="n">tasks</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">Task</span><span class="p">.</span><span class="n">Run</span><span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">Texture2D</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;UI/Icon1&quot;</span><span class="p">)));</span>
+<span class="w">    </span><span class="n">tasks</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">Task</span><span class="p">.</span><span class="n">Run</span><span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">Texture2D</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;UI/Icon2&quot;</span><span class="p">)));</span>
+<span class="w">    </span><span class="n">tasks</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">Task</span><span class="p">.</span><span class="n">Run</span><span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">AudioClip</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Audio/SFX1&quot;</span><span class="p">)));</span>
+
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="n">Task</span><span class="p">.</span><span class="n">WhenAll</span><span class="p">(</span><span class="n">tasks</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="handle-leak-prevention">Handle Leak Prevention<a class="headerlink" href="#handle-leak-prevention" title="Permanent link">&para;</a></h3>
+<p>All Addressables handles are now automatically tracked and cleaned up:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Check handle count for debugging</span>
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">MonitorHandles</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">stats</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">GetResourceStats</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Handle counts are automatically logged in ResourceStats</span>
+<span class="w">    </span><span class="c1">// Active AssetReference handles: 5</span>
+<span class="w">    </span><span class="c1">// Active AddressableResourceLoader handles: 12</span>
+
+<span class="w">    </span><span class="c1">// Manual cleanup if needed</span>
+<span class="w">    </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">Shutdown</span><span class="p">();</span><span class="w"> </span><span class="c1">// Releases all tracked handles</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="debugging-handle-leaks">Debugging Handle Leaks<a class="headerlink" href="#debugging-handle-leaks" title="Permanent link">&para;</a></h3>
+<p>Monitor handle usage during development:</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ResourceMonitor</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IResourceService</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_resourceService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IResourceService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Check handles periodically</span>
+<span class="w">        </span><span class="n">InvokeRepeating</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">LogHandleStats</span><span class="p">),</span><span class="w"> </span><span class="mf">10f</span><span class="p">,</span><span class="w"> </span><span class="mf">10f</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LogHandleStats</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// This will log active handle counts to help detect leaks</span>
+<span class="w">        </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">GetResourceStats</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Use AssetReferences When Possible</strong> - Prefer <code>AssetReference</code> over string-based loading for:</li>
+<li><strong>Type Safety</strong>: Compile-time validation of asset types</li>
+<li><strong>Inspector Integration</strong>: Drag-and-drop asset assignment</li>
+<li><strong>Automatic Dependency Tracking</strong>: Unity handles asset dependencies</li>
+<li>
+<p><strong>Refactoring Safety</strong>: Asset moves don't break references</p>
+</li>
+<li>
+<p><strong>Asynchronous Loading</strong> - Prefer async methods for larger assets to avoid frame rate spikes</p>
+</li>
+<li>
+<p><strong>Resource IDs</strong> - For string-based loading, use consistent, hierarchical naming (e.g., "Characters/Player", "UI/MainMenu")</p>
+</li>
+<li>
+<p><strong>Memory Management</strong> - Release assets when no longer needed:
+   <div class="highlight"><pre><span></span><code><span class="c1">// For AssetReference</span>
+<span class="n">_resourceService</span><span class="p">.</span><span class="n">Release</span><span class="p">(</span><span class="n">myAssetReference</span><span class="p">);</span>
+
+<span class="c1">// For string-based loading</span>
+<span class="n">_resourceService</span><span class="p">.</span><span class="n">Release</span><span class="p">(</span><span class="s">&quot;path/to/asset&quot;</span><span class="p">);</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Preloading</strong> - Preload assets during loading screens to avoid hitches during gameplay</p>
+</li>
+<li>
+<p><strong>Pooling</strong> - Use object pooling for frequently instantiated objects</p>
+</li>
+<li>
+<p><strong>Cleanup</strong> - Make sure to release resources in OnDestroy or when switching scenes</p>
+</li>
+<li>
+<p><strong>AssetReference Validation</strong> - Always check <code>RuntimeKeyIsValid()</code> before loading:
+   <div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">assetRef</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">assetRef</span><span class="p">.</span><span class="n">RuntimeKeyIsValid</span><span class="p">())</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">asset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">assetRef</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Handle Monitoring</strong> - In development builds, monitor handle counts to detect leaks early:
+   <div class="highlight"><pre><span></span><code><span class="cp">#if DEVELOPMENT_BUILD || UNITY_EDITOR</span>
+<span class="n">_resourceService</span><span class="p">.</span><span class="n">GetResourceStats</span><span class="p">();</span><span class="w"> </span><span class="c1">// Logs handle counts</span>
+<span class="cp">#endif</span>
+</code></pre></div></p>
+</li>
+</ol>
+<h2 id="common-pitfalls">Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Memory Leaks</strong> - Not releasing assets when they're no longer needed</li>
+<li><strong>Main Thread Blocking</strong> - Using synchronous loading for large assets during gameplay</li>
+<li><strong>Path Inconsistencies</strong> - Inconsistent casing or slashes in resource paths</li>
+<li><strong>Missing References</strong> - Not checking for null when loading assets</li>
+<li><strong>Pool Bloat</strong> - Not setting maximum pool sizes for object pools</li>
+</ol>
+<h2 id="addressables-integration">Addressables Integration<a class="headerlink" href="#addressables-integration" title="Permanent link">&para;</a></h2>
+<h3 id="setting-up-addressables">Setting Up Addressables<a class="headerlink" href="#setting-up-addressables" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Initialize Addressables in Unity</strong>:
+   <div class="highlight"><pre><span></span><code>Window &gt; Asset Management &gt; Addressables &gt; Groups
+→ Click &quot;Create Addressables Settings&quot; if not already done
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Mark Assets as Addressable</strong>:</p>
+</li>
+<li>Select assets in Project window</li>
+<li>Check "Addressable" checkbox</li>
+<li>
+<p>Set Address to meaningful names (e.g., "Audio/BackgroundMusic01")</p>
+</li>
+<li>
+<p><strong>Configure ResourceManagementConfig</strong>:
+   <div class="highlight"><pre><span></span><code><span class="c1">// Set these values in your ResourceManagementConfig asset</span>
+<span class="n">enableAddressables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span>
+<span class="n">preferredSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ResourceSource</span><span class="p">.</span><span class="n">Addressables</span>
+<span class="n">fallbackToResources</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span>
+</code></pre></div></p>
+</li>
+</ol>
+<h3 id="loading-priority">Loading priority<a class="headerlink" href="#loading-priority" title="Permanent link">&para;</a></h3>
+<p>When Addressables is enabled in <code>ResourceManagementConfig</code>, <code>ResourceService</code> tries loaders in this order:</p>
+<ol>
+<li><strong>Addressables</strong> (<code>AddressableResourceLoader</code>) — if enabled and initialized</li>
+<li><strong>Resources</strong> (<code>ResourcesLoader</code>) — if <code>fallbackToResources</code> is true</li>
+<li><strong>AssetBundles</strong> (<code>AssetBundleLoader</code>)</li>
+</ol>
+<p>Your game code stays the same — <code>LoadAsync&lt;T&gt;("Audio/MyClip")</code> uses the configured priority automatically. <code>AudioService</code> and other consumers load through <code>IResourceService</code>; no per-service Addressables setup is required.</p>
+<p><strong>Editor setup checklist:</strong></p>
+<ol>
+<li><code>Window &gt; Asset Management &gt; Addressables &gt; Groups</code> → Create Addressables Settings</li>
+<li>Mark assets Addressable with meaningful addresses (e.g. <code>Audio/BackgroundMusic01</code>)</li>
+<li>Create <strong>Resource Management Config</strong> (<code>Create &gt; LoLEngine &gt; Config &gt; Resource Management Config</code>)</li>
+<li>Set <code>enableAddressables = true</code>, <code>preferredSource = Addressables</code></li>
+<li>Assign config to <code>ServiceConfiguration</code> and test:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">clip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IResourceService</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">AudioClip</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Audio/YourAddressableAudio&quot;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="addressables-benefits">Addressables Benefits<a class="headerlink" href="#addressables-benefits" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Async-First</strong>: Built for non-blocking asset loading</li>
+<li><strong>Remote Content</strong>: Download assets from CDN/servers</li>
+<li><strong>Memory Management</strong>: Automatic reference counting and cleanup</li>
+<li><strong>Build Optimization</strong>: Assets can be built separately from main app</li>
+<li><strong>Progress Tracking</strong>: Built-in loading progress reports</li>
+</ul>
+<h3 id="migration-from-resources">Migration from Resources<a class="headerlink" href="#migration-from-resources" title="Permanent link">&para;</a></h3>
+<p>Replace Resources folder assets with Addressable assets:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// OLD (Resources folder):</span>
+<span class="c1">// &quot;Resources/Audio/Music.wav&quot; → Resources.Load&lt;AudioClip&gt;(&quot;Audio/Music&quot;)</span>
+
+<span class="c1">// NEW (Addressables):</span>
+<span class="c1">// Mark &quot;Audio/Music.wav&quot; as Addressable with Address &quot;Audio/Music&quot;</span>
+<span class="c1">// Same ResourceService code works automatically!</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">music</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">AudioClip</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Audio/Music&quot;</span><span class="p">);</span>
+</code></pre></div>
+<h2 id="advanced-features">Advanced Features<a class="headerlink" href="#advanced-features" title="Permanent link">&para;</a></h2>
+<h3 id="custom-asset-loaders">Custom asset loaders<a class="headerlink" href="#custom-asset-loaders" title="Permanent link">&para;</a></h3>
+<p><code>ResourceService</code> registers built-in loaders during <code>Initialize()</code>:</p>
+<ul>
+<li><code>AddressableResourceLoader</code> (when Addressables enabled)</li>
+<li><code>ResourcesLoader</code></li>
+<li><code>AssetBundleLoader</code></li>
+</ul>
+<p>There is no public <code>RegisterLoader()</code> API — custom loading strategies should go through <code>IResourceService</code> configuration or game-layer wrappers. Forking the engine to add <code>IResourceLoader</code> implementations is possible but not a supported extension point for Asset Store projects today.</p>
+<p>If you only need a different <strong>source priority</strong>, use <code>ResourceManagementConfig.preferredSource</code> and <code>fallbackToResources</code>.</p>
+<h3 id="memory-budget-tuning">Memory Budget Tuning<a class="headerlink" href="#memory-budget-tuning" title="Permanent link">&para;</a></h3>
+<p>See "Step 1: Configure Memory Budgets" section above for platform-specific recommendations.</p>
+<p>Adjust memory budgets dynamically at runtime:</p>
+<div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesReady</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">resourceService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IResourceService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Set different budgets based on platform</span>
+<span class="w">    </span><span class="cp">#if UNITY_ANDROID || UNITY_IOS</span>
+<span class="w">        </span><span class="n">resourceService</span><span class="p">.</span><span class="n">SetMemoryBudget</span><span class="p">(</span><span class="mi">256</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span><span class="w"> </span><span class="c1">// 256MB for mobile</span>
+<span class="w">    </span><span class="cp">#elif UNITY_STANDALONE || UNITY_EDITOR</span>
+<span class="w">        </span><span class="n">resourceService</span><span class="p">.</span><span class="n">SetMemoryBudget</span><span class="p">(</span><span class="mi">512</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span><span class="w"> </span><span class="c1">// 512MB for desktop</span>
+<span class="w">    </span><span class="cp">#endif</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="vr-specific-resource-management-recommendations"><strong>VR-SPECIFIC RESOURCE MANAGEMENT RECOMMENDATIONS</strong><a class="headerlink" href="#vr-specific-resource-management-recommendations" title="Permanent link">&para;</a></h2>
+<h3 id="critical-vr-considerations">Critical VR Considerations<a class="headerlink" href="#critical-vr-considerations" title="Permanent link">&para;</a></h3>
+<p><strong>Memory Constraints</strong> - VR requires double rendering (one per eye), leaving significantly less memory for assets:
+- <strong>Quest 2/3</strong>: Set <code>maxMemoryBudgetMB = 128-256</code> (NOT 512!)
+- <strong>PC VR</strong>: Set <code>maxMemoryBudgetMB = 256-384</code> depending on GPU VRAM</p>
+<p><strong>Asynchronous Loading is MANDATORY</strong> - VR cannot afford frame drops:
+<div class="highlight"><pre><span></span><code><span class="c1">// NEVER in VR - causes stuttering and nausea</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">Load</span><span class="o">&lt;</span><span class="n">GameObject</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Models/Enemy&quot;</span><span class="p">);</span>
+
+<span class="c1">// ALWAYS use async in VR</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">GameObject</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Models/Enemy&quot;</span><span class="p">);</span>
+</code></pre></div></p>
+<p><strong>Aggressive Object Pooling</strong> - Essential for 90fps minimum:
+<div class="highlight"><pre><span></span><code><span class="c1">// Pool EVERYTHING that spawns frequently</span>
+<span class="c1">// Even small objects add up with VR&#39;s strict frame budget</span>
+<span class="n">_resourceService</span><span class="p">.</span><span class="n">Instantiate</span><span class="p">(</span><span class="n">bulletPrefab</span><span class="p">,</span><span class="w"> </span><span class="n">pos</span><span class="p">,</span><span class="w"> </span><span class="n">rot</span><span class="p">);</span><span class="w">  </span><span class="c1">// Uses pool automatically</span>
+<span class="n">_resourceService</span><span class="p">.</span><span class="n">Recycle</span><span class="p">(</span><span class="n">bullet</span><span class="p">);</span><span class="w">  </span><span class="c1">// Return to pool - CRITICAL!</span>
+</code></pre></div></p>
+<p><strong>Preloading During Load Screens</strong> - Never load assets mid-gameplay in VR:
+<div class="highlight"><pre><span></span><code><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">PreloadVRAssets</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">GameObject</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Player/HandModels&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">GameObject</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;UI/VRMenuPrefab&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">AudioClip</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Audio/UIClick&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Preload ALL gameplay assets before entering VR scene</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Texture Compression</strong> - Mandatory for VR:
+- Use ASTC compression for Quest
+- Use BC7 for PC VR
+- Enable Addressables texture streaming
+- Set <code>preferredSource = ResourceSource.Addressables</code></p>
+<p><strong>Handle Leak Prevention</strong> - CRITICAL for long VR sessions:
+<div class="highlight"><pre><span></span><code><span class="c1">// Monitor handles in development builds</span>
+<span class="cp">#if DEVELOPMENT_BUILD || UNITY_EDITOR</span>
+<span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">frameCount</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">300</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">  </span><span class="c1">// Every 5 seconds at 60fps</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">GetResourceStats</span><span class="p">();</span><span class="w">  </span><span class="c1">// Logs handle counts</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="cp">#endif</span>
+</code></pre></div></p>
+<p><strong>Release Assets Aggressively</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1">// VR has tight memory limits - clean up immediately</span>
+<span class="k">void</span><span class="w"> </span><span class="nf">OnSceneUnload</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">Release</span><span class="p">(</span><span class="s">&quot;LevelSpecificAsset&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">ReleaseAll</span><span class="p">();</span><span class="w">  </span><span class="c1">// When changing levels</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="asset-not-found">Asset Not Found<a class="headerlink" href="#asset-not-found" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Check that the resource ID (path) is correct, including case</li>
+<li>Verify the asset is in the correct location</li>
+<li>Check for compilation errors in asset scripts</li>
+</ul>
+<h3 id="memory-issues">Memory Issues<a class="headerlink" href="#memory-issues" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Monitor memory usage with <code>GetResourceStats()</code></li>
+<li>Release unused assets</li>
+<li>Set appropriate memory budgets</li>
+<li>Use object pooling for frequent instantiation</li>
+</ul>
+<h3 id="slow-loading">Slow Loading<a class="headerlink" href="#slow-loading" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use asynchronous loading for large assets</li>
+<li>Preload assets during loading screens</li>
+<li>Consider using asset bundles or addressables for better loading</li>
+<li>Compress textures and audio appropriately</li>
+</ul>
+<h2 id="architecture-diagram">Architecture Diagram<a class="headerlink" href="#architecture-diagram" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>+-------------------+       +-------------------+
+|                   |       |                   |
+| Game Code         |------&gt;| IResourceService  |
+|                   |       |                   |
++-------------------+       +--------+----------+
+                                     |
+                                     | implements
+                                     v
++-----------------+        +-------------------+
+|                 |        |                   |
+| ResourceEvents  |&lt;------&gt;| ResourceService   |
+|                 |        |                   |
++-----------------+        +--------+----------+
+                                    |
+                                    | uses
+                                    v
++-------------------+     +-------------------+     +------------------------+
+|                   |     |                   |     |                        |
+| ResourcesLoader   |     | AssetBundleLoader |     | AddressableResourceLdr |
+|                   |     |                   |     |  (NEW - Priority #1)   |
++-------------------+     +-------------------+     +------------------------+
+                                    |
+                                    | manages
+                                    v
++-------------------+     +-------------------+     +-------------------+
+|                   |     |                   |     |                   |
+| ResourcePool      |     | AssetUpdaterService     | VersionCatalog    |
+|                   |     |                   |     |                   |
++-------------------+     +-------------------+     +-------------------+
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

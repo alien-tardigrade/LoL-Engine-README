@@ -1,0 +1,2830 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Modular Unity 6 game framework — audio, saves, events, localization, deterministic RNG, and more.">
+      
+      
+        <meta name="author" content="MooMoo Games">
+      
+      
+        <link rel="canonical" href="https://alien-tardigrade.github.io/LoL-Engine-README/Architecture/">
+      
+      
+        <link rel="prev" href="../IL2CPP/">
+      
+      
+        <link rel="next" href="../CHANGELOG/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Architecture Guide - LoL Engine Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lol-engine-architecture-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="LoL Engine Documentation" class="md-header__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LoL Engine Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Architecture Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="LoL Engine Documentation" class="md-nav__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LoL Engine Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_QUICKSTART/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart (5 min)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Full Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-SERVICES-CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHEATSHEET-How-To-Use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceLocator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Locator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImprovedGameInitializer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Initializer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceDependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AudioHelpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio Helpers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DataPersistence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Persistence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Serialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCALIZATION_MIGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization Migration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ResourceManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Input/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilities
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ObjectPool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Pool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TimeManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GameState/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HelperUtilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helper Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Logger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IL2CPP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IL2CPP & Code Stripping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#engine-internals-good-to-know" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engine internals (good to know)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Engine internals (good to know)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adr-001-defensive-initialization-resourceservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-001: Defensive initialization (ResourceService)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-002-cache-invalidation-audioextensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-002: Cache invalidation (AudioExtensions)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-003-distributed-domain-reload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-003: Distributed domain reload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-004-multi-tier-audio-handle-tracking-audioservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-004: Multi-tier audio handle tracking (AudioService)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-005-fail-fast-service-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-005: Fail-fast service initialization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-006-sink-based-logging-lollogger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-006: Sink-based logging (LoLLogger)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extending-lol-engine-adr-007" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extending LoL Engine (ADR-007)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extending LoL Engine (ADR-007)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#three-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three layers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#initialization-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initialization order
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-iserviceregistrar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: IServiceRegistrar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deterministic-rng-adr-008" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deterministic RNG (ADR-008)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deterministic RNG (ADR-008)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#content-registry-adr-009" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Content registry (ADR-009)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Content registry (ADR-009)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#canonical-vs-mutable-models-adr-010" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Canonical vs mutable models (ADR-010)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Canonical vs mutable models (ADR-010)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#locstring-adr-011" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LocString (ADR-011)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LocString (ADR-011)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rules_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save-system-design-adr-012" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save system design (ADR-012)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Save system design (ADR-012)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typedpoolbag-adr-013" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TypedPoolBag (ADR-013)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TypedPoolBag (ADR-013)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probabilistic-rolls-adr-014" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probabilistic rolls (ADR-014)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Probabilistic rolls (ADR-014)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-game-patterns-adr-015-adr-018" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended game patterns (ADR-015 – ADR-018)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recommended game patterns (ADR-015 – ADR-018)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adr-015-fluent-option-builders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-015: Fluent option builders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-016-extrafields-kitchen-drawer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-016: ExtraFields kitchen drawer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-017-null-object-for-optional-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-017: Null-object for optional scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-018-test-escape-hatch-naming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-018: Test escape-hatch naming
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adr-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR index
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#engine-internals-good-to-know" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engine internals (good to know)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Engine internals (good to know)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adr-001-defensive-initialization-resourceservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-001: Defensive initialization (ResourceService)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-002-cache-invalidation-audioextensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-002: Cache invalidation (AudioExtensions)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-003-distributed-domain-reload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-003: Distributed domain reload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-004-multi-tier-audio-handle-tracking-audioservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-004: Multi-tier audio handle tracking (AudioService)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-005-fail-fast-service-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-005: Fail-fast service initialization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-006-sink-based-logging-lollogger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-006: Sink-based logging (LoLLogger)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extending-lol-engine-adr-007" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extending LoL Engine (ADR-007)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extending LoL Engine (ADR-007)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#three-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three layers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#initialization-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initialization order
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-iserviceregistrar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: IServiceRegistrar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deterministic-rng-adr-008" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deterministic RNG (ADR-008)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deterministic RNG (ADR-008)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#content-registry-adr-009" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Content registry (ADR-009)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Content registry (ADR-009)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#canonical-vs-mutable-models-adr-010" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Canonical vs mutable models (ADR-010)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Canonical vs mutable models (ADR-010)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#locstring-adr-011" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LocString (ADR-011)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LocString (ADR-011)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rules_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save-system-design-adr-012" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save system design (ADR-012)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Save system design (ADR-012)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typedpoolbag-adr-013" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TypedPoolBag (ADR-013)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TypedPoolBag (ADR-013)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probabilistic-rolls-adr-014" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probabilistic rolls (ADR-014)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Probabilistic rolls (ADR-014)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-game-patterns-adr-015-adr-018" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended game patterns (ADR-015 – ADR-018)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recommended game patterns (ADR-015 – ADR-018)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adr-015-fluent-option-builders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-015: Fluent option builders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-016-extrafields-kitchen-drawer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-016: ExtraFields kitchen drawer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-017-null-object-for-optional-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-017: Null-object for optional scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-018-test-escape-hatch-naming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-018: Test escape-hatch naming
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adr-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR index
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="lol-engine-architecture-guide">LoL Engine Architecture Guide<a class="headerlink" href="#lol-engine-architecture-guide" title="Permanent link">&para;</a></h1>
+<p>This guide explains how LoL Engine is structured and the patterns you should follow when <strong>extending</strong> the framework in your game project.</p>
+<p>This package-facing guide focuses on the extension patterns needed by game projects.</p>
+<hr />
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>LoL Engine is built on four pillars:</p>
+<table>
+<thead>
+<tr>
+<th>Pillar</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Service Locator</strong></td>
+<td>Services implement <code>ILoLEngineService</code> and are accessed via <code>ServiceLocator.Instance.Get&lt;T&gt;()</code></td>
+</tr>
+<tr>
+<td><strong>ScriptableObject config</strong></td>
+<td><code>ServiceConfiguration</code> toggles services; per-service configs live in <code>Resources/Configs/</code></td>
+</tr>
+<tr>
+<td><strong>Phased initialization</strong></td>
+<td>Core → Feature → Game → Custom → External registrars → <code>LateInitialize()</code></td>
+</tr>
+<tr>
+<td><strong>Event-driven communication</strong></td>
+<td>Type-safe <code>GameEvent</code> bus for decoupled systems</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1">// Typical game code pattern</span>
+<span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">WaitForServices</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">audio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAudioService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">save</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ISaveSystem</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>See <a href="../ServiceLocator/">Service Locator</a>, <a href="../Config/">Config</a>, and <a href="../GettingStarted/">Getting Started</a> for setup details.</p>
+<hr />
+<h2 id="engine-internals-good-to-know">Engine internals (good to know)<a class="headerlink" href="#engine-internals-good-to-know" title="Permanent link">&para;</a></h2>
+<p>These patterns govern core engine code. You rarely need to change them, but understanding them prevents confusion when reading source or debugging initialization.</p>
+<h3 id="adr-001-defensive-initialization-resourceservice">ADR-001: Defensive initialization (ResourceService)<a class="headerlink" href="#adr-001-defensive-initialization-resourceservice" title="Permanent link">&para;</a></h3>
+<p><code>ResourceService.Initialize()</code> works <strong>without</strong> <code>ResourceManagementConfig</code> registered — it falls back to a 512 MB memory budget and registers all loaders. Full configuration is applied in <code>InitializeAsync()</code>.</p>
+<p><strong>For you:</strong> If ResourceService boots before your config asset is wired, that is expected — not a bug.</p>
+<h3 id="adr-002-cache-invalidation-audioextensions">ADR-002: Cache invalidation (AudioExtensions)<a class="headerlink" href="#adr-002-cache-invalidation-audioextensions" title="Permanent link">&para;</a></h3>
+<p>Static extension caches use <code>ServiceLocator.Instance.GetHashCode()</code> as a version stamp. Same singleton instance → same hash (cache hits). After domain reload, a new singleton → new hash → cache invalidates automatically.</p>
+<h3 id="adr-003-distributed-domain-reload">ADR-003: Distributed domain reload<a class="headerlink" href="#adr-003-distributed-domain-reload" title="Permanent link">&para;</a></h3>
+<p>Multiple classes reset their own static state via <code>[RuntimeInitializeOnLoadMethod(SubsystemRegistration)]</code>. There is no central coordinator — each class manages its own cleanup independently.</p>
+<h3 id="adr-004-multi-tier-audio-handle-tracking-audioservice">ADR-004: Multi-tier audio handle tracking (AudioService)<a class="headerlink" href="#adr-004-multi-tier-audio-handle-tracking-audioservice" title="Permanent link">&para;</a></h3>
+<p>Three collections serve different roles: <code>_activeHandles</code> (fast GUID lookup), <code>_persistentHandles</code> (survive scene changes), <code>_monitoredHandles</code> (auto-cleanup for non-looping sounds). All three are cleaned up on completion, periodic sweep, and shutdown.</p>
+<h3 id="adr-005-fail-fast-service-initialization">ADR-005: Fail-fast service initialization<a class="headerlink" href="#adr-005-fail-fast-service-initialization" title="Permanent link">&para;</a></h3>
+<p>Core service init failures throw immediately — the game cannot run without EventManager, ResourceService, etc. Custom services use graceful degradation (catch and continue).</p>
+<h3 id="adr-006-sink-based-logging-lollogger">ADR-006: Sink-based logging (LoLLogger)<a class="headerlink" href="#adr-006-sink-based-logging-lollogger" title="Permanent link">&para;</a></h3>
+<p><code>LoLLogger</code> is a thin static facade dispatching to pluggable <code>ILogSink</code> implementations (console, file, history). Formatting and I/O live in sinks, not in <code>LoLLogger</code> itself. See <a href="../Logger/">Logger.md</a>.</p>
+<hr />
+<h2 id="extending-lol-engine-adr-007">Extending LoL Engine (ADR-007)<a class="headerlink" href="#extending-lol-engine-adr-007" title="Permanent link">&para;</a></h2>
+<p>Game projects register their own services without modifying engine code.</p>
+<h3 id="three-layers">Three layers<a class="headerlink" href="#three-layers" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong><code>IServiceRegistrar</code></strong> — auto-discovered from your game assembly; runs after all engine services init</li>
+<li><strong><code>ServiceRegistrationInfo</code></strong> — inspector-driven custom services on <code>ServiceConfiguration</code></li>
+<li><strong><code>LateInitialize()</code></strong> — default method on <code>ILoLEngineService</code>; safe to resolve cross-service dependencies</li>
+</ol>
+<h3 id="initialization-order">Initialization order<a class="headerlink" href="#initialization-order" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Phase 1: Core services (Events, Pool, Time, Resources)
+Phase 2: Feature services (Audio, Serialization, Save, …)
+Phase 3: Game services (GameStateManager, …)
+Phase 4: Custom services (ServiceConfiguration inspector list)
+Phase 5: External registrars (IServiceRegistrar auto-discovery)
+Phase 6: LateInitialize() on ALL registered services
+</code></pre></div>
+<h3 id="rules">Rules<a class="headerlink" href="#rules" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use <code>IServiceRegistrar</code> for game-specific service registration</li>
+<li>Specify <strong>both</strong> interface and implementation types in <code>ServiceRegistrationInfo</code></li>
+<li>Use <code>LateInitialize()</code> when a service needs other services that may not exist during <code>Initialize()</code></li>
+<li>Don't resolve other services inside <code>Initialize()</code> — use <code>LateInitialize()</code> instead</li>
+<li>Don't register under the implementation type only — <code>Get&lt;IMyService&gt;()</code> won't find it</li>
+</ul>
+<h3 id="example-iserviceregistrar">Example: IServiceRegistrar<a class="headerlink" href="#example-iserviceregistrar" title="Permanent link">&para;</a></h3>
+<p>See <code>Samples~/Scripts/09_GameServiceRegistrarSample.cs</code> for a complete working example.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">GameServiceRegistrar</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">IServiceRegistrar</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Priority</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">RegisterServices</span><span class="p">(</span><span class="n">IServiceLocator</span><span class="w"> </span><span class="n">locator</span><span class="p">,</span><span class="w"> </span><span class="n">ServiceConfiguration</span><span class="w"> </span><span class="n">config</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">wallet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WalletService</span><span class="p">();</span>
+<span class="w">        </span><span class="n">wallet</span><span class="p">.</span><span class="n">Initialize</span><span class="p">();</span>
+<span class="w">        </span><span class="n">locator</span><span class="p">.</span><span class="n">Register</span><span class="o">&lt;</span><span class="n">IWalletService</span><span class="o">&gt;</span><span class="p">(</span><span class="n">wallet</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="deterministic-rng-adr-008">Deterministic RNG (ADR-008)<a class="headerlink" href="#deterministic-rng-adr-008" title="Permanent link">&para;</a></h2>
+<p>Use <code>IRngService</code> for any gameplay randomness that must be reproducible (replays, tests, save/load resume).</p>
+<h3 id="rules_1">Rules<a class="headerlink" href="#rules_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Give every concern its own named stream (combat, loot, AI, map, …)</li>
+<li>Call <code>SetSeed()</code> once at run start; store <code>RngServiceSnapshot</code> in save data</li>
+<li>Use <code>GetStream</code> / <code>SetStream</code> when mutating a stream across multiple operations</li>
+<li>Don't use <code>UnityEngine.Random</code> for reproducible gameplay logic</li>
+<li>Don't share one stream between unrelated systems</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">MyStreams</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Combat</span><span class="p">,</span><span class="w"> </span><span class="n">Loot</span><span class="p">,</span><span class="w"> </span><span class="n">Map</span><span class="p">,</span><span class="w"> </span><span class="n">Ai</span><span class="w"> </span><span class="p">}</span>
+
+<span class="n">_rngService</span><span class="p">.</span><span class="n">SetStreamSet</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MyStreamSet</span><span class="p">());</span>
+<span class="n">_rngService</span><span class="p">.</span><span class="n">SetSeed</span><span class="p">(</span><span class="n">runSeed</span><span class="p">);</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">roll</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_rngService</span><span class="p">.</span><span class="n">DrawInt</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">MyStreams</span><span class="p">.</span><span class="n">Loot</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">);</span>
+
+<span class="c1">// Save/load</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">snapshot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_rngService</span><span class="p">.</span><span class="n">TakeSnapshot</span><span class="p">();</span>
+<span class="n">_rngService</span><span class="p">.</span><span class="n">RestoreSnapshot</span><span class="p">(</span><span class="n">loadedSnapshot</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Files:</strong> <code>Runtime/Scripts/Core/Rng/</code></p>
+<hr />
+<h2 id="content-registry-adr-009">Content registry (ADR-009)<a class="headerlink" href="#content-registry-adr-009" title="Permanent link">&para;</a></h2>
+<p><code>ModelDb</code> maps stable <code>ModelId</code> keys to canonical content objects. Registration is <strong>explicit</strong> at bootstrap — no reflection at runtime (IL2CPP-safe).</p>
+<h3 id="rules_2">Rules<a class="headerlink" href="#rules_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Register canonical templates once at bootstrap (<code>ContentBootstrap.RegisterAll()</code>)</li>
+<li>Store <code>ModelId</code> strings in save data; resolve via <code>ModelDb.GetByIdOrNull&lt;T&gt;()</code> on load</li>
+<li>Keep IDs stable after shipping — saves depend on them</li>
+<li>Don't save the template object itself — save the ID and re-resolve</li>
+<li>Don't mutate canonical instances registered in ModelDb</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">ModelDb</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ModelId</span><span class="p">(</span><span class="s">&quot;Enemy&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;goblin&quot;</span><span class="p">),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GoblinModel</span><span class="p">());</span>
+
+<span class="kt">var</span><span class="w"> </span><span class="n">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ModelDb</span><span class="p">.</span><span class="n">Require</span><span class="o">&lt;</span><span class="n">GoblinModel</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ModelId</span><span class="p">(</span><span class="s">&quot;Enemy&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;goblin&quot;</span><span class="p">));</span>
+</code></pre></div>
+<p><strong>Files:</strong> <code>Runtime/Scripts/Runtime/Models/ModelDb.cs</code>, <code>ModelId.cs</code></p>
+<hr />
+<h2 id="canonical-vs-mutable-models-adr-010">Canonical vs mutable models (ADR-010)<a class="headerlink" href="#canonical-vs-mutable-models-adr-010" title="Permanent link">&para;</a></h2>
+<p><code>AbstractModel</code> prevents silent template corruption: canonical instances (<code>IsMutable = false</code>) throw if mutated; runtime instances come from <code>MutableClone()</code>.</p>
+<h3 id="rules_3">Rules<a class="headerlink" href="#rules_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Register canonicals in <code>ModelDb</code>; spawn runtime copies via <code>MutableClone()</code></li>
+<li>Call <code>AssertMutable()</code> at the top of every mutating method</li>
+<li>Don't call mutating methods on templates retrieved from <code>ModelDb</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">GoblinModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">AbstractModel</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">_currentHp</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">TakeDamage</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">AssertMutable</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_currentHp</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">amount</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">var</span><span class="w"> </span><span class="n">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">GoblinModel</span><span class="p">)</span><span class="n">template</span><span class="p">.</span><span class="n">MutableClone</span><span class="p">();</span>
+<span class="n">instance</span><span class="p">.</span><span class="n">TakeDamage</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="w"> </span><span class="c1">// safe — template unchanged</span>
+</code></pre></div>
+<hr />
+<h2 id="locstring-adr-011">LocString (ADR-011)<a class="headerlink" href="#locstring-adr-011" title="Permanent link">&para;</a></h2>
+<p>Structured localized text with runtime variable substitution. Use instead of <code>GetText(key)</code> for dynamic tooltips, card descriptions, and upgrade previews.</p>
+<h3 id="key-types">Key types<a class="headerlink" href="#key-types" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>LocString</code></strong> — <code>(LocTable, key, DynamicVar[])</code> resolved via <code>ILocalizationService.Format()</code></li>
+<li><strong><code>DynamicVar</code></strong> — <code>BaseValue</code>, <code>CalculatedValue</code>, <code>PreviewValue</code>, <code>WasJustUpgraded</code> flag</li>
+<li><strong><code>ILocStringFormatter</code></strong> — custom specifiers like <code>{damage:highlight}</code></li>
+</ul>
+<h3 id="rules_4">Rules<a class="headerlink" href="#rules_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use <code>LocString</code> for any text with runtime numeric variables</li>
+<li>Run <code>Tools &gt; LoL Engine &gt; Validate Localization Tables</code> (or <code>LocValidator.ValidateAll()</code>) in CI</li>
+<li>Don't store resolved strings — re-format when values change</li>
+</ul>
+<p>See <a href="../Localization/">Localization.md</a> and <a href="../LOCALIZATION_MIGRATION/">LOCALIZATION_MIGRATION.md</a>.</p>
+<hr />
+<h2 id="save-system-design-adr-012">Save system design (ADR-012)<a class="headerlink" href="#save-system-design-adr-012" title="Permanent link">&para;</a></h2>
+<p>Three features work together for production-grade persistence:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>ISaveStore</code></strong></td>
+<td>Pluggable I/O — <code>LocalFileSaveStore</code> (disk) or <code>InMemorySaveStore</code> (tests)</td>
+</tr>
+<tr>
+<td><strong><code>IDomainMigration</code></strong></td>
+<td>Per-domain schema versioning — migrate JSON between versions on load</td>
+</tr>
+<tr>
+<td><strong>Quarantine</strong></td>
+<td>Corrupt files moved to <code>Saves/Quarantine/</code> instead of deleted</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rules_5">Rules<a class="headerlink" href="#rules_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Increment <code>PersistableData.SchemaVersion</code> when serialized fields change; register one <code>IDomainMigration</code> per version step</li>
+<li>Check <code>ISaveSystem.LastLoadReport</code> after load to surface quarantine events</li>
+<li>Don't ignore quarantined saves silently — offer the player a recovery path</li>
+</ul>
+<p>See <a href="../DataPersistence/">DataPersistence.md</a>.</p>
+<hr />
+<h2 id="typedpoolbag-adr-013">TypedPoolBag (ADR-013)<a class="headerlink" href="#typedpoolbag-adr-013" title="Permanent link">&para;</a></h2>
+<p>Genre-neutral shuffled pool with per-bucket cascade (loot tables, relic pools, event decks).</p>
+<h3 id="rules_6">Rules<a class="headerlink" href="#rules_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Register buckets in cascade priority order (preferred → fallback)</li>
+<li>Call <code>Shuffle(ref rng)</code> before the first <code>Draw</code></li>
+<li>Serialize remaining items as stable IDs; rebuild on load</li>
+<li>Don't catch <code>PoolExhaustedException</code> silently — it signals a content bug</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">bag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TypedPoolBag</span><span class="o">&lt;</span><span class="n">Tier</span><span class="p">,</span><span class="w"> </span><span class="n">RelicModel</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="n">AddBucket</span><span class="p">(</span><span class="n">Tier</span><span class="p">.</span><span class="n">High</span><span class="p">,</span><span class="w"> </span><span class="n">rareRelics</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="n">AddBucket</span><span class="p">(</span><span class="n">Tier</span><span class="p">.</span><span class="n">Mid</span><span class="p">,</span><span class="w"> </span><span class="n">uncommonRelics</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="n">AddBucket</span><span class="p">(</span><span class="n">Tier</span><span class="p">.</span><span class="n">Low</span><span class="p">,</span><span class="w"> </span><span class="n">commonRelics</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="n">Shuffle</span><span class="p">(</span><span class="k">ref</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
+
+<span class="kt">var</span><span class="w"> </span><span class="n">relic</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bag</span><span class="p">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">Tier</span><span class="p">.</span><span class="n">High</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Files:</strong> <code>Runtime/Scripts/Utility/TypedPoolBag.cs</code></p>
+<hr />
+<h2 id="probabilistic-rolls-adr-014">Probabilistic rolls (ADR-014)<a class="headerlink" href="#probabilistic-rolls-adr-014" title="Permanent link">&para;</a></h2>
+<p><code>AbstractOdds&lt;TOutcome&gt;</code> and <code>AntiPityOdds&lt;T&gt;</code> encapsulate weighted rolls with persistent pity state.</p>
+<h3 id="rules_7">Rules<a class="headerlink" href="#rules_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Inject a named <code>Rng</code> substream at construction</li>
+<li>Save and restore <code>CurrentValue</code> alongside RNG snapshot on load</li>
+<li>Don't share one odds instance across unrelated roll contexts</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">rarityOdds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AntiPityOdds</span><span class="o">&lt;</span><span class="n">Rarity</span><span class="o">&gt;</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span>
+<span class="w">    </span><span class="n">outcomes</span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">(</span><span class="n">Rarity</span><span class="p">.</span><span class="n">Common</span><span class="p">,</span><span class="w"> </span><span class="mf">60f</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">Rarity</span><span class="p">.</span><span class="n">Rare</span><span class="p">,</span><span class="w"> </span><span class="mf">3f</span><span class="p">)</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="n">pityTarget</span><span class="p">:</span><span class="w"> </span><span class="n">Rarity</span><span class="p">.</span><span class="n">Rare</span><span class="p">,</span>
+<span class="w">    </span><span class="n">pityIncrement</span><span class="p">:</span><span class="w"> </span><span class="mf">1f</span><span class="p">);</span>
+
+<span class="n">Rarity</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rarityOdds</span><span class="p">.</span><span class="n">Roll</span><span class="p">();</span>
+</code></pre></div>
+<p><strong>Files:</strong> <code>Runtime/Scripts/Utility/Odds/</code></p>
+<hr />
+<h2 id="recommended-game-patterns-adr-015-adr-018">Recommended game patterns (ADR-015 – ADR-018)<a class="headerlink" href="#recommended-game-patterns-adr-015-adr-018" title="Permanent link">&para;</a></h2>
+<p>These are guidance for <strong>your game code</strong> — no engine API required.</p>
+<h3 id="adr-015-fluent-option-builders">ADR-015: Fluent option builders<a class="headerlink" href="#adr-015-fluent-option-builders" title="Permanent link">&para;</a></h3>
+<p>Use readonly structs with <code>With*</code> methods for service calls with many optional parameters. The engine already uses this in <code>PlayOptions</code>, <code>PlaylistPlayOptions</code>, and <code>ResourceLoadOptions</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">SpawnOptions</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">SpawnOptions</span><span class="w"> </span><span class="n">Default</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">new</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Level</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">init</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">SpawnOptions</span><span class="w"> </span><span class="nf">WithLevel</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="n">spawner</span><span class="p">.</span><span class="n">Spawn</span><span class="p">(</span><span class="n">template</span><span class="p">,</span><span class="w"> </span><span class="n">SpawnOptions</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="n">WithLevel</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+</code></pre></div>
+<h3 id="adr-016-extrafields-kitchen-drawer">ADR-016: ExtraFields kitchen drawer<a class="headerlink" href="#adr-016-extrafields-kitchen-drawer" title="Permanent link">&para;</a></h3>
+<p>Mutable <code>AbstractModel</code> subclasses may use <code>Dictionary&lt;string, object&gt; ExtraFields</code> for one-off flags that appear fewer than three times. Graduate to a real field once a flag is accessed by more than one system.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ApplyCharm</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">AssertMutable</span><span class="p">();</span><span class="w"> </span><span class="n">ExtraFields</span><span class="p">[</span><span class="s">&quot;charmed&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">IsCharmed</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ExtraFields</span><span class="p">.</span><span class="n">TryGetValue</span><span class="p">(</span><span class="s">&quot;charmed&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">var</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="adr-017-null-object-for-optional-scope">ADR-017: Null-object for optional scope<a class="headerlink" href="#adr-017-null-object-for-optional-scope" title="Permanent link">&para;</a></h3>
+<p>When a scope is validly absent (no active run in the main menu), implement <code>NullFoo.Instance</code> that satisfies the interface with safe no-ops. Call sites use the interface unconditionally.</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">sealed</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">NullRunState</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">IRunState</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="n">NullRunState</span><span class="w"> </span><span class="n">Instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">();</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="nf">NullRunState</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">AddGold</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Gold</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="adr-018-test-escape-hatch-naming">ADR-018: Test escape-hatch naming<a class="headerlink" href="#adr-018-test-escape-hatch-naming" title="Permanent link">&para;</a></h3>
+<p>Engine test seams use the prefix <code>NeverEverCallThisOutsideOfTests_</code>. Never call these from game code.</p>
+<p>Examples: <code>AbstractModel.NeverEverCallThisOutsideOfTests_SetIsMutable</code>, <code>SaveSystem.NeverEverCallThisOutsideOfTests_InjectSerializer</code>.</p>
+<hr />
+<h2 id="adr-index">ADR index<a class="headerlink" href="#adr-index" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ADR</th>
+<th>Topic</th>
+<th>Audience</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001</td>
+<td>Defensive initialization</td>
+<td>Engine internals</td>
+</tr>
+<tr>
+<td>002</td>
+<td>GetHashCode() cache invalidation</td>
+<td>Engine internals</td>
+</tr>
+<tr>
+<td>003</td>
+<td>Distributed domain reload</td>
+<td>Engine internals</td>
+</tr>
+<tr>
+<td>004</td>
+<td>Multi-tier audio handles</td>
+<td>Engine internals</td>
+</tr>
+<tr>
+<td>005</td>
+<td>Fail-fast initialization</td>
+<td>Engine internals</td>
+</tr>
+<tr>
+<td>006</td>
+<td>Sink-based logger</td>
+<td>Engine + game logging</td>
+</tr>
+<tr>
+<td>007</td>
+<td>Service extensibility</td>
+<td><strong>Game developers</strong></td>
+</tr>
+<tr>
+<td>008</td>
+<td>Deterministic RNG</td>
+<td><strong>Game developers</strong></td>
+</tr>
+<tr>
+<td>009</td>
+<td>ModelDb content registry</td>
+<td><strong>Game developers</strong></td>
+</tr>
+<tr>
+<td>010</td>
+<td>AbstractModel boundary</td>
+<td><strong>Game developers</strong></td>
+</tr>
+<tr>
+<td>011</td>
+<td>LocString architecture</td>
+<td><strong>Game developers</strong></td>
+</tr>
+<tr>
+<td>012</td>
+<td>Save schemas &amp; quarantine</td>
+<td><strong>Game developers</strong></td>
+</tr>
+<tr>
+<td>013</td>
+<td>TypedPoolBag</td>
+<td><strong>Game developers</strong></td>
+</tr>
+<tr>
+<td>014</td>
+<td>AbstractOdds / AntiPityOdds</td>
+<td><strong>Game developers</strong></td>
+</tr>
+<tr>
+<td>015</td>
+<td>Fluent option builders</td>
+<td><strong>Game developers</strong></td>
+</tr>
+<tr>
+<td>016</td>
+<td>ExtraFields kitchen drawer</td>
+<td><strong>Game developers</strong></td>
+</tr>
+<tr>
+<td>017</td>
+<td>Null-object pattern</td>
+<td><strong>Game developers</strong></td>
+</tr>
+<tr>
+<td>018</td>
+<td>Test escape-hatch naming</td>
+<td>Test authors</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../CHEATSHEET-How-To-Use/">CHEATSHEET-How-To-Use.md</a> — quick reference for every system</li>
+<li><a href="../ServiceDependencies/">Service Dependencies</a> — optional attribute-based ordering</li>
+<li><a href="../IL2CPP/">IL2CPP.md</a> — required before shipping IL2CPP builds</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

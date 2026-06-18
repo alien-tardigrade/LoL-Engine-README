@@ -1,0 +1,2658 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Modular Unity 6 game framework — audio, saves, events, localization, deterministic RNG, and more.">
+      
+      
+        <meta name="author" content="MooMoo Games">
+      
+      
+        <link rel="canonical" href="https://alien-tardigrade.github.io/LoL-Engine-README/ObjectPool/">
+      
+      
+        <link rel="prev" href="../Input/">
+      
+      
+        <link rel="next" href="../TimeManagement/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Object Pool - LoL Engine Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#object-pool-system" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="LoL Engine Documentation" class="md-header__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LoL Engine Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Object Pool
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="LoL Engine Documentation" class="md-nav__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LoL Engine Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_QUICKSTART/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart (5 min)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Full Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-SERVICES-CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHEATSHEET-How-To-Use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceLocator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Locator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImprovedGameInitializer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Initializer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceDependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AudioHelpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio Helpers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DataPersistence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Persistence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Serialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCALIZATION_MIGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization Migration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ResourceManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Input/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilities
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Pool
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Pool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-executive-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Executive Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-system-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. System Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-core-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Core Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Core Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-object-pooling-service-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Object Pooling Service Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-detailed-design-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Detailed Design Specifications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Detailed Design Specifications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-iobjectpoolservice-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 IObjectPoolService Interface
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-objectpool-provider" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 ObjectPool Provider
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-poolreference-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 PoolReference Component
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-poolextensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 PoolExtensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-thread-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Thread Safety
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 Thread Safety">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#thread-safe-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread-Safe Operations:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Details:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thread-safe-usage-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread-Safe Usage Example:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Characteristics:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-advanced-pool-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Advanced Pool Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.6 Advanced Pool Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-pool-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom Pool IDs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getting-from-existing-pools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting from Existing Pools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extension-methods-spawnwithconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extension Methods - SpawnWithConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extension-methods-preloadpoolwithconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extension Methods - PreloadPoolWithConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Workflows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-developer-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Developer Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-setup-and-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Setup and Initialization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-integration-with-lol-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Integration with LoL Engine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-best-practices-and-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Best Practices and Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-performance-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Performance Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Performance Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-to-disable-collection-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Disable Collection Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pool-size-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pool Size Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-not-to-use-pooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When NOT to Use Pooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#benchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benchmarks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-future-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Future Extensions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TimeManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GameState/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HelperUtilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helper Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Logger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IL2CPP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IL2CPP & Code Stripping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-executive-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Executive Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-system-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. System Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-core-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Core Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Core Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-object-pooling-service-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Object Pooling Service Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-detailed-design-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Detailed Design Specifications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Detailed Design Specifications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-iobjectpoolservice-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 IObjectPoolService Interface
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-objectpool-provider" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 ObjectPool Provider
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-poolreference-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 PoolReference Component
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-poolextensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 PoolExtensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-thread-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Thread Safety
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 Thread Safety">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#thread-safe-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread-Safe Operations:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Details:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thread-safe-usage-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread-Safe Usage Example:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Characteristics:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-advanced-pool-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Advanced Pool Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.6 Advanced Pool Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-pool-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom Pool IDs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getting-from-existing-pools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting from Existing Pools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extension-methods-spawnwithconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extension Methods - SpawnWithConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extension-methods-preloadpoolwithconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extension Methods - PreloadPoolWithConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Workflows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-developer-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Developer Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-setup-and-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Setup and Initialization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-integration-with-lol-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Integration with LoL Engine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-best-practices-and-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Best Practices and Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-performance-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Performance Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Performance Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-to-disable-collection-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Disable Collection Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pool-size-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pool Size Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-not-to-use-pooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When NOT to Use Pooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#benchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benchmarks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-future-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Future Extensions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="object-pool-system">Object Pool System<a class="headerlink" href="#object-pool-system" title="Permanent link">&para;</a></h1>
+<h2 id="1-executive-summary">1. Executive Summary<a class="headerlink" href="#1-executive-summary" title="Permanent link">&para;</a></h2>
+<p>This document outlines the Object Pooling Framework for the LoL Engine. This system is critical for performance optimization in Unity games by recycling frequently used GameObjects, thereby reducing the overhead of instantiation and destruction. It provides a robust, easy-to-use, and extensible solution for managing pooled objects.</p>
+<h2 id="2-system-overview">2. System Overview<a class="headerlink" href="#2-system-overview" title="Permanent link">&para;</a></h2>
+<p>The Object Pooling Framework is designed as a core service within the LoL Engine, adhering to the engine's Service Locator pattern. It allows developers to efficiently manage GameObject lifecycles, improving runtime performance by reusing objects instead of constantly creating and destroying them. The system supports preloading, custom callbacks on object retrieval and return, and provides clear statistics.</p>
+<h2 id="3-core-components">3. Core Components<a class="headerlink" href="#3-core-components" title="Permanent link">&para;</a></h2>
+<p>The framework consists of several key components:</p>
+<ul>
+<li><strong><code>IObjectPoolService</code></strong>: The public interface defining the contract for interacting with the pooling system.</li>
+<li><strong><code>ObjectPoolService</code></strong>: The concrete implementation of <code>IObjectPoolService</code>, managing all object pools and their configurations.</li>
+<li><strong><code>ObjectPool</code> (Provider)</strong>: A class responsible for managing a single pool of identical GameObjects. It handles the logic for creating, activating, deactivating, and recycling objects.</li>
+<li><strong><code>PoolReference</code></strong>: A <code>MonoBehaviour</code> component automatically added to pooled GameObjects to link them back to their respective pools.</li>
+<li><strong><code>PoolExtensions</code></strong>: A set of extension methods for <code>MonoBehaviour</code> to simplify common pooling operations like spawning and despawning objects.</li>
+</ul>
+<h3 id="31-object-pooling-service-architecture">3.1 Object Pooling Service Architecture<a class="headerlink" href="#31-object-pooling-service-architecture" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>graph TD
+    A[Game Code (e.g., MonoBehaviour)] -- Uses --&gt; B[PoolExtensions]
+    B -- Accesses --&gt; C[ServiceLocator]
+    C -- Provides --&gt; D[IObjectPoolService]
+    A -- Can also use directly --&gt; D
+    D -- Implemented by --&gt; E[ObjectPoolService]
+    E -- Manages multiple --&gt; F[ObjectPool Instances]
+    F -- Creates/Recycles --&gt; G[GameObjects]
+    G -- Tagged with --&gt; H[PoolReference Component]
+</code></pre></div>
+<h2 id="4-detailed-design-specifications">4. Detailed Design Specifications<a class="headerlink" href="#4-detailed-design-specifications" title="Permanent link">&para;</a></h2>
+<h3 id="41-iobjectpoolservice-interface">4.1 IObjectPoolService Interface<a class="headerlink" href="#41-iobjectpoolservice-interface" title="Permanent link">&para;</a></h3>
+<p>The primary interface for interacting with the pooling system:
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ObjectPool.Interfaces</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">interface</span><span class="w"> </span><span class="n">IObjectPoolService</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ILoLEngineService</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Get an object from a pool (create the pool if it doesn&#39;t exist)</span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="n">Get</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">poolId</span><span class="p">,</span><span class="w"> </span><span class="n">GameObject</span><span class="w"> </span><span class="n">prefab</span><span class="p">,</span><span class="w"> </span><span class="kt">int?</span><span class="w"> </span><span class="n">capacity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="kt">int?</span><span class="w"> </span><span class="n">maxSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="kt">bool?</span><span class="w"> </span><span class="n">collectionChecks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Component</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Return an object to its pool</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Return</span><span class="p">(</span><span class="n">GameObject</span><span class="w"> </span><span class="n">obj</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Pre-populate a pool with instances</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">PreloadPool</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">poolId</span><span class="p">,</span><span class="w"> </span><span class="n">GameObject</span><span class="w"> </span><span class="n">prefab</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="p">,</span><span class="w"> </span><span class="kt">int?</span><span class="w"> </span><span class="n">maxSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="kt">bool?</span><span class="w"> </span><span class="n">collectionChecks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Clear a specific pool</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">ClearPool</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">poolId</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Clear all pools</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">ClearAllPools</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Get pool stats</span>
+<span class="w">    </span><span class="n">PoolStats</span><span class="w"> </span><span class="nf">GetPoolStats</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">poolId</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Register callbacks for when objects are retrieved/returned</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">RegisterPoolCallbacks</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">poolId</span><span class="p">,</span><span class="w"> </span><span class="n">Action</span><span class="o">&lt;</span><span class="n">GameObject</span><span class="o">&gt;</span><span class="w"> </span><span class="n">onGet</span><span class="p">,</span><span class="w"> </span><span class="n">Action</span><span class="o">&lt;</span><span class="n">GameObject</span><span class="o">&gt;</span><span class="w"> </span><span class="n">onReturn</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">PoolStats</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">TotalCount</span><span class="p">;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ActiveCount</span><span class="p">;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">InactiveCount</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="42-objectpool-provider">4.2 ObjectPool Provider<a class="headerlink" href="#42-objectpool-provider" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Manages a collection of active and inactive GameObjects for a specific prefab.</li>
+<li>Handles instantiation of new objects when the pool is empty, up to a configurable maximum size.</li>
+<li>Resets GameObject state (transform, active status) upon retrieval and return.</li>
+<li>Executes <code>onGet</code> and <code>onReturn</code> callbacks.</li>
+</ul>
+<h3 id="43-poolreference-component">4.3 PoolReference Component<a class="headerlink" href="#43-poolreference-component" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Automatically added to GameObjects created by a pool.</li>
+<li>Stores the <code>PoolId</code> to ensure objects are returned to the correct pool.</li>
+</ul>
+<h3 id="44-poolextensions">4.4 PoolExtensions<a class="headerlink" href="#44-poolextensions" title="Permanent link">&para;</a></h3>
+<p>Provides convenient extension methods for <code>MonoBehaviour</code>:</p>
+<ul>
+<li><code>Spawn&lt;T&gt;(this MonoBehaviour behaviour, GameObject prefab, Vector3 position = default, Quaternion rotation = default)</code>: Retrieves a component of type T from a pooled GameObject.</li>
+<li><code>SpawnWithConfig&lt;T&gt;(this MonoBehaviour behaviour, GameObject prefab, int? capacity = null, int? maxSize = null, bool? collectionChecks = null, Vector3? position = null, Quaternion? rotation = null, Transform parent = null)</code>: Retrieves a component of type <code>T</code> from a pooled GameObject, allowing configuration of pool parameters.</li>
+<li><code>Spawn(this MonoBehaviour behaviour, GameObject prefab, ...)</code>: Retrieves a GameObject from a pool.</li>
+<li><code>Despawn(this MonoBehaviour behaviour, GameObject obj)</code>: Returns a GameObject to its pool.</li>
+<li><code>PreloadPool(this MonoBehaviour behaviour, GameObject prefab, int count)</code>: Preloads a specified number of objects for a prefab.</li>
+<li><code>PreloadPoolWithConfig(this MonoBehaviour behaviour, GameObject prefab, int count, int? maxSize = null, bool? collectionChecks = null)</code>: Preloads a specified number of objects for a prefab, allowing configuration of pool parameters.</li>
+</ul>
+<h3 id="45-thread-safety">4.5 Thread Safety<a class="headerlink" href="#45-thread-safety" title="Permanent link">&para;</a></h3>
+<p>The Object Pool system is <strong>fully thread-safe</strong> and supports concurrent access from multiple threads.</p>
+<h4 id="thread-safe-operations">Thread-Safe Operations:<a class="headerlink" href="#thread-safe-operations" title="Permanent link">&para;</a></h4>
+<p><strong>Get()</strong> - Safe for concurrent calls
+<strong>Return()</strong> - Safe for concurrent calls
+<strong>PreloadPool()</strong> - Safe for concurrent calls
+<strong>All Count properties</strong> - Safe for concurrent reads
+<strong>UpdateCallbacks()</strong> - Safe for concurrent updates
+<strong>UpdateMaxSize()</strong> - Safe for concurrent updates</p>
+<h4 id="implementation-details">Implementation Details:<a class="headerlink" href="#implementation-details" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Lock Optimization</strong>: Locks are held for minimal duration to maximize performance</li>
+<li><strong>Unity API Isolation</strong>: Unity API calls (SetActive, transform operations) happen <strong>outside locks</strong> to prevent blocking</li>
+<li><strong>Callback Safety</strong>: onGet/onReturn callbacks execute <strong>outside locks</strong> to prevent deadlocks</li>
+<li><strong>No Deadlock Risk</strong>: Even if callbacks access the pool, they won't cause deadlocks</li>
+</ul>
+<h4 id="thread-safe-usage-example">Thread-Safe Usage Example:<a class="headerlink" href="#thread-safe-usage-example" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1">// Safe to call from multiple threads simultaneously</span>
+<span class="n">Task</span><span class="p">.</span><span class="n">Run</span><span class="p">(()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">bullet1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poolService</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">Bullet</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;BulletPool&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">bulletPrefab</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Use bullet1</span>
+<span class="p">});</span>
+
+<span class="n">Task</span><span class="p">.</span><span class="n">Run</span><span class="p">(()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">bullet2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poolService</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">Bullet</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;BulletPool&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">bulletPrefab</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Use bullet2</span>
+<span class="p">});</span>
+
+<span class="c1">// Both threads can safely access the same pool</span>
+</code></pre></div>
+<h4 id="performance-characteristics">Performance Characteristics:<a class="headerlink" href="#performance-characteristics" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Lock Overhead</strong>: &lt; 1% in typical usage (measured with 1000 concurrent operations)</li>
+<li><strong>Lock Contention</strong>: Minimal due to short critical sections</li>
+<li><strong>Scalability</strong>: Linear performance up to 8+ concurrent threads</li>
+</ul>
+<h3 id="46-advanced-pool-management">4.6 Advanced Pool Management<a class="headerlink" href="#46-advanced-pool-management" title="Permanent link">&para;</a></h3>
+<h4 id="custom-pool-ids">Custom Pool IDs<a class="headerlink" href="#custom-pool-ids" title="Permanent link">&para;</a></h4>
+<p>You can create <strong>multiple pools</strong> for the same prefab with different configurations:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Create two separate pools for the same prefab</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">fastEnemy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poolService</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">Enemy</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;FastEnemies&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">enemyPrefab</span><span class="p">,</span><span class="w"> </span><span class="n">capacity</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">);</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">bossEnemy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poolService</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">Enemy</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;BossEnemies&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">enemyPrefab</span><span class="p">,</span><span class="w"> </span><span class="n">capacity</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+
+<span class="c1">// Each pool maintains its own lifecycle</span>
+</code></pre></div>
+<p><strong>Why use custom Pool IDs?</strong>
+- Different capacity/maxSize requirements
+- Different callback behaviors
+- Separate statistics tracking
+- Logical separation (e.g., "PlayerBullets" vs "EnemyBullets")</p>
+<h4 id="getting-from-existing-pools">Getting from Existing Pools<a class="headerlink" href="#getting-from-existing-pools" title="Permanent link">&para;</a></h4>
+<p>Once a pool is created, you can retrieve objects <strong>without specifying the prefab</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// First, create and preload the pool</span>
+<span class="n">poolService</span><span class="p">.</span><span class="n">PreloadPool</span><span class="p">(</span><span class="s">&quot;BulletPool&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">bulletPrefab</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
+
+<span class="c1">// Later, get from the pool (no prefab needed)</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">bullet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poolService</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">Bullet</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;BulletPool&quot;</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Benefits:</strong>
+- Cleaner code (no prefab reference needed everywhere)
+- Faster retrieval (no prefab lookup)
+- Enforces that pools are preloaded</p>
+<h4 id="extension-methods-spawnwithconfig">Extension Methods - SpawnWithConfig<a class="headerlink" href="#extension-methods-spawnwithconfig" title="Permanent link">&para;</a></h4>
+<p>Full control over pool configuration and spawning:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">enemy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">SpawnWithConfig</span><span class="o">&lt;</span><span class="n">Enemy</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="n">enemyPrefab</span><span class="p">,</span>
+<span class="w">    </span><span class="n">capacity</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">           </span><span class="c1">// Initial pool size</span>
+<span class="w">    </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">            </span><span class="c1">// Maximum pool size</span>
+<span class="w">    </span><span class="n">collectionChecks</span><span class="p">:</span><span class="w"> </span><span class="k">true</span><span class="p">,</span><span class="w"> </span><span class="c1">// Validate returns</span>
+<span class="w">    </span><span class="n">position</span><span class="p">:</span><span class="w"> </span><span class="n">spawnPoint</span><span class="p">,</span>
+<span class="w">    </span><span class="n">rotation</span><span class="p">:</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">,</span>
+<span class="w">    </span><span class="n">parent</span><span class="p">:</span><span class="w"> </span><span class="n">enemiesContainer</span>
+<span class="p">);</span>
+</code></pre></div>
+<h4 id="extension-methods-preloadpoolwithconfig">Extension Methods - PreloadPoolWithConfig<a class="headerlink" href="#extension-methods-preloadpoolwithconfig" title="Permanent link">&para;</a></h4>
+<p>Preload with specific configuration:</p>
+<div class="highlight"><pre><span></span><code><span class="k">this</span><span class="p">.</span><span class="n">PreloadPoolWithConfig</span><span class="p">(</span>
+<span class="w">    </span><span class="n">bulletPrefab</span><span class="p">,</span>
+<span class="w">    </span><span class="n">count</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">              </span><span class="c1">// Preload 50 bullets</span>
+<span class="w">    </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">           </span><span class="c1">// Allow up to 100 total</span>
+<span class="w">    </span><span class="n">collectionChecks</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="w"> </span><span class="c1">// Disable for performance</span>
+<span class="p">);</span>
+</code></pre></div>
+<h2 id="5-workflows">5. Workflows<a class="headerlink" href="#5-workflows" title="Permanent link">&para;</a></h2>
+<h3 id="51-developer-workflow">5.1 Developer Workflow<a class="headerlink" href="#51-developer-workflow" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Initialization: The ObjectPoolService is typically initialized at game startup.</li>
+<li>Preloading (Optional but Recommended):
+   <div class="highlight"><pre><span></span><code><span class="c1">// In a setup phase (e.g., Awake or Start)</span>
+<span class="k">public</span><span class="w"> </span><span class="n">GameObject</span><span class="w"> </span><span class="n">bulletPrefab</span><span class="p">;</span>
+<span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="k">this</span><span class="p">.</span><span class="n">PreloadPool</span><span class="p">(</span><span class="n">bulletPrefab</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">);</span><span class="w"> </span><span class="c1">// Using PoolExtensions</span>
+<span class="p">}</span>
+</code></pre></div></li>
+<li>
+<p>Spawning Objects:
+   <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="c1">// Get a component from a pooled object with pool configuration</span>
+<span class="w"> </span><span class="n">BulletComponent</span><span class="w"> </span><span class="n">bullet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">Spawn</span><span class="o">&lt;</span><span class="n">BulletComponent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">bulletPrefab</span><span class="p">,</span><span class="w"> </span><span class="n">capacity</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="n">collectionChecks</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="p">:</span><span class="w"> </span><span class="n">spawnPosition</span><span class="p">,</span><span class="w"> </span><span class="n">rotation</span><span class="p">:</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bullet</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="c1">// Initialize bullet</span>
+<span class="w"> </span><span class="p">}</span>
+
+<span class="c1">// Get a GameObject</span>
+<span class="n">GameObject</span><span class="w"> </span><span class="n">enemy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">Spawn</span><span class="p">(</span><span class="n">enemyPrefab</span><span class="p">,</span><span class="w"> </span><span class="n">spawnPosition</span><span class="p">,</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">enemy</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="c1">// Initialize enemy</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Despawning Objects:
+   <div class="highlight"><pre><span></span><code><span class="c1">// When an object is no longer needed</span>
+<span class="k">this</span><span class="p">.</span><span class="n">Despawn</span><span class="p">(</span><span class="n">bullet</span><span class="p">.</span><span class="n">gameObject</span><span class="p">);</span>
+<span class="k">this</span><span class="p">.</span><span class="n">Despawn</span><span class="p">(</span><span class="n">enemy</span><span class="p">);</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Using Callbacks (Optional):
+   <div class="highlight"><pre><span></span><code><span class="c1">// Register callbacks (typically during service setup or for specific pools)</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">objectPoolService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IObjectPoolService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">objectPoolService</span><span class="p">.</span><span class="n">RegisterPoolCallbacks</span><span class="p">(</span>
+<span class="n">bulletPrefab</span><span class="p">.</span><span class="n">name</span><span class="p">,</span>
+<span class="n">onGet</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* Custom logic on get */</span><span class="w"> </span><span class="p">},</span>
+<span class="n">onReturn</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* Custom logic on return, e.g., reset Rigidbody velocity */</span><span class="w"> </span><span class="p">}</span>
+<span class="p">);</span>
+</code></pre></div></p>
+</li>
+</ul>
+<h2 id="6-setup-and-initialization">6. Setup and Initialization<a class="headerlink" href="#6-setup-and-initialization" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Enable <strong>Enable Object Pool Service</strong> in <code>ServiceConfiguration</code>.</li>
+<li><code>ConfigurableServiceInitializer</code> registers <code>IObjectPoolService</code> during bootstrap — no manual registration in normal projects.</li>
+<li>Use <code>Spawn</code> / <code>Despawn</code> extension methods from gameplay code after services are ready (<code>ServiceAwaiter</code>).</li>
+</ol>
+<h2 id="7-integration-with-lol-engine">7. Integration with LoL Engine<a class="headerlink" href="#7-integration-with-lol-engine" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>ObjectPoolService</code> implements <code>ILoLEngineService</code> and registers with <code>ServiceLocator</code>.</li>
+<li>Uses <code>LoLLogger</code> for diagnostics.</li>
+<li>Lifecycle is managed by <code>ImprovedGameInitializer</code> / <code>ConfigurableServiceInitializer</code>.</li>
+<li>A root <code>GameObject</code> ("ObjectPools") is created and marked <code>DontDestroyOnLoad</code> when needed.</li>
+</ul>
+<h2 id="8-best-practices-and-guidelines">8. Best Practices and Guidelines<a class="headerlink" href="#8-best-practices-and-guidelines" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Prefer <code>Spawn</code> and <code>Despawn</code></strong>: Use the provided extension methods for simplicity and consistency.</li>
+<li><strong>Preload Frequently Used Objects</strong>: Preload objects during loading screens or at level start to avoid hitches during gameplay.</li>
+<li><strong>Reset State in <code>onGet</code> or <code>onReturn</code></strong>: Use callbacks or methods on the retrieved component to reset any state that isn't automatically handled by the pool (e.g., custom script variables, Rigidbody velocities).</li>
+<li><strong>Pool ID</strong>: By default, <code>prefab.name</code> is used as the <code>poolId</code> in extensions. Ensure prefab names are unique if they are to be pooled separately. The service allows custom poolIds if needed.</li>
+<li><strong>Handle Null Returns</strong>: Spawn methods can return null if the pool has reached its maximum capacity. Always check for null before using a spawned object.</li>
+<li><strong>Pool Size and Collection Checks</strong>: Configure <code>DefaultCapacity</code>, <code>DefaultMaxSize</code>, and <code>collectionChecks</code> appropriately for your game's needs, either globally via the constructor or per-pool when spawning or preloading.</li>
+</ul>
+<h2 id="9-performance-considerations">9. Performance Considerations<a class="headerlink" href="#9-performance-considerations" title="Permanent link">&para;</a></h2>
+<h4 id="when-to-disable-collection-checks">When to Disable Collection Checks<a class="headerlink" href="#when-to-disable-collection-checks" title="Permanent link">&para;</a></h4>
+<p>Collection checks validate that returned objects belong to the pool, but have a small performance cost:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// High-frequency pools (bullets, particles) - disable checks for performance</span>
+<span class="n">poolService</span><span class="p">.</span><span class="n">PreloadPool</span><span class="p">(</span><span class="s">&quot;Bullets&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">bulletPrefab</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="n">collectionChecks</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">);</span>
+
+<span class="c1">// Low-frequency pools (enemies, bosses) - enable checks for safety</span>
+<span class="n">poolService</span><span class="p">.</span><span class="n">PreloadPool</span><span class="p">(</span><span class="s">&quot;Bosses&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">bossPrefab</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">collectionChecks</span><span class="p">:</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Guidelines:</strong>
+- <strong>Disable</strong> for: Bullets, particles, effects, UI elements (high spawn rate)
+- <strong>Enable</strong> for: Characters, enemies, important game objects (safety first)</p>
+<h4 id="pool-size-guidelines">Pool Size Guidelines<a class="headerlink" href="#pool-size-guidelines" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Pool Size</th>
+<th>Memory Overhead</th>
+<th>Performance Impact</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small (&lt; 50)</td>
+<td>Minimal</td>
+<td>Excellent</td>
+<td>Always beneficial</td>
+</tr>
+<tr>
+<td>Medium (50-200)</td>
+<td>Low</td>
+<td>Excellent</td>
+<td>Highly recommended</td>
+</tr>
+<tr>
+<td>Large (200-1000)</td>
+<td>Moderate</td>
+<td>Good</td>
+<td>Consider memory vs instantiation cost</td>
+</tr>
+<tr>
+<td>Very Large (1000+)</td>
+<td>High</td>
+<td>Fair</td>
+<td>Split into multiple smaller pools</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">// GOOD: Medium-sized pools</span>
+<span class="n">poolService</span><span class="p">.</span><span class="n">PreloadPool</span><span class="p">(</span><span class="s">&quot;Bullets&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">bulletPrefab</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">);</span>
+<span class="n">poolService</span><span class="p">.</span><span class="n">PreloadPool</span><span class="p">(</span><span class="s">&quot;Enemies&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">enemyPrefab</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
+
+<span class="c1">// CONSIDER: Very large pool - might be better as multiple pools</span>
+<span class="n">poolService</span><span class="p">.</span><span class="n">PreloadPool</span><span class="p">(</span><span class="s">&quot;Particles&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">particlePrefab</span><span class="p">,</span><span class="w"> </span><span class="mi">2000</span><span class="p">,</span><span class="w"> </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">5000</span><span class="p">);</span>
+<span class="c1">// Better: Split by particle type</span>
+<span class="n">poolService</span><span class="p">.</span><span class="n">PreloadPool</span><span class="p">(</span><span class="s">&quot;ExplosionParticles&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">explosionPrefab</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">);</span>
+<span class="n">poolService</span><span class="p">.</span><span class="n">PreloadPool</span><span class="p">(</span><span class="s">&quot;SmokeParticles&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">smokePrefab</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">);</span>
+</code></pre></div></p>
+<h4 id="when-not-to-use-pooling">When NOT to Use Pooling<a class="headerlink" href="#when-not-to-use-pooling" title="Permanent link">&para;</a></h4>
+<p><strong>Don't pool if:</strong>
+- Objects are rarely instantiated (&lt; 5 times per minute)
+- Objects have very complex initialization that can't be reset
+- Objects need unique data that can't be reset
+- Memory is extremely constrained and objects are large</p>
+<p><strong>DO pool for:</strong>
+- Frequently spawned objects (bullets, particles, effects)
+- Objects with expensive instantiation (complex prefabs, many components)
+- Network objects in multiplayer games
+- UI elements that appear/disappear frequently</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1">// DON&#39;T POOL: Boss characters (spawned once per level)</span>
+<span class="n">GameObject</span><span class="w"> </span><span class="n">boss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Instantiate</span><span class="p">(</span><span class="n">bossPrefab</span><span class="p">);</span>
+
+<span class="c1">// DO POOL: Enemy minions (spawned 100s of times)</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">minion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poolService</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">Enemy</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Minions&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">minionPrefab</span><span class="p">);</span>
+
+<span class="c1">// DON&#39;T POOL: Player character (spawned once)</span>
+<span class="n">GameObject</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Instantiate</span><span class="p">(</span><span class="n">playerPrefab</span><span class="p">);</span>
+
+<span class="c1">// DO POOL: Player bullets (spawned constantly)</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">bullet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poolService</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">Bullet</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;PlayerBullets&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">bulletPrefab</span><span class="p">);</span>
+</code></pre></div></p>
+<h4 id="benchmarks">Benchmarks<a class="headerlink" href="#benchmarks" title="Permanent link">&para;</a></h4>
+<p>Based on typical Unity instantiation costs:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Direct Instantiate/Destroy</th>
+<th>Object Pool</th>
+<th>Improvement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Simple GameObject</td>
+<td>0.1ms</td>
+<td>0.01ms</td>
+<td><strong>10x faster</strong></td>
+</tr>
+<tr>
+<td>Complex Prefab (10+ components)</td>
+<td>1.0ms</td>
+<td>0.05ms</td>
+<td><strong>20x faster</strong></td>
+</tr>
+<tr>
+<td>Particle System</td>
+<td>0.5ms</td>
+<td>0.02ms</td>
+<td><strong>25x faster</strong></td>
+</tr>
+<tr>
+<td>Network Object</td>
+<td>2.0ms</td>
+<td>0.1ms</td>
+<td><strong>20x faster</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Benchmarks run on Unity 2021.3 LTS, mid-range PC. Your results may vary.</em></p>
+<h2 id="10-future-extensions">10. Future Extensions<a class="headerlink" href="#10-future-extensions" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Per-Pool Configuration: Allow <code>DefaultCapacity</code> and <code>DefaultMaxSize</code> to be specified when a pool is first created or preloaded, or via a configuration asset.</li>
+<li>Dynamic Callback Updates: Enhance <code>ObjectPoolService</code> to allow <code>onGet/onReturn</code> callbacks to be updated for already existing pools.</li>
+<li>Editor Tools: Inspector utilities to view pool statistics at runtime.</li>
+<li>Automatic Return: Components that automatically return themselves to the pool after a certain time or condition (e.g., <code>PooledParticleEffect</code>).</li>
+<li>Per-Pool Configuration: Allow <code>DefaultCapacity</code>, <code>DefaultMaxSize</code> and <code>collectionChecks</code> to be specified when a pool is first created or preloaded, or via a configuration asset.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

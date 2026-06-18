@@ -1,0 +1,4449 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Modular Unity 6 game framework — audio, saves, events, localization, deterministic RNG, and more.">
+      
+      
+        <meta name="author" content="MooMoo Games">
+      
+      
+        <link rel="canonical" href="https://alien-tardigrade.github.io/LoL-Engine-README/CHEATSHEET-How-To-Use/">
+      
+      
+        <link rel="prev" href="../02-SERVICES-CHECKLIST/">
+      
+      
+        <link rel="next" href="../Troubleshooting/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Cheatsheet - LoL Engine Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lol-engine-components-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="LoL Engine Documentation" class="md-header__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LoL Engine Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Cheatsheet
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="LoL Engine Documentation" class="md-nav__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LoL Engine Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_QUICKSTART/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart (5 min)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Full Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-SERVICES-CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#initial-project-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initial Project Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initial Project Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets Creation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-setup-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Setup Pattern
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Setup Pattern">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#base-game-initializer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Base Game Initializer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monobehaviour-service-usage-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MonoBehaviour Service Usage Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audio System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audioconfig-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AudioConfig Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audiomixer-setup-if-using" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AudioMixer Setup (if using)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#randomized-playback-pitchvolume-jitter-variant-pools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Randomized Playback (pitch/volume jitter + variant pools)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#play-audio-from-your-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Play Audio From Your UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#music-playlist-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Music Playlist System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Music Playlist System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-track-gain-loudness-normalisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-Track Gain (loudness normalisation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#now-playing-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Now-Playing UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gapless-crossfade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gapless Crossfade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equal-power-crossfade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equal-Power Crossfade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settings-ui-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings UI Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audiomixer-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AudioMixer (optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wav-source-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WAV Source Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crossfade-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crossfade Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-unity-input-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Input (Unity Input System)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resource Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resource Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resourcemanagementconfig-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ResourceManagementConfig Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#addressables-setup-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressables Setup (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loading Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#object-pooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Pooling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Object Pooling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-event" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Define Event
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listen-to-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listen to Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trigger-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trigger Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-persistence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Persistence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Persistence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saveconfig-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SaveConfig Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-service-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Service Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-data-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup Data Classes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saveload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save/Load
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-save" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-Save
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paths-and-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paths and Extensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#localization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Localization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Localization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#localizationconfig-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LocalizationConfig Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-localization-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create Localization Tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Time Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-time-channels-auto-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default Time Channels (auto-created)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#time-service-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Service Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notifications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Notifications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-configuration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default Categories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notification-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notification Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#send-notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Send Notifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subscribe-to-notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subscribe to Notifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#game-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Game State Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Game State Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-configuration_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engine-vs-game-state-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engine vs Game State IDs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        State Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thread-safety-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread Safety &amp; Performance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thread Safety &amp; Performance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enhanced-thread-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enhanced Thread Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handle-leak-prevention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handle Leak Prevention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-management-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Management Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#default-config-locations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default Config Locations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Cleanup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#null-checking-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Null Checking Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceLocator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Locator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImprovedGameInitializer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Initializer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceDependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AudioHelpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio Helpers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DataPersistence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Persistence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Serialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCALIZATION_MIGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization Migration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ResourceManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Input/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilities
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ObjectPool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Pool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TimeManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GameState/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HelperUtilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helper Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Logger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IL2CPP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IL2CPP & Code Stripping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#initial-project-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initial Project Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initial Project Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets Creation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-setup-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Setup Pattern
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Setup Pattern">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#base-game-initializer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Base Game Initializer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monobehaviour-service-usage-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MonoBehaviour Service Usage Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audio System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audioconfig-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AudioConfig Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audiomixer-setup-if-using" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AudioMixer Setup (if using)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#randomized-playback-pitchvolume-jitter-variant-pools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Randomized Playback (pitch/volume jitter + variant pools)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#play-audio-from-your-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Play Audio From Your UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#music-playlist-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Music Playlist System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Music Playlist System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-track-gain-loudness-normalisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-Track Gain (loudness normalisation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#now-playing-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Now-Playing UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gapless-crossfade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gapless Crossfade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equal-power-crossfade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equal-Power Crossfade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#settings-ui-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings UI Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audiomixer-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AudioMixer (optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wav-source-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WAV Source Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crossfade-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crossfade Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-unity-input-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Input (Unity Input System)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resource Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resource Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resourcemanagementconfig-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ResourceManagementConfig Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#addressables-setup-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressables Setup (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loading-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loading Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#object-pooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Pooling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Object Pooling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-event" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Define Event
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listen-to-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listen to Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trigger-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trigger Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-persistence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Persistence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Persistence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saveconfig-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SaveConfig Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-service-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Service Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-data-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup Data Classes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saveload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save/Load
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-save" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-Save
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paths-and-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paths and Extensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#localization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Localization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Localization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-assets_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#localizationconfig-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LocalizationConfig Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-localization-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create Localization Tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Time Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-time-channels-auto-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default Time Channels (auto-created)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#time-service-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Service Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notifications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Notifications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-configuration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default Categories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notification-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notification Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#send-notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Send Notifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subscribe-to-notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subscribe to Notifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#game-state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Game State Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Game State Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service-configuration_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engine-vs-game-state-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engine vs Game State IDs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        State Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thread-safety-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread Safety &amp; Performance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thread Safety &amp; Performance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enhanced-thread-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enhanced Thread Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handle-leak-prevention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handle Leak Prevention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-management-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Management Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#default-config-locations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Default Config Locations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Cleanup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#null-checking-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Null Checking Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="lol-engine-components-cheat-sheet">LoL Engine Components Cheat Sheet<a class="headerlink" href="#lol-engine-components-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="initial-project-setup">Initial Project Setup<a class="headerlink" href="#initial-project-setup" title="Permanent link">&para;</a></h2>
+<h3 id="required-assets-creation">Required Assets Creation<a class="headerlink" href="#required-assets-creation" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Create Service Configuration</strong></li>
+<li>Right-click in Project → Create → LoLEngine → Service Configuration</li>
+<li>
+<p>Name it (e.g., "MyGame_ServiceConfig")</p>
+</li>
+<li>
+<p><strong>Create Resource Path Config</strong></p>
+</li>
+<li>Right-click → Create → LoLEngine → Resource Path Config</li>
+<li>
+<p>Name it (e.g., "MyGame_ResourcePaths")</p>
+</li>
+<li>
+<p><strong>Setup Scene</strong></p>
+</li>
+<li>Create empty GameObject "EngineInitializer"</li>
+<li>Add <code>ImprovedGameInitializer</code> component</li>
+<li>
+<p>Assign ServiceConfiguration and ResourcePathConfig assets</p>
+</li>
+<li>
+<p><strong>ServiceConfiguration Options</strong>
+   <div class="highlight"><pre><span></span><code>Core Services:
+[ ] Enable Event Manager - Required for all event handling
+[ ] Enable Resource Service - Required for asset loading
+[ ] Enable Object Pool - Enables GameObject pooling
+[ ] Enable Time Service - Time manipulation
+[ ] Enable Rng Service - Deterministic named RNG streams
+
+Game Services:
+[ ] Enable Audio Service - Sound/music playback
+[ ] Enable Music Playlist Service - Playlist orchestration over audio
+[ ] Enable Audio Orchestrator - Advanced audio routing (default off)
+[ ] Enable Data Persistence Service - Game saves/loads
+[ ] Enable Auto Save Service - Automatic saving at intervals
+[ ] Enable Quick Save Service - Quick save/load functionality (default off)
+[ ] Enable Localization Service - Multi-language support
+[ ] Enable Notification Service - In-game notifications
+[ ] Enable Game State Manager - Game state machine
+[ ] Enable Asset Updater Service - Remote catalog updates (default off)
+
+Support Services:
+[ ] Enable Serialization Service - JSON serialization (required for saves)
+[ ] Enable Compression Service - Data compression (optional for saves)
+[ ] Enable Encryption Service - Data encryption (optional for saves)
+</code></pre></div></p>
+</li>
+</ol>
+<h2 id="quick-setup-pattern">Quick Setup Pattern<a class="headerlink" href="#quick-setup-pattern" title="Permanent link">&para;</a></h2>
+<h3 id="base-game-initializer">Base Game Initializer<a class="headerlink" href="#base-game-initializer" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.GameInitializer</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime.Logger</span><span class="p">;</span>
+
+<span class="na">[DefaultExecutionOrder(-100)]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyGameInitializer</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ImprovedGameInitializer</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">AreServicesReady</span><span class="p">())</span>
+<span class="w">            </span><span class="n">OnServicesReady</span><span class="p">();</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">WaitForServices</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesReady</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesTimeout</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesReady</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Your initialization code here</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesTimeout</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">LoLLogger</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="s">&quot;Timed out waiting for services&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="monobehaviour-service-usage-pattern">MonoBehaviour Service Usage Pattern<a class="headerlink" href="#monobehaviour-service-usage-pattern" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyComponent</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IMyService</span><span class="w"> </span><span class="n">_myService</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">AreServicesReady</span><span class="p">())</span>
+<span class="w">            </span><span class="n">OnServicesReady</span><span class="p">();</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">            </span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">WaitForServices</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesReady</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesTimeout</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesReady</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_myService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IMyService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">_myService</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// Use service</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Cleanup</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="audio-system">Audio System<a class="headerlink" href="#audio-system" title="Permanent link">&para;</a></h2>
+<h3 id="required-assets">Required Assets<a class="headerlink" href="#required-assets" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Create AudioConfig</strong>: Right-click → Create → LoLEngine → Audio → Audio Config</li>
+<li><strong>Assign to ServiceConfiguration</strong>: In AudioConfig field</li>
+</ol>
+<h3 id="audioconfig-options">AudioConfig Options<a class="headerlink" href="#audioconfig-options" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Audio Settings:
+├─ Tracks (List)
+│  └─ Track Entry:
+│     ├─ Name: &quot;Music&quot;/&quot;SFX&quot;/&quot;UI&quot;/&quot;Voice&quot; - Track identifier
+│     ├─ Volume: 0-1 - Default volume for track
+│     ├─ Mute: true/false - Start muted
+│     ├─ Max Concurrent Sounds: -1 = unlimited, &gt;0 = limit
+│     └─ Mixer Group: Optional AudioMixerGroup assignment
+│
+├─ Pool Settings:
+│  ├─ Use Object Pooling: true/false - Recycle AudioSources
+│  ├─ Initial Pool Size: 10 - Pre-create this many AudioSources
+│  └─ Max Pool Size: 50 - Maximum AudioSources in pool
+│
+├─ Default Settings:
+│  ├─ Master Volume: 0-1 - Global volume multiplier
+│  ├─ Default Fade Duration: 0.5f - Default fade time
+│  └─ Spatial Blend: 0 = 2D, 1 = 3D - Default spatial setting
+│
+└─ Audio Mixer: Optional - Assign main AudioMixer asset
+</code></pre></div>
+<h3 id="audiomixer-setup-if-using">AudioMixer Setup (if using)<a class="headerlink" href="#audiomixer-setup-if-using" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Create AudioMixer asset</li>
+<li>Expose these parameters (right-click parameter → Expose):</li>
+<li><code>MasterVolume</code> - Controls all audio</li>
+<li><code>MusicVolume</code> - Music track volume</li>
+<li><code>SFXVolume</code> - Sound effects volume</li>
+<li><code>UIVolume</code> - UI sounds volume</li>
+<li><code>VoiceVolume</code> - Voice/dialogue volume</li>
+<li>Assign to AudioConfig</li>
+</ol>
+<h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="n">IAudioService</span><span class="w"> </span><span class="n">_audioService</span><span class="p">;</span>
+
+<span class="c1">// In OnServicesReady:</span>
+<span class="n">_audioService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAudioService</span><span class="o">&gt;</span><span class="p">();</span>
+</code></pre></div>
+<h3 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Play 2D sound</span>
+<span class="k">this</span><span class="p">.</span><span class="n">PlaySound</span><span class="p">(</span><span class="s">&quot;Audio/UIClick&quot;</span><span class="p">);</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_audioService</span><span class="p">.</span><span class="n">PlaySound</span><span class="p">(</span><span class="s">&quot;Audio/UIClick&quot;</span><span class="p">);</span>
+
+<span class="c1">// Play 3D sound</span>
+<span class="k">this</span><span class="p">.</span><span class="n">PlaySoundAtPosition</span><span class="p">(</span><span class="s">&quot;Audio/Explosion&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">);</span>
+
+<span class="c1">// With options</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PlayOptions</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">volume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">,</span>
+<span class="w">    </span><span class="n">pitch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.2f</span><span class="p">,</span>
+<span class="w">    </span><span class="n">loop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<span class="w">    </span><span class="n">fadeIn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<span class="w">    </span><span class="n">track</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;SFX&quot;</span><span class="p">)</span>
+<span class="p">};</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_audioService</span><span class="p">.</span><span class="n">PlaySound</span><span class="p">(</span><span class="s">&quot;Audio/Music&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">);</span>
+
+<span class="c1">// Control playback</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">SetVolume</span><span class="p">(</span><span class="mf">0.5f</span><span class="p">);</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">Pause</span><span class="p">();</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">Resume</span><span class="p">();</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">Stop</span><span class="p">();</span>
+
+<span class="c1">// Track control</span>
+<span class="n">_audioService</span><span class="p">.</span><span class="n">SetTrackVolume</span><span class="p">(</span><span class="n">_audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;Music&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">0.7f</span><span class="p">);</span>
+<span class="n">_audioService</span><span class="p">.</span><span class="n">SetTrackMute</span><span class="p">(</span><span class="n">_audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;SFX&quot;</span><span class="p">),</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="randomized-playback-pitchvolume-jitter-variant-pools">Randomized Playback (pitch/volume jitter + variant pools)<a class="headerlink" href="#randomized-playback-pitchvolume-jitter-variant-pools" title="Permanent link">&para;</a></h3>
+<p>Use when the same action fires repeatedly (UI clicks, footsteps) and identical-sounding playback feels robotic. Types live in <code>LoLEngine.Core.Audio.Data</code>; entry points are extension methods in <code>LoLEngine.Core.Audio.Extensions</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Audio.Data</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Audio.Extensions</span><span class="p">;</span>
+
+<span class="c1">// Hold the pool as a field so no-immediate-repeat state persists across calls</span>
+<span class="k">private</span><span class="w"> </span><span class="n">RandomAudioPool</span><span class="w"> </span><span class="n">_clickPool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RandomAudioPool</span><span class="p">(</span><span class="k">new</span><span class="p">[]</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="s">&quot;sfx_ui_click_a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sfx_ui_click_b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sfx_ui_click_c&quot;</span>
+<span class="p">});</span>
+
+<span class="c1">// Per-click:</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">baseOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PlayOptions</span><span class="p">.</span><span class="n">Default</span><span class="p">;</span>
+<span class="n">baseOptions</span><span class="p">.</span><span class="n">track</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;UI&quot;</span><span class="p">);</span>
+
+<span class="c1">// Pool overload — picks a variant + applies jitter</span>
+<span class="k">await</span><span class="w"> </span><span class="n">_audioService</span><span class="p">.</span><span class="n">PlayRandomAsync</span><span class="p">(</span><span class="n">_clickPool</span><span class="p">,</span><span class="w"> </span><span class="n">baseOptions</span><span class="p">,</span><span class="w"> </span><span class="n">PlayRandomization</span><span class="p">.</span><span class="n">Default</span><span class="p">);</span>
+
+<span class="c1">// Single-id overload — just jitter, no pool</span>
+<span class="k">await</span><span class="w"> </span><span class="n">_audioService</span><span class="p">.</span><span class="n">PlayRandomAsync</span><span class="p">(</span><span class="s">&quot;sfx_ui_click&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">baseOptions</span><span class="p">,</span><span class="w"> </span><span class="n">PlayRandomization</span><span class="p">.</span><span class="n">Default</span><span class="p">);</span>
+
+<span class="c1">// Presets: PlayRandomization.Default (light jitter) or .None (no jitter)</span>
+<span class="c1">// Or build your own:</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">rand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PlayRandomization</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">minPitch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.9f</span><span class="p">,</span><span class="w"> </span><span class="n">maxPitch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.1f</span><span class="p">,</span><span class="w"> </span><span class="n">minVolume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.95f</span><span class="p">,</span><span class="w"> </span><span class="n">maxVolume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1f</span><span class="p">,</span><span class="w"> </span><span class="n">avoidImmediateRepeat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="p">};</span>
+
+<span class="c1">// Fire-and-forget: observe faults via the ObserveFault extension</span>
+<span class="c1">// (zero-alloc static ContinueWith on OnlyOnFaulted, logs LogChannel.Custom1)</span>
+<span class="n">_audioService</span><span class="p">.</span><span class="n">PlayRandomAsync</span><span class="p">(</span><span class="n">_clickPool</span><span class="p">,</span><span class="w"> </span><span class="n">baseOptions</span><span class="p">,</span><span class="w"> </span><span class="n">PlayRandomization</span><span class="p">.</span><span class="n">Default</span><span class="p">)</span>
+<span class="w">             </span><span class="p">.</span><span class="n">ObserveFault</span><span class="p">(</span><span class="s">&quot;[MyComponent]&quot;</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Notes:</strong>
+- <code>IAudioService</code>/<code>AudioService</code> are unchanged — these are extension methods that compose existing <code>PlaySoundAsync</code>.
+- Returns <code>Task&lt;IAudioHandle&gt;</code>. Don't use <code>_ = task</code> — call <code>.ObserveFault("[Tag]")</code> (from <code>LoLEngine.Core.Audio.Extensions</code>) or <code>await</code>.
+- Build <code>RandomAudioPool</code> once and reuse; do NOT construct per-click (<code>_lastIndex</code> state is lost).
+- No cooldown/debounce included — add at the call site if needed (see below).</p>
+<p><strong>Rate limiting for continuous-input actions (hold-to-rotate, etc.):</strong></p>
+<p>Randomization makes rapid playback sound less repetitive but does <strong>not</strong> throttle anything. If the action can fire at frame rate, throttle at the call site — three lines, <code>Time.unscaledTime</code>, anchor the window on <em>attempts</em>:</p>
+<div class="highlight"><pre><span></span><code><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">sfxCooldownSeconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0f</span><span class="p">;</span><span class="w">   </span><span class="c1">// 0 = disabled; try ~0.05f for held-input rotation</span>
+<span class="k">private</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">_lastSfxTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float</span><span class="p">.</span><span class="n">NegativeInfinity</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">PlayRotate</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">sfxCooldownSeconds</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0f</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Time</span><span class="p">.</span><span class="n">unscaledTime</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">now</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_lastSfxTime</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">sfxCooldownSeconds</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="n">_lastSfxTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">now</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">_audioService</span><span class="p">.</span><span class="n">PlayRandomAsync</span><span class="p">(</span><span class="n">_pool</span><span class="p">,</span><span class="w"> </span><span class="n">baseOptions</span><span class="p">,</span><span class="w"> </span><span class="n">rotateRandomization</span><span class="p">)</span>
+<span class="w">                 </span><span class="p">.</span><span class="n">ObserveFault</span><span class="p">(</span><span class="s">&quot;[RotateSfx]&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Only apply to continuous-input actions. Discrete events (pick/release, button click, snap, solve) don't need throttling.</p>
+<h3 id="play-audio-from-your-ui">Play Audio From Your UI<a class="headerlink" href="#play-audio-from-your-ui" title="Permanent link">&para;</a></h3>
+<p>Use your UI controller or button handlers to play music or a stinger through <code>IAudioService</code>.</p>
+<p>Steps:
+- Resolve <code>IAudioService</code> after engine initialization.
+- Call <code>PlaySound</code> from button click handlers.
+- Call <code>PlayMusic</code> or <code>Play</code> with <code>PlayOptions</code> when a menu/panel becomes visible.
+- Stop or fade music when leaving the menu if your game flow requires it.</p>
+<p>Addressables setup:
+- Mark your AudioClip as addressable with key matching <code>Audio Id</code> (e.g., <code>Audio/Music/MainMenuTheme</code>).
+- Or place it under <code>Resources/Audio/Music/MainMenuTheme</code> and use that path.</p>
+<p>Notes:
+- LoL Engine does not ship a UI service wrapper; use Unity uGUI, UI Toolkit, or your own UI framework directly.
+- Ensure <code>IAudioService</code> is enabled in your service configuration.</p>
+<hr />
+<h2 id="music-playlist-system">Music Playlist System<a class="headerlink" href="#music-playlist-system" title="Permanent link">&para;</a></h2>
+<p>Orchestration layer on top of <code>IAudioService</code> for back-to-back, themed, or shuffled music playback with <strong>gapless crossfade</strong>, <strong>per-track loudness normalization</strong>, and <strong>Now-Playing metadata</strong>. Enable <code>enableMusicPlaylistService</code> in ServiceConfiguration (requires Audio Service).</p>
+<h3 id="required-assets_1">Required Assets<a class="headerlink" href="#required-assets_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Create a <strong>MusicPlaylist</strong>: Right-click → Create → LoLEngine → Audio → Music Playlist</li>
+<li>Fill in <code>playlistId</code> and the <code>tracks</code> list — each entry has <code>addressableId</code> (required), <code>gainDb</code>, <code>displayTitle</code>, <code>artist</code>, <code>coverArt</code>.
+   Legacy <code>addressableIds</code> list (plain strings) auto-migrates to <code>tracks</code> when the asset is opened in the Inspector.</li>
+<li><code>AudioConfig</code> music-playlist fields:</li>
+<li><code>defaultCrossfadeDuration</code> — seconds between tracks (default 2)</li>
+<li><code>defaultPreloadLookaheadSeconds</code> — seconds before end to begin loading next clip (default 3)</li>
+<li><code>defaultPlaylistCrossfadeCurve</code> — <code>EqualPower</code> (default) or <code>Linear</code></li>
+<li><code>defaultPlaybackMode</code>, <code>globalCrossfadeEnabledDefault</code>, <code>defaultMuteMode</code></li>
+</ol>
+<h3 id="basic-usage_1">Basic Usage<a class="headerlink" href="#basic-usage_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="n">IMusicPlaylistService</span><span class="w"> </span><span class="n">_playlist</span><span class="p">;</span>
+
+<span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesReady</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_playlist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IMusicPlaylistService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="n">_playlist</span><span class="p">.</span><span class="n">OnTrackChanged</span><span class="w">      </span><span class="o">+=</span><span class="w"> </span><span class="n">id</span><span class="w">    </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Now playing: {id}&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">_playlist</span><span class="p">.</span><span class="n">OnTrackEntryChanged</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">UpdateNowPlayingUI</span><span class="p">(</span><span class="n">entry</span><span class="p">);</span>
+<span class="w">    </span><span class="n">_playlist</span><span class="p">.</span><span class="n">OnPlaylistCompleted</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">pl</span><span class="w">    </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Finished&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Authored playlist (MusicPlaylist asset)</span>
+<span class="n">_playlist</span><span class="p">.</span><span class="n">Play</span><span class="p">(</span><span class="n">forestThemePlaylist</span><span class="p">);</span>
+
+<span class="c1">// Runtime string list (no metadata)</span>
+<span class="n">_playlist</span><span class="p">.</span><span class="n">Play</span><span class="p">(</span><span class="k">new</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;music_a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;music_b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;music_c&quot;</span><span class="w"> </span><span class="p">});</span>
+
+<span class="c1">// Runtime list with per-track metadata and gain</span>
+<span class="n">_playlist</span><span class="p">.</span><span class="n">Play</span><span class="p">(</span><span class="k">new</span><span class="p">[]</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">PlaylistTrackEntry</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">addressableId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;music_a&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">gainDb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">3f</span><span class="p">,</span><span class="w"> </span><span class="n">displayTitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Forest Dawn&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">artist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Composer&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">PlaylistTrackEntry</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">addressableId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;music_b&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">gainDb</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="mf">0f</span><span class="p">,</span><span class="w"> </span><span class="n">displayTitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Deep Grove&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="p">});</span>
+
+<span class="c1">// Controls</span>
+<span class="n">_playlist</span><span class="p">.</span><span class="n">Next</span><span class="p">();</span>
+<span class="n">_playlist</span><span class="p">.</span><span class="n">Previous</span><span class="p">();</span>
+<span class="n">_playlist</span><span class="p">.</span><span class="n">Pause</span><span class="p">();</span><span class="w">       </span><span class="c1">// position-preserving</span>
+<span class="n">_playlist</span><span class="p">.</span><span class="n">Resume</span><span class="p">();</span>
+<span class="n">_playlist</span><span class="p">.</span><span class="n">Stop</span><span class="p">(</span><span class="mf">1.5f</span><span class="p">);</span><span class="w">    </span><span class="c1">// fade-out seconds; -1 = service default</span>
+
+<span class="c1">// Theme swap (crossfades between playlists)</span>
+<span class="n">_playlist</span><span class="p">.</span><span class="n">SwitchTo</span><span class="p">(</span><span class="n">cityThemePlaylist</span><span class="p">);</span>
+
+<span class="c1">// Shuffle — plays every track exactly once per cycle, then reshuffles</span>
+<span class="n">_playlist</span><span class="p">.</span><span class="n">Mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PlaylistPlaybackMode</span><span class="p">.</span><span class="n">Shuffle</span><span class="p">;</span>
+
+<span class="c1">// Now-Playing (polling)</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_playlist</span><span class="p">.</span><span class="n">CurrentTrackEntry</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="per-track-gain-loudness-normalisation">Per-Track Gain (loudness normalisation)<a class="headerlink" href="#per-track-gain-loudness-normalisation" title="Permanent link">&para;</a></h3>
+<p>Set <code>gainDb</code> on each <code>PlaylistTrackEntry</code>.
+<code>0 dB</code> = neutral. Recommended range: <strong>−12 to +6 dB</strong>.
+The linear gain (<code>10 ^ (gainDb / 20)</code>) multiplies into <code>PlayOptions.volume</code> alongside the Music track volume and master volume — no AudioMixer required.</p>
+<h3 id="now-playing-ui">Now-Playing UI<a class="headerlink" href="#now-playing-ui" title="Permanent link">&para;</a></h3>
+<p>Subscribe to <code>OnTrackEntryChanged</code> or use the ready-made <code>NowPlayingSample</code> MonoBehaviour (<code>Samples~/Scripts/11_NowPlayingSample.cs</code>). Assign <code>TMP_Text</code> fields for title/artist and an <code>Image</code> for the cover sprite — the component handles updates automatically.</p>
+<h3 id="gapless-crossfade">Gapless Crossfade<a class="headerlink" href="#gapless-crossfade" title="Permanent link">&para;</a></h3>
+<p>The service creates a hidden <code>MusicPlaylistPump</code> MonoBehaviour on <code>DontDestroyOnLoad</code> during <code>LateInitialize()</code>. Each frame it checks remaining time:
+- At <code>remaining ≤ preloadLookaheadSeconds</code> → loads the next clip into the resource cache.
+- At <code>remaining ≤ crossfadeDuration</code> (and cache is ready) → starts the next track early so both clips genuinely overlap.
+- <strong>Fallback</strong>: if the preload hasn't finished, <code>OnComplete</code> fires the advance as usual (same gap as before — no regression).</p>
+<h3 id="equal-power-crossfade">Equal-Power Crossfade<a class="headerlink" href="#equal-power-crossfade" title="Permanent link">&para;</a></h3>
+<p><code>AudioConfig.defaultPlaylistCrossfadeCurve = EqualPower</code> (default) uses <code>sin</code>/<code>cos</code> curves so the sum of the two fading signals stays near constant perceived loudness. Switch to <code>Linear</code> per-config to restore the old character.</p>
+<h3 id="settings-ui-pattern">Settings UI Pattern<a class="headerlink" href="#settings-ui-pattern" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">_playlist</span><span class="p">.</span><span class="n">MasterMusicVolume</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">;</span>
+<span class="n">_playlist</span><span class="p">.</span><span class="n">GlobalCrossfadeEnabled</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span><span class="w">     </span><span class="c1">// kill-switch → instant cuts</span>
+<span class="n">_playlist</span><span class="p">.</span><span class="n">MuteMode</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="n">MuteMode</span><span class="p">.</span><span class="n">PauseOnMute</span><span class="p">;</span><span class="w"> </span><span class="c1">// or SilenceOnly</span>
+<span class="n">_playlist</span><span class="p">.</span><span class="n">IsMuted</span><span class="w">                  </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+</code></pre></div>
+<ul>
+<li><code>MuteMode.PauseOnMute</code> — pauses the Music track; unmute resumes from the exact position.</li>
+<li><code>MuteMode.SilenceOnly</code> — silences but keeps playback advancing; unmute is in sync with wall-clock.</li>
+</ul>
+<h3 id="audiomixer-optional">AudioMixer (optional)<a class="headerlink" href="#audiomixer-optional" title="Permanent link">&para;</a></h3>
+<p>Simple path: leave <code>AudioTrackConfig.mixerGroup</code> unset; per-track <code>gainDb</code> handles relative loudness.
+Bus-processing path: create an AudioMixer asset, add a <code>Music</code> group with:
+- Compressor: ratio ≈ 3:1, threshold ≈ −18 dB, knee 6 dB
+- Limiter: ceiling −1 dBFS</p>
+<p>Assign the group to the Music entry's <code>mixerGroup</code> in <code>AudioConfig</code>. No engine code change required (<code>AudioTrackConfig.mixerGroup</code> is already an <code>AudioMixerGroup</code> field).</p>
+<h3 id="wav-source-files">WAV Source Files<a class="headerlink" href="#wav-source-files" title="Permanent link">&para;</a></h3>
+<p>Unity re-encodes at build time based on each clip's <strong>Import Settings → Compression Format</strong>. Leave source files as WAV. Recommended for music beds:
+- Load Type: <strong>Streaming</strong>
+- Compression Format: <strong>Vorbis</strong>
+- Quality: <strong>70–100 %</strong></p>
+<p>Trim any trailing silence in a DAW before import — author padding prevents true gapless transitions.</p>
+<h3 id="crossfade-requirements">Crossfade Requirements<a class="headerlink" href="#crossfade-requirements" title="Permanent link">&para;</a></h3>
+<p>Crossfading requires the <code>Music</code> track's <code>maxConcurrentSounds &gt;= 2</code> (the service logs a warning at init and falls back to instant cuts if misconfigured).</p>
+<h3 id="events">Events<a class="headerlink" href="#events" title="Permanent link">&para;</a></h3>
+<p>C# events: <code>OnTrackChanged(string)</code>, <code>OnTrackEntryChanged(PlaylistTrackEntry)</code>, <code>OnPlaylistCompleted(MusicPlaylist)</code>. Also fires <code>PlaylistEvents.{PlaylistStarted, PlaylistTrackChanged, PlaylistStopped, PlaylistSwitched, PlaylistCompleted}</code> on <code>IEventManager</code>.</p>
+<hr />
+<h2 id="input-unity-input-system">Input (Unity Input System)<a class="headerlink" href="#input-unity-input-system" title="Permanent link">&para;</a></h2>
+<p>LoL Engine has <strong>no</strong> <code>IInputService</code> (removed before 1.0 — see <a href="../CHANGELOG/">CHANGELOG.md</a>). Install Unity's Input System package and use <code>InputActionAsset</code> / <code>PlayerInput</code> in game code. Optional starter: <code>Runtime/Resources/Input/DefaultInputSystem_Actions.inputactions</code>.</p>
+<p>Full guide: <strong><a href="../Input/">Input.md</a></strong>.</p>
+<hr />
+<h2 id="resource-management">Resource Management<a class="headerlink" href="#resource-management" title="Permanent link">&para;</a></h2>
+<h3 id="required-assets_2">Required Assets<a class="headerlink" href="#required-assets_2" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Create ResourceManagementConfig</strong>: Right-click → Create → LoLEngine → Config → Resource Management Config</li>
+<li><strong>Assign to ServiceConfiguration</strong>: In ResourceManagementConfig field</li>
+</ol>
+<h3 id="resourcemanagementconfig-options">ResourceManagementConfig Options<a class="headerlink" href="#resourcemanagementconfig-options" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Loading Settings:
+├─ Enable Addressables: true/false - Use Addressables system
+├─ Preferred Source: Addressables/Resources/AssetBundles - Primary loading method
+├─ Fallback To Resources: true/false - Try Resources if Addressables fails
+│
+Memory Management:
+├─ Max Memory Budget MB: 512 - Maximum cached assets in memory
+├─ Enable Reference Counting: true/false - Track asset usage
+├─ Auto Unload Unused: true/false - Clean up unreferenced assets
+├─ Unload Interval: 60 - Seconds between cleanup checks
+│
+Performance:
+├─ Preload On Start: true/false - Load common assets at startup
+├─ Async Loading Priority: High/Normal/Low - Default load priority
+├─ Max Concurrent Loads: 4 - Simultaneous async operations
+│
+Addressables Settings (if enabled):
+├─ Remote Catalog URL: &quot;&quot; - URL for remote content catalog
+├─ Asset Download Path: &quot;&quot; - Where to download remote assets
+├─ Check For Updates: true/false - Check for catalog updates
+└─ Auto Release Handles: true/false - Automatic memory cleanup
+</code></pre></div>
+<h3 id="addressables-setup-recommended">Addressables Setup (Recommended)<a class="headerlink" href="#addressables-setup-recommended" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Window → Asset Management → Addressables → Groups</li>
+<li>Click "Create Addressables Settings"</li>
+<li>Mark assets as Addressable:</li>
+<li>Select asset → Inspector → Check "Addressable"</li>
+<li>Set meaningful address (e.g., "Audio/BackgroundMusic01")</li>
+</ol>
+<h3 id="setup_1">Setup<a class="headerlink" href="#setup_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="n">IResourceService</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">;</span>
+
+<span class="c1">// In OnServicesReady:</span>
+<span class="n">_resourceService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IResourceService</span><span class="o">&gt;</span><span class="p">();</span>
+</code></pre></div>
+<h3 id="loading-assets">Loading Assets<a class="headerlink" href="#loading-assets" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Async loading (recommended)</span>
+<span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadAssets</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// String-based loading</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">texture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">Texture2D</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;UI/ButtonTexture&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">prefab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">GameObject</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Prefabs/Enemy&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// With options</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ResourceLoadOptions</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Priority</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ResourceLoadPriority</span><span class="p">.</span><span class="n">High</span><span class="p">,</span>
+<span class="w">        </span><span class="n">KeepInMemory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">audio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">AudioClip</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Audio/Music&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// AssetReference loading (if using Addressables)</span>
+<span class="cp">#if UNITY_ADDRESSABLES</span>
+<span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">AssetReference</span><span class="w"> </span><span class="n">enemyPrefabRef</span><span class="p">;</span>
+
+<span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadWithAssetReference</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">enemyPrefabRef</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">enemyPrefabRef</span><span class="p">.</span><span class="n">RuntimeKeyIsValid</span><span class="p">())</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">prefab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">GameObject</span><span class="o">&gt;</span><span class="p">(</span><span class="n">enemyPrefabRef</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="cp">#endif</span>
+
+<span class="c1">// Cleanup</span>
+<span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">Release</span><span class="p">(</span><span class="s">&quot;path/to/asset&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="cp">#if UNITY_ADDRESSABLES</span>
+<span class="w">    </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">Release</span><span class="p">(</span><span class="n">enemyPrefabRef</span><span class="p">);</span>
+<span class="w">    </span><span class="cp">#endif</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="object-pooling">Object Pooling<a class="headerlink" href="#object-pooling" title="Permanent link">&para;</a></h2>
+<h3 id="required-assets_3">Required Assets<a class="headerlink" href="#required-assets_3" title="Permanent link">&para;</a></h3>
+<p>No specific config required - service works automatically.
+Pool settings can be configured per-prefab when spawning.</p>
+<h3 id="basic-usage_2">Basic Usage<a class="headerlink" href="#basic-usage_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Spawn from pool</span>
+<span class="n">GameObject</span><span class="w"> </span><span class="n">enemy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">Spawn</span><span class="p">(</span><span class="n">enemyPrefab</span><span class="p">,</span><span class="w"> </span><span class="n">spawnPosition</span><span class="p">,</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+<span class="n">BulletComponent</span><span class="w"> </span><span class="n">bullet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">Spawn</span><span class="o">&lt;</span><span class="n">BulletComponent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">bulletPrefab</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="n">rotation</span><span class="p">);</span>
+
+<span class="c1">// With pool configuration</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">bullet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">SpawnWithConfig</span><span class="o">&lt;</span><span class="n">BulletComponent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">bulletPrefab</span><span class="p">,</span>
+<span class="w">    </span><span class="n">capacity</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span>
+<span class="w">    </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span>
+<span class="w">    </span><span class="n">position</span><span class="p">:</span><span class="w"> </span><span class="n">spawnPosition</span><span class="p">);</span>
+
+<span class="c1">// Return to pool</span>
+<span class="k">this</span><span class="p">.</span><span class="n">Despawn</span><span class="p">(</span><span class="n">enemy</span><span class="p">);</span>
+<span class="k">this</span><span class="p">.</span><span class="n">Despawn</span><span class="p">(</span><span class="n">bullet</span><span class="p">.</span><span class="n">gameObject</span><span class="p">);</span>
+
+<span class="c1">// Preload pool</span>
+<span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">PreloadPool</span><span class="p">(</span><span class="n">bulletPrefab</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="event-system">Event System<a class="headerlink" href="#event-system" title="Permanent link">&para;</a></h2>
+<h3 id="required-assets_4">Required Assets<a class="headerlink" href="#required-assets_4" title="Permanent link">&para;</a></h3>
+<p>No specific config required - service initializes automatically.</p>
+<h3 id="define-event">Define Event<a class="headerlink" href="#define-event" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PlayerHealthChangedEvent</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">GameEvent</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CurrentHealth</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">MaxHealth</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="listen-to-events">Listen to Events<a class="headerlink" href="#listen-to-events" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">HealthUI</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span><span class="p">,</span><span class="w"> </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">PlayerHealthChangedEvent</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnEnable</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">EventStartListening</span><span class="o">&lt;</span><span class="n">PlayerHealthChangedEvent</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDisable</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">EventStopListening</span><span class="o">&lt;</span><span class="n">PlayerHealthChangedEvent</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnGameEvent</span><span class="p">(</span><span class="n">PlayerHealthChangedEvent</span><span class="w"> </span><span class="n">eventData</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Update UI</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="trigger-events">Trigger Events<a class="headerlink" href="#trigger-events" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Get pooled event</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">healthEvent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GameEvent</span><span class="p">.</span><span class="n">GetEvent</span><span class="o">&lt;</span><span class="n">PlayerHealthChangedEvent</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">healthEvent</span><span class="p">.</span><span class="n">CurrentHealth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">75</span><span class="p">;</span>
+<span class="n">healthEvent</span><span class="p">.</span><span class="n">MaxHealth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+<span class="n">GameEvent</span><span class="p">.</span><span class="n">Trigger</span><span class="p">(</span><span class="n">healthEvent</span><span class="p">);</span>
+</code></pre></div>
+<hr />
+<h2 id="data-persistence">Data Persistence<a class="headerlink" href="#data-persistence" title="Permanent link">&para;</a></h2>
+<h3 id="required-assets_5">Required Assets<a class="headerlink" href="#required-assets_5" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Create LoLEngineConfig</strong> (engine-wide): <code>Assets/Resources/Configs/DefaultLoLEngineConfig.asset</code> — compression, encryption, extensions, and paths live here. Do not commit production keys; inject via environment variables/CI.</li>
+<li><strong>Create SaveConfig</strong> (game behavior): Right-click → Create → LoLEngine → Data Persistence → Save Configuration</li>
+<li><strong>Place SaveConfig at</strong>: <code>Assets/Resources/Configs/DefaultSaveConfig.asset</code> (auto-discovered by AutoSave)</li>
+</ol>
+<h3 id="saveconfig-options">SaveConfig Options<a class="headerlink" href="#saveconfig-options" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Game Behavior:
+├─ Default Save Slot: &quot;save1&quot; - Default slot name
+├─ Enable Auto Save: true/false - Enable automatic saving
+├─ Auto Save Interval: 300 - Seconds between auto-saves
+├─ Auto Save Slot: &quot;autosave&quot; - Dedicated auto-save slot
+├─ Restrict Auto Save To Gameplay: true/false - Skip MainMenu/Boot/Loading scenes
+├─ Enable Quick Save: true/false - Enable quick save/load
+└─ Save Thumbnails: true/false - For UI usage (optional)
+
+Note: the number of quick saves to keep is a runtime property on IQuickSaveService (MaxQuickSaves, default 5), not a SaveConfig field.
+
+Note: Engine-wide save directory, file extensions, compression, obfuscation, and encryption live in LoLEngineConfig (Resources/Configs/DefaultLoLEngineConfig).
+</code></pre></div>
+<h3 id="required-service-dependencies">Required Service Dependencies<a class="headerlink" href="#required-service-dependencies" title="Permanent link">&para;</a></h3>
+<p>Enable these in ServiceConfiguration:
+- [x] EnableDataPersistenceService (required)
+- [x] EnableSerializationService (required)
+- [ ] EnableCompressionService (if using compression)
+- [ ] EnableEncryptionService (if using encryption)
+- [ ] EnableAutoSaveService (if using auto-save)</p>
+<h3 id="setup-data-classes">Setup Data Classes<a class="headerlink" href="#setup-data-classes" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="na">[Serializable]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PlayerData</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">PersistableData</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">DataId</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;player&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">level</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">Vector3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Level</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">level</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Vector3</span><span class="w"> </span><span class="n">Position</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">position</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="saveload">Save/Load<a class="headerlink" href="#saveload" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="n">ISaveSystem</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">;</span>
+
+<span class="c1">// In OnServicesReady:</span>
+<span class="n">_saveSystem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ISaveSystem</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="c1">// Get/Create data</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">playerData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">GetData</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">playerData</span><span class="p">.</span><span class="n">Level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="n">playerData</span><span class="p">.</span><span class="n">Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+
+<span class="c1">// Save</span>
+<span class="n">_saveSystem</span><span class="p">.</span><span class="n">SaveGame</span><span class="p">(</span><span class="s">&quot;slot1&quot;</span><span class="p">);</span>
+
+<span class="c1">// Load</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">HasSaveFile</span><span class="p">(</span><span class="s">&quot;slot1&quot;</span><span class="p">))</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">LoadGame</span><span class="p">(</span><span class="s">&quot;slot1&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">loadedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">GetData</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loadedData</span><span class="p">.</span><span class="n">Position</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Async operations</span>
+<span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">SaveGameAsync</span><span class="p">(</span><span class="s">&quot;slot1&quot;</span><span class="p">);</span>
+<span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">LoadGameAsync</span><span class="p">(</span><span class="s">&quot;slot1&quot;</span><span class="p">);</span>
+
+<span class="c1">// List / delete / latest / any</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">ListSavesAsync</span><span class="p">();</span>
+<span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">DeleteAsync</span><span class="p">(</span><span class="s">&quot;slot1&quot;</span><span class="p">);</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">latest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">GetLatestAsync</span><span class="p">();</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">any</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">HasAnySavesAsync</span><span class="p">();</span>
+</code></pre></div>
+<h3 id="auto-save">Auto-Save<a class="headerlink" href="#auto-save" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">autoSaveService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAutoSaveService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">autoSaveService</span><span class="p">.</span><span class="n">StartAutoSave</span><span class="p">();</span>
+<span class="n">autoSaveService</span><span class="p">.</span><span class="n">StopAutoSave</span><span class="p">();</span>
+<span class="n">autoSaveService</span><span class="p">.</span><span class="n">SaveNow</span><span class="p">();</span>
+</code></pre></div>
+<h3 id="paths-and-extensions">Paths and Extensions<a class="headerlink" href="#paths-and-extensions" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">settings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SaveSettings</span><span class="p">();</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">settings</span><span class="p">.</span><span class="n">GetSaveFilePath</span><span class="p">(</span><span class="s">&quot;slot1&quot;</span><span class="p">);</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">ext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">settings</span><span class="p">.</span><span class="n">GetFileExtension</span><span class="p">();</span><span class="w"> </span><span class="c1">// do not hardcode .sav/.osav/.esave</span>
+</code></pre></div>
+<h3 id="security-notes">Security Notes<a class="headerlink" href="#security-notes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Configure encryption/compression only in <code>LoLEngineConfig</code>.</li>
+<li>Inject production keys via environment variables or CI; never commit real keys.</li>
+</ul>
+<hr />
+<h2 id="localization">Localization<a class="headerlink" href="#localization" title="Permanent link">&para;</a></h2>
+<h3 id="required-assets_6">Required Assets<a class="headerlink" href="#required-assets_6" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Create LocalizationConfig</strong>: Right-click → Create → LoLEngine → Localization → Config</li>
+<li><strong>Assign to ServiceConfiguration</strong>: In LocalizationConfig field</li>
+</ol>
+<h3 id="localizationconfig-options">LocalizationConfig Options<a class="headerlink" href="#localizationconfig-options" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Language Settings:
+├─ Default Language: English - Fallback language
+├─ Use System Language: true/false - Auto-detect from OS
+├─ Supported Languages: List&lt;SystemLanguage&gt; - Available languages
+│  └─ Add languages your game supports
+│
+Table Settings:
+├─ Localization Tables Path: &quot;Localization/&quot; - Path in Resources
+├─ Table Format: CSV/JSON - File format for translations
+├─ Auto Load Tables: true/false - Load all tables on init
+├─ Missing Key Behavior: ShowKey/ShowError/UseDefault
+│  ├─ ShowKey - Display the key itself
+│  ├─ ShowError - Show error message
+│  └─ UseDefault - Use default language
+│
+Text Processing:
+├─ Enable Text Formatting: true/false - Support {0} placeholders
+├─ Enable Rich Text: true/false - Support TextMeshPro tags
+├─ RTL Language Support: true/false - Right-to-left languages
+│
+Performance:
+├─ Cache Translations: true/false - Keep in memory
+├─ Lazy Load Languages: true/false - Load only when needed
+├─ Max Cache Size: 1000 - Maximum cached strings
+│
+Debug:
+├─ Show Language Debug: true/false - Display language codes
+├─ Highlight Missing: true/false - Highlight untranslated text
+└─ Export Missing Keys: true/false - Log missing translations
+</code></pre></div>
+<h3 id="create-localization-tables">Create Localization Tables<a class="headerlink" href="#create-localization-tables" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Create CSV files in Resources/Localization/</li>
+<li>Format:
+   <div class="highlight"><pre><span></span><code>Key,Context,English,French,German,Japanese
+UI_PLAY_BUTTON,Main Menu,Play,Jouer,Spielen,プレイ
+UI_SETTINGS,Main Menu,Settings,Paramètres,Einstellungen,設定
+ITEM_SWORD_DESC,Items,A sharp blade,Une lame tranchante,Eine scharfe Klinge,鋭い刃
+</code></pre></div></li>
+</ol>
+<h3 id="setup_2">Setup<a class="headerlink" href="#setup_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="n">ILocalizationService</span><span class="w"> </span><span class="n">_localizationService</span><span class="p">;</span>
+
+<span class="c1">// In OnServicesReady:</span>
+<span class="n">_localizationService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ILocalizationService</span><span class="o">&gt;</span><span class="p">();</span>
+</code></pre></div>
+<h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Get text</span>
+<span class="c1">// using LoLEngine.Core.Localization.LocString;</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localizationService</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">LocString</span><span class="p">(</span><span class="n">LocTable</span><span class="p">.</span><span class="n">UI</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UI_WELCOME&quot;</span><span class="p">));</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">formatted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localizationService</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="nf">LocString</span><span class="p">(</span><span class="n">LocTable</span><span class="p">.</span><span class="n">UI</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SCORE_TEXT&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DynamicVar</span><span class="p">(</span><span class="s">&quot;score&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">playerScore</span><span class="p">)));</span>
+
+<span class="c1">// Change language</span>
+<span class="n">_localizationService</span><span class="p">.</span><span class="n">SetLanguage</span><span class="p">(</span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">French</span><span class="p">);</span>
+
+<span class="c1">// Get available languages</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">languages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localizationService</span><span class="p">.</span><span class="n">AvailableLanguages</span><span class="p">;</span>
+</code></pre></div>
+<hr />
+<h2 id="ui">UI<a class="headerlink" href="#ui" title="Permanent link">&para;</a></h2>
+<p>LoL Engine does not provide an <code>IUIService</code>, <code>UIScreen</code>, or <code>UIConfig</code> API in this release. Use Unity uGUI, UI Toolkit, or your project's UI framework directly, and call LoL Engine services such as <code>IAudioService</code>, <code>ILocalizationService</code>, and <code>IEventManager</code> from your UI controllers.</p>
+<hr />
+<h2 id="time-management">Time Management<a class="headerlink" href="#time-management" title="Permanent link">&para;</a></h2>
+<h3 id="service-configuration">Service Configuration<a class="headerlink" href="#service-configuration" title="Permanent link">&para;</a></h3>
+<p>No config asset required - enable in ServiceConfiguration:
+- [x] Enable Time Service</p>
+<h3 id="default-time-channels-auto-created">Default Time Channels (auto-created)<a class="headerlink" href="#default-time-channels-auto-created" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Global Channel:
+├─ Controls: Overall game time
+├─ Default Scale: 1.0
+└─ Use For: General gameplay
+
+UI Channel:
+├─ Controls: UI animations/transitions
+├─ Inherits Global: false - Independent from game pause
+└─ Use For: Menus, HUD animations
+
+Audio Channel:
+├─ Controls: Audio playback speed
+├─ Inherits Global: true - Pauses with game
+└─ Use For: Music, sound effects
+
+Custom Channels:
+└─ Create via: timeService.CreateChannel(&quot;name&quot;, inheritsGlobal)
+</code></pre></div>
+<h3 id="time-service-features">Time Service Features<a class="headerlink" href="#time-service-features" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Global Controls:
+├─ Pause/Resume - Affects all inheriting channels
+├─ Time Scale - 0.5 = half speed, 2.0 = double speed
+├─ Smooth Transitions - Lerp between time scales
+│
+Timer Types:
+├─ Countdown - Fires callback after duration
+├─ Stopwatch - Tracks elapsed time
+├─ Periodic - Repeats at intervals
+└─ Scheduled - Execute at specific time
+</code></pre></div>
+<h3 id="usage_1">Usage<a class="headerlink" href="#usage_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Global time control</span>
+<span class="n">_timeService</span><span class="p">.</span><span class="n">SetTimeScale</span><span class="p">(</span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="n">EasingType</span><span class="p">.</span><span class="n">EaseOut</span><span class="p">);</span>
+<span class="n">_timeService</span><span class="p">.</span><span class="n">PauseGlobal</span><span class="p">();</span>
+<span class="n">_timeService</span><span class="p">.</span><span class="n">ResumeGlobal</span><span class="p">();</span>
+
+<span class="c1">// Channel-specific time</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">gameplayChannel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">GetChannel</span><span class="p">(</span><span class="s">&quot;Gameplay&quot;</span><span class="p">);</span>
+<span class="n">gameplayChannel</span><span class="p">.</span><span class="n">SetTimeScale</span><span class="p">(</span><span class="mf">0.25f</span><span class="p">);</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">deltaTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gameplayChannel</span><span class="p">.</span><span class="n">DeltaTime</span><span class="p">;</span>
+
+<span class="c1">// Timers</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">5.0f</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Timer done!&quot;</span><span class="p">));</span>
+<span class="n">timer</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+
+<span class="c1">// Scheduling</span>
+<span class="n">_timeService</span><span class="p">.</span><span class="n">Scheduler</span><span class="p">.</span><span class="n">Schedule</span><span class="p">(()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Delayed!&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">);</span>
+
+<span class="c1">// MonoBehaviour extensions</span>
+<span class="k">this</span><span class="p">.</span><span class="n">DelayedCall</span><span class="p">(()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;After 3 seconds&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">3.0f</span><span class="p">);</span>
+</code></pre></div>
+<hr />
+<h2 id="notifications">Notifications<a class="headerlink" href="#notifications" title="Permanent link">&para;</a></h2>
+<h3 id="service-configuration_1">Service Configuration<a class="headerlink" href="#service-configuration_1" title="Permanent link">&para;</a></h3>
+<p>No config asset required - enable in ServiceConfiguration:
+- [x] Enable Notification Service</p>
+<h3 id="default-categories">Default Categories<a class="headerlink" href="#default-categories" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>NotificationCategory enum:
+├─ UI - User interface messages
+├─ System - System/engine messages
+├─ Gameplay - Game events/achievements
+├─ Level - Level-specific notifications
+├─ Combat - Combat-related notifications
+├─ Achievement - Achievement unlocks
+└─ Error - Error messages
+
+NotificationPriority enum:
+├─ Low - Background info
+├─ Normal - Standard messages
+├─ High - Important alerts
+└─ Critical - Must-see messages
+</code></pre></div>
+<h3 id="notification-features">Notification Features<a class="headerlink" href="#notification-features" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Display Options:
+├─ Duration: 0 = manual dismiss, &gt;0 = auto-dismiss
+├─ Persistent: Survives scene changes
+├─ Queue: Wait for previous to finish
+└─ Data: Custom payload Dictionary&lt;string, object&gt;
+
+Management:
+├─ History: Keep last N notifications
+├─ Categories: Enable/disable by type
+├─ Active List: Currently showing
+└─ Filtering: By category/priority
+</code></pre></div>
+<h3 id="send-notifications">Send Notifications<a class="headerlink" href="#send-notifications" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Simple notification</span>
+<span class="k">this</span><span class="p">.</span><span class="n">SendNotification</span><span class="p">(</span><span class="s">&quot;Title&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Message&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">NotificationCategory</span><span class="p">.</span><span class="n">Gameplay</span><span class="p">);</span>
+
+<span class="c1">// With options</span>
+<span class="k">this</span><span class="p">.</span><span class="n">SendNotification</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;Quest Complete&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;You earned 100 gold!&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">NotificationCategory</span><span class="p">.</span><span class="n">Gameplay</span><span class="p">,</span>
+<span class="w">    </span><span class="n">NotificationPriority</span><span class="p">.</span><span class="n">High</span><span class="p">,</span>
+<span class="w">    </span><span class="n">duration</span><span class="p">:</span><span class="w"> </span><span class="mf">5f</span><span class="p">,</span>
+<span class="w">    </span><span class="n">data</span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">object</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;gold&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<span class="p">);</span>
+</code></pre></div>
+<h3 id="subscribe-to-notifications">Subscribe to Notifications<a class="headerlink" href="#subscribe-to-notifications" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">SubscribeToNotifications</span><span class="p">(</span><span class="n">NotificationCategory</span><span class="p">.</span><span class="n">Gameplay</span><span class="p">,</span><span class="w"> </span><span class="n">HandleNotification</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="n">UnsubscribeFromNotifications</span><span class="p">(</span><span class="n">NotificationCategory</span><span class="p">.</span><span class="n">Gameplay</span><span class="p">,</span><span class="w"> </span><span class="n">HandleNotification</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">HandleNotification</span><span class="p">(</span><span class="n">INotification</span><span class="w"> </span><span class="n">notification</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;{notification.Title}: {notification.Message}&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="game-state-management">Game State Management<a class="headerlink" href="#game-state-management" title="Permanent link">&para;</a></h2>
+<h3 id="service-configuration_2">Service Configuration<a class="headerlink" href="#service-configuration_2" title="Permanent link">&para;</a></h3>
+<p>No config asset required - enable in ServiceConfiguration:
+- [x] Enable Game State Manager Service</p>
+<h3 id="engine-vs-game-state-ids">Engine vs Game State IDs<a class="headerlink" href="#engine-vs-game-state-ids" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Engine GameStateType (0–99):
+├─ None (0) - Uninitialized / no active state
+├─ Bootstrap (1) - Engine startup
+└─ Loading (2) - Scene/asset transition
+
+Game-defined (100+ in YOUR project):
+public static class MyGameStateType {
+    public const GameStateType MainMenu = (GameStateType)100;
+    public const GameStateType Gameplay = (GameStateType)101;
+    public const GameStateType Paused   = (GameStateType)102;
+}
+See Samples~/GameState/SampleGameStateType.cs
+</code></pre></div>
+<h3 id="state-features">State Features<a class="headerlink" href="#state-features" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>State Lifecycle (IGameState / BaseGameState):
+├─ Enter() - Setup when entering state
+├─ Exit() - Cleanup when leaving state
+├─ Update() - Per-frame logic (if needed)
+└─ FixedUpdate() - Physics-tick logic (if needed)
+
+State Events:
+├─ BeforeStateChange - Pre-transition
+├─ AfterStateChange - Post-transition
+└─ Via EventManager (IEventListener + EventStartListening)
+</code></pre></div>
+<h3 id="usage_2">Usage<a class="headerlink" href="#usage_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Bootstrap: register before ChangeState</span>
+<span class="n">_gameStateManager</span><span class="p">.</span><span class="n">RegisterState</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MainMenuState</span><span class="p">());</span>
+<span class="n">_gameStateManager</span><span class="p">.</span><span class="n">RegisterState</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">GameplayState</span><span class="p">());</span>
+<span class="n">_gameStateManager</span><span class="p">.</span><span class="n">RegisterState</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">PausedState</span><span class="p">());</span>
+
+<span class="c1">// Change state</span>
+<span class="n">_gameStateManager</span><span class="p">.</span><span class="n">ChangeState</span><span class="p">(</span><span class="n">MyGameStateType</span><span class="p">.</span><span class="n">Gameplay</span><span class="p">);</span>
+
+<span class="c1">// Check current state</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_gameStateManager</span><span class="p">.</span><span class="n">IsInState</span><span class="p">(</span><span class="n">MyGameStateType</span><span class="p">.</span><span class="n">Paused</span><span class="p">))</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Handle paused state</span>
+<span class="p">}</span>
+
+<span class="c1">// Listen (MonoBehaviour implementing IEventListener&lt;T&gt;)</span>
+<span class="k">void</span><span class="w"> </span><span class="nf">OnEnable</span><span class="p">()</span><span class="w">  </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">EventStartListening</span><span class="o">&lt;</span><span class="n">GameStateEvents</span><span class="p">.</span><span class="n">AfterStateChangeEvent</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="k">void</span><span class="w"> </span><span class="nf">OnDisable</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">EventStopListening</span><span class="o">&lt;</span><span class="n">GameStateEvents</span><span class="p">.</span><span class="n">AfterStateChangeEvent</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnGameEvent</span><span class="p">(</span><span class="n">GameStateEvents</span><span class="p">.</span><span class="n">AfterStateChangeEvent</span><span class="w"> </span><span class="n">evt</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">evt</span><span class="p">.</span><span class="n">NewCurrentStateType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">MyGameStateType</span><span class="p">.</span><span class="n">Paused</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Create custom state</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyGameState</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">BaseGameState</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="n">GameStateType</span><span class="w"> </span><span class="n">StateType</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">MyGameStateType</span><span class="p">.</span><span class="n">Gameplay</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Enter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* Setup */</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Exit</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* Cleanup */</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* Update logic */</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="thread-safety-performance">Thread Safety &amp; Performance<a class="headerlink" href="#thread-safety-performance" title="Permanent link">&para;</a></h2>
+<h3 id="enhanced-thread-safety">Enhanced Thread Safety<a class="headerlink" href="#enhanced-thread-safety" title="Permanent link">&para;</a></h3>
+<p>All core services now provide production-ready thread safety:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Thread-safe service access from any thread</span>
+<span class="k">private</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="nf">BackgroundProcessing</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="n">Task</span><span class="p">.</span><span class="n">Run</span><span class="p">(()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Safe to access services from background threads</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">resourceService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IResourceService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">audioService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAudioService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// All operations are thread-safe</span>
+<span class="w">        </span><span class="n">resourceService</span><span class="p">.</span><span class="n">LoadAsync</span><span class="o">&lt;</span><span class="n">Texture2D</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;background_texture&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">audioService</span><span class="p">.</span><span class="n">PlaySound</span><span class="p">(</span><span class="s">&quot;notification_sound&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="handle-leak-prevention">Handle Leak Prevention<a class="headerlink" href="#handle-leak-prevention" title="Permanent link">&para;</a></h3>
+<p>Addressables handles are automatically tracked and cleaned up:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Monitor handle usage (development builds)</span>
+<span class="cp">#if DEVELOPMENT_BUILD || UNITY_EDITOR</span>
+<span class="k">void</span><span class="w"> </span><span class="nf">CheckHandleLeaks</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// This logs active handle counts</span>
+<span class="w">    </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">GetResourceStats</span><span class="p">();</span>
+<span class="w">    </span><span class="c1">// Output: &quot;Active AssetReference handles: 5&quot;</span>
+<span class="w">    </span><span class="c1">// Output: &quot;Active AddressableResourceLoader handles: 12&quot;</span>
+<span class="p">}</span>
+<span class="cp">#endif</span>
+</code></pre></div>
+<h3 id="memory-management-best-practices">Memory Management Best Practices<a class="headerlink" href="#memory-management-best-practices" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Proper cleanup on scene transition</span>
+<span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Release all AssetReference resources</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_resourceService</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_resourceService</span><span class="p">.</span><span class="n">Release</span><span class="p">(</span><span class="n">myAssetReference</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Service cleanup is automatic during shutdown</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="common-patterns">Common Patterns<a class="headerlink" href="#common-patterns" title="Permanent link">&para;</a></h2>
+<h3 id="default-config-locations">Default Config Locations<a class="headerlink" href="#default-config-locations" title="Permanent link">&para;</a></h3>
+<p>If configs aren't assigned in ServiceConfiguration, the system looks for defaults at:
+- <code>Resources/Configs/DefaultLoLEngineConfig</code>
+- <code>Resources/Configs/DefaultLocalizationConfig</code>
+- <code>Resources/Configs/DefaultSaveConfig</code>
+- <code>Resources/Configs/DefaultAudioConfig</code>
+- <code>Resources/Configs/DefaultResourceManagementConfig</code></p>
+<h3 id="service-dependencies">Service Dependencies<a class="headerlink" href="#service-dependencies" title="Permanent link">&para;</a></h3>
+<p>Some services require others to be enabled:
+- SaveSystem → SerializationService, CompressionService (optional), EncryptionService (optional)</p>
+<h3 id="service-cleanup">Service Cleanup<a class="headerlink" href="#service-cleanup" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_eventManager</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">EventStopListening</span><span class="o">&lt;</span><span class="n">MyEvent</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Release resources</span>
+<span class="w">    </span><span class="n">_resourceService</span><span class="o">?.</span><span class="n">Release</span><span class="p">(</span><span class="s">&quot;assetPath&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">try</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IMyService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="c1">// Use service</span>
+<span class="p">}</span>
+<span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ServiceNotFoundException</span><span class="w"> </span><span class="n">ex</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">LoLLogger</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="s">$&quot;Service not found: {ex.Message}&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="null-checking-pattern">Null Checking Pattern<a class="headerlink" href="#null-checking-pattern" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">_isInitialized</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">_myService</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Safe to use service</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

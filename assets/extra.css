@@ -1,0 +1,16 @@
+/* Custom brand color for the hosted LoL Engine docs site.
+   Referenced via extra_css in mkdocs.yml; staged into the site by Tools/build-docs.sh.
+   Palette uses primary: custom / accent: custom, so these attribute selectors apply. */
+
+[data-md-color-primary=custom] {
+  --md-primary-fg-color:        #44749D;
+  --md-primary-fg-color--light: #5d89ad;
+  --md-primary-fg-color--dark:  #345a78;
+  --md-primary-bg-color:        #ffffff;
+  --md-primary-bg-color--light: #ffffffb3;
+}
+
+[data-md-color-accent=custom] {
+  --md-accent-fg-color:             #5d89ad;
+  --md-accent-fg-color--transparent: #5d89ad1a;
+}

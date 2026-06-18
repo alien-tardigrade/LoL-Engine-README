@@ -1,0 +1,3408 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Modular Unity 6 game framework — audio, saves, events, localization, deterministic RNG, and more.">
+      
+      
+        <meta name="author" content="MooMoo Games">
+      
+      
+        <link rel="canonical" href="https://alien-tardigrade.github.io/LoL-Engine-README/TimeManagement/">
+      
+      
+        <link rel="prev" href="../ObjectPool/">
+      
+      
+        <link rel="next" href="../Notifications/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Time Management - LoL Engine Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#time-management-system" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="LoL Engine Documentation" class="md-header__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LoL Engine Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Time Management
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="LoL Engine Documentation" class="md-nav__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LoL Engine Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_QUICKSTART/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart (5 min)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Full Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-SERVICES-CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHEATSHEET-How-To-Use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceLocator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Locator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImprovedGameInitializer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Initializer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceDependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AudioHelpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio Helpers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DataPersistence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Persistence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Serialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCALIZATION_MIGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization Migration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ResourceManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Input/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilities
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ObjectPool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Pool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Management
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#time-service-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Service Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-entities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Entities
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#time-service-interface-itimeservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Service Interface (ITimeService)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#time-channel-interface-itimechannel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Channel Interface (ITimeChannel)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timer-interface-itimer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timer Interface (ITimer)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scheduler-interface-ischeduler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scheduler Interface (IScheduler)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-and-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup and Initialization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accessing-the-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accessing the Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scaling-global-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling Global Time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-a-time-channel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using a Time Channel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-timer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Timer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scheduling-a-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scheduling a Task
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-monobehaviour-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using MonoBehaviour Extensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-with-lol-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration with LoL Engine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices-and-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices and Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Best Practices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#timer-pooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timer Pooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-frequency-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Frequency Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices-for-timer-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices for Timer Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-running-timer-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Long-Running Timer Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bullet-time-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bullet Time Effect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cutscene-time-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cutscene Time Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pause-menu-with-unscaled-animations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pause Menu with Unscaled Animations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-timer-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complex Timer Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#timer-not-updating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timer Not Updating
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smooth-time-scale-transitions-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Smooth Time Scale Transitions Not Working
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stopwatch-passes-wrong-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stopwatch Passes Wrong Values
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timer-memory-leaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timer Memory Leaks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physics-issues-with-high-time-scales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physics Issues with High Time Scales
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Memory Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overflow-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overflow Protection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timer-cleanup-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timer Cleanup Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GameState/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HelperUtilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helper Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Logger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IL2CPP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IL2CPP & Code Stripping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#time-service-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Service Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-entities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Entities
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#time-service-interface-itimeservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Service Interface (ITimeService)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#time-channel-interface-itimechannel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Channel Interface (ITimeChannel)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timer-interface-itimer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timer Interface (ITimer)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scheduler-interface-ischeduler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scheduler Interface (IScheduler)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-and-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup and Initialization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accessing-the-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accessing the Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scaling-global-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling Global Time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-a-time-channel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using a Time Channel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-timer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Timer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scheduling-a-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scheduling a Task
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-monobehaviour-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using MonoBehaviour Extensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-with-lol-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration with LoL Engine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices-and-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices and Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Best Practices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#timer-pooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timer Pooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-frequency-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Frequency Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices-for-timer-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices for Timer Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-running-timer-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Long-Running Timer Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bullet-time-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bullet Time Effect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cutscene-time-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cutscene Time Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pause-menu-with-unscaled-animations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pause Menu with Unscaled Animations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-timer-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complex Timer Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#timer-not-updating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timer Not Updating
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smooth-time-scale-transitions-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Smooth Time Scale Transitions Not Working
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stopwatch-passes-wrong-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stopwatch Passes Wrong Values
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timer-memory-leaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timer Memory Leaks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physics-issues-with-high-time-scales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physics Issues with High Time Scales
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Memory Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overflow-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overflow Protection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timer-cleanup-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timer Cleanup Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="time-management-system">Time Management System<a class="headerlink" href="#time-management-system" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The Time Management system gives you centralized control over the flow of game time: global and per-channel time scaling, pause/resume, countdown/stopwatch/periodic timers, and a task scheduler. Use it for bullet-time effects, cutscene pacing, pause menus with live UI, and any timing that must respect (or deliberately ignore) the game time scale.</p>
+<p>It is a core engine service (<code>ITimeService</code>) resolved through the Service Locator, with a <code>TimeManager</code> MonoBehaviour driving it from Unity's update loop. Each system can run on its own time channel (Gameplay, UI, Audio, …) with an independent scale and pause state.</p>
+<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Enable <strong>Enable Time Service</strong> in your <code>ServiceConfiguration</code> asset.</li>
+<li>Resolve <code>ITimeService</code> and use it:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.TimeManagement.Interfaces</span><span class="p">;</span>
+
+<span class="kt">var</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ITimeService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="c1">// Ease global time to 30% over 0.5s (bullet-time)</span>
+<span class="n">time</span><span class="p">.</span><span class="n">SetTimeScale</span><span class="p">(</span><span class="mf">0.3f</span><span class="p">,</span><span class="w"> </span><span class="n">duration</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">);</span>
+
+<span class="c1">// Run a callback after 3 seconds of (scaled) game time</span>
+<span class="n">time</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">3f</span><span class="p">,</span><span class="w"> </span><span class="n">onComplete</span><span class="p">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Done&quot;</span><span class="p">));</span>
+
+<span class="c1">// Pause / resume everything</span>
+<span class="n">time</span><span class="p">.</span><span class="n">PauseGlobal</span><span class="p">();</span>
+<span class="n">time</span><span class="p">.</span><span class="n">ResumeGlobal</span><span class="p">();</span>
+</code></pre></div>
+<p>See <a href="#setup-and-initialization">Setup and Initialization</a> below for how the service and its default channels are wired.</p>
+<h2 id="core-components">Core Components<a class="headerlink" href="#core-components" title="Permanent link">&para;</a></h2>
+<h3 id="time-service-architecture">Time Service Architecture<a class="headerlink" href="#time-service-architecture" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>graph TD
+    A[TimeService] --&gt; B[Global Time Control]
+    A -- manage --&gt; C[Time Channels]
+    A --&gt; D[Timers]
+    A --&gt; E[Scheduler]
+    F[TimeManager MonoBehaviour] --&gt; A
+    C --&gt; G[Channel-Specific Time Scale &amp; Pause]
+    D -- uses/configured_by --&gt; C
+    E -- uses/configured_by --&gt; C
+    H[Game Systems] --&gt; A
+    A --&gt; I[TimeEvents]
+</code></pre></div>
+<h3 id="key-entities">Key Entities<a class="headerlink" href="#key-entities" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>TimeService</strong>: Central service managing all time operations (resolved via ServiceLocator).</li>
+<li><strong>TimeChannel</strong>: Represents an independent timeline (e.g., "Gameplay", "UI") with its own time scale and pause state, optionally inheriting from global settings.</li>
+<li><strong>Timer</strong>: Objects for countdowns, stopwatches, and periodic actions, operating on specific time channels.</li>
+<li><strong>Scheduler</strong>: Allows scheduling actions to occur after a delay or periodically, respecting time channel states.</li>
+<li><strong>TimeManager</strong>: MonoBehaviour responsible for updating the <code>TimeService</code> each frame.</li>
+</ul>
+<h2 id="api-reference">API Reference<a class="headerlink" href="#api-reference" title="Permanent link">&para;</a></h2>
+<h3 id="time-service-interface-itimeservice">Time Service Interface (<code>ITimeService</code>)<a class="headerlink" href="#time-service-interface-itimeservice" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// File: Assets/LoLEngine/Runtime/Scripts/Core/TimeManagement/Interfaces/ITimeService.cs</span>
+<span class="k">public</span><span class="w"> </span><span class="k">interface</span><span class="w"> </span><span class="n">ITimeService</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ILoLEngineService</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Global Time Scale &amp; Pause</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">GlobalTimeScale</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">IsGloballyPaused</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">SetTimeScale</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">scale</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0f</span><span class="p">,</span><span class="w"> </span><span class="n">EasingType</span><span class="w"> </span><span class="n">easing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EasingType</span><span class="p">.</span><span class="n">Linear</span><span class="p">);</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">PauseGlobal</span><span class="p">();</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">ResumeGlobal</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Channel-Specific Time</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="nf">GetTimeScale</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">channelName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">SetChannelTimeScale</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">channelName</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">scale</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0f</span><span class="p">,</span><span class="w"> </span><span class="n">EasingType</span><span class="w"> </span><span class="n">easing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EasingType</span><span class="p">.</span><span class="n">Linear</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IsChannelPaused</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">channelName</span><span class="p">);</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">PauseChannel</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">channelName</span><span class="p">);</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">ResumeChannel</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">channelName</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Time Values</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="nf">DeltaTime</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">channelName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="nf">FixedDeltaTime</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">channelName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">UnscaledDeltaTime</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="nf">Time</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">channelName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Timer Creation</span>
+<span class="w">    </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">CreateTimer</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">Action</span><span class="w"> </span><span class="n">onComplete</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">autoStart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">CreateCountdown</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">Action</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">onUpdate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="n">Action</span><span class="w"> </span><span class="n">onComplete</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">autoStart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">CreateStopwatch</span><span class="p">(</span><span class="n">Action</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">onUpdate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">autoStart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">CreatePeriodicTimer</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">interval</span><span class="p">,</span><span class="w"> </span><span class="n">Action</span><span class="w"> </span><span class="n">onPeriod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">repeatCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">autoStart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateAllTimers</span><span class="p">();</span><span class="w"> </span><span class="c1">// Called by TimeManager</span>
+
+<span class="w">    </span><span class="c1">// Scheduler</span>
+<span class="w">    </span><span class="n">IScheduler</span><span class="w"> </span><span class="n">Scheduler</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Channel Management</span>
+<span class="w">    </span><span class="n">ITimeChannel</span><span class="w"> </span><span class="nf">GetChannel</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">channelName</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ITimeChannel</span><span class="w"> </span><span class="nf">CreateChannel</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">channelName</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">inheritsGlobalScale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Events</span>
+<span class="w">    </span><span class="k">event</span><span class="w"> </span><span class="n">Action</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">OnGlobalTimeScaleChanged</span><span class="p">;</span>
+<span class="w">    </span><span class="k">event</span><span class="w"> </span><span class="n">Action</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">OnGlobalPauseStateChanged</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="time-channel-interface-itimechannel">Time Channel Interface (<code>ITimeChannel</code>)<a class="headerlink" href="#time-channel-interface-itimechannel" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// File: Assets/LoLEngine/Runtime/Scripts/Core/TimeManagement/Interfaces/ITimeChannel.cs</span>
+<span class="k">public</span><span class="w"> </span><span class="k">interface</span><span class="w"> </span><span class="n">ITimeChannel</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">TimeScale</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Effective time scale including global inheritance</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">IsPaused</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">   </span><span class="c1">// Effective pause state including global inheritance</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">InheritsGlobalScale</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">DeltaTime</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">FixedDeltaTime</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">Time</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Accumulated time on this channel</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">SetTimeScale</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">scale</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0f</span><span class="p">,</span><span class="w"> </span><span class="n">EasingType</span><span class="w"> </span><span class="n">easing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EasingType</span><span class="p">.</span><span class="n">Linear</span><span class="p">);</span><span class="w"> </span><span class="c1">// Sets local scale</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Pause</span><span class="p">();</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Resume</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">event</span><span class="w"> </span><span class="n">Action</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">OnTimeScaleChanged</span><span class="p">;</span><span class="w"> </span><span class="c1">// Local scale change</span>
+<span class="w">    </span><span class="k">event</span><span class="w"> </span><span class="n">Action</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">OnPauseStateChanged</span><span class="p">;</span><span class="w"> </span><span class="c1">// Local pause state change</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="timer-interface-itimer">Timer Interface (<code>ITimer</code>)<a class="headerlink" href="#timer-interface-itimer" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// File: Assets/LoLEngine/Runtime/Scripts/Core/TimeManagement/Interfaces/ITimer.cs</span>
+<span class="k">public</span><span class="w"> </span><span class="k">interface</span><span class="w"> </span><span class="n">ITimer</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">IDisposable</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Guid</span><span class="w"> </span><span class="n">Id</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">Duration</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">RemainingTime</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">ElapsedTime</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">IsRunning</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">IsPaused</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Reflects if the timer itself or its channel is paused</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">IsCompleted</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="n">ITimeChannel</span><span class="w"> </span><span class="n">TimeChannel</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">Start</span><span class="p">();</span>
+<span class="w">    </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">Pause</span><span class="p">();</span><span class="w"> </span><span class="c1">// Pauses the timer independently of its channel</span>
+<span class="w">    </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">Resume</span><span class="p">();</span>
+<span class="w">    </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">Reset</span><span class="p">();</span>
+<span class="w">    </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">Cancel</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">OnComplete</span><span class="p">(</span><span class="n">Action</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">OnUpdate</span><span class="p">(</span><span class="n">Action</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">callback</span><span class="p">);</span><span class="w"> </span><span class="c1">// Passes remaining time for countdowns, elapsed for stopwatches</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">deltaTime</span><span class="p">);</span><span class="w"> </span><span class="c1">// Called by TimeService</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="scheduler-interface-ischeduler">Scheduler Interface (<code>IScheduler</code>)<a class="headerlink" href="#scheduler-interface-ischeduler" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// File: Assets/LoLEngine/Runtime/Scripts/Core/TimeManagement/Interfaces/IScheduler.cs</span>
+<span class="k">public</span><span class="w"> </span><span class="k">interface</span><span class="w"> </span><span class="n">IScheduler</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Guid</span><span class="w"> </span><span class="nf">Schedule</span><span class="p">(</span><span class="n">Action</span><span class="w"> </span><span class="n">action</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">delay</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">channelName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Guid</span><span class="w"> </span><span class="nf">SchedulePeriodic</span><span class="p">(</span><span class="n">Action</span><span class="w"> </span><span class="n">action</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">interval</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">repeatCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">channelName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Guid</span><span class="w"> </span><span class="nf">ScheduleAtTime</span><span class="p">(</span><span class="n">Action</span><span class="w"> </span><span class="n">action</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">absoluteTime</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">channelName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Guid ScheduleCron(Action action, string cronExpression); // Future consideration</span>
+
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">CancelScheduled</span><span class="p">(</span><span class="n">Guid</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">CancelAll</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">();</span><span class="w"> </span><span class="c1">// Called by TimeService (via TimeManager)</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="key-features">Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Global Time Control</strong>: Pause, resume, and scale time for the entire game.</li>
+<li><strong>Time Channels</strong>: Isolate time management for different systems (e.g., UI, Gameplay, Audio) with independent time scales and pause states. Channels can optionally inherit global settings.</li>
+<li><strong>Smooth Transitions</strong>: Time scale changes can be applied instantly or smoothly over a duration using various easing functions.</li>
+<li><strong>Versatile Timers</strong>:<ul>
+<li><strong>Countdown Timers</strong>: Execute an action after a set duration.</li>
+<li><strong>Stopwatches</strong>: Track elapsed time.</li>
+<li><strong>Periodic Timers</strong>: Execute an action repeatedly at specified intervals.</li>
+<li>Timers operate on specific time channels, respecting their scale and pause state.</li>
+</ul>
+</li>
+<li><strong>Task Scheduling</strong>: Schedule actions to be executed after a delay, at a specific future time, or periodically, all tied to time channels.</li>
+<li><strong>Event System Integration</strong>: Publishes events for global and channel-specific time scale changes and pause state changes (via <code>TimeEvents.cs</code>).</li>
+<li><strong>Extensibility</strong>: MonoBehaviour extensions for easy delayed calls and repeating actions.</li>
+<li><strong>Debug Support</strong>: Optional OnGUI display for current time scales and pause states.</li>
+</ul>
+<h2 id="setup-and-initialization">Setup and Initialization<a class="headerlink" href="#setup-and-initialization" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Enable <strong>Enable Time Service</strong> in <code>ServiceConfiguration</code>.</li>
+<li><code>ConfigurableServiceInitializer</code> registers <code>ITimeService</code> and auto-creates a <code>[TimeManager]</code> GameObject when needed (<code>EnsureTimeManagerExists()</code>).</li>
+<li>Default channels (<code>Global</code>, <code>UI</code>, <code>Audio</code>, <code>Unscaled</code>) are created when <code>TimeService</code> initializes.</li>
+</ol>
+<h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">&para;</a></h2>
+<h3 id="accessing-the-service">Accessing the Service<a class="headerlink" href="#accessing-the-service" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.TimeManagement.Interfaces</span><span class="p">;</span>
+
+<span class="n">ITimeService</span><span class="w"> </span><span class="n">timeService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ITimeService</span><span class="o">&gt;</span><span class="p">();</span>
+</code></pre></div>
+<h3 id="scaling-global-time">Scaling Global Time<a class="headerlink" href="#scaling-global-time" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Slow down time to 50% over 1 second with EaseOut</span>
+<span class="n">timeService</span><span class="p">.</span><span class="n">SetTimeScale</span><span class="p">(</span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="n">EasingType</span><span class="p">.</span><span class="n">EaseOut</span><span class="p">);</span>
+
+<span class="c1">// Pause the game</span>
+<span class="n">timeService</span><span class="p">.</span><span class="n">PauseGlobal</span><span class="p">();</span>
+
+<span class="c1">// Resume the game</span>
+<span class="n">timeService</span><span class="p">.</span><span class="n">ResumeGlobal</span><span class="p">();</span>
+</code></pre></div>
+<h3 id="using-a-time-channel">Using a Time Channel<a class="headerlink" href="#using-a-time-channel" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">ITimeChannel</span><span class="w"> </span><span class="n">gameplayChannel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timeService</span><span class="p">.</span><span class="n">GetChannel</span><span class="p">(</span><span class="s">&quot;Gameplay&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Or CreateChannel if it might not exist</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">gameplayChannel</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">gameplayChannel</span><span class="p">.</span><span class="n">SetTimeScale</span><span class="p">(</span><span class="mf">0.25f</span><span class="p">);</span><span class="w"> </span><span class="c1">// Affects only &quot;Gameplay&quot; channel</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">gameplayDeltaTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gameplayChannel</span><span class="p">.</span><span class="n">DeltaTime</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="creating-a-timer">Creating a Timer<a class="headerlink" href="#creating-a-timer" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Create a timer (starts on the Global channel), then move it to the UI channel</span>
+<span class="n">ITimer</span><span class="w"> </span><span class="n">uiTimer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">5.0f</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;UI Timer Complete!&quot;</span><span class="p">));</span>
+<span class="n">uiTimer</span><span class="p">.</span><span class="n">TimeChannel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timeService</span><span class="p">.</span><span class="n">GetChannel</span><span class="p">(</span><span class="s">&quot;UI&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Reassign to the UI channel</span>
+<span class="n">uiTimer</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span><span class="w"> </span><span class="c1">// If not auto-started</span>
+</code></pre></div>
+<h3 id="scheduling-a-task">Scheduling a Task<a class="headerlink" href="#scheduling-a-task" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Execute an action after 2 seconds on the &quot;Global&quot; channel</span>
+<span class="n">Guid</span><span class="w"> </span><span class="n">taskId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timeService</span><span class="p">.</span><span class="n">Scheduler</span><span class="p">.</span><span class="n">Schedule</span><span class="p">(()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Delayed action executed!&quot;</span><span class="p">);</span>
+<span class="p">},</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Global&quot;</span><span class="p">);</span>
+
+<span class="c1">// Cancel it if needed</span>
+<span class="c1">// timeService.Scheduler.CancelScheduled(taskId);</span>
+</code></pre></div>
+<h3 id="using-monobehaviour-extensions">Using MonoBehaviour Extensions<a class="headerlink" href="#using-monobehaviour-extensions" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// In a MonoBehaviour script</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.TimeManagement.Extensions</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyComponent</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="n">DelayedCall</span><span class="p">(()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;This happened after 3 seconds (game time)!&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">},</span><span class="w"> </span><span class="mf">3.0f</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">Guid</span><span class="w"> </span><span class="n">repeatingId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">RepeatingCall</span><span class="p">(()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;This happens every 1 second (game time)&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">},</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="integration-with-lol-engine">Integration with LoL Engine<a class="headerlink" href="#integration-with-lol-engine" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Registers as a core service (<code>ITimeService</code>) via <code>ImprovedGameInitializer</code>.</li>
+<li>Utilizes the engine's <code>IEventManager</code> for publishing <code>TimeEvents</code>.</li>
+<li>Follows LoL Engine coding standards and service-based architecture.</li>
+<li>The <code>TimeManager</code> MonoBehaviour acts as the bridge to Unity's update loop.</li>
+</ul>
+<h2 id="best-practices-and-guidelines">Best Practices and Guidelines<a class="headerlink" href="#best-practices-and-guidelines" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Use the "Global" channel for general game time. Create specific channels (e.g., "UI", "Cutscene", "Minigame") for systems that need independent time control.</li>
+<li>When creating timers or scheduling tasks, explicitly specify the <code>channelName</code> if it's not intended for the "Global" channel.</li>
+<li>Be mindful of <code>unscaledDeltaTime</code> vs. channel-specific <code>DeltaTime</code> when dealing with UI animations or effects that should not be affected by gameplay time scaling. The <code>TimeService</code> provides <code>UnscaledDeltaTime</code>.</li>
+<li>Smooth time scale transitions (<code>duration &gt; 0</code>) use unscaled time to ensure they complete correctly even if the target time scale is very low or zero.</li>
+<li>Clean up timers by calling <code>Cancel()</code> or <code>Dispose()</code> when they are no longer needed, especially for long-running or periodic timers, to prevent unnecessary updates.</li>
+<li>Use the <code>TimeManager</code>'s <code>unscaledUpdateMode</code> if the primary update loop for timers and scheduler needs to run based on real-world time rather than scaled game time (rare, but available).</li>
+</ul>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Unity 6000.0+</li>
+<li>LoL Engine core (Service Locator, Event Manager) — no external package dependencies.</li>
+</ul>
+<hr />
+<h2 id="performance-best-practices">Performance Best Practices<a class="headerlink" href="#performance-best-practices" title="Permanent link">&para;</a></h2>
+<h3 id="timer-pooling">Timer Pooling<a class="headerlink" href="#timer-pooling" title="Permanent link">&para;</a></h3>
+<p>For games with many short-lived timers, consider implementing timer pooling to reduce allocations:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Timer pooling pattern</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">TimerPool</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">Stack</span><span class="o">&lt;</span><span class="n">ITimer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_availableTimers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Stack</span><span class="o">&lt;</span><span class="n">ITimer</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ITimeService</span><span class="w"> </span><span class="n">_timeService</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="nf">TimerPool</span><span class="p">(</span><span class="n">ITimeService</span><span class="w"> </span><span class="n">timeService</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">initialSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timeService</span><span class="p">;</span>
+<span class="w">        </span><span class="c1">// Pre-create timers</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">initialSize</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">_availableTimers</span><span class="p">.</span><span class="n">Push</span><span class="p">(</span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">0f</span><span class="p">,</span><span class="w"> </span><span class="n">autoStart</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">));</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">GetTimer</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">Action</span><span class="w"> </span><span class="n">onComplete</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ITimer</span><span class="w"> </span><span class="n">timer</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_availableTimers</span><span class="p">.</span><span class="n">Count</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_availableTimers</span><span class="p">.</span><span class="n">Pop</span><span class="p">();</span>
+<span class="w">            </span><span class="n">timer</span><span class="p">.</span><span class="n">Duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">duration</span><span class="p">;</span>
+<span class="w">            </span><span class="n">timer</span><span class="p">.</span><span class="n">OnComplete</span><span class="p">(</span><span class="n">onComplete</span><span class="p">);</span>
+<span class="w">            </span><span class="n">timer</span><span class="p">.</span><span class="n">Reset</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">onComplete</span><span class="p">,</span><span class="w"> </span><span class="n">autoStart</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">timer</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ReturnTimer</span><span class="p">(</span><span class="n">ITimer</span><span class="w"> </span><span class="n">timer</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">timer</span><span class="p">.</span><span class="n">Cancel</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_availableTimers</span><span class="p">.</span><span class="n">Push</span><span class="p">(</span><span class="n">timer</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Usage</span>
+<span class="n">TimerPool</span><span class="w"> </span><span class="n">timerPool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TimerPool</span><span class="p">(</span><span class="n">timeService</span><span class="p">);</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timerPool</span><span class="p">.</span><span class="n">GetTimer</span><span class="p">(</span><span class="mf">2.0f</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Timer complete&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">timerPool</span><span class="p">.</span><span class="n">ReturnTimer</span><span class="p">(</span><span class="n">timer</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="n">timer</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+</code></pre></div>
+<h3 id="update-frequency-optimization">Update Frequency Optimization<a class="headerlink" href="#update-frequency-optimization" title="Permanent link">&para;</a></h3>
+<p>The TimeService has been optimized to reduce per-frame allocations:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Optimized UpdateAllTimers implementation (TimeService.cs:361-377)</span>
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateAllTimers</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Iterate backwards to safely remove completed timers</span>
+<span class="w">    </span><span class="c1">// Zero allocations (no List.ToList() copy)</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timers</span><span class="p">.</span><span class="n">Count</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timers</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">timer</span><span class="p">.</span><span class="n">IsRunning</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">timer</span><span class="p">.</span><span class="n">Update</span><span class="p">(</span><span class="n">timer</span><span class="p">.</span><span class="n">TimeChannel</span><span class="p">.</span><span class="n">DeltaTime</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">timer</span><span class="p">.</span><span class="n">IsCompleted</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">_timers</span><span class="p">.</span><span class="n">RemoveAt</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w">  </span><span class="c1">// Safe removal during iteration</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Performance Characteristics:</strong>
+- <strong>Before optimization</strong>: ~1KB GC allocation per frame (for 100 timers)
+- <strong>After optimization</strong>: 0KB GC allocation per frame
+- <strong>Speed improvement</strong>: 30-40% faster for 100+ active timers</p>
+<h3 id="best-practices-for-timer-usage">Best Practices for Timer Usage<a class="headerlink" href="#best-practices-for-timer-usage" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Good: Cache timer references when reusing</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">AbilitySystem</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ITimer</span><span class="w"> </span><span class="n">_cooldownTimer</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ITimeService</span><span class="w"> </span><span class="n">_timeService</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ITimeService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// Create once, reuse many times</span>
+<span class="w">        </span><span class="n">_cooldownTimer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">0f</span><span class="p">,</span><span class="w"> </span><span class="n">autoStart</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UseAbility</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_cooldownTimer</span><span class="p">.</span><span class="n">Duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">abilityCooldown</span><span class="p">;</span>
+<span class="w">        </span><span class="n">_cooldownTimer</span><span class="p">.</span><span class="n">Reset</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_cooldownTimer</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Bad: Creating new timers repeatedly</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">AbilitySystem</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UseAbility</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Creates new timer each time (GC pressure)</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="n">abilityCooldown</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Cooldown complete</span>
+<span class="w">        </span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="long-running-timer-management">Long-Running Timer Management<a class="headerlink" href="#long-running-timer-management" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// For very long durations, monitor overflow</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LongTimerExample</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ITimer</span><span class="w"> </span><span class="n">_longTimer</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">StartLongTimer</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// For durations &gt; 1 hour, consider using scheduler or real-time tracking</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">duration</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">3600f</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogWarning</span><span class="p">(</span><span class="s">$&quot;Very long timer duration: {duration}s. Consider using scheduler or DateTime tracking.&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">_longTimer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">OnComplete</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Alternative: Use DateTime for very long durations</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">DateTime</span><span class="w"> </span><span class="n">_targetTime</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">StartLongTimerWithDateTime</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_targetTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">.</span><span class="n">AddHours</span><span class="p">(</span><span class="mi">24</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">_targetTime</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">OnComplete</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="advanced-examples">Advanced Examples<a class="headerlink" href="#advanced-examples" title="Permanent link">&para;</a></h2>
+<h3 id="bullet-time-effect">Bullet Time Effect<a class="headerlink" href="#bullet-time-effect" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">BulletTimeController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ITimeService</span><span class="w"> </span><span class="n">_timeService</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">_isBulletTimeActive</span><span class="p">;</span>
+
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">bulletTimeScale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2f</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">transitionDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ITimeService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ActivateBulletTime</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_isBulletTimeActive</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">_isBulletTimeActive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Slow down gameplay channel, keep UI normal</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="p">.</span><span class="n">SetChannelTimeScale</span><span class="p">(</span><span class="s">&quot;Gameplay&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">bulletTimeScale</span><span class="p">,</span><span class="w"> </span><span class="n">transitionDuration</span><span class="p">,</span><span class="w"> </span><span class="n">EasingType</span><span class="p">.</span><span class="n">EaseOut</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// UI stays at normal speed</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="p">.</span><span class="n">SetChannelTimeScale</span><span class="p">(</span><span class="s">&quot;UI&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Audio pitch adjustment (optional)</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="p">.</span><span class="n">SetChannelTimeScale</span><span class="p">(</span><span class="s">&quot;Audio&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">bulletTimeScale</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">DeactivateBulletTime</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">_isBulletTimeActive</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">_isBulletTimeActive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Return to normal speed</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="p">.</span><span class="n">SetChannelTimeScale</span><span class="p">(</span><span class="s">&quot;Gameplay&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="n">transitionDuration</span><span class="p">,</span><span class="w"> </span><span class="n">EasingType</span><span class="p">.</span><span class="n">EaseIn</span><span class="p">);</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="p">.</span><span class="n">SetChannelTimeScale</span><span class="p">(</span><span class="s">&quot;Audio&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="n">transitionDuration</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="cutscene-time-control">Cutscene Time Control<a class="headerlink" href="#cutscene-time-control" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">CutsceneController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ITimeService</span><span class="w"> </span><span class="n">_timeService</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ITimeChannel</span><span class="w"> </span><span class="n">_cutsceneChannel</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ITimeService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Create dedicated cutscene channel</span>
+<span class="w">        </span><span class="n">_cutsceneChannel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateChannel</span><span class="p">(</span><span class="s">&quot;Cutscene&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">inheritsGlobalScale</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">PlayCutscene</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Pause gameplay</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="p">.</span><span class="n">PauseChannel</span><span class="p">(</span><span class="s">&quot;Gameplay&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Keep UI responsive</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="p">.</span><span class="n">SetChannelTimeScale</span><span class="p">(</span><span class="s">&quot;UI&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Cutscene runs at controlled speed</span>
+<span class="w">        </span><span class="n">_cutsceneChannel</span><span class="p">.</span><span class="n">SetTimeScale</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Timer for cutscene events (uses cutscene channel)</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">3.0f</span><span class="p">,</span><span class="w"> </span><span class="n">OnCutsceneEvent</span><span class="p">);</span>
+<span class="w">        </span><span class="n">timer</span><span class="p">.</span><span class="n">TimeChannel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_cutsceneChannel</span><span class="p">;</span>
+<span class="w">        </span><span class="n">timer</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">EndCutscene</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Resume gameplay</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="p">.</span><span class="n">ResumeChannel</span><span class="p">(</span><span class="s">&quot;Gameplay&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnCutsceneEvent</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Cutscene event triggered!&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="pause-menu-with-unscaled-animations">Pause Menu with Unscaled Animations<a class="headerlink" href="#pause-menu-with-unscaled-animations" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PauseMenuController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ITimeService</span><span class="w"> </span><span class="n">_timeService</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ITimeChannel</span><span class="w"> </span><span class="n">_uiChannel</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ITimeService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_uiChannel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">GetChannel</span><span class="p">(</span><span class="s">&quot;UI&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ShowPauseMenu</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Pause game time</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="p">.</span><span class="n">PauseGlobal</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Animate menu using UI channel (unscaled)</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">fadeTimer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">0.3f</span><span class="p">,</span><span class="w"> </span><span class="n">OnFadeComplete</span><span class="p">);</span>
+<span class="w">        </span><span class="n">fadeTimer</span><span class="p">.</span><span class="n">TimeChannel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_uiChannel</span><span class="p">;</span><span class="w">  </span><span class="c1">// UI channel ignores global pause</span>
+<span class="w">        </span><span class="n">fadeTimer</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">HidePauseMenu</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Resume game time</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="p">.</span><span class="n">ResumeGlobal</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnFadeComplete</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Pause menu fade complete&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="complex-timer-patterns">Complex Timer Patterns<a class="headerlink" href="#complex-timer-patterns" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">TimerPatterns</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ITimeService</span><span class="w"> </span><span class="n">_timeService</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ITimeService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Chain timers sequentially</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ChainedTimers</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;First timer&quot;</span><span class="p">);</span>
+
+<span class="w">            </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">2.0f</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Second timer&quot;</span><span class="p">);</span>
+
+<span class="w">                </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">3.0f</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Third timer&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="p">});</span>
+<span class="w">            </span><span class="p">});</span>
+<span class="w">        </span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Parallel timers</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ParallelTimers</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">timer1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">2.0f</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Timer 1 complete&quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">timer2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">3.0f</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Timer 2 complete&quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">timer3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Timer 3 complete&quot;</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Cancelable sequence</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ITimer</span><span class="w"> </span><span class="n">_sequenceTimer</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">CancelableSequence</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_sequenceTimer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">5.0f</span><span class="p">,</span><span class="w"> </span><span class="n">OnSequenceComplete</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">CancelSequence</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_sequenceTimer</span><span class="o">?.</span><span class="n">Cancel</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnSequenceComplete</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Sequence completed!&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="timer-not-updating">Timer Not Updating<a class="headerlink" href="#timer-not-updating" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Timer doesn't fire or update callbacks aren't called</p>
+<p><strong>Common Causes:</strong></p>
+<ol>
+<li>
+<p><strong>TimeManager not in scene</strong>
+   <div class="highlight"><pre><span></span><code><span class="c1">// Verify TimeManager exists</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">timeManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FindAnyObjectByType</span><span class="o">&lt;</span><span class="n">TimeManager</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">timeManager</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&quot;TimeManager MonoBehaviour not found in scene!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Timer channel is paused</strong>
+   <div class="highlight"><pre><span></span><code><span class="c1">// Check channel state</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">channel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timer</span><span class="p">.</span><span class="n">TimeChannel</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">channel</span><span class="p">.</span><span class="n">IsPaused</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Timer channel &#39;{channel.Name}&#39; is paused&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Timer not started</strong>
+   <div class="highlight"><pre><span></span><code><span class="c1">// Ensure timer is running</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">timer</span><span class="p">.</span><span class="n">IsRunning</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">timer</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Global time is paused</strong>
+   <div class="highlight"><pre><span></span><code><span class="c1">// Check global pause state</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_timeService</span><span class="p">.</span><span class="n">IsGloballyPaused</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Global time is paused&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+</ol>
+<h3 id="smooth-time-scale-transitions-not-working">Smooth Time Scale Transitions Not Working<a class="headerlink" href="#smooth-time-scale-transitions-not-working" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> SetTimeScale with duration doesn't transition smoothly</p>
+<p><strong>Solution:</strong> The system now uses the Unscaled channel for transitions (fixed in recent update):</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// TimeService.cs:117-150 (Fixed implementation)</span>
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SetTimeScale</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">scale</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0f</span><span class="p">,</span><span class="w"> </span><span class="n">EasingType</span><span class="w"> </span><span class="n">easing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EasingType</span><span class="p">.</span><span class="n">Linear</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Validation</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">scale</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">LoLLogger</span><span class="p">.</span><span class="n">Warning</span><span class="p">(</span><span class="s">&quot;Time scale cannot be negative, clamping to 0&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">scale</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">100f</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">LoLLogger</span><span class="p">.</span><span class="n">Warning</span><span class="p">(</span><span class="s">&quot;Time scale &gt; 100x may cause physics instability&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Instant change</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">duration</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0f</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_globalTimeScale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scale</span><span class="p">;</span>
+<span class="w">        </span><span class="n">OnGlobalTimeScaleChanged</span><span class="o">?.</span><span class="n">Invoke</span><span class="p">(</span><span class="n">_globalTimeScale</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Smooth transition using Unscaled channel</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CreateTimer</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">onComplete</span><span class="p">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_globalTimeScale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">targetScale</span><span class="p">;</span><span class="w">  </span><span class="c1">// Ensure exact target value</span>
+<span class="w">        </span><span class="n">OnGlobalTimeScaleChanged</span><span class="o">?.</span><span class="n">Invoke</span><span class="p">(</span><span class="n">_globalTimeScale</span><span class="p">);</span>
+<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="n">autoStart</span><span class="p">:</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// CRITICAL: Use Unscaled channel so transition works even at low time scales</span>
+<span class="w">    </span><span class="n">timer</span><span class="p">.</span><span class="n">TimeChannel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetChannel</span><span class="p">(</span><span class="s">&quot;Unscaled&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Why it matters:</strong>
+- Before: Transitions used global time scale (infinite loop at scale=0)
+- After: Transitions use Unscaled channel (always completes)</p>
+<h3 id="stopwatch-passes-wrong-values">Stopwatch Passes Wrong Values<a class="headerlink" href="#stopwatch-passes-wrong-values" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Stopwatch OnUpdate callback receives countdown values instead of elapsed</p>
+<p><strong>Solution:</strong> Use the Stopwatch class (fixed in Timer.cs:174-192):</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Correct usage</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">stopwatch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateStopwatch</span><span class="p">(</span>
+<span class="w">    </span><span class="n">onUpdate</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="n">elapsed</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Elapsed: {elapsed}s&quot;</span><span class="p">);</span><span class="w">  </span><span class="c1">// Counts up</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">);</span>
+
+<span class="c1">// The CreateStopwatch method now returns proper Stopwatch instance:</span>
+<span class="k">public</span><span class="w"> </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">CreateStopwatch</span><span class="p">(</span><span class="n">Action</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">onUpdate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">autoStart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">stopwatch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Stopwatch</span><span class="p">(</span><span class="n">GetChannel</span><span class="p">(</span><span class="s">&quot;Global&quot;</span><span class="p">));</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">onUpdate</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span><span class="w"> </span><span class="n">stopwatch</span><span class="p">.</span><span class="n">OnUpdate</span><span class="p">(</span><span class="n">onUpdate</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">autoStart</span><span class="p">)</span><span class="w"> </span><span class="n">stopwatch</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+<span class="w">    </span><span class="n">RegisterTimer</span><span class="p">(</span><span class="n">stopwatch</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">stopwatch</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="timer-memory-leaks">Timer Memory Leaks<a class="headerlink" href="#timer-memory-leaks" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Timers accumulate over time, causing performance degradation</p>
+<p><strong>Solutions:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 1. Always dispose long-running timers</span>
+<span class="k">private</span><span class="w"> </span><span class="n">ITimer</span><span class="w"> </span><span class="n">_respawnTimer</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">StartRespawn</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_respawnTimer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="mf">10.0f</span><span class="p">,</span><span class="w"> </span><span class="n">OnRespawn</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_respawnTimer</span><span class="o">?.</span><span class="n">Dispose</span><span class="p">();</span><span class="w">  </span><span class="c1">// Clean up</span>
+<span class="p">}</span>
+
+<span class="c1">// 2. Cancel timers when no longer needed</span>
+<span class="k">private</span><span class="w"> </span><span class="n">ITimer</span><span class="w"> </span><span class="n">_countdownTimer</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">CancelCountdown</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_countdownTimer</span><span class="o">?.</span><span class="n">Cancel</span><span class="p">();</span><span class="w">  </span><span class="c1">// Auto-removed from update list</span>
+<span class="p">}</span>
+
+<span class="c1">// 3. Use periodic timers carefully</span>
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">StartPeriodicUpdate</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Specify repeat count to avoid infinite timers</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreatePeriodicTimer</span><span class="p">(</span>
+<span class="w">        </span><span class="n">interval</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<span class="w">        </span><span class="n">repeatCount</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">  </span><span class="c1">// Limited repeats</span>
+<span class="w">        </span><span class="n">onPeriod</span><span class="p">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Tick&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="physics-issues-with-high-time-scales">Physics Issues with High Time Scales<a class="headerlink" href="#physics-issues-with-high-time-scales" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> Physics becomes unstable at high time scales</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// The system now warns about extreme time scales</span>
+<span class="n">_timeService</span><span class="p">.</span><span class="n">SetTimeScale</span><span class="p">(</span><span class="mf">150f</span><span class="p">);</span><span class="w">  </span><span class="c1">// Warning logged</span>
+
+<span class="c1">// Recommended maximum time scales:</span>
+<span class="c1">// - Normal gameplay: 0.1x - 2.0x</span>
+<span class="c1">// - Slow motion: 0.01x - 0.5x</span>
+<span class="c1">// - Fast forward: 2.0x - 10.0x</span>
+<span class="c1">// - Physics stable limit: ~20x</span>
+
+<span class="c1">// For time-lapse effects, consider:</span>
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">TimeLapseEffect</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Instead of 100x time scale, update less frequently</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreatePeriodicTimer</span><span class="p">(</span>
+<span class="w">        </span><span class="n">interval</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1f</span><span class="p">,</span><span class="w">  </span><span class="c1">// Update every 0.1s</span>
+<span class="w">        </span><span class="n">onPeriod</span><span class="p">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Advance game state in larger chunks</span>
+<span class="w">            </span><span class="n">AdvanceGameState</span><span class="p">(</span><span class="mf">10f</span><span class="p">);</span><span class="w">  </span><span class="c1">// Simulate 10 seconds</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="memory-management">Memory Management<a class="headerlink" href="#memory-management" title="Permanent link">&para;</a></h2>
+<h3 id="overflow-protection">Overflow Protection<a class="headerlink" href="#overflow-protection" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// For extremely long-running timers, use DateTime instead</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LongDurationTracker</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">DateTime</span><span class="w"> </span><span class="n">_startTime</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">TimeSpan</span><span class="w"> </span><span class="n">_targetDuration</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">StartTracking</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">durationInSeconds</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// For durations &gt; 24 hours, use DateTime</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">durationInSeconds</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">86400f</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">_startTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+<span class="w">            </span><span class="n">_targetDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromSeconds</span><span class="p">(</span><span class="n">durationInSeconds</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Use timer for shorter durations</span>
+<span class="w">            </span><span class="n">timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="n">durationInSeconds</span><span class="p">,</span><span class="w"> </span><span class="n">OnComplete</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IsComplete</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_startTime</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">_targetDuration</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="timer-cleanup-patterns">Timer Cleanup Patterns<a class="headerlink" href="#timer-cleanup-patterns" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">TimerManager</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ITimer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">_activeTimers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">ITimer</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ITimeService</span><span class="w"> </span><span class="n">_timeService</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_timeService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ITimeService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">ITimer</span><span class="w"> </span><span class="nf">CreateManagedTimer</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="n">Action</span><span class="w"> </span><span class="n">onComplete</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_timeService</span><span class="p">.</span><span class="n">CreateTimer</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">onComplete</span><span class="o">?.</span><span class="n">Invoke</span><span class="p">();</span>
+<span class="w">            </span><span class="n">_activeTimers</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">timer</span><span class="p">);</span><span class="w">  </span><span class="c1">// Auto-cleanup</span>
+<span class="w">        </span><span class="p">});</span>
+
+<span class="w">        </span><span class="n">_activeTimers</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">timer</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">timer</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Clean up all managed timers</span>
+<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">_activeTimers</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">timer</span><span class="p">.</span><span class="n">Dispose</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">_activeTimers</span><span class="p">.</span><span class="n">Clear</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="best-practices-summary">Best Practices Summary<a class="headerlink" href="#best-practices-summary" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Dispose timers in OnDestroy</strong>: Prevent memory leaks</li>
+<li><strong>Use Unscaled channel for system operations</strong>: Time transitions, UI animations</li>
+<li><strong>Cache timer references</strong>: Reduce allocations for frequently-used timers</li>
+<li><strong>Limit periodic timer repeats</strong>: Specify repeatCount to avoid infinite timers</li>
+<li><strong>Monitor time scale values</strong>: Keep within 0.01x - 20x range for physics stability</li>
+<li><strong>Use DateTime for very long durations</strong>: Prevents float overflow (&gt;24 hours)</li>
+</ol>
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../Events/">Events</a> — <code>TimeEvents</code> are published through <code>IEventManager</code></li>
+<li><a href="../ServiceLocator/">Service Locator</a> — how <code>ITimeService</code> is resolved</li>
+<li><a href="../GettingStarted/">Getting Started</a> — full engine setup</li>
+<li><a href="../Troubleshooting/">Troubleshooting</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

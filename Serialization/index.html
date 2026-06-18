@@ -1,0 +1,2439 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Modular Unity 6 game framework — audio, saves, events, localization, deterministic RNG, and more.">
+      
+      
+        <meta name="author" content="MooMoo Games">
+      
+      
+        <link rel="canonical" href="https://alien-tardigrade.github.io/LoL-Engine-README/Serialization/">
+      
+      
+        <link rel="prev" href="../DataPersistence/">
+      
+      
+        <link rel="next" href="../Localization/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Serialization - LoL Engine Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lol-engine-serialization-system" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="LoL Engine Documentation" class="md-header__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LoL Engine Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Serialization
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="LoL Engine Documentation" class="md-nav__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LoL Engine Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_QUICKSTART/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart (5 min)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Full Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-SERVICES-CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHEATSHEET-How-To-Use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceLocator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Locator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImprovedGameInitializer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Initializer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceDependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AudioHelpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio Helpers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DataPersistence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Persistence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serialization
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newtonsoft-json-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Newtonsoft JSON Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Newtonsoft JSON Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#be-careful-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Be Careful With
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unity-inspector-dictionaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unity Inspector Dictionaries
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Registration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-serializers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accessing Serializers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-data-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Data Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-versioning-and-migration-new-in-v11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Versioning and Migration (New in v1.1)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Versioning and Migration (New in v1.1)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-versioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use Versioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-chain-multiple-migrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced: Chain Multiple Migrations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versioning-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versioning Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-complete-versioning-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Complete Versioning Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version History
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCALIZATION_MIGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization Migration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ResourceManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Input/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilities
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ObjectPool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Pool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TimeManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GameState/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HelperUtilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helper Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Logger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IL2CPP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IL2CPP & Code Stripping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newtonsoft-json-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Newtonsoft JSON Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Newtonsoft JSON Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#be-careful-with" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Be Careful With
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unity-inspector-dictionaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unity Inspector Dictionaries
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Registration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-serializers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accessing Serializers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-data-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Data Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-versioning-and-migration-new-in-v11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Versioning and Migration (New in v1.1)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Versioning and Migration (New in v1.1)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-versioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use Versioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-chain-multiple-migrations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced: Chain Multiple Migrations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versioning-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versioning Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-complete-versioning-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Complete Versioning Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version History
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="lol-engine-serialization-system">LoL Engine Serialization System<a class="headerlink" href="#lol-engine-serialization-system" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The Serialization System provides Newtonsoft JSON, obfuscated JSON, and encrypted JSON serialization for save data and other game-owned data models.</p>
+<p>The public serializer contract is <code>LoLEngine.Core.Serialization.Interfaces.IDataSerializer</code>.</p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Standard JSON serialization through <code>JsonDataSerializer</code></li>
+<li>Obfuscated JSON serialization through <code>ObfuscatedJsonDataSerializer</code> (recommended for normal game saves)</li>
+<li>Encrypted JSON serialization through <code>EncryptedJsonDataSerializer</code> (for truly sensitive data)</li>
+<li>Optional compression through <code>ICompressionService</code></li>
+<li>Private Unity fields marked with <code>[SerializeField]</code> are included through <code>UnityPrivateFieldContractResolver</code></li>
+<li>Automatic serializer selection in <code>SaveSystem</code></li>
+</ul>
+<h2 id="newtonsoft-json-notes">Newtonsoft JSON Notes<a class="headerlink" href="#newtonsoft-json-notes" title="Permanent link">&para;</a></h2>
+<p>LoL Engine uses Newtonsoft JSON, not Unity <code>JsonUtility</code>.</p>
+<h3 id="supported">Supported<a class="headerlink" href="#supported" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Simple types, arrays, lists, dictionaries, structs, enums, and most POCO classes</li>
+<li>Public fields and properties</li>
+<li>Private fields marked with <code>[SerializeField]</code> or <code>[JsonProperty]</code></li>
+<li><code>DateTime</code> and other standard Newtonsoft-supported .NET types</li>
+</ul>
+<h3 id="be-careful-with">Be Careful With<a class="headerlink" href="#be-careful-with" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Circular references unless you configure your own serializer strategy</li>
+<li>Interface or abstract fields unless you store type information yourself</li>
+<li>Unity object references (<code>GameObject</code>, <code>Transform</code>, <code>AudioClip</code>, etc.); persist asset IDs, Addressable keys, or model IDs instead</li>
+<li>Renaming fields after shipping saves; use migrations for live games</li>
+</ul>
+<h3 id="unity-inspector-dictionaries">Unity Inspector Dictionaries<a class="headerlink" href="#unity-inspector-dictionaries" title="Permanent link">&para;</a></h3>
+<p>Newtonsoft can serialize dictionaries, but Unity's Inspector still cannot show a plain <code>Dictionary&lt;TKey, TValue&gt;</code>. Use <code>SerializableDictionary&lt;TKey, TValue&gt;</code> from <code>LoLEngine.Helpers.Extensions</code> only when you need Inspector editing.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Helpers.Extensions</span><span class="p">;</span>
+
+<span class="na">[Serializable]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">StringIntDictionary</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">SerializableDictionary</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<h2 id="service-registration">Service Registration<a class="headerlink" href="#service-registration" title="Permanent link">&para;</a></h2>
+<p>When <strong>Enable Serialization Service</strong> is on, <code>ConfigurableServiceInitializer</code> registers the base <code>IDataSerializer</code> and keyed variants:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Implementation</th>
+<th>Availability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>default / <code>json</code></td>
+<td><code>JsonDataSerializer</code></td>
+<td>Serialization service enabled</td>
+</tr>
+<tr>
+<td><code>obfuscated</code></td>
+<td><code>ObfuscatedJsonDataSerializer</code></td>
+<td>Obfuscation service registered</td>
+</tr>
+<tr>
+<td><code>encrypted</code></td>
+<td><code>EncryptedJsonDataSerializer</code></td>
+<td>Encryption service enabled and registered</td>
+</tr>
+</tbody>
+</table>
+<p><code>SaveSystem</code> chooses the serializer from <code>SaveSettings</code>:</p>
+<ul>
+<li><code>UseObfuscation = true</code> uses <code>IDataSerializer</code> key <code>obfuscated</code></li>
+<li><code>UseEncryption = true</code> uses <code>IDataSerializer</code> key <code>encrypted</code></li>
+<li>Both false uses <code>IDataSerializer</code> key <code>json</code></li>
+</ul>
+<h2 id="accessing-serializers">Accessing Serializers<a class="headerlink" href="#accessing-serializers" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Serialization.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+
+<span class="kt">var</span><span class="w"> </span><span class="n">jsonSerializer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IDataSerializer</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;json&quot;</span><span class="p">);</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">obfuscatedSerializer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IDataSerializer</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;obfuscated&quot;</span><span class="p">);</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">encryptedSerializer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IDataSerializer</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;encrypted&quot;</span><span class="p">);</span>
+</code></pre></div>
+<p>In normal gameplay code, prefer using <code>ISaveSystem</code> instead of calling serializers directly.</p>
+<h2 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">&para;</a></h2>
+<p>Standard JSON serialization:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">jsonSerializer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IDataSerializer</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;json&quot;</span><span class="p">);</span>
+
+<span class="n">PlayerData</span><span class="w"> </span><span class="n">playerData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PlayerData</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Player1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">};</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">jsonData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jsonSerializer</span><span class="p">.</span><span class="n">Serialize</span><span class="p">(</span><span class="n">playerData</span><span class="p">,</span><span class="w"> </span><span class="n">compress</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">);</span>
+
+<span class="n">PlayerData</span><span class="w"> </span><span class="n">loadedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jsonSerializer</span><span class="p">.</span><span class="n">Deserialize</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">(</span><span class="n">jsonData</span><span class="p">,</span><span class="w"> </span><span class="n">compress</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">);</span>
+</code></pre></div>
+<p>Obfuscated Serialization (Recommended)
+<div class="highlight"><pre><span></span><code><span class="c1">// Get the obfuscated serializer</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">obfuscatedSerializer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IDataSerializer</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;obfuscated&quot;</span><span class="p">);</span>
+
+<span class="c1">// Serialize and obfuscate object (10x faster than encryption)</span>
+<span class="n">PlayerData</span><span class="w"> </span><span class="n">playerData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PlayerData</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Player1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">};</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">obfuscatedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obfuscatedSerializer</span><span class="p">.</span><span class="n">Serialize</span><span class="p">(</span><span class="n">playerData</span><span class="p">);</span>
+
+<span class="c1">// Deobfuscate and deserialize object</span>
+<span class="n">PlayerData</span><span class="w"> </span><span class="n">loadedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obfuscatedSerializer</span><span class="p">.</span><span class="n">Deserialize</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">(</span><span class="n">obfuscatedData</span><span class="p">);</span>
+</code></pre></div></p>
+<p>Encrypted Serialization (For Sensitive Data)
+<div class="highlight"><pre><span></span><code><span class="c1">// Get the encrypted serializer</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">encryptedSerializer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IDataSerializer</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;encrypted&quot;</span><span class="p">);</span>
+
+<span class="c1">// Serialize and encrypt object (slower but more secure)</span>
+<span class="n">PlayerData</span><span class="w"> </span><span class="n">playerData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PlayerData</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Player1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">};</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">encryptedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">encryptedSerializer</span><span class="p">.</span><span class="n">Serialize</span><span class="p">(</span><span class="n">playerData</span><span class="p">);</span>
+
+<span class="c1">// Decrypt and deserialize object</span>
+<span class="n">PlayerData</span><span class="w"> </span><span class="n">loadedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">encryptedSerializer</span><span class="p">.</span><span class="n">Deserialize</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">(</span><span class="n">encryptedData</span><span class="p">);</span>
+</code></pre></div></p>
+<p><strong>When to use each</strong>:
+- <strong>Obfuscated</strong>: Normal game saves, player progress, settings (fast, default)
+- <strong>Encrypted</strong>: Payment data, personal info, security-critical data (slow, secure)
+- <strong>Plain JSON</strong>: Development, debugging only (fastest, no protection)</p>
+<h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">try</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">serializer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IDataSerializer</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;json&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="n">jsonData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serializer</span><span class="p">.</span><span class="n">Serialize</span><span class="p">(</span><span class="n">myData</span><span class="p">,</span><span class="w"> </span><span class="n">compress</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">JsonSerializationException</span><span class="w"> </span><span class="n">ex</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">$&quot;JSON serialization failed: {ex.Message}&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ServiceNotFoundException</span><span class="w"> </span><span class="n">ex</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&quot;Serialization service not found&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Data Model Design</strong></li>
+<li>Use simple data types when possible</li>
+<li>Implement proper data contracts</li>
+<li>
+<p>Consider serialization attributes</p>
+</li>
+<li>
+<p><strong>Security</strong></p>
+</li>
+<li><strong>Use obfuscated serialization for normal game data</strong> (default, recommended)</li>
+<li>Use encrypted serialization only for truly sensitive data (payment, personal info)</li>
+<li>Store encryption keys securely (never hardcode in production)</li>
+<li>
+<p>Validate deserialized data</p>
+</li>
+<li>
+<p><strong>Performance</strong></p>
+</li>
+<li><strong>Prefer obfuscation over encryption</strong> for game saves (10x faster)</li>
+<li>Cache serialized results when appropriate</li>
+<li>Use plain JSON only for debugging</li>
+<li>
+<p>Handle large datasets carefully</p>
+</li>
+<li>
+<p><strong>Choosing the Right Serializer</strong></p>
+</li>
+<li><strong>Obfuscated</strong> (.osav): Game progress, settings, inventory (fast, default)</li>
+<li><strong>Encrypted</strong> (.esave): Payment data, passwords, personal info (slow, secure)</li>
+<li><strong>Plain JSON</strong> (.sav): Development/debugging only (fastest, no protection)</li>
+</ol>
+<p>See <a href="../DataPersistence/#save-protection-obfuscation-and-encryption">Data Persistence — Save protection</a> for detailed comparison.</p>
+<h3 id="example-data-model">Example Data Model<a class="headerlink" href="#example-data-model" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PlayerData</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Level</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Inventory</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="data-versioning-and-migration-new-in-v11">Data Versioning and Migration (New in v1.1)<a class="headerlink" href="#data-versioning-and-migration-new-in-v11" title="Permanent link">&para;</a></h2>
+<p>The Serialization system now supports data versioning to handle changes to your data structures over time.</p>
+<h3 id="when-to-use-versioning">When to Use Versioning<a class="headerlink" href="#when-to-use-versioning" title="Permanent link">&para;</a></h3>
+<p>Use data versioning when:
+- You need to support old save files after updates
+- Your data structure will change over time
+- You want graceful migration instead of data loss
+- You're releasing updates to a live game</p>
+<h3 id="basic-usage_1">Basic Usage<a class="headerlink" href="#basic-usage_1" title="Permanent link">&para;</a></h3>
+<p><strong>Step 1: Wrap your data with VersionedData</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Serialization.Types</span><span class="p">;</span>
+
+<span class="c1">// Your game data class</span>
+<span class="na">[Serializable]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PlayerData</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">playerName</span><span class="p">;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">level</span><span class="p">;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gold</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Save with version</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">playerData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PlayerData</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">playerName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hero&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">gold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="p">};</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">versioned</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VersionedData</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="n">playerData</span><span class="p">,</span><span class="w"> </span><span class="n">version</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">// Serialize as normal</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jsonSerializer</span><span class="p">.</span><span class="n">Serialize</span><span class="p">(</span><span class="n">versioned</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Step 2: Load and migrate</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Deserialize</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">versioned</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jsonSerializer</span><span class="p">.</span><span class="n">Deserialize</span><span class="o">&lt;</span><span class="n">VersionedData</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
+
+<span class="c1">// Migrate if needed</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">currentVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="c1">// Your game is now on version 2</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">migrated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataVersioning</span><span class="p">.</span><span class="n">TryMigrate</span><span class="p">(</span><span class="n">versioned</span><span class="p">,</span><span class="w"> </span><span class="n">currentVersion</span><span class="p">,</span><span class="w"> </span><span class="n">MigratePlayerData</span><span class="p">);</span>
+
+<span class="c1">// Migration function</span>
+<span class="k">private</span><span class="w"> </span><span class="n">PlayerData</span><span class="w"> </span><span class="nf">MigratePlayerData</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">oldVersion</span><span class="p">,</span><span class="w"> </span><span class="n">PlayerData</span><span class="w"> </span><span class="n">oldData</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">oldVersion</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Version 1 -&gt; 2: Added experience field</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PlayerDataV2</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">playerName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oldData</span><span class="p">.</span><span class="n">playerName</span><span class="p">,</span>
+<span class="w">            </span><span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oldData</span><span class="p">.</span><span class="n">level</span><span class="p">,</span>
+<span class="w">            </span><span class="n">gold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oldData</span><span class="p">.</span><span class="n">gold</span><span class="p">,</span>
+<span class="w">            </span><span class="n">experience</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oldData</span><span class="p">.</span><span class="n">level</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="c1">// Calculate from level</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">oldData</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="advanced-chain-multiple-migrations">Advanced: Chain Multiple Migrations<a class="headerlink" href="#advanced-chain-multiple-migrations" title="Permanent link">&para;</a></h3>
+<p>For games with many versions, chain migrations together:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Version 1: { name, level, gold }</span>
+<span class="c1">// Version 2: { name, level, gold, experience }</span>
+<span class="c1">// Version 3: { name, level, gold, experience, inventory }</span>
+
+<span class="k">private</span><span class="w"> </span><span class="n">Func</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">PlayerData</span><span class="p">,</span><span class="w"> </span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CreateMigrator</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">DataVersioning</span><span class="p">.</span><span class="n">ChainMigrations</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">        </span><span class="c1">// Version 1 -&gt; 2</span>
+<span class="w">        </span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">v2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PlayerDataV2</span><span class="p">();</span>
+<span class="w">            </span><span class="c1">// Copy old fields</span>
+<span class="w">            </span><span class="n">v2</span><span class="p">.</span><span class="n">playerName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">PlayerDataV1</span><span class="p">)</span><span class="n">data</span><span class="p">).</span><span class="n">playerName</span><span class="p">;</span>
+<span class="w">            </span><span class="n">v2</span><span class="p">.</span><span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">PlayerDataV1</span><span class="p">)</span><span class="n">data</span><span class="p">).</span><span class="n">level</span><span class="p">;</span>
+<span class="w">            </span><span class="n">v2</span><span class="p">.</span><span class="n">gold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">PlayerDataV1</span><span class="p">)</span><span class="n">data</span><span class="p">).</span><span class="n">gold</span><span class="p">;</span>
+<span class="w">            </span><span class="c1">// Add new field</span>
+<span class="w">            </span><span class="n">v2</span><span class="p">.</span><span class="n">experience</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v2</span><span class="p">.</span><span class="n">level</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">v2</span><span class="p">;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="c1">// Version 2 -&gt; 3</span>
+<span class="w">        </span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">v3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PlayerDataV3</span><span class="p">();</span>
+<span class="w">            </span><span class="c1">// Copy all V2 fields</span>
+<span class="w">            </span><span class="n">v3</span><span class="p">.</span><span class="n">playerName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">PlayerDataV2</span><span class="p">)</span><span class="n">data</span><span class="p">).</span><span class="n">playerName</span><span class="p">;</span>
+<span class="w">            </span><span class="n">v3</span><span class="p">.</span><span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">PlayerDataV2</span><span class="p">)</span><span class="n">data</span><span class="p">).</span><span class="n">level</span><span class="p">;</span>
+<span class="w">            </span><span class="n">v3</span><span class="p">.</span><span class="n">gold</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">PlayerDataV2</span><span class="p">)</span><span class="n">data</span><span class="p">).</span><span class="n">gold</span><span class="p">;</span>
+<span class="w">            </span><span class="n">v3</span><span class="p">.</span><span class="n">experience</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">PlayerDataV2</span><span class="p">)</span><span class="n">data</span><span class="p">).</span><span class="n">experience</span><span class="p">;</span>
+<span class="w">            </span><span class="c1">// Add new field</span>
+<span class="w">            </span><span class="n">v3</span><span class="p">.</span><span class="n">inventory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">();</span><span class="w"> </span><span class="c1">// Empty inventory</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">v3</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Use it</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">migrated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataVersioning</span><span class="p">.</span><span class="n">TryMigrate</span><span class="p">(</span><span class="n">versioned</span><span class="p">,</span><span class="w"> </span><span class="n">currentVersion</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">CreateMigrator</span><span class="p">());</span>
+</code></pre></div>
+<h3 id="versioning-best-practices">Versioning Best Practices<a class="headerlink" href="#versioning-best-practices" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Increment version for breaking changes only</strong>
+   <div class="highlight"><pre><span></span><code><span class="c1">// Breaking change - increment version</span>
+<span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">level</span><span class="p">;</span><span class="w">       </span><span class="c1">// was: public string level;</span>
+
+<span class="c1">// Non-breaking addition - don&#39;t increment</span>
+<span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">newField</span><span class="p">;</span><span class="w">    </span><span class="c1">// added to existing structure</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Always provide migration path</strong>
+   <div class="highlight"><pre><span></span><code><span class="c1">// Good: Handle all old versions</span>
+<span class="k">private</span><span class="w"> </span><span class="n">PlayerData</span><span class="w"> </span><span class="nf">Migrate</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">oldVersion</span><span class="p">,</span><span class="w"> </span><span class="n">PlayerData</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">oldVersion</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">MigrateV1ToV2</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">oldVersion</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">MigrateV2ToV3</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w"> </span><span class="c1">// Already current version</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Test migrations with real data</strong>
+   <div class="highlight"><pre><span></span><code><span class="na">[Test]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">TestMigration_V1ToV2</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Create V1 data</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">v1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PlayerDataV1</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Test&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">versioned</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VersionedData</span><span class="o">&lt;</span><span class="n">PlayerDataV1</span><span class="o">&gt;</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Migrate to V2</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">v2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataVersioning</span><span class="p">.</span><span class="n">TryMigrate</span><span class="p">(</span><span class="n">versioned</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Migrator</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Verify migration</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="n">AreEqual</span><span class="p">(</span><span class="s">&quot;Test&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v2</span><span class="p">.</span><span class="n">name</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="n">AreEqual</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">v2</span><span class="p">.</span><span class="n">level</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="n">AreEqual</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="n">v2</span><span class="p">.</span><span class="n">experience</span><span class="p">);</span><span class="w"> </span><span class="c1">// Calculated field</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Log migration events</strong>
+   <div class="highlight"><pre><span></span><code><span class="c1">// The system automatically logs migrations</span>
+<span class="c1">// [DataVersioning] Migrating data from version 1 to 2</span>
+<span class="c1">// [DataVersioning] Successfully migrated data to version 2</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Keep old versions for reference</strong>
+   <div class="highlight"><pre><span></span><code><span class="c1">// Don&#39;t delete old data classes - keep for migration</span>
+<span class="na">[Serializable]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PlayerDataV1</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
+
+<span class="na">[Serializable]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PlayerDataV2</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
+
+<span class="c1">// Current version</span>
+<span class="na">[Serializable]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PlayerData</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div></p>
+</li>
+</ol>
+<h3 id="example-complete-versioning-workflow">Example: Complete Versioning Workflow<a class="headerlink" href="#example-complete-versioning-workflow" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SaveSystem</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">CURRENT_SAVE_VERSION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IDataSerializer</span><span class="w"> </span><span class="n">_serializer</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SaveGame</span><span class="p">(</span><span class="n">GameData</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Wrap with current version</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">versioned</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VersionedData</span><span class="o">&lt;</span><span class="n">GameData</span><span class="o">&gt;</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">CURRENT_SAVE_VERSION</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Serialize</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_serializer</span><span class="p">.</span><span class="n">Serialize</span><span class="p">(</span><span class="n">versioned</span><span class="p">);</span>
+<span class="w">        </span><span class="n">File</span><span class="p">.</span><span class="n">WriteAllText</span><span class="p">(</span><span class="n">savePath</span><span class="p">,</span><span class="w"> </span><span class="n">json</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">GameData</span><span class="w"> </span><span class="nf">LoadGame</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Load and deserialize</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span><span class="p">.</span><span class="n">ReadAllText</span><span class="p">(</span><span class="n">savePath</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">versioned</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_serializer</span><span class="p">.</span><span class="n">Deserialize</span><span class="o">&lt;</span><span class="n">VersionedData</span><span class="o">&lt;</span><span class="n">GameData</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Migrate if needed</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">migrated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataVersioning</span><span class="p">.</span><span class="n">TryMigrate</span><span class="p">(</span>
+<span class="w">            </span><span class="n">versioned</span><span class="p">,</span>
+<span class="w">            </span><span class="n">CURRENT_SAVE_VERSION</span><span class="p">,</span>
+<span class="w">            </span><span class="n">CreateGameDataMigrator</span><span class="p">()</span>
+<span class="w">        </span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">migrated</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&quot;Failed to load save - migration failed&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nf">GetDefaultGameData</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">migrated</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">Func</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="n">GameData</span><span class="p">,</span><span class="w"> </span><span class="n">GameData</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CreateGameDataMigrator</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">DataVersioning</span><span class="p">.</span><span class="n">ChainMigrations</span><span class="o">&lt;</span><span class="n">GameData</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">            </span><span class="n">MigrateV1ToV2</span><span class="p">,</span>
+<span class="w">            </span><span class="n">MigrateV2ToV3</span>
+<span class="w">        </span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<p>Common issues and solutions:
+- <code>ServiceNotFoundException</code>: Ensure <code>ImprovedGameInitializer</code> has run and the Serialization Service is enabled
+- <code>JsonSerializationException</code>: Check data model compatibility
+- <code>CryptographicException</code> / <code>FormatException</code>: Verify the encryption password/key is correct
+- <code>Invalid data</code>: Ensure data hasn't been corrupted
+- <code>Memory issues</code>: Consider chunking large datasets
+- <code>Migration failed</code>: Check migration logic and version numbers</p>
+<h2 id="version-history">Version History<a class="headerlink" href="#version-history" title="Permanent link">&para;</a></h2>
+<p>See <a href="../CHANGELOG/">CHANGELOG.md</a> for release history.</p>
+<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
+<p>The Serialization System is part of the LoL Engine framework and follows its licensing terms.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

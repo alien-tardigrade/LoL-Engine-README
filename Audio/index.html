@@ -1,0 +1,3928 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Modular Unity 6 game framework — audio, saves, events, localization, deterministic RNG, and more.">
+      
+      
+        <meta name="author" content="MooMoo Games">
+      
+      
+        <link rel="canonical" href="https://alien-tardigrade.github.io/LoL-Engine-README/Audio/">
+      
+      
+        <link rel="prev" href="../Events/">
+      
+      
+        <link rel="next" href="../AudioHelpers/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Audio - LoL Engine Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lol-engine-audio-system-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="LoL Engine Documentation" class="md-header__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LoL Engine Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Audio
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="LoL Engine Documentation" class="md-nav__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LoL Engine Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_QUICKSTART/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart (5 min)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Full Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-SERVICES-CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHEATSHEET-How-To-Use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceLocator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Locator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImprovedGameInitializer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Initializer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceDependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-minute-quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5-Minute Quick Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5-Minute Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#for-scene-background-music-most-common" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        For Scene Background Music (Most Common)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started-complete-setup-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started - Complete Setup Guide
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started - Complete Setup Guide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-initial-project-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Initial Project Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Initial Project Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-verify-lolengine-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Verify LoLEngine Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-create-audio-directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Create Audio Directory Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-audio-asset-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Audio Asset Preparation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Audio Asset Preparation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-import-audio-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Import Audio Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-configure-addressables-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Configure Addressables (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-audiomixer-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: AudioMixer Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: AudioMixer Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-create-audiomixer-asset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Create AudioMixer Asset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-expose-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Expose Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-make-audiomixer-addressable-critical" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Make AudioMixer Addressable (CRITICAL)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-service-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Service Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Service Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-enable-audio-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Enable Audio Services
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-understanding-audio-configuration-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Understanding Audio Configuration Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-create-aaa-audio-configuration-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Create AAA Audio Configuration Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-scene-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Scene Implementation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 5: Scene Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-add-audio-to-your-scene" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Add Audio to Your Scene
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-test-basic-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Test Basic Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Advanced Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6: Advanced Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-loading-screen-preloading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Loading Screen Preloading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-dynamic-music-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Dynamic Music Context
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aaa-audio-orchestrator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AAA Audio Orchestrator
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AAA Audio Orchestrator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audioorchestratorservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AudioOrchestratorService
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audio Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-audio-system-foundation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Audio System (Foundation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Audio System (Foundation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audioservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AudioService
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-interfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Interfaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-audio-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Audio Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aaa-orchestrator-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AAA Orchestrator Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advancedaudioplayer-and-audiopreloadmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AdvancedAudioPlayer and AudioPreloadManager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#randomized-playback-pitchvolume-jitter-variant-pools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Randomized Playback (pitch/volume jitter + variant pools)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime-sound-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime Sound Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#track-management-volume-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track Management &amp; Volume Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sound-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sound Limits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audioorchestratorservice-not-available" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "AudioOrchestratorService not available"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-not-found-using-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Config not found, using defaults"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sync-loading-warnings-still-appear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Sync loading warnings still appear"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-audio-playing-at-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "No audio playing at all"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automatic-scene-based-music-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Automatic scene-based music not working"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invalidkeyexception-no-location-found-for-keylolengineaudiomainaudiomixer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "InvalidKeyException: No Location found for Key=LoLEngine/Audio/MainAudioMixer"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invalidkeyexception-no-location-found-for-key-audio-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "InvalidKeyException: No Location found for Key" (Audio Assets)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-components-dont-show-in-component-menu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Audio components don't show in Component menu"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration Guide
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration Guide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setmusiccontext-return-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SetMusicContext Return Value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-legacy-audio-players" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Legacy Audio Players
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-core-audioservice-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Core AudioService Only
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AudioHelpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio Helpers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DataPersistence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Persistence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Serialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCALIZATION_MIGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization Migration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ResourceManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Input/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilities
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ObjectPool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Pool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TimeManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GameState/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HelperUtilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helper Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Logger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IL2CPP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IL2CPP & Code Stripping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-minute-quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5-Minute Quick Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5-Minute Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#for-scene-background-music-most-common" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        For Scene Background Music (Most Common)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started-complete-setup-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started - Complete Setup Guide
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started - Complete Setup Guide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-initial-project-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Initial Project Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Initial Project Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-verify-lolengine-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Verify LoLEngine Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-create-audio-directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Create Audio Directory Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-audio-asset-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Audio Asset Preparation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Audio Asset Preparation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-import-audio-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Import Audio Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-configure-addressables-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Configure Addressables (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-audiomixer-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: AudioMixer Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: AudioMixer Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-create-audiomixer-asset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Create AudioMixer Asset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-expose-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Expose Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-make-audiomixer-addressable-critical" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Make AudioMixer Addressable (CRITICAL)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-service-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Service Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Service Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-enable-audio-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Enable Audio Services
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-understanding-audio-configuration-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Understanding Audio Configuration Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-create-aaa-audio-configuration-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Create AAA Audio Configuration Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-scene-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Scene Implementation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 5: Scene Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-add-audio-to-your-scene" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Add Audio to Your Scene
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-test-basic-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Test Basic Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Advanced Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6: Advanced Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-loading-screen-preloading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Loading Screen Preloading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-dynamic-music-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Dynamic Music Context
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aaa-audio-orchestrator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AAA Audio Orchestrator
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AAA Audio Orchestrator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audioorchestratorservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AudioOrchestratorService
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audio Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-audio-system-foundation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Audio System (Foundation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Audio System (Foundation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audioservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AudioService
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-interfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Interfaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-audio-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Audio Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aaa-orchestrator-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AAA Orchestrator Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advancedaudioplayer-and-audiopreloadmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AdvancedAudioPlayer and AudioPreloadManager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#randomized-playback-pitchvolume-jitter-variant-pools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Randomized Playback (pitch/volume jitter + variant pools)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime-sound-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime Sound Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#track-management-volume-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track Management &amp; Volume Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sound-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sound Limits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audioorchestratorservice-not-available" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "AudioOrchestratorService not available"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-not-found-using-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Config not found, using defaults"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sync-loading-warnings-still-appear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Sync loading warnings still appear"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-audio-playing-at-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "No audio playing at all"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automatic-scene-based-music-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Automatic scene-based music not working"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invalidkeyexception-no-location-found-for-keylolengineaudiomainaudiomixer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "InvalidKeyException: No Location found for Key=LoLEngine/Audio/MainAudioMixer"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invalidkeyexception-no-location-found-for-key-audio-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "InvalidKeyException: No Location found for Key" (Audio Assets)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-components-dont-show-in-component-menu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Audio components don't show in Component menu"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration Guide
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Migration Guide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setmusiccontext-return-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SetMusicContext Return Value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-legacy-audio-players" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Legacy Audio Players
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-core-audioservice-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Core AudioService Only
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debug-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="lol-engine-audio-system-documentation">LoL Engine Audio System Documentation<a class="headerlink" href="#lol-engine-audio-system-documentation" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The LoL Engine Audio System provides a comprehensive, AAA-quality audio solution for Unity games. It features two tiers: a foundational <strong>Core Audio System</strong> for basic needs, and an advanced <strong>AAA Audio Orchestrator</strong> for professional-grade audio management with voice prioritization, ducking, and preloading.</p>
+<h2 id="5-minute-quick-start">5-Minute Quick Start<a class="headerlink" href="#5-minute-quick-start" title="Permanent link">&para;</a></h2>
+<h3 id="for-scene-background-music-most-common">For Scene Background Music (Most Common)<a class="headerlink" href="#for-scene-background-music-most-common" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Create AudioMixer</strong>:</li>
+<li>Right-click → Create → Audio → Audio Mixer → Name: "MainAudioMixer"</li>
+<li>Create groups: Master → Music, SFX, UI, Voice</li>
+<li>Expose parameters: MasterVolume, MusicVolume, SFXVolume, UIVolume, VoiceVolume</li>
+<li>
+<p><strong>CRITICAL: Mark as Addressable with address <code>LoLEngine/Audio/MainAudioMixer</code></strong></p>
+</li>
+<li>
+<p><strong>Enable Audio Services</strong> in your <code>ServiceConfiguration.asset</code>:</p>
+</li>
+<li>Enable Audio Service</li>
+<li>
+<p>Enable Audio Orchestrator</p>
+</li>
+<li>
+<p><strong>Add SimpleAudioPlayer to your scene</strong>:</p>
+</li>
+<li>Create empty GameObject → Add Component → LoLEngine → Helpers → Simple Audio Player</li>
+<li>
+<p>Configure:</p>
+<ul>
+<li>Audio Id: "Audio/Music/MainMenuTheme"</li>
+<li>Track Name: "Music"</li>
+<li>Volume: 0.7</li>
+<li>Loop:</li>
+<li>Play On Start:</li>
+<li>Fade In Duration: 1.5</li>
+</ul>
+</li>
+<li>
+<p><strong>Test</strong>: Press Play - your scene should play the background music!</p>
+</li>
+</ol>
+<p><strong>Notes:</strong>
+- You do NOT need to create AudioConfig - the engine handles it automatically
+- AudioMixer MUST be Addressable or in Resources folder for the engine to find it</p>
+<hr />
+<h2 id="getting-started-complete-setup-guide">Getting Started - Complete Setup Guide<a class="headerlink" href="#getting-started-complete-setup-guide" title="Permanent link">&para;</a></h2>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
+<ul>
+<li>LoL Engine package installed in your Unity project</li>
+<li>Unity 6000.0+ (recommended)</li>
+<li>Basic familiarity with Unity's Inspector and Project window</li>
+</ul>
+<h3 id="step-1-initial-project-setup">Step 1: Initial Project Setup<a class="headerlink" href="#step-1-initial-project-setup" title="Permanent link">&para;</a></h3>
+<h4 id="11-verify-lolengine-installation">1.1 Verify LoLEngine Installation<a class="headerlink" href="#11-verify-lolengine-installation" title="Permanent link">&para;</a></h4>
+<p>Ensure you have LoLEngine properly set up:
+1. Check that <code>ServiceLocator</code> and basic services are initialized
+2. Verify you have a <code>ServiceConfiguration</code> asset in your project
+3. Confirm LoLEngine assemblies are compiled without errors</p>
+<h4 id="12-create-audio-directory-structure">1.2 Create Audio Directory Structure<a class="headerlink" href="#12-create-audio-directory-structure" title="Permanent link">&para;</a></h4>
+<p>Create the following folder structure for organization:
+<div class="highlight"><pre><span></span><code>Assets/
+├── Audio/
+│   ├── Music/
+│   ├── SFX/
+│   ├── UI/
+│   └── Voice/
+└── Resources/
+    └── Configs/
+        └── Audio/
+</code></pre></div></p>
+<h3 id="step-2-audio-asset-preparation">Step 2: Audio Asset Preparation<a class="headerlink" href="#step-2-audio-asset-preparation" title="Permanent link">&para;</a></h3>
+<h4 id="21-import-audio-files">2.1 Import Audio Files<a class="headerlink" href="#21-import-audio-files" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Import your audio files into the appropriate folders:</li>
+<li><strong>Music</strong>: Background music, ambient tracks</li>
+<li><strong>SFX</strong>: Sound effects, impact sounds</li>
+<li><strong>UI</strong>: Button clicks, notifications</li>
+<li><strong>Voice</strong>: Dialog, narration</li>
+</ol>
+<h4 id="22-configure-addressables-recommended">2.2 Configure Addressables (Recommended)<a class="headerlink" href="#22-configure-addressables-recommended" title="Permanent link">&para;</a></h4>
+<p>For better performance and memory management:</p>
+<ol>
+<li><strong>Enable Addressables:</strong></li>
+<li>Window → Asset Management → Addressables → Groups</li>
+<li>
+<p>Click "Create Addressables Settings" if needed</p>
+</li>
+<li>
+<p><strong>Mark Audio as Addressable:</strong></p>
+</li>
+<li>Select audio files in Project window</li>
+<li>Check "Addressable" in Inspector</li>
+<li>Set addresses following pattern: <code>Audio/Category/FileName</code></li>
+<li>
+<p>Example: <code>Audio/Music/MainMenuTheme</code>, <code>Audio/SFX/ButtonClick</code></p>
+</li>
+<li>
+<p><strong>Create Audio Groups:</strong></p>
+</li>
+<li>In Addressables Groups window, create groups:<ul>
+<li><code>Audio_Music</code> (for background music)</li>
+<li><code>Audio_SFX</code> (for sound effects)</li>
+<li><code>Audio_Critical</code> (for UI and essential sounds)</li>
+</ul>
+</li>
+</ol>
+<h3 id="step-3-audiomixer-setup">Step 3: AudioMixer Setup<a class="headerlink" href="#step-3-audiomixer-setup" title="Permanent link">&para;</a></h3>
+<h4 id="31-create-audiomixer-asset">3.1 Create AudioMixer Asset<a class="headerlink" href="#31-create-audiomixer-asset" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Right-click in Project → Create → Audio → Audio Mixer</li>
+<li>Name it <code>MainAudioMixer</code></li>
+<li>Create groups structure:
+   <div class="highlight"><pre><span></span><code>Master
+├── Music
+├── SFX
+├── UI
+└── Voice
+</code></pre></div></li>
+</ol>
+<h4 id="32-expose-parameters">3.2 Expose Parameters<a class="headerlink" href="#32-expose-parameters" title="Permanent link">&para;</a></h4>
+<p>For each group, expose volume parameters:
+1. Right-click group → "Expose... to script"
+2. Rename exposed parameters in Audio Mixer window:
+   - <code>MasterVolume</code>
+   - <code>MusicVolume</code>
+   - <code>SFXVolume</code>
+   - <code>UIVolume</code>
+   - <code>VoiceVolume</code></p>
+<h4 id="33-make-audiomixer-addressable-critical">3.3 Make AudioMixer Addressable (CRITICAL)<a class="headerlink" href="#33-make-audiomixer-addressable-critical" title="Permanent link">&para;</a></h4>
+<p><strong>IMPORTANT: The AudioMixer MUST be Addressable for the engine to load it.</strong></p>
+<ol>
+<li><strong>Select</strong> <code>MainAudioMixer</code> asset in Project window</li>
+<li><strong>Check</strong> "Addressable" checkbox in Inspector (top of window)</li>
+<li><strong>Set address</strong> to: <code>LoLEngine/Audio/MainAudioMixer</code></li>
+<li><strong>Save</strong> the changes</li>
+</ol>
+<p><strong>Alternative (Resources fallback):</strong>
+If not using Addressables, place the AudioMixer at:
+- Path: <code>Assets/Resources/LoLEngine/Audio/MainAudioMixer.mixer</code>
+- The engine will automatically fallback to Resources loading</p>
+<h3 id="step-4-service-configuration">Step 4: Service Configuration<a class="headerlink" href="#step-4-service-configuration" title="Permanent link">&para;</a></h3>
+<h4 id="41-enable-audio-services">4.1 Enable Audio Services<a class="headerlink" href="#41-enable-audio-services" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Locate your <code>ServiceConfiguration</code> asset (usually in <code>Assets/Resources/Configs/</code>)</li>
+<li>In the Inspector, ensure these are enabled:</li>
+<li><strong>Enable Audio Service</strong> (required foundation)</li>
+<li><strong>Enable Audio Orchestrator</strong> (AAA features)</li>
+</ol>
+<h4 id="42-understanding-audio-configuration-architecture">4.2 Understanding Audio Configuration Architecture<a class="headerlink" href="#42-understanding-audio-configuration-architecture" title="Permanent link">&para;</a></h4>
+<p><strong>IMPORTANT: Volume Control Hierarchy</strong></p>
+<p>The LoLEngine audio system has a clear hierarchy for volume control:</p>
+<ol>
+<li><strong>AudioMixer</strong> (Unity built-in) - <strong>PRIMARY RUNTIME VOLUME CONTROL</strong></li>
+<li>Exposed parameters control actual playback volumes</li>
+<li>Set design-time defaults directly in the mixer asset</li>
+<li>Runtime changes via <code>audioService.SetTrackVolume()</code> write to mixer parameters</li>
+<li>
+<p>Player preferences are persisted to PlayerPrefs and restored on startup</p>
+</li>
+<li>
+<p><strong>AudioPriorityConfig</strong> (AAA Orchestrator) - <strong>VOICE MANAGEMENT &amp; DUCKING</strong></p>
+</li>
+<li>Controls max concurrent sounds per category</li>
+<li>Voice stealing policies (Oldest, Quietest, Lowest Priority)</li>
+<li>Audio ducking rules and duck amounts</li>
+<li>
+<p>Platform-specific performance overrides</p>
+</li>
+<li>
+<p><strong>~~AudioConfig~~</strong> (Legacy, NOT NEEDED for AAA setup)</p>
+</li>
+<li>Do NOT create this for AAA AudioOrchestratorService</li>
+<li>Only used by basic AudioService if you're not using the orchestrator</li>
+<li>Engine creates sensible defaults automatically if needed</li>
+<li>Volume settings in AudioConfig are overridden by AudioMixer anyway</li>
+</ol>
+<p><strong>What You Actually Need for AAA Setup:</strong>
+- AudioMixer (Step 3) - Volume control and routing
+- AudioPriorityConfig (below) - Voice limits and ducking
+- AudioPreloadProfile (below) - Critical audio preloading
+- MusicMapConfig asset (optional, below) - Scene/context music mappings
+- AudioConfig - NOT needed, engine provides defaults</p>
+<h4 id="43-create-aaa-audio-configuration-assets">4.3 Create AAA Audio Configuration Assets<a class="headerlink" href="#43-create-aaa-audio-configuration-assets" title="Permanent link">&para;</a></h4>
+<p><strong>Create AudioPriorityConfig (REQUIRED for AAA features):</strong>
+1. Right-click in Project → Create → LoLEngine → Audio → Audio Priority Config
+2. Name: <code>AudioPriorityConfig</code>
+3. Location: <code>Assets/LoLEngine/Runtime/Resources/Configs/Audio/AudioPriorityConfig.asset</code>
+4. Configure category rules:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Priority</th>
+<th>Max Voices</th>
+<th>Steal Policy</th>
+<th>Allow Ducking</th>
+<th>Duck Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Music</td>
+<td>64</td>
+<td>2</td>
+<td>Oldest</td>
+<td>Yes</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td>SFX</td>
+<td>128</td>
+<td>16</td>
+<td>Lowest Priority</td>
+<td>No</td>
+<td>0.7</td>
+</tr>
+<tr>
+<td>UI</td>
+<td>255</td>
+<td>4</td>
+<td>None</td>
+<td>No</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Voice</td>
+<td>200</td>
+<td>3</td>
+<td>Oldest</td>
+<td>No</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Ambient</td>
+<td>32</td>
+<td>8</td>
+<td>Quietest</td>
+<td>Yes</td>
+<td>0.2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Field Explanations:</strong>
+- <strong>Priority</strong>: Higher = more important (0-255, where 255 = critical, won't be stolen)
+- <strong>Max Voices</strong>: Maximum concurrent sounds in this category (-1 = unlimited, not recommended)
+- <strong>Steal Policy</strong>: What to stop when limit reached (Oldest/Quietest/Lowest Priority/None)
+- <strong>Allow Ducking</strong>: Can this category's volume be reduced when high-priority audio plays?
+- <strong>Duck Amount</strong>: Volume multiplier when ducked (0.3 = reduce to 30% volume)</p>
+<p><strong>Create AudioPreloadProfile (RECOMMENDED for performance):</strong>
+1. Right-click in Project → Create → LoLEngine → Audio → Audio Preload Profile
+2. Name: <code>DefaultPreloadProfile</code>
+3. Location: <code>Assets/LoLEngine/Runtime/Resources/Configs/Audio/AudioPreloadProfile.asset</code>
+4. Add critical audio IDs by priority:
+   - <strong>Emergency Priority</strong>: UI sounds, error alerts (must load instantly)
+   - <strong>Important Priority</strong>: Menu music, player action sounds
+   - <strong>Normal Priority</strong>: Ambient sounds, optional audio
+5. Set memory budget and loading constraints:
+   - <strong>Memory Budget MB</strong>: 50-100 MB for mobile, 200+ MB for PC/console
+   - <strong>Max Concurrent Loads</strong>: 4-8 depending on platform
+   - <strong>Loading Timeout</strong>: 5-10 seconds</p>
+<p><strong>Create MusicMapConfig (OPTIONAL for scene/context music mappings):</strong>
+1. Right-click in Project → Create → LoLEngine → Audio → Music Map Config
+2. Name: <code>GameMusicMapConfig</code>
+3. Location: <code>Assets/Resources/Configs/GameMusicMapConfig.asset</code> (in your game project, not LoLEngine)
+4. Add scene mappings:</p>
+<table>
+<thead>
+<tr>
+<th>Scene Name</th>
+<th>Audio ID</th>
+<th>Crossfade Duration</th>
+<th>Play On Load</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MainMenu</td>
+<td>Audio/Music/MainMenuTheme</td>
+<td>2.0</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>GameLevel</td>
+<td>Audio/Music/GameplayTheme</td>
+<td>3.0</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Combat</td>
+<td>Audio/Music/CombatTheme</td>
+<td>1.5</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Add context mappings for dynamic music (optional):</li>
+<li>Context ID: "Combat", Audio ID: "Audio/Music/BattleIntense"</li>
+<li>Context ID: "Exploration", Audio ID: "Audio/Music/AmbientCalm"</li>
+<li>Context ID: "BossFight", Audio ID: "Audio/Music/BossTheme"</li>
+</ol>
+<p><strong>Note:</strong> <code>MusicMapConfig</code> requires custom code to use. See "Automatic scene-based music" in Troubleshooting section.</p>
+<h3 id="step-5-scene-implementation">Step 5: Scene Implementation<a class="headerlink" href="#step-5-scene-implementation" title="Permanent link">&para;</a></h3>
+<h4 id="51-add-audio-to-your-scene">5.1 Add Audio to Your Scene<a class="headerlink" href="#51-add-audio-to-your-scene" title="Permanent link">&para;</a></h4>
+<p><strong>For Background Music:</strong>
+1. Create an empty GameObject named "AudioManager"
+2. Add Component → LoLEngine → Helpers → Simple Audio Player
+3. Configure in Inspector:
+   - <strong>Audio Id</strong>: <code>Audio/Music/MainMenuTheme</code>
+   - <strong>Track Name</strong>: <code>Music</code>
+   - <strong>Volume</strong>: <code>0.7</code>
+   - <strong>Loop</strong>:
+   - <strong>Fade In Duration</strong>: <code>1.5</code>
+   - <strong>Play On Start</strong>:</p>
+<p><strong>For Interactive Audio:</strong>
+1. Select UI buttons or interactive objects
+2. Add Component → LoLEngine → Helpers → Simple Audio Player
+3. Configure for UI sounds:
+   - <strong>Audio Id</strong>: <code>Audio/UI/ButtonClick</code>
+   - <strong>Track Name</strong>: <code>UI</code>
+   - <strong>Play On Start</strong>: (trigger manually)</p>
+<h4 id="52-test-basic-setup">5.2 Test Basic Setup<a class="headerlink" href="#52-test-basic-setup" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Press Play in Unity Editor</li>
+<li>Verify you see in Console: <code>"AudioOrchestratorService initialized successfully"</code></li>
+<li>Music should play without "Synchronous loading" warnings</li>
+<li>Test UI interactions trigger appropriate sounds</li>
+</ol>
+<h3 id="step-6-advanced-features">Step 6: Advanced Features<a class="headerlink" href="#step-6-advanced-features" title="Permanent link">&para;</a></h3>
+<h4 id="61-loading-screen-preloading">6.1 Loading Screen Preloading<a class="headerlink" href="#61-loading-screen-preloading" title="Permanent link">&para;</a></h4>
+<p>For better performance during gameplay:</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">GameLoader</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">AudioPreloadProfile</span><span class="w"> </span><span class="n">gameplayProfile</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">orchestrator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAudioOrchestratorService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">orchestrator</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">gameplayProfile</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">await</span><span class="w"> </span><span class="n">orchestrator</span><span class="p">.</span><span class="n">PreloadProfile</span><span class="p">(</span><span class="n">gameplayProfile</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Critical audio preloaded for instant playback&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Continue with scene loading...</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="62-dynamic-music-context">6.2 Dynamic Music Context<a class="headerlink" href="#62-dynamic-music-context" title="Permanent link">&para;</a></h4>
+<p>For context-sensitive music:</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">GameStateManager</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IAudioOrchestratorService</span><span class="w"> </span><span class="n">orchestrator</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">orchestrator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAudioOrchestratorService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnCombatStart</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">orchestrator</span><span class="o">?.</span><span class="n">SetMusicContext</span><span class="p">(</span><span class="s">&quot;Combat&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SceneManager</span><span class="p">.</span><span class="n">GetActiveScene</span><span class="p">().</span><span class="n">name</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnCombatEnd</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">orchestrator</span><span class="o">?.</span><span class="n">SetMusicContext</span><span class="p">(</span><span class="s">&quot;Exploration&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SceneManager</span><span class="p">.</span><span class="n">GetActiveScene</span><span class="p">().</span><span class="n">name</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>graph TD
+    A[AudioOrchestratorService] --&gt; B[IAudioService - Core]
+    A --&gt; C[Voice Management]
+    A --&gt; D[Audio Ducking]
+    A --&gt; E[Preloading System]
+    A --&gt; F[Configuration System]
+
+    B --&gt; G[Track Management]
+    B --&gt; H[AudioMixer Integration]
+    B --&gt; I[Audio Source Pooling]
+    B --&gt; J[Resource Loading]
+
+    K[SimpleAudioPlayer] --&gt; A
+    L[AdvancedAudioPlayer] --&gt; A
+    M[AudioPreloadManager] --&gt; E
+
+    F --&gt; N[AudioPriorityConfig]
+    F --&gt; O[MusicMapConfig]
+    F --&gt; P[AudioPreloadProfile]
+</code></pre></div>
+<h2 id="core-components">Core Components<a class="headerlink" href="#core-components" title="Permanent link">&para;</a></h2>
+<h3 id="aaa-audio-orchestrator">AAA Audio Orchestrator<a class="headerlink" href="#aaa-audio-orchestrator" title="Permanent link">&para;</a></h3>
+<h4 id="audioorchestratorservice">AudioOrchestratorService<a class="headerlink" href="#audioorchestratorservice" title="Permanent link">&para;</a></h4>
+<p>Advanced audio service implementing ILoLEngineService with:
+- <strong>Priority-based voice management</strong> with intelligent stealing policies
+- <strong>Automatic audio ducking</strong> and mixer snapshot transitions
+- <strong>Context-aware music system</strong> with seamless crossfading
+- <strong>Smart preloading</strong> with memory management for instant critical audio playback
+- <strong>Platform-specific optimizations</strong> for mobile, console, and PC builds</p>
+<h4 id="audio-components">Audio Components<a class="headerlink" href="#audio-components" title="Permanent link">&para;</a></h4>
+<p><strong>SimpleAudioPlayer</strong> - Simple drop-in component for audio playback
+- Inspector-friendly configuration for one audio ID
+- Supports volume, looping, fade in/out, track name, play-on-start, and stop-on-disable
+- Good for scene background music, ambience, and simple UI sounds
+- Uses <code>IAudioService</code> through the service locator</p>
+<p><strong>AdvancedAudioPlayer</strong> - Full-featured component
+- Smart loading strategies (Always Async/Sync, PreloadThenSync, Smart)
+- AAA performance settings with priority levels and loading timeouts
+- Memory management integration with AudioPreloadManager</p>
+<p><strong>AudioPreloadManager</strong> - Singleton preloading manager
+- Batch preloading with progress reporting for loading screens
+- Automatic cleanup of unused preloaded assets
+- Memory usage tracking and optimization</p>
+<h3 id="core-audio-system-foundation">Core Audio System (Foundation)<a class="headerlink" href="#core-audio-system-foundation" title="Permanent link">&para;</a></h3>
+<h4 id="audioservice">AudioService<a class="headerlink" href="#audioservice" title="Permanent link">&para;</a></h4>
+<p>The foundational audio service (<code>IAudioService</code>) that handles:
+- <strong>Track-based organization</strong> (Music, SFX, UI, Voice)
+- <strong>Unity AudioMixer integration</strong> with parameter validation
+- <strong>Audio source pooling</strong> for performance optimization
+- <strong>Resource loading</strong> via ResourceService (Addressables/Resources)
+- <strong>Settings persistence</strong> using PlayerPrefs</p>
+<h4 id="key-interfaces">Key Interfaces<a class="headerlink" href="#key-interfaces" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong><code>IAudioService</code></strong> - Core audio operations interface</li>
+<li><strong><code>IAudioHandle</code></strong> - Active sound instance control interface</li>
+<li><strong><code>AudioTrack</code></strong> - Sound category representation</li>
+<li><strong><code>PlayOptions</code></strong> - Detailed playback parameter specification</li>
+</ul>
+<h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">&para;</a></h2>
+<h3 id="basic-audio-operations">Basic Audio Operations<a class="headerlink" href="#basic-audio-operations" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Get audio service</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">audioService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAudioService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="c1">// Simple sound effect</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">PlaySound</span><span class="p">(</span><span class="s">&quot;Audio/SFX/Explosion&quot;</span><span class="p">);</span>
+
+<span class="c1">// 3D positioned sound</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">handle3D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">PlaySoundAtPosition</span><span class="p">(</span><span class="s">&quot;Audio/SFX/Footstep&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">);</span>
+
+<span class="c1">// Advanced playback with options</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PlayOptions</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">volume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">,</span>
+<span class="w">    </span><span class="n">pitch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.2f</span><span class="p">,</span>
+<span class="w">    </span><span class="n">loop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">,</span>
+<span class="w">    </span><span class="n">track</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;SFX&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">fadeIn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span>
+<span class="p">};</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">advancedHandle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">PlaySound</span><span class="p">(</span><span class="s">&quot;Audio/Ambient/Wind&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="aaa-orchestrator-usage">AAA Orchestrator Usage<a class="headerlink" href="#aaa-orchestrator-usage" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Get orchestrator service</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">orchestrator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAudioOrchestratorService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="c1">// Play music with crossfading</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">musicOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MusicOptions</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Volume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Loop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<span class="w">    </span><span class="n">CrossfadeDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2f</span>
+<span class="p">};</span>
+<span class="k">await</span><span class="w"> </span><span class="n">orchestrator</span><span class="p">.</span><span class="n">PlayMusic</span><span class="p">(</span><span class="s">&quot;Audio/Music/CombatTheme&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">musicOptions</span><span class="p">);</span>
+
+<span class="c1">// Play SFX with priority</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">sfxOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SfxOptions</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AudioCategory</span><span class="p">.</span><span class="n">SFX</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Priority</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AudioPriority</span><span class="p">.</span><span class="n">Critical</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Volume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1f</span>
+<span class="p">};</span>
+<span class="k">await</span><span class="w"> </span><span class="n">orchestrator</span><span class="p">.</span><span class="n">PlaySfx</span><span class="p">(</span><span class="s">&quot;Audio/Weapons/Gunshot&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sfxOptions</span><span class="p">);</span>
+
+<span class="c1">// Context-aware music switching</span>
+<span class="k">await</span><span class="w"> </span><span class="n">orchestrator</span><span class="p">.</span><span class="n">SetMusicContext</span><span class="p">(</span><span class="s">&quot;Combat&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SceneManager</span><span class="p">.</span><span class="n">GetActiveScene</span><span class="p">().</span><span class="n">name</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="advancedaudioplayer-and-audiopreloadmanager">AdvancedAudioPlayer and AudioPreloadManager<a class="headerlink" href="#advancedaudioplayer-and-audiopreloadmanager" title="Permanent link">&para;</a></h3>
+<p>Optional MonoBehaviour helpers in <code>LoLEngine.Helpers.Audio</code> for priority-based loading and batch preloading. Enable <strong>Audio Orchestrator</strong> in <code>ServiceConfiguration</code> for full voice-management features; these helpers work with <code>IAudioService</code> directly.</p>
+<p><strong>Components:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AdvancedAudioPlayer</code></td>
+<td>Per-GameObject playback with priority, loading strategy, preload-on-start</td>
+</tr>
+<tr>
+<td><code>AudioPreloadManager</code></td>
+<td>Scene singleton for batch preloading during loading screens</td>
+</tr>
+<tr>
+<td><code>AudioPriority</code> / <code>AudioLoadingStrategy</code></td>
+<td>Priority levels and sync/async loading modes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Quick setup:</strong></p>
+<ol>
+<li>Add <code>AudioPreloadManager</code> to your boot or loading scene (singleton, <code>DontDestroyOnLoad</code>).</li>
+<li>Configure preload groups in the Inspector (weapon SFX, UI clicks, etc.) with appropriate priority.</li>
+<li>Add <code>AdvancedAudioPlayer</code> to GameObjects; set <code>audioId</code>, priority, and loading strategy in the Inspector.</li>
+</ol>
+<p><strong>Loading screen batch preload:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">GameLoadingScreen</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">criticalAudio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="s">&quot;Audio/Weapons/PrimaryWeapon&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;Audio/Weapons/SecondaryWeapon&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;Audio/Player/Footsteps&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s">&quot;Audio/UI/CriticalAlerts&quot;</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="k">await</span><span class="w"> </span><span class="n">AudioPreloadManager</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">PreloadAudioBatchAsync</span><span class="p">(</span>
+<span class="w">            </span><span class="n">criticalAudio</span><span class="p">,</span>
+<span class="w">            </span><span class="n">AudioPriority</span><span class="p">.</span><span class="n">Critical</span><span class="p">,</span>
+<span class="w">            </span><span class="n">progress</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">UpdateProgressBar</span><span class="p">(</span><span class="n">progress</span><span class="p">));</span>
+
+<span class="w">        </span><span class="n">SceneManager</span><span class="p">.</span><span class="n">LoadScene</span><span class="p">(</span><span class="s">&quot;GameLevel&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Combat SFX (configure priority/strategy in Inspector, call from code):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">WeaponController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">AdvancedAudioPlayer</span><span class="w"> </span><span class="n">weaponFirePlayer</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">AdvancedAudioPlayer</span><span class="w"> </span><span class="n">reloadPlayer</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">FireWeapon</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">weaponFirePlayer</span><span class="p">.</span><span class="n">PlaySync</span><span class="p">();</span><span class="w"> </span><span class="c1">// instant when preloaded</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">StartReload</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">reloadPlayer</span><span class="p">.</span><span class="n">Play</span><span class="p">();</span><span class="w"> </span><span class="c1">// smart async loading</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Dynamic music via <code>SetAudioIdAsync</code>:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ChangeGameState</span><span class="p">(</span><span class="n">GameState</span><span class="w"> </span><span class="n">newState</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="n">musicId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newState</span><span class="w"> </span><span class="k">switch</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">GameState</span><span class="p">.</span><span class="n">Exploration</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;Audio/Music/Exploration&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">GameState</span><span class="p">.</span><span class="n">Combat</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;Audio/Music/Combat&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">GameState</span><span class="p">.</span><span class="n">Boss</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;Audio/Music/BossFight&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;Audio/Music/Ambient&quot;</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="n">musicPlayer</span><span class="p">.</span><span class="n">SetAudioIdAsync</span><span class="p">(</span><span class="n">musicId</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Priority and loading strategy:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Use case</th>
+<th>Loading strategy</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Emergency</td>
+<td>Must play instantly</td>
+<td>PreloadThenSync</td>
+<td>Death sounds, critical alerts</td>
+</tr>
+<tr>
+<td>Critical</td>
+<td>Near-instant playback</td>
+<td>PreloadThenSync or Smart</td>
+<td>Weapon fire, UI feedback</td>
+</tr>
+<tr>
+<td>Important</td>
+<td>Quick but not urgent</td>
+<td>Smart</td>
+<td>Combat music, key dialogue</td>
+</tr>
+<tr>
+<td>Normal</td>
+<td>Standard game audio</td>
+<td>Smart or AlwaysAsync</td>
+<td>Ambient SFX</td>
+</tr>
+<tr>
+<td>Background</td>
+<td>Can wait or skip</td>
+<td>AlwaysAsync</td>
+<td>Distant sounds</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Memory management:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Inspector: autoUnloadUnused + unloadDelay on AudioPreloadManager</span>
+<span class="n">AudioPreloadManager</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">UnloadAudio</span><span class="p">(</span><span class="s">&quot;Audio/Level1/SpecificSound&quot;</span><span class="p">);</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">stats</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AudioPreloadManager</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">GetStats</span><span class="p">();</span>
+<span class="c1">// stats.preloaded, stats.loading, stats.failed</span>
+</code></pre></div>
+<p><strong>Migrating from SimpleAudioPlayer:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">oldPlayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetComponent</span><span class="o">&lt;</span><span class="n">SimpleAudioPlayer</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">newPlayer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gameObject</span><span class="p">.</span><span class="n">AddComponent</span><span class="o">&lt;</span><span class="n">AdvancedAudioPlayer</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">newPlayer</span><span class="p">.</span><span class="n">SetAudioId</span><span class="p">(</span><span class="n">oldPlayer</span><span class="p">.</span><span class="n">CurrentAudioId</span><span class="p">);</span>
+<span class="c1">// Set priority, loadingStrategy, preloadOnStart in Inspector</span>
+<span class="n">Destroy</span><span class="p">(</span><span class="n">oldPlayer</span><span class="p">);</span>
+</code></pre></div>
+<p>For basic drop-in playback without priority/preloading, see <a href="../AudioHelpers/">AudioHelpers.md</a> (<code>SimpleAudioPlayer</code>).</p>
+<h3 id="randomized-playback-pitchvolume-jitter-variant-pools">Randomized Playback (pitch/volume jitter + variant pools)<a class="headerlink" href="#randomized-playback-pitchvolume-jitter-variant-pools" title="Permanent link">&para;</a></h3>
+<p>For actions that fire repeatedly — UI clicks, footsteps, low-impact SFX — playing the exact same clip at the exact same pitch sounds robotic. LoLEngine ships two composable primitives for this:</p>
+<ul>
+<li><strong><code>PlayRandomization</code></strong> — a serializable struct (min/max pitch, min/max volume, <code>avoidImmediateRepeat</code>) with <code>Default</code> (light jitter) and <code>None</code> (no jitter) presets.</li>
+<li><strong><code>RandomAudioPool</code></strong> — a small stateful picker over a <code>string[]</code> of audio IDs. Remembers its last pick so successive <code>Pick</code> calls can avoid immediate repeats.</li>
+</ul>
+<p>Both are in <code>LoLEngine.Core.Audio.Data</code>. The entry points are extension methods on <code>IAudioService</code> in <code>LoLEngine.Core.Audio.Extensions.AudioExtensions</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Audio.Data</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Audio.Extensions</span><span class="p">;</span>
+
+<span class="c1">// --- Single id with jitter ---</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">baseOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PlayOptions</span><span class="p">.</span><span class="n">Default</span><span class="p">;</span>
+<span class="n">baseOptions</span><span class="p">.</span><span class="n">track</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;UI&quot;</span><span class="p">);</span>
+<span class="k">await</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">PlayRandomAsync</span><span class="p">(</span><span class="s">&quot;sfx_ui_click&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">baseOptions</span><span class="p">,</span><span class="w"> </span><span class="n">PlayRandomization</span><span class="p">.</span><span class="n">Default</span><span class="p">);</span>
+
+<span class="c1">// --- Variant pool (no-immediate-repeat) ---</span>
+<span class="c1">// Build the pool ONCE (it holds the _lastIndex state across calls)</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">clickPool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RandomAudioPool</span><span class="p">(</span><span class="k">new</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;sfx_ui_click_a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sfx_ui_click_b&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sfx_ui_click_c&quot;</span><span class="w"> </span><span class="p">});</span>
+
+<span class="c1">// Then each click — pool is reused, jitter re-rolled every call</span>
+<span class="k">await</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">PlayRandomAsync</span><span class="p">(</span><span class="n">clickPool</span><span class="p">,</span><span class="w"> </span><span class="n">baseOptions</span><span class="p">,</span><span class="w"> </span><span class="n">PlayRandomization</span><span class="p">.</span><span class="n">Default</span><span class="p">);</span>
+
+<span class="c1">// --- Pure helper: just roll new pitch/volume without playing ---</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">jittered</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">baseOptions</span><span class="p">.</span><span class="n">WithRandomization</span><span class="p">(</span><span class="n">PlayRandomization</span><span class="p">.</span><span class="n">Default</span><span class="p">);</span>
+<span class="n">audioService</span><span class="p">.</span><span class="n">PlaySound</span><span class="p">(</span><span class="s">&quot;some_id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">jittered</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>When to use which overload:</strong>
+- <code>PlayRandomAsync(string, ...)</code> — single clip, just add pitch/volume variance. No pool state needed.
+- <code>PlayRandomAsync(RandomAudioPool, ...)</code> — you have 2+ variant clips and want no-immediate-repeat selection. <strong>Hold the <code>RandomAudioPool</code> as a field</strong> so the repeat-avoidance state persists across calls.
+- <code>PlayOptions.WithRandomization(in PlayRandomization)</code> — escape hatch when you want the jitter applied to options but plan to play through a different path (e.g. <code>PlaySoundAtPosition</code>).</p>
+<p><strong>Important design notes:</strong>
+- Neither <code>IAudioService</code> nor <code>AudioService</code> were modified. These are extension methods that compose <code>PlaySoundAsync</code> — you can still use every existing audio API without change.
+- The extensions return <code>Task&lt;IAudioHandle&gt;</code>, same as <code>PlaySoundAsync</code>. <strong>Fire-and-forget with <code>_ = task</code> will lose exceptions silently.</strong> Observe the task (see below) or <code>await</code> it.
+- <code>PlayRandomization</code> is a struct with sensible defaults; it's safe to call <code>PlayRandomization.Default</code> or <code>PlayRandomization.None</code> inline rather than caching one.
+- No cooldown/debounce is built in. If you need rate limiting (e.g., max 1 click sound per 50 ms), add it at the call site — it's unrelated to audio randomization.</p>
+<p><strong>Observing fire-and-forget tasks:</strong></p>
+<p>Because extensions return <code>Task</code>, any fault (missing audio ID, resource load failure) surfaces as an unobserved task exception unless you handle it. Use the <code>ObserveFault</code> extension in <code>AudioExtensions</code> — it attaches a zero-allocation fault observer that logs on <code>LogChannel.Custom1</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnButtonClicked</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">baseOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PlayOptions</span><span class="p">.</span><span class="n">Default</span><span class="p">;</span>
+<span class="w">    </span><span class="n">baseOptions</span><span class="p">.</span><span class="n">track</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;UI&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_audioService</span><span class="p">.</span><span class="n">PlayRandomAsync</span><span class="p">(</span><span class="n">_clickPool</span><span class="p">,</span><span class="w"> </span><span class="n">baseOptions</span><span class="p">,</span><span class="w"> </span><span class="n">_randomization</span><span class="p">);</span>
+<span class="w">    </span><span class="n">task</span><span class="p">.</span><span class="n">ObserveFault</span><span class="p">(</span><span class="s">&quot;[ButtonClickSfx]&quot;</span><span class="p">);</span><span class="w">  </span><span class="c1">// logs as &quot;[ButtonClickSfx] async audio failed: ...&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>ObserveFault</code> is safe to call with a null or already-completed task, handles the sync-completion path without allocating, and uses a static <code>ContinueWith</code> continuation (state-parameter overload) so there's no closure allocation per call — cheap enough for rapid UI input or held-key rotation.</p>
+<p>A complete consumer-side example (wiring the API to a Unity <code>Button</code> with task observation) lives in the Tangrams project at <code>Assets/Tangrams/Features/UI/Common/Scripts/ButtonClickSfx.cs</code>.</p>
+<p><strong>Rate limiting at the call site:</strong></p>
+<p>Randomization makes rapid playback <em>sound</em> less repetitive, but it does not <em>throttle</em> anything — if rotation input fires at frame rate, you'll get 60 jittered clicks per second. That's the caller's problem, not the engine's: the right cooldown value depends entirely on how the action is driven (held-key input vs. discrete step events vs. touch taps). Don't try to push this into the engine — three lines at the call site is correct:</p>
+<div class="highlight"><pre><span></span><code><span class="na">[SerializeField, Tooltip(&quot;Minimum unscaled seconds between plays. 0 disables throttling.&quot;)]</span>
+<span class="k">private</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">rotateSfxCooldownSeconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0f</span><span class="p">;</span>
+
+<span class="k">private</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">_lastRotateSfxTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float</span><span class="p">.</span><span class="n">NegativeInfinity</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">PlayRotate</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rotateSfxCooldownSeconds</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0f</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Time</span><span class="p">.</span><span class="n">unscaledTime</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">now</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">_lastRotateSfxTime</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">rotateSfxCooldownSeconds</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="n">_lastRotateSfxTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">now</span><span class="p">;</span><span class="w">   </span><span class="c1">// anchor on attempts, not successes</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">baseOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PlayOptions</span><span class="p">.</span><span class="n">Default</span><span class="p">;</span>
+<span class="w">    </span><span class="n">baseOptions</span><span class="p">.</span><span class="n">track</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;SFX&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">_audioService</span><span class="p">.</span><span class="n">PlayRandomAsync</span><span class="p">(</span><span class="n">_rotatePool</span><span class="p">,</span><span class="w"> </span><span class="n">baseOptions</span><span class="p">,</span><span class="w"> </span><span class="n">_rotateRandomization</span><span class="p">)</span>
+<span class="w">                 </span><span class="p">.</span><span class="n">ObserveFault</span><span class="p">(</span><span class="s">&quot;[PuzzleAudio]&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Why these specific choices matter:</strong>
+- <strong><code>Time.unscaledTime</code></strong>, not <code>Time.time</code> — so the throttle still fires during pause/slow-mo animations.
+- <strong>Default <code>0f</code> = disabled</strong> — safe to ship with the field added; behavior unchanged until a designer tunes it per action.
+- <strong>Timestamp updated inside the guard, not after the play call</strong> — anchors the window on <em>attempts</em>, so a caller that fires faster than the cooldown can't starve the window by perpetually resetting it from "just-missed" calls.
+- <strong>No throttle on Pick / Snap / Solved</strong> — picks are discrete grab-and-release events, snaps and solves are rare. Only continuous-input actions need this.</p>
+<p><strong>Starting value for tuning:</strong> ~50 ms (20 plays/sec max) is a reasonable anchor for rotation-style continuous input. Below ~30 ms it still sounds mashy even with pitch jitter; above ~100 ms you can hear the throttle kick in as "skipped" feedback. Adjust by ear. A live example of this pattern is in the Tangrams project at <code>Assets/Tangrams/Features/Puzzle/Scripts/PuzzleAudio.cs</code> (<code>PlayRotate</code>).</p>
+<h3 id="runtime-sound-control">Runtime Sound Control<a class="headerlink" href="#runtime-sound-control" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Control individual sounds</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">SetVolume</span><span class="p">(</span><span class="mf">0.5f</span><span class="p">);</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">SetPitch</span><span class="p">(</span><span class="mf">0.8f</span><span class="p">);</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">Pause</span><span class="p">();</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">Resume</span><span class="p">();</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">Stop</span><span class="p">();</span>
+
+<span class="c1">// Subscribe to events</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">OnComplete</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Sound finished!&quot;</span><span class="p">);</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">OnDestroyed</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Handle cleaned up&quot;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="track-management-volume-control">Track Management &amp; Volume Control<a class="headerlink" href="#track-management-volume-control" title="Permanent link">&para;</a></h3>
+<p><strong>Understanding Volume Control:</strong></p>
+<p>The audio system controls volume through <strong>AudioMixer exposed parameters</strong>. All volume changes write to the mixer, ensuring consistent audio routing and DSP processing.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Get audio service</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">audioService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAudioService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="c1">// Resolve tracks by name first — the volume/mute APIs take an AudioTrack</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">music</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;Music&quot;</span><span class="p">);</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">sfx</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;SFX&quot;</span><span class="p">);</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">ui</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;UI&quot;</span><span class="p">);</span>
+
+<span class="c1">// Set track volumes (writes to AudioMixer parameters)</span>
+<span class="n">audioService</span><span class="p">.</span><span class="n">SetTrackVolume</span><span class="p">(</span><span class="n">music</span><span class="p">,</span><span class="w"> </span><span class="mf">0.7f</span><span class="p">);</span><span class="w">      </span><span class="c1">// 70% volume</span>
+<span class="n">audioService</span><span class="p">.</span><span class="n">SetTrackVolume</span><span class="p">(</span><span class="n">sfx</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">);</span><span class="w">        </span><span class="c1">// 80% volume</span>
+<span class="n">audioService</span><span class="p">.</span><span class="n">SetTrackVolume</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span><span class="w">         </span><span class="c1">// 100% volume</span>
+
+<span class="c1">// Read current volume / mute state from the resolved track</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">musicVolume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">music</span><span class="p">.</span><span class="n">Volume</span><span class="p">;</span>
+
+<span class="c1">// Mute/unmute tracks</span>
+<span class="n">audioService</span><span class="p">.</span><span class="n">SetTrackMute</span><span class="p">(</span><span class="n">sfx</span><span class="p">,</span><span class="w"> </span><span class="k">true</span><span class="p">);</span><span class="w">          </span><span class="c1">// Mute sound effects</span>
+<span class="n">audioService</span><span class="p">.</span><span class="n">SetTrackMute</span><span class="p">(</span><span class="n">sfx</span><span class="p">,</span><span class="w"> </span><span class="k">false</span><span class="p">);</span><span class="w">         </span><span class="c1">// Unmute sound effects</span>
+
+<span class="c1">// Solo: play one sound exclusively on a track, then restore normal playback</span>
+<span class="n">audioService</span><span class="p">.</span><span class="n">PlaySolo</span><span class="p">(</span><span class="s">&quot;Audio/Music/CombatTheme&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">music</span><span class="p">);</span>
+<span class="n">audioService</span><span class="p">.</span><span class="n">EndSolo</span><span class="p">();</span>
+
+<span class="c1">// Check if a track is muted</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">isMuted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">music</span><span class="p">.</span><span class="n">Muted</span><span class="p">;</span>
+</code></pre></div>
+<p><strong>Volume Persistence:</strong></p>
+<p>Volume settings are automatically saved to PlayerPrefs and restored on startup:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Player changes music volume in settings menu</span>
+<span class="n">audioService</span><span class="p">.</span><span class="n">SetTrackVolume</span><span class="p">(</span><span class="n">audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;Music&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">);</span>
+
+<span class="c1">// Restart game</span>
+<span class="c1">// Volume is automatically restored to 0.5f</span>
+</code></pre></div>
+<p><strong>Creating a Settings Menu:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">AudioSettingsUI</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">Slider</span><span class="w"> </span><span class="n">masterVolumeSlider</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">Slider</span><span class="w"> </span><span class="n">musicVolumeSlider</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">Slider</span><span class="w"> </span><span class="n">sfxVolumeSlider</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IAudioService</span><span class="w"> </span><span class="n">audioService</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">audioService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAudioService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Load current volumes</span>
+<span class="w">        </span><span class="n">masterVolumeSlider</span><span class="p">.</span><span class="k">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;Master&quot;</span><span class="p">).</span><span class="n">Volume</span><span class="p">;</span>
+<span class="w">        </span><span class="n">musicVolumeSlider</span><span class="p">.</span><span class="k">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;Music&quot;</span><span class="p">).</span><span class="n">Volume</span><span class="p">;</span>
+<span class="w">        </span><span class="n">sfxVolumeSlider</span><span class="p">.</span><span class="k">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;SFX&quot;</span><span class="p">).</span><span class="n">Volume</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Hook up slider events</span>
+<span class="w">        </span><span class="n">masterVolumeSlider</span><span class="p">.</span><span class="n">onValueChanged</span><span class="p">.</span><span class="n">AddListener</span><span class="p">(</span><span class="n">OnMasterVolumeChanged</span><span class="p">);</span>
+<span class="w">        </span><span class="n">musicVolumeSlider</span><span class="p">.</span><span class="n">onValueChanged</span><span class="p">.</span><span class="n">AddListener</span><span class="p">(</span><span class="n">OnMusicVolumeChanged</span><span class="p">);</span>
+<span class="w">        </span><span class="n">sfxVolumeSlider</span><span class="p">.</span><span class="n">onValueChanged</span><span class="p">.</span><span class="n">AddListener</span><span class="p">(</span><span class="n">OnSFXVolumeChanged</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnMasterVolumeChanged</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">audioService</span><span class="p">.</span><span class="n">SetTrackVolume</span><span class="p">(</span><span class="n">audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;Master&quot;</span><span class="p">),</span><span class="w"> </span><span class="k">value</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnMusicVolumeChanged</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">audioService</span><span class="p">.</span><span class="n">SetTrackVolume</span><span class="p">(</span><span class="n">audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;Music&quot;</span><span class="p">),</span><span class="w"> </span><span class="k">value</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnSFXVolumeChanged</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">audioService</span><span class="p">.</span><span class="n">SetTrackVolume</span><span class="p">(</span><span class="n">audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;SFX&quot;</span><span class="p">),</span><span class="w"> </span><span class="k">value</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="performance-considerations">Performance Considerations<a class="headerlink" href="#performance-considerations" title="Permanent link">&para;</a></h2>
+<h3 id="sound-limits">Sound Limits<a class="headerlink" href="#sound-limits" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Configure max concurrent sounds per track to prevent audio overload</li>
+<li>Use audio source pooling to minimize allocation overhead</li>
+<li>Monitor active handle counts in development builds</li>
+</ul>
+<h3 id="memory-management">Memory Management<a class="headerlink" href="#memory-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Addressables automatically handles memory management</strong> for audio assets when enabled</li>
+<li>Large audio files benefit from Addressables' reference counting and streaming</li>
+<li>Proper cleanup of persistent handles</li>
+<li>Event subscription management to prevent memory leaks</li>
+</ul>
+<h3 id="cpu-performance">CPU Performance<a class="headerlink" href="#cpu-performance" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Cleanup operations run at configurable intervals</li>
+<li>Coroutine-based monitoring scales better than frame-based polling</li>
+<li>Event-driven architecture minimizes unnecessary updates</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="audioorchestratorservice-not-available">"AudioOrchestratorService not available"<a class="headerlink" href="#audioorchestratorservice-not-available" title="Permanent link">&para;</a></h3>
+<p><strong>Solutions:</strong>
+1. Check <code>ServiceConfiguration</code> asset has "Enable Audio Orchestrator"
+2. Ensure "Enable Audio Service" is also (orchestrator depends on it)
+3. Verify ServiceConfiguration is assigned in your scene's GameInitializer
+4. Check Console for initialization errors</p>
+<h3 id="config-not-found-using-defaults">"Config not found, using defaults"<a class="headerlink" href="#config-not-found-using-defaults" title="Permanent link">&para;</a></h3>
+<p><strong>Solutions:</strong>
+1. Create ScriptableObject assets using Unity's Create menu (not manual .asset files)
+2. Place in exact path: <code>Assets/LoLEngine/Runtime/Resources/Configs/Audio/</code>
+3. File names must match exactly: <code>AudioPriorityConfig.asset</code>, <code>MusicMapConfig.asset</code>
+4. Ensure .meta files are not corrupted</p>
+<h3 id="sync-loading-warnings-still-appear">"Sync loading warnings still appear"<a class="headerlink" href="#sync-loading-warnings-still-appear" title="Permanent link">&para;</a></h3>
+<p><strong>Solutions:</strong>
+1. Verify orchestrator is enabled AND initialized successfully
+2. Use <code>SimpleAudioPlayer</code> or <code>AdvancedAudioPlayer</code> instead of hand-written playback code
+3. For critical audio, add to <code>AudioPreloadProfile</code> and preload during loading screens
+4. Check audio files are properly marked as Addressable</p>
+<h3 id="no-audio-playing-at-all">"No audio playing at all"<a class="headerlink" href="#no-audio-playing-at-all" title="Permanent link">&para;</a></h3>
+<p><strong>Solutions:</strong>
+1. Verify AudioMixer is configured with required tracks and exposed parameters
+2. Check AudioMixer volume levels are not muted or set to -80dB
+3. Verify audio asset exists at specified audioId path
+4. Test with a simple audioId like "Audio/Music/TestClip"
+5. Check Addressables Groups window - ensure audio is marked as Addressable
+6. Verify speakers/headphones are connected and Unity audio is not muted</p>
+<h3 id="automatic-scene-based-music-not-working">"Automatic scene-based music not working"<a class="headerlink" href="#automatic-scene-based-music-not-working" title="Permanent link">&para;</a></h3>
+<p><strong>Note:</strong> There is no automatic scene-based music component. To use <code>MusicMapConfig</code> for automatic scene music, you must call <code>AudioOrchestratorService.SetMusicContext()</code> programmatically.</p>
+<p><strong>For Automatic Scene Music (Advanced):</strong>
+Create a script that loads music based on the scene:</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SceneMusicManager</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IAudioOrchestratorService</span><span class="w"> </span><span class="n">orchestrator</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">orchestrator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAudioOrchestratorService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">orchestrator</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">string</span><span class="w"> </span><span class="n">sceneName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SceneManager</span><span class="p">.</span><span class="n">GetActiveScene</span><span class="p">().</span><span class="n">name</span><span class="p">;</span>
+<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">orchestrator</span><span class="p">.</span><span class="n">SetMusicContext</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sceneName</span><span class="p">);</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">handle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogWarning</span><span class="p">(</span><span class="s">$&quot;Failed to load music for scene: {sceneName}&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>For Simple Scene Music (Recommended):</strong>
+Use <code>SimpleAudioPlayer</code> with manual Audio ID configuration per scene, or write a small scene script that calls <code>SetMusicContext()</code>.</p>
+<h3 id="invalidkeyexception-no-location-found-for-keylolengineaudiomainaudiomixer">"InvalidKeyException: No Location found for Key=LoLEngine/Audio/MainAudioMixer"<a class="headerlink" href="#invalidkeyexception-no-location-found-for-keylolengineaudiomainaudiomixer" title="Permanent link">&para;</a></h3>
+<p><strong>This error means the AudioMixer is not Addressable or not at the correct address:</strong></p>
+<p><strong>Solutions:</strong>
+1. <strong>Select your AudioMixer</strong> asset in Project window
+2. <strong>Check "Addressable"</strong> checkbox in Inspector
+3. <strong>Set address to</strong>: <code>LoLEngine/Audio/MainAudioMixer</code> (exactly)
+4. <strong>Alternative</strong>: Move AudioMixer to <code>Assets/Resources/LoLEngine/Audio/MainAudioMixer.mixer</code></p>
+<p><strong>Common mistake:</strong> Creating the AudioMixer but forgetting to mark it as Addressable. The engine requires either Addressables OR Resources folder placement.</p>
+<h3 id="invalidkeyexception-no-location-found-for-key-audio-assets">"InvalidKeyException: No Location found for Key" (Audio Assets)<a class="headerlink" href="#invalidkeyexception-no-location-found-for-key-audio-assets" title="Permanent link">&para;</a></h3>
+<p><strong>This error indicates invalid Addressable keys for audio files:</strong>
+<strong>Solutions:</strong>
+1. Check audio asset addresses match your code exactly (case-sensitive)
+2. Verify audio files are marked as Addressable in the Addressables Groups window
+3. For music files, ensure <code>MusicMapConfig</code> audio IDs match Addressable addresses
+4. Test with a simple path like "Audio/Music/TestClip" to verify Addressables is working
+5. Check Addressables Groups window → Default Local Group → ensure assets are listed</p>
+<h3 id="audio-components-dont-show-in-component-menu">"Audio components don't show in Component menu"<a class="headerlink" href="#audio-components-dont-show-in-component-menu" title="Permanent link">&para;</a></h3>
+<p><strong>Solutions:</strong>
+1. Check compilation errors in Console window
+2. Verify all scripts compiled successfully
+3. Try Unity → Assets → Refresh
+4. Restart Unity Editor if needed</p>
+<h2 id="migration-guide">Migration Guide<a class="headerlink" href="#migration-guide" title="Permanent link">&para;</a></h2>
+<h3 id="setmusiccontext-return-value">SetMusicContext Return Value<a class="headerlink" href="#setmusiccontext-return-value" title="Permanent link">&para;</a></h3>
+<p><code>AudioOrchestratorService.SetMusicContext</code> returns <code>Task&lt;IAudioHandle&gt;</code>, so callers can detect whether music actually loaded.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">orchestrator</span><span class="p">.</span><span class="n">SetMusicContext</span><span class="p">(</span><span class="s">&quot;Combat&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sceneName</span><span class="p">);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">handle</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Music loaded successfully&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogWarning</span><span class="p">(</span><span class="s">&quot;Music failed to load - implement fallback&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Benefits:</strong>
+- Proper error detection and handling
+- Enables intelligent fallback systems
+- Better debugging and monitoring capabilities</p>
+<h3 id="from-legacy-audio-players">From Legacy Audio Players<a class="headerlink" href="#from-legacy-audio-players" title="Permanent link">&para;</a></h3>
+<p>Replace existing audio components with:
+- <strong>SimpleAudioPlayer</strong> - For scene background music and simple audio playback
+- <strong>AdvancedAudioPlayer</strong> - For complex audio scenarios requiring advanced loading strategies and memory management
+- <strong>Custom Script</strong> - For <code>MusicMapConfig</code>-based automatic scene music (see "Automatic scene-based music" in Troubleshooting section)</p>
+<h3 id="from-core-audioservice-only">From Core AudioService Only<a class="headerlink" href="#from-core-audioservice-only" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Enable AudioOrchestrator in ServiceConfiguration</li>
+<li>Create configuration ScriptableObjects</li>
+<li>Optionally replace direct AudioService calls with orchestrator components</li>
+<li>Add preloading profiles for critical audio</li>
+</ol>
+<h2 id="debug-features">Debug Features<a class="headerlink" href="#debug-features" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Comprehensive logging through LoLLogger system</li>
+<li>Parameter validation during initialization</li>
+<li>Runtime handle monitoring and cleanup reporting</li>
+<li>Performance statistics via <code>GetPerformanceStats()</code></li>
+</ul>
+<p>This Audio System provides a comprehensive, robust, and performant solution for managing all aspects of game audio within the LoL Engine, designed with scalability, maintainability, and ease of use in mind.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

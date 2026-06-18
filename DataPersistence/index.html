@@ -1,0 +1,3052 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Modular Unity 6 game framework — audio, saves, events, localization, deterministic RNG, and more.">
+      
+      
+        <meta name="author" content="MooMoo Games">
+      
+      
+        <link rel="canonical" href="https://alien-tardigrade.github.io/LoL-Engine-README/DataPersistence/">
+      
+      
+        <link rel="prev" href="../AudioHelpers/">
+      
+      
+        <link rel="next" href="../Serialization/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Data Persistence - LoL Engine Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#data-persistence-system" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="LoL Engine Documentation" class="md-header__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LoL Engine Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Data Persistence
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="LoL Engine Documentation" class="md-nav__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LoL Engine Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_QUICKSTART/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart (5 min)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Full Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-SERVICES-CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHEATSHEET-How-To-Use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceLocator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Locator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImprovedGameInitializer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Initializer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceDependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AudioHelpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio Helpers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Persistence
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Persistence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overhaul-summary-and-how-to-use-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overhaul Summary and How To Use It
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overhaul Summary and How To Use It">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-steps-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup Steps (New)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-to-put-obfuscationencryption-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to Put Obfuscation/Encryption Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save-paths-and-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save Paths and Extensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#autosave-scene-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AutoSave Scene Filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-save-management-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Save Management API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atomic-writes-and-integrity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atomic Writes and Integrity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versioning-and-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versioning and Migration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-configure-and-initialize-the-save-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Configure and Initialize the Save System
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-define-data-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Define Data Classes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-register-and-use-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Register and Use Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#save-file-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save File Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#save-slots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save Slots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-save-iautosaveservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-Save (IAutoSaveService)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-save-iquicksaveservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Save (IQuickSaveService)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save-protection-obfuscation-and-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save Protection (Obfuscation and Encryption)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compression-icompressionservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression (ICompressionService)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event-system-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event System Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-with-other-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration with Other Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-complete-save-system-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Complete Save System Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Serialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCALIZATION_MIGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization Migration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ResourceManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Input/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilities
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ObjectPool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Pool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TimeManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GameState/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HelperUtilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helper Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Logger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IL2CPP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IL2CPP & Code Stripping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overhaul-summary-and-how-to-use-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overhaul Summary and How To Use It
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overhaul Summary and How To Use It">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-steps-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup Steps (New)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-to-put-obfuscationencryption-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to Put Obfuscation/Encryption Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save-paths-and-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save Paths and Extensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#autosave-scene-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AutoSave Scene Filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-save-management-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Save Management API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atomic-writes-and-integrity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atomic Writes and Integrity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versioning-and-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versioning and Migration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-configure-and-initialize-the-save-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Configure and Initialize the Save System
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-define-data-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Define Data Classes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-register-and-use-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Register and Use Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#save-file-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save File Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#save-slots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save Slots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-save-iautosaveservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-Save (IAutoSaveService)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-save-iquicksaveservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Save (IQuickSaveService)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save-protection-obfuscation-and-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save Protection (Obfuscation and Encryption)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compression-icompressionservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression (ICompressionService)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event-system-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event System Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-with-other-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration with Other Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-complete-save-system-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Complete Save System Implementation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="data-persistence-system">Data Persistence System<a class="headerlink" href="#data-persistence-system" title="Permanent link">&para;</a></h1>
+<p>A robust, configurable data persistence solution for Unity applications built with the LoL Engine framework.</p>
+<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<p><strong>IMPORTANT: Config Assets Must Be In Resources Folder</strong></p>
+<ol>
+<li><strong>Create LoLEngineConfig</strong> (Right-click → Create → LoLEngine → Config → LoLEngineConfig):</li>
+<li>Save at: <code>Assets/[YourProject]/Resources/Configs/DefaultLoLEngineConfig.asset</code></li>
+<li>
+<p>Configure: obfuscation (enabled by default), encryption (off by default), compression, save paths</p>
+</li>
+<li>
+<p><strong>Create SaveConfig</strong> (Right-click → Create → LoLEngine → Data Persistence → Save Configuration):</p>
+</li>
+<li>Save at: <code>Assets/[YourProject]/Resources/Configs/DefaultSaveConfig.asset</code></li>
+<li>
+<p>Configure: save slots, auto-save interval, quick-save settings</p>
+</li>
+<li>
+<p><strong>Enable Services</strong> in your <code>ServiceConfiguration.asset</code>:</p>
+</li>
+<li><code>Enable Data Persistence Service</code> (core save system)</li>
+<li><code>Enable Serialization Service</code> (required for JSON)</li>
+<li><code>Enable Compression Service</code> (if using compression)</li>
+<li><code>Enable Encryption Service</code> (if using encryption)</li>
+<li><code>Enable Auto Save Service</code> (optional, for auto-saving)</li>
+<li>
+<p><code>Enable Quick Save Service</code> (optional, for F5/F9 quick save)</p>
+</li>
+<li>
+<p><strong>Add ImprovedGameInitializer</strong> to your first scene and assign your <code>ServiceConfiguration</code></p>
+</li>
+</ol>
+<p>Basic usage:
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.DataPersistence.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+
+<span class="kt">var</span><span class="w"> </span><span class="n">saveSystem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ISaveSystem</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="c1">// Access or create data</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">saveSystem</span><span class="p">.</span><span class="n">GetData</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">player</span><span class="p">.</span><span class="n">PlayerName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hero&quot;</span><span class="p">;</span>
+<span class="n">player</span><span class="p">.</span><span class="n">Health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+
+<span class="c1">// Save/Load</span>
+<span class="n">saveSystem</span><span class="p">.</span><span class="n">SaveGame</span><span class="p">(</span><span class="s">&quot;save1&quot;</span><span class="p">);</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">saveSystem</span><span class="p">.</span><span class="n">LoadGame</span><span class="p">(</span><span class="s">&quot;save1&quot;</span><span class="p">);</span>
+</code></pre></div></p>
+<p>Note: This file reflects recent improvements to the Save System. It aligns with the current LoLEngine implementation: engine-wide compression/obfuscation/encryption live in LoLEngineConfig, AutoSave uses SaveConfig if present, saves use atomic writes, and the save management API is available.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The LoL Engine Data Persistence system provides a service-based approach to saving and loading game data. Built on the Service Locator pattern, it offers JSON serialization with optional compression and protection (obfuscation or encryption), plus an organized structure for managing persistent game data.</p>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Type-safe data persistence through <code>PersistableData</code> inheritance</li>
+<li>Multiple formats: JSON, JSON with obfuscation, or JSON with encryption</li>
+<li>Obfuscation for fast save protection (enabled by default)</li>
+<li>Optional compression to reduce save file sizes</li>
+<li>Optional encryption for sensitive game data (configured in <code>LoLEngineConfig</code>)</li>
+<li>Save slots for multiple save files</li>
+<li>Asynchronous operations for performance</li>
+<li>Events for save begin/complete (via <code>GameEvent</code>)</li>
+<li>Auto-save functionality</li>
+<li>Checksum stored with save container (validation available to call)</li>
+<li>Configuration via <code>LoLEngineConfig</code> (engine-wide compression/obfuscation/encryption, paths, extensions) and <code>SaveConfig</code> (game behavior for autosave/quicksave slots/intervals).</li>
+<li>Atomic save operations (writing to temporary files first) for enhanced data integrity.</li>
+<li>Data versioning support within save files.</li>
+<li>Checksum validation for save file integrity.</li>
+<li>Asynchronous operations by default for non-blocking save/loads.</li>
+</ul>
+<hr />
+<h2 id="overhaul-summary-and-how-to-use-it">Overhaul Summary and How To Use It<a class="headerlink" href="#overhaul-summary-and-how-to-use-it" title="Permanent link">&para;</a></h2>
+<p>The Save System received a major update. This section explains what changed and how to adopt it.</p>
+<h3 id="what-changed">What Changed<a class="headerlink" href="#what-changed" title="Permanent link">&para;</a></h3>
+<ul>
+<li>SECURITY: Removed committed encryption keys from the repository. Use environment variables or build-time injection for production keys.</li>
+<li>ARCHITECTURE: Consolidated configuration. Protection/compression now live in <code>LoLEngineConfig</code> (single source of truth). <code>SaveConfig</code> focuses on gameplay behavior (slots/intervals/toggles for auto/quick save).</li>
+<li>PRODUCTION PATHS: Saves now use <code>Application.persistentDataPath</code> for builds. Editor paths remain predictable for debugging.</li>
+<li>FLEXIBILITY: File extensions are resolved dynamically via <code>SaveSettings.GetFileExtension()</code>; do not hardcode extensions.</li>
+<li>SCENE-AWARE AUTOSAVE: AutoSave service can exclude common non-gameplay scenes using a built-in list (e.g., MainMenu/Boot/Loading). Toggle with <code>RestrictAutoSaveToGameplay</code>.</li>
+<li>API ENHANCEMENT: Added <code>ListSavesAsync</code>, <code>DeleteAsync</code>, <code>GetLatestAsync</code>, <code>HasAnySavesAsync</code> for richer file management.</li>
+<li>VERSION SUPPORT: Added on-load version validation and a foundation for save migrations.</li>
+<li>INTERFACE CONSISTENCY: Clarified <code>ISaveSystem</code> vs <code>IAutoSaveService</code> responsibilities.</li>
+</ul>
+<h3 id="setup-steps-new">Setup Steps (New)<a class="headerlink" href="#setup-steps-new" title="Permanent link">&para;</a></h3>
+<p><strong>1. LoLEngineConfig (engine-wide)</strong>
+- Create/locate <code>Resources/Configs/DefaultLoLEngineConfig.asset</code> (created via menu: LoLEngine/Config/LoLEngineConfig).
+- Set compression/obfuscation/encryption here. Do NOT place production keys in the repo; inject via environment variables/CI and write into <code>LoLEngineConfig</code> at build/startup.</p>
+<p><strong>2. SaveConfig (game behavior)</strong>
+- Create via: Create → LoLEngine → Data Persistence → Save Configuration.
+- Configure: default/quick/auto save slots, quick-save limits, auto-save interval, and whether to restrict auto-save to gameplay scenes.
+- Placement: put the asset at <code>Resources/Configs/DefaultSaveConfig.asset</code> to be auto-discovered by AutoSave.</p>
+<p><strong>3. ServiceConfiguration</strong>
+- Enable: Serialization, (optional) Compression, (optional) Encryption services.
+- Enable: Data Persistence (Save System), Auto Save Service (if needed), Quick Save Service (optional).</p>
+<p><strong>4. Game Initializer</strong>
+- Use <code>ImprovedGameInitializer</code> and assign your <code>ServiceConfiguration</code>.
+- The initializer registers <code>SaveSystem</code> and (optionally) <code>AutoSaveService</code>. AutoSave picks up settings from <code>DefaultSaveConfig</code> if present; <code>SaveSystem</code> reads engine-level settings from <code>LoLEngineConfig</code>.</p>
+<h3 id="where-to-put-obfuscationencryption-configuration">Where to Put Obfuscation/Encryption Configuration<a class="headerlink" href="#where-to-put-obfuscationencryption-configuration" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Put obfuscation and encryption configuration in <code>LoLEngineConfig</code> ONLY.</li>
+<li>Obfuscation (default): Set <code>obfuscateSaveFiles = true</code> for fast protection.</li>
+<li>Encryption: Set <code>encryptSaveFiles = true</code> only for sensitive data. This takes precedence over obfuscation at runtime.</li>
+<li>In production, inject encryption keys via environment variables or CI/build scripts. Do not commit production keys.</li>
+</ul>
+<h3 id="save-paths-and-extensions">Save Paths and Extensions<a class="headerlink" href="#save-paths-and-extensions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use <code>SaveSettings.GetSaveFilePath(slot)</code> to get the full path under <code>Application.persistentDataPath</code>.</li>
+<li>Use <code>SaveSettings.GetFileExtension()</code> to get the correct extension for current settings (do not hardcode <code>.sav</code>/<code>.osav</code>/encrypted ext).</li>
+</ul>
+<h3 id="autosave-scene-filtering">AutoSave Scene Filtering<a class="headerlink" href="#autosave-scene-filtering" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Configure an excluded-scenes list (e.g., <code>Boot</code>, <code>MainMenu</code>, <code>Loading</code>) in <code>SaveConfig</code>.</li>
+<li>The AutoSave service subscribes to scene changes and pauses/resumes accordingly.</li>
+</ul>
+<h3 id="new-save-management-api">New Save Management API<a class="headerlink" href="#new-save-management-api" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// List existing save files (with file system metadata)</span>
+<span class="n">IReadOnlyList</span><span class="o">&lt;</span><span class="n">SaveFileInfo</span><span class="o">&gt;</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">ListSavesAsync</span><span class="p">();</span>
+
+<span class="c1">// Delete a save</span>
+<span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">DeleteAsync</span><span class="p">(</span><span class="s">&quot;save1&quot;</span><span class="p">);</span>
+
+<span class="c1">// Get the most recent save</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">latest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">GetLatestAsync</span><span class="p">();</span>
+
+<span class="c1">// Do we have any saves at all?</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">any</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">HasAnySavesAsync</span><span class="p">();</span>
+</code></pre></div>
+<p><code>SaveFileInfo</code> provides file-level metadata (name, timestamp, size) and is separate from your game's <code>SaveMetadata</code>.</p>
+<h3 id="atomic-writes-and-integrity">Atomic Writes and Integrity<a class="headerlink" href="#atomic-writes-and-integrity" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Saves write to a temporary file and then perform an atomic move to prevent partial/corrupted files.</li>
+<li>Checksums validate integrity during load.</li>
+</ul>
+<h3 id="versioning-and-migration">Versioning and Migration<a class="headerlink" href="#versioning-and-migration" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Override <code>SchemaVersion</code> on each <code>PersistableData</code> subclass whose serialized fields change, then register a per-domain migration with <code>_saveSystem.RegisterDomainMigration(...)</code> (a bundle-level <code>ISaveMigration</code> via <code>RegisterMigration(...)</code> is also available).</li>
+<li>The system validates each domain's stored version at load and routes incompatible versions to your registered migration steps.</li>
+</ul>
+<h3 id="security-checklist">Security Checklist<a class="headerlink" href="#security-checklist" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Never commit production keys.</li>
+<li>Use environment variables or CI secrets to inject keys.</li>
+<li>Keep Encryption/Compression config in <code>LoLEngineConfig</code> only (do not duplicate in <code>SaveConfig</code>).</li>
+</ul>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
+<p>The Data Persistence system is organized as follows:</p>
+<div class="highlight"><pre><span></span><code>DataPersistence/
+├── Data/                       # Core data structures
+│   ├── GameSaveData.cs         # Container for all game data
+│   └── PersistableData.cs      # Base class for all save data
+├── Events/                     # Save-related events
+│   └── SaveEvents.cs           # Event definitions
+├── Interfaces/                 # Service interfaces
+│   ├── IAutoSaveService.cs     # Auto-save functionality
+│   ├── IQuickSaveService.cs    # Quick save functionality
+│   └── ISaveSystem.cs          # Main persistence interface
+├── Service/                    # Service implementations
+│   ├── AutoSaveService.cs      # Auto-save implementation
+│   ├── QuickSaveService.cs     # Quick save implementation
+│   └── SaveSystem.cs           # Main persistence implementation
+└── Settings/                   # Configuration
+    ├── SaveConfig.cs           # ScriptableObject for editor-time configuration
+    └── SaveSettings.cs         # Runtime persistence setting (derived from SaveConfig)
+</code></pre></div>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<h3 id="1-configure-and-initialize-the-save-system">1. Configure and Initialize the Save System<a class="headerlink" href="#1-configure-and-initialize-the-save-system" title="Permanent link">&para;</a></h3>
+<p>The Data Persistence system is initialized as part of the LoL Engine's startup sequence when using the <code>ImprovedGameInitializer</code>. Configuration is primarily handled through ScriptableObject assets:</p>
+<ol>
+<li>
+<p><strong>Enable Data Persistence Services:</strong></p>
+<ul>
+<li>In your <code>ServiceConfiguration</code> asset (assigned to <code>ImprovedGameInitializer</code>), ensure the relevant data persistence services are enabled:<ul>
+<li><code>EnableDataPersistenceService</code> (for the core <code>ISaveSystem</code>)</li>
+<li><code>EnableAutoSaveService</code> (if you need auto-save functionality)</li>
+<li><code>EnableQuickSaveService</code> (if you need quick save/load)</li>
+<li>Ensure <code>EnableSerializationService</code>, <code>EnableCompressionService</code>, and <code>EnableEncryptionService</code> are enabled if you intend to use their respective features with saving.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Create a <code>SaveConfig</code> Asset:</strong></p>
+<ul>
+<li>Create a <code>SaveConfig</code> asset in your project (Right-click in Project window → <code>Create</code> → <code>LoLEngine</code> → <code>Data Persistence</code> → <code>Save Configuration</code>).</li>
+<li>Customize settings within this <code>SaveConfig</code> asset: default/quick/auto save slots, max quick saves, auto-save interval, and restrict-to-gameplay toggle.</li>
+<li>Place the asset at <code>Resources/Configs/DefaultSaveConfig.asset</code> so AutoSave can auto-discover it.</li>
+</ul>
+</li>
+<li>
+<p><strong>Ensure <code>ImprovedGameInitializer</code> is Set Up:</strong></p>
+<ul>
+<li>Have an <code>ImprovedGameInitializer</code> component in your first scene with your <code>ServiceConfiguration</code> assigned to it.</li>
+</ul>
+</li>
+</ol>
+<p>The engine will then use these configurations to initialize the <code>SaveSystem</code> and related services.</p>
+<h3 id="2-define-data-classes">2. Define Data Classes<a class="headerlink" href="#2-define-data-classes" title="Permanent link">&para;</a></h3>
+<p>Create data classes by inheriting from <code>PersistableData</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.DataPersistence.Data</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">YourGame.Data</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="na">[Serializable]</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PlayerData</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">PersistableData</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Unique identifier for this data class</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">DataId</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;player&quot;</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Serialized fields</span>
+<span class="w">        </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">playerName</span><span class="p">;</span>
+<span class="w">        </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">health</span><span class="p">;</span>
+<span class="w">        </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">Vector3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Properties with getters/setters</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">PlayerName</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">get</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">playerName</span><span class="p">;</span>
+<span class="w">            </span><span class="k">set</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">playerName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Health</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">get</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">health</span><span class="p">;</span>
+<span class="w">            </span><span class="k">set</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="n">Vector3</span><span class="w"> </span><span class="n">Position</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">get</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+<span class="w">            </span><span class="k">set</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Optional lifecycle hooks</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnBeforeSave</span><span class="p">()</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Prepare data before saving (e.g., update timestamps)</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnAfterLoad</span><span class="p">()</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Process data after loading (e.g., validate values)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="3-register-and-use-data">3. Register and Use Data<a class="headerlink" href="#3-register-and-use-data" title="Permanent link">&para;</a></h3>
+<p>Access the save system and register your data objects:</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.DataPersistence.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">YourGame.Data</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">GameManager</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ISaveSystem</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Awake</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Get save system through service locator</span>
+<span class="w">        </span><span class="n">_saveSystem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ISaveSystem</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Initialize game data</span>
+<span class="w">        </span><span class="n">InitializeGameData</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">InitializeGameData</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Create or get player data</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">playerData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">GetData</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Initialize with default values if needed</span>
+<span class="w">        </span><span class="n">playerData</span><span class="p">.</span><span class="n">PlayerName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hero&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">playerData</span><span class="p">.</span><span class="n">Health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+<span class="w">        </span><span class="n">playerData</span><span class="p">.</span><span class="n">Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Vector3</span><span class="p">.</span><span class="n">zero</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Register other game data types</span>
+<span class="w">        </span><span class="c1">// Note: GetData automatically registers a new instance if not found</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">inventoryData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">GetData</span><span class="o">&lt;</span><span class="n">InventoryData</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">questData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">GetData</span><span class="o">&lt;</span><span class="n">QuestData</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Call this to manually save the game</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SaveGame</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Update values before saving</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">playerData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">GetData</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">playerData</span><span class="p">.</span><span class="n">Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">try</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Save to &quot;save1&quot; slot</span>
+<span class="w">            </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">SaveGame</span><span class="p">(</span><span class="s">&quot;save1&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Game saved successfully&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">$&quot;Save failed: {e.Message}&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Call this to load a saved game</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadGame</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Check if save exists before loading</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">HasSaveFile</span><span class="p">(</span><span class="s">&quot;save1&quot;</span><span class="p">))</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">LoadGame</span><span class="p">(</span><span class="s">&quot;save1&quot;</span><span class="p">))</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// Access loaded data</span>
+<span class="w">                </span><span class="kt">var</span><span class="w"> </span><span class="n">playerData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">GetData</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">                </span><span class="c1">// Apply loaded values to game state</span>
+<span class="w">                </span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">playerData</span><span class="p">.</span><span class="n">Position</span><span class="p">;</span>
+<span class="w">                </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Loaded player: {playerData.PlayerName}, Health: {playerData.Health}&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">else</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&quot;Failed to load save file&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;No save file found&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// For large save files, use async methods</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SaveGameAsync</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">try</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">SaveGameAsync</span><span class="p">(</span><span class="s">&quot;save1&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Game saved asynchronously&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">$&quot;Async save failed: {e.Message}&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="configuration-options">Configuration Options<a class="headerlink" href="#configuration-options" title="Permanent link">&para;</a></h2>
+<p>Configuration is split between <code>LoLEngineConfig</code> (engine-wide) and <code>SaveConfig</code> (game behavior):</p>
+<ul>
+<li><code>LoLEngineConfig</code> (Resources/Configs/DefaultLoLEngineConfig):</li>
+<li><code>saveDirectory</code>, <code>saveFileExtension</code>, <code>obfuscatedSaveFileExtension</code>, <code>encryptedSaveFileExtension</code></li>
+<li><code>compressSaveFiles</code>, <code>compressionLevelForSaveFiles</code></li>
+<li>
+<p><code>obfuscateSaveFiles</code> (default), <code>encryptSaveFiles</code>, <code>defaultEncryptionKey</code>, <code>encryptionKeySeed</code></p>
+</li>
+<li>
+<p><code>SaveConfig</code> (Resources/Configs/DefaultSaveConfig):</p>
+</li>
+<li><code>DefaultSaveSlot</code>, <code>QuickSaveSlot</code>, <code>AutoSaveSlot</code></li>
+<li><code>MaxSaveSlots</code>, <code>EnableQuickSave</code>, <code>EnableAutoSave</code></li>
+<li><code>AutoSaveInterval</code>, <code>RestrictAutoSaveToGameplay</code></li>
+</ul>
+<p>Tip: You generally do not need to construct <code>SaveSettings</code> yourself. <code>SaveSystem</code> reads engine-wide options from <code>LoLEngineConfig</code>; <code>AutoSaveService</code> reads game behavior from <code>DefaultSaveConfig</code> if present.</p>
+<h3 id="save-file-types">Save File Types<a class="headerlink" href="#save-file-types" title="Permanent link">&para;</a></h3>
+<p>The system supports three formats with automatic detection (names configurable in <code>LoLEngineConfig</code>):
+- Obfuscated JSON (default, fast) — default extension <code>.osav</code>
+- Encrypted JSON (for sensitive data) — default extension <code>.esave</code>
+- Plain JSON — default extension <code>.sav</code> (not recommended)</p>
+<p>Priority when loading: obfuscated &gt; encrypted &gt; plain. Always use <code>SaveSettings.GetFileExtension()</code> rather than hardcoding extensions.</p>
+<p>Priority when loading: obfuscated &gt; encrypted &gt; plain. Always use <code>SaveSettings.GetFileExtension()</code> rather than hardcoding extensions.</p>
+<p>See <strong>Save protection</strong> below for obfuscation vs encryption guidance.</p>
+<h2 id="advanced-features">Advanced Features<a class="headerlink" href="#advanced-features" title="Permanent link">&para;</a></h2>
+<h3 id="save-slots">Save Slots<a class="headerlink" href="#save-slots" title="Permanent link">&para;</a></h3>
+<p>The system supports multiple save files:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Save to different slots</span>
+<span class="n">_saveSystem</span><span class="p">.</span><span class="n">SaveGame</span><span class="p">(</span><span class="s">&quot;quicksave&quot;</span><span class="p">);</span>
+<span class="n">_saveSystem</span><span class="p">.</span><span class="n">SaveGame</span><span class="p">(</span><span class="s">&quot;slot1&quot;</span><span class="p">);</span>
+<span class="n">_saveSystem</span><span class="p">.</span><span class="n">SaveGame</span><span class="p">(</span><span class="s">&quot;autosave&quot;</span><span class="p">);</span>
+
+<span class="c1">// Load from specific slot</span>
+<span class="n">_saveSystem</span><span class="p">.</span><span class="n">LoadGame</span><span class="p">(</span><span class="s">&quot;slot1&quot;</span><span class="p">);</span>
+
+<span class="c1">// Check if a save exists</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">HasSaveFile</span><span class="p">(</span><span class="s">&quot;quicksave&quot;</span><span class="p">))</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Save exists</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="auto-save-iautosaveservice">Auto-Save (<code>IAutoSaveService</code>)<a class="headerlink" href="#auto-save-iautosaveservice" title="Permanent link">&para;</a></h3>
+<p>Enable in <code>ServiceConfiguration</code>: <strong>Enable Auto Save Service</strong> (requires Data Persistence + Serialization).</p>
+<p>Configure behavior in <code>SaveConfig</code>:</p>
+<div class="highlight"><pre><span></span><code>Auto Save Settings:
+├─ Auto Save Enabled: true
+├─ Auto Save Interval: 300 (seconds)
+├─ Auto Save Slot: &quot;autosave&quot;
+└─ Restrict Auto Save To Gameplay: true
+</code></pre></div>
+<p>Auto-save starts automatically when the service initializes (if enabled in config). Use <code>DefaultSaveConfig</code> at <code>Resources/Configs/DefaultSaveConfig.asset</code> so AutoSave can auto-discover settings.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.DataPersistence.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+
+<span class="kt">var</span><span class="w"> </span><span class="n">autoSave</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAutoSaveService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="n">autoSave</span><span class="p">.</span><span class="n">StartAutoSave</span><span class="p">();</span><span class="w">   </span><span class="c1">// resume periodic saves</span>
+<span class="n">autoSave</span><span class="p">.</span><span class="n">StopAutoSave</span><span class="p">();</span><span class="w">    </span><span class="c1">// pause (e.g. main menu)</span>
+<span class="n">autoSave</span><span class="p">.</span><span class="n">SaveNow</span><span class="p">();</span><span class="w">         </span><span class="c1">// force immediate save (scene transitions, quit)</span>
+</code></pre></div>
+<p><strong>Scene filtering:</strong> When <code>RestrictAutoSaveToGameplay</code> is true, AutoSave pauses in scenes whose names match the six built-in exclusions (<code>MainMenu</code>, <code>Boot</code>, <code>Loading</code>, <code>Splash</code>, <code>Settings</code>, <code>Credits</code>). Add your own (e.g. <code>CharacterSelect</code>, <code>Lobby</code>, <code>Tutorial</code>) via <code>SaveConfig.excludedSceneNames</code>.</p>
+<p><strong>Recommended intervals:</strong> 60–120s (action/permadeath), 300–600s (RPG/strategy), 900–1800s (casual games with manual saves).</p>
+<h3 id="quick-save-iquicksaveservice">Quick Save (<code>IQuickSaveService</code>)<a class="headerlink" href="#quick-save-iquicksaveservice" title="Permanent link">&para;</a></h3>
+<p>Enable in <code>ServiceConfiguration</code>: <strong>Enable Quick Save Service</strong> (requires Data Persistence + Serialization).</p>
+<p>Configure in <code>SaveConfig</code>:</p>
+<div class="highlight"><pre><span></span><code>Quick Save Settings:
+├─ Quick Save Enabled: true
+└─ Max Quick Saves: 5
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.DataPersistence.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">QuickSaveHandler</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IQuickSaveService</span><span class="w"> </span><span class="n">_quickSave</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_quickSave</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IQuickSaveService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetKeyDown</span><span class="p">(</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">F5</span><span class="p">))</span><span class="w"> </span><span class="n">_quickSave</span><span class="p">.</span><span class="n">QuickSave</span><span class="p">();</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">GetKeyDown</span><span class="p">(</span><span class="n">KeyCode</span><span class="p">.</span><span class="n">F9</span><span class="p">))</span><span class="w"> </span><span class="n">_quickSave</span><span class="p">.</span><span class="n">QuickLoad</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>API highlights:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Method / property</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QuickSave()</code></td>
+<td>Create a timestamped quick save</td>
+</tr>
+<tr>
+<td><code>QuickLoad(index = 0)</code></td>
+<td>Load most recent (0) or older slot (1, 2, …)</td>
+</tr>
+<tr>
+<td><code>HasQuickSave()</code></td>
+<td>Whether any quick save exists</td>
+</tr>
+<tr>
+<td><code>GetLatestQuickSaveSlot()</code></td>
+<td>Most recent slot name</td>
+</tr>
+<tr>
+<td><code>QuickSaveSlots</code></td>
+<td>All current quick save slot names</td>
+</tr>
+<tr>
+<td><code>MaxQuickSaves</code></td>
+<td>Rotation limit (oldest removed when exceeded)</td>
+</tr>
+</tbody>
+</table>
+<p>Quick saves use timestamped names: <code>quicksave_yyyyMMdd_HHmmss</code> (e.g. <code>quicksave_20250108_143025</code>).</p>
+<p><code>QuickSaveService</code> exposes <code>BeforeQuickSave</code> / <code>AfterQuickSave</code> events (on the concrete class) for UI feedback — pause, show indicators, notifications.</p>
+<h3 id="save-protection-obfuscation-and-encryption">Save Protection (Obfuscation and Encryption)<a class="headerlink" href="#save-protection-obfuscation-and-encryption" title="Permanent link">&para;</a></h3>
+<p>Configure in <strong><code>LoLEngineConfig</code></strong> only (not <code>SaveConfig</code>). Enable <strong>Serialization Service</strong>; obfuscation/encryption run through the serializer pipeline automatically when saving.</p>
+<p><strong>Priority at runtime:</strong> obfuscation → encryption → plain JSON.</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Extension (default)</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Obfuscation</strong> (default)</td>
+<td><code>.osav</code></td>
+<td>Game progress, settings — fast, stops casual editing</td>
+</tr>
+<tr>
+<td><strong>Encryption</strong></td>
+<td><code>.esav</code></td>
+<td>Payment data, PII, compliance requirements</td>
+</tr>
+<tr>
+<td><strong>Plain</strong></td>
+<td><code>.sav</code></td>
+<td>Debugging only — not recommended for shipping</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Performance comparison:</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Obfuscation (XOR)</th>
+<th>Encryption (AES-256)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Speed</td>
+<td>~10× faster</td>
+<td>Slower (PBKDF2 key derivation)</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Casual protection</td>
+<td>Strong</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>Frequent saves, mobile</td>
+<td>Sensitive data, rare saves</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommended defaults (most games):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// LoLEngineConfig</span>
+<span class="n">obfuscateSaveFiles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w">   </span><span class="c1">// on by default</span>
+<span class="n">encryptSaveFiles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span><span class="w">      </span><span class="c1">// only for sensitive data</span>
+</code></pre></div>
+<p><strong>Obfuscation</strong> — automatic when enabled; no extra code at save sites:</p>
+<div class="highlight"><pre><span></span><code><span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">SaveGameAsync</span><span class="p">(</span><span class="s">&quot;save1&quot;</span><span class="p">);</span><span class="w">  </span><span class="c1">// writes save1.osav</span>
+<span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">LoadGameAsync</span><span class="p">(</span><span class="s">&quot;save1&quot;</span><span class="p">);</span><span class="w">  </span><span class="c1">// auto-detects .osav / .esav / .sav</span>
+</code></pre></div>
+<p>Direct service access (advanced):</p>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">obfuscation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IObfuscationService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">obfuscated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obfuscation</span><span class="p">.</span><span class="n">Obfuscate</span><span class="p">(</span><span class="n">plainText</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">restored</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obfuscation</span><span class="p">.</span><span class="n">Deobfuscate</span><span class="p">(</span><span class="n">obfuscated</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Encryption</strong> — enable <code>encryptSaveFiles</code> in <code>LoLEngineConfig</code>. Keys come from <code>SecureKeyProvider</code> + optional <code>encryptionKeySeed</code>. <strong>Never commit production keys</strong> — inject via CI/environment at build time.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Keys are wired by ConfigurableServiceInitializer from LoLEngineConfig</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">encryption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IEncryptionService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">encrypted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">encryption</span><span class="p">.</span><span class="n">EncryptString</span><span class="p">(</span><span class="n">sensitiveData</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">);</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">decrypted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">encryption</span><span class="p">.</span><span class="n">DecryptString</span><span class="p">(</span><span class="n">encrypted</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Security tips:</strong></p>
+<ul>
+<li>Obfuscation does not stop determined reverse engineering — validate loaded data (sanity checks, checksums).</li>
+<li>For multiplayer, validate critical values server-side.</li>
+<li>Migrating encryption → obfuscation: new saves use <code>.osav</code>; old <code>.esav</code> / <code>.sav</code> files still load.</li>
+</ul>
+<h3 id="compression-icompressionservice">Compression (<code>ICompressionService</code>)<a class="headerlink" href="#compression-icompressionservice" title="Permanent link">&para;</a></h3>
+<p>Enable in <code>ServiceConfiguration</code>: <strong>Enable Compression Service</strong>. Toggle save compression in <strong><code>LoLEngineConfig</code></strong> (<code>compressSaveFiles</code>, <code>compressionLevelForSaveFiles</code>).</p>
+<p>When enabled, the save/serializer pipeline compresses JSON before obfuscation/encryption. Useful for large save files; skip for tiny saves if CPU matters more than disk.</p>
+<p>Direct service access (non-save use cases):</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Compression.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">System.IO.Compression</span><span class="p">;</span>
+
+<span class="kt">var</span><span class="w"> </span><span class="n">compression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ICompressionService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="kt">string</span><span class="w"> </span><span class="n">compressed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">compression</span><span class="p">.</span><span class="n">CompressString</span><span class="p">(</span><span class="n">largeJson</span><span class="p">,</span><span class="w"> </span><span class="n">CompressionLevel</span><span class="p">.</span><span class="n">Optimal</span><span class="p">);</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">restored</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">compression</span><span class="p">.</span><span class="n">DecompressString</span><span class="p">(</span><span class="n">compressed</span><span class="p">);</span>
+
+<span class="n">compression</span><span class="p">.</span><span class="n">CompressFile</span><span class="p">(</span><span class="n">sourcePath</span><span class="p">,</span><span class="w"> </span><span class="n">outputZipPath</span><span class="p">,</span><span class="w"> </span><span class="n">CompressionLevel</span><span class="p">.</span><span class="n">Fastest</span><span class="p">);</span>
+<span class="n">compression</span><span class="p">.</span><span class="n">DecompressFile</span><span class="p">(</span><span class="n">inputZipPath</span><span class="p">,</span><span class="w"> </span><span class="n">outputDirectory</span><span class="p">);</span>
+</code></pre></div>
+<p>Services register automatically via <code>ImprovedGameInitializer</code> — do not manually register unless writing custom bootstrap code.</p>
+<h3 id="event-system-integration">Event System Integration<a class="headerlink" href="#event-system-integration" title="Permanent link">&para;</a></h3>
+<p>The system publishes events for save begin/complete via <code>GameEvent</code>. Subscribe with <code>GameEvent.Subscribe</code> and implement <code>IEventListener&lt;T&gt;</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.DataPersistence.Events</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Events.GameEvents</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Events.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SaveEventsListener</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span><span class="p">,</span>
+<span class="w">    </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">SaveBeginEvent</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">SaveCompleteEvent</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnEnable</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">GameEvent</span><span class="p">.</span><span class="n">Subscribe</span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">SaveBeginEvent</span><span class="o">&gt;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">GameEvent</span><span class="p">.</span><span class="n">Subscribe</span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">SaveCompleteEvent</span><span class="o">&gt;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDisable</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">GameEvent</span><span class="p">.</span><span class="n">Unsubscribe</span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">SaveBeginEvent</span><span class="o">&gt;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">GameEvent</span><span class="p">.</span><span class="n">Unsubscribe</span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">SaveCompleteEvent</span><span class="o">&gt;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnGameEvent</span><span class="p">(</span><span class="n">SaveBeginEvent</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Save starting for slot: {e.SaveSlot}&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnGameEvent</span><span class="p">(</span><span class="n">SaveCompleteEvent</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Save completed for slot: {e.SaveSlot}, Success: {e.Success}&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Note: Quick/Auto save/load event types exist but are not emitted by all services yet; rely on the save begin/complete events for now.</p>
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>DataId Uniqueness</strong>: Ensure each <code>PersistableData</code> class has a unique <code>DataId</code></p>
+</li>
+<li>
+<p><strong>Data Registration</strong>: Use <code>GetData&lt;T&gt;()</code> which auto-registers new data instances if needed</p>
+</li>
+<li>
+<p><strong>Data Updates</strong>: Update your data objects before calling <code>SaveGame()</code></p>
+</li>
+<li>
+<p><strong>Error Handling</strong>: Always handle exceptions from save operations</p>
+</li>
+<li>
+<p><strong>Save File Management</strong>:</p>
+</li>
+<li>Use meaningful slot names</li>
+<li>Implement a save management UI</li>
+<li>
+<p>Clean up old saves to prevent storage bloat</p>
+</li>
+<li>
+<p><strong>Performance</strong>:</p>
+</li>
+<li>Use asynchronous methods for large saves</li>
+<li>Configure compression level based on your needs</li>
+<li><strong>Use obfuscation for normal game saves</strong> (10x faster than encryption)</li>
+<li>
+<p>Only encrypt truly sensitive data (payment info, personal details)</p>
+</li>
+<li>
+<p><strong>Testing</strong>:</p>
+</li>
+<li>Test with various save sizes</li>
+<li>Verify data integrity between saves</li>
+<li>
+<p>Test on target platforms (mobile devices may have different storage behavior)</p>
+</li>
+<li>
+<p>Use <code>SaveConfig</code> for autosave/quicksave behavior and <code>LoLEngineConfig</code> for engine-wide protection/compression settings.</p>
+</li>
+</ol>
+<h2 id="integration-with-other-systems">Integration with Other Systems<a class="headerlink" href="#integration-with-other-systems" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>UI Integration</strong>: Create a save/load UI that displays save slots and timestamps</p>
+</li>
+<li>
+<p><strong>Scene Management</strong>: Save current scene information to restore game state properly</p>
+</li>
+<li>
+<p><strong>Player Settings</strong>: Save user preferences such as graphics quality, sound volume, etc.</p>
+</li>
+</ol>
+<h2 id="example-complete-save-system-implementation">Example: Complete Save System Implementation<a class="headerlink" href="#example-complete-save-system-implementation" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.DataPersistence.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Events.GameEvents</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.DataPersistence.Events</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">YourGame.Data</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SaveManager</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LoLEngine</span><span class="p">.</span><span class="n">Core</span><span class="p">.</span><span class="n">Events</span><span class="p">.</span><span class="n">Interfaces</span><span class="p">.</span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">SaveBeginEvent</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LoLEngine</span><span class="p">.</span><span class="n">Core</span><span class="p">.</span><span class="n">Events</span><span class="p">.</span><span class="n">Interfaces</span><span class="p">.</span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">SaveCompleteEvent</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ISaveSystem</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IQuickSaveService</span><span class="w"> </span><span class="n">_quickSaveService</span><span class="p">;</span>
+
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">defaultSlot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;save1&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">event</span><span class="w"> </span><span class="n">Action</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">OnSaveCompleted</span><span class="p">;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">event</span><span class="w"> </span><span class="n">Action</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">OnLoadCompleted</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Awake</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_saveSystem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ISaveSystem</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_quickSaveService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IQuickSaveService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Subscribe to events (save begin/complete)</span>
+<span class="w">        </span><span class="n">GameEvent</span><span class="p">.</span><span class="n">Subscribe</span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">SaveBeginEvent</span><span class="o">&gt;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">GameEvent</span><span class="p">.</span><span class="n">Subscribe</span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">SaveCompleteEvent</span><span class="o">&gt;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Unsubscribe from events</span>
+<span class="w">        </span><span class="n">GameEvent</span><span class="p">.</span><span class="n">Unsubscribe</span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">SaveBeginEvent</span><span class="o">&gt;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">GameEvent</span><span class="p">.</span><span class="n">Unsubscribe</span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">SaveCompleteEvent</span><span class="o">&gt;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">QuickSave</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_quickSaveService</span><span class="p">.</span><span class="n">QuickSave</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">QuickLoad</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_quickSaveService</span><span class="p">.</span><span class="n">QuickLoad</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SaveToSlot</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">slotName</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">try</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">UpdateAllData</span><span class="p">();</span>
+<span class="w">            </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">SaveGame</span><span class="p">(</span><span class="n">slotName</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">$&quot;Error saving to slot {slotName}: {e.Message}&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">LoadFromSlot</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">slotName</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">HasSaveFile</span><span class="p">(</span><span class="n">slotName</span><span class="p">))</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogWarning</span><span class="p">(</span><span class="s">$&quot;No save file found in slot: {slotName}&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">success</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">LoadGame</span><span class="p">(</span><span class="n">slotName</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">ApplyLoadedData</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">$&quot;Failed to load from slot: {slotName}&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">success</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="nf">GetAllSaveSlots</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Implementation would depend on additional methods in SaveSystem</span>
+<span class="w">        </span><span class="c1">// This is just a conceptual example</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;save1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;save2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;quicksave&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;autosave&quot;</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateAllData</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Update player data before saving</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">playerData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">GetData</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">playerData</span><span class="p">.</span><span class="n">Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FindFirstObjectByType</span><span class="o">&lt;</span><span class="n">PlayerController</span><span class="o">&gt;</span><span class="p">().</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+<span class="w">        </span><span class="n">playerData</span><span class="p">.</span><span class="n">Health</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FindFirstObjectByType</span><span class="o">&lt;</span><span class="n">PlayerHealth</span><span class="o">&gt;</span><span class="p">().</span><span class="n">CurrentHealth</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Update other game data...</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ApplyLoadedData</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Get loaded data</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">playerData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">GetData</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Apply to game objects</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FindFirstObjectByType</span><span class="o">&lt;</span><span class="n">PlayerController</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">player</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">player</span><span class="p">.</span><span class="n">transform</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">playerData</span><span class="p">.</span><span class="n">Position</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">healthComp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FindFirstObjectByType</span><span class="o">&lt;</span><span class="n">PlayerHealth</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">healthComp</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">healthComp</span><span class="p">.</span><span class="n">SetHealth</span><span class="p">(</span><span class="n">playerData</span><span class="p">.</span><span class="n">Health</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Apply other game data...</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnGameEvent</span><span class="p">(</span><span class="n">SaveBeginEvent</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Starting save to slot: {e.SaveSlot}&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnGameEvent</span><span class="p">(</span><span class="n">SaveCompleteEvent</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Save {(e.Success ? &quot;</span><span class="n">succeeded</span><span class="s">&quot; : &quot;</span><span class="n">failed</span><span class="s">&quot;)} for slot: {e.SaveSlot}&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">Success</span><span class="p">)</span><span class="w"> </span><span class="n">OnSaveCompleted</span><span class="o">?.</span><span class="n">Invoke</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">SaveSlot</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

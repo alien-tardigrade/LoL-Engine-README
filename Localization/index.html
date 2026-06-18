@@ -1,0 +1,4013 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Modular Unity 6 game framework — audio, saves, events, localization, deterministic RNG, and more.">
+      
+      
+        <meta name="author" content="MooMoo Games">
+      
+      
+        <link rel="canonical" href="https://alien-tardigrade.github.io/LoL-Engine-README/Localization/">
+      
+      
+        <link rel="prev" href="../Serialization/">
+      
+      
+        <link rel="next" href="../LOCALIZATION_MIGRATION/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Localization - LoL Engine Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lol-engine-localization-system" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="LoL Engine Documentation" class="md-header__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LoL Engine Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Localization
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="LoL Engine Documentation" class="md-nav__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LoL Engine Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_QUICKSTART/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart (5 min)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Full Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-SERVICES-CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHEATSHEET-How-To-Use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceLocator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Locator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImprovedGameInitializer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Initializer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceDependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AudioHelpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio Helpers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DataPersistence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Persistence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Serialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup &amp; Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup &amp; Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-localizationconfig-asset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Create LocalizationConfig Asset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-configure-improvedgameinitializer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Configure ImprovedGameInitializer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-create-csv-localization-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Create CSV Localization File
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accessing-the-localization-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accessing the Localization Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-text-localization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simple Text Localization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-with-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text with Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changing-languages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changing Languages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Changing Languages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#language-selection-menu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Language Selection Menu
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#programmatic-language-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Programmatic Language Change
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#localizing-ui-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Localizing UI Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Localizing UI Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auto-updating-text-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-Updating Text Component
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-ui-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dynamic UI Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#font-localization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Font Localization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Font Localization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#localizedfontconfig-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LocalizedFontConfig Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automatic-font-switching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Font Switching
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#standalone-font-applier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Standalone Font Applier
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#programmatic-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Programmatic Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plural-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plural Rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Plural Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#csv-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSV Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Categories
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-transforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case Transforms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rtl-language-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RTL Language Support
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RTL Language Support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#per-language-memory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-Language Memory Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Per-Language Memory Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#splitting-csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Splitting CSV
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automatic-build-splitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Build Splitting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#localized-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Localized Audio
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Localized Audio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-based" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Component-Based
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extension-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extension Method
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#localized-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Localized Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#number-date-and-currency-formatting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Number, Date, and Currency Formatting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-localization-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complex Localization Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language-fallback-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Language Fallback System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-system-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event System Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-organize-your-keys-hierarchically" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Organize Your Keys Hierarchically
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-use-serviceawaiter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Use ServiceAwaiter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-always-unsubscribe-from-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Always Unsubscribe from Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-handle-missing-translations-gracefully" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Handle Missing Translations Gracefully
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-test-with-pseudo-localization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Test With Pseudo-Localization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Tips
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#translations-not-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Translations Not Loading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#language-not-changing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Language Not Changing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-language-not-detected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System Language Not Detected
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asset-localization-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asset Localization Not Working
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Component Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCALIZATION_MIGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization Migration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ResourceManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Input/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilities
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ObjectPool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Pool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TimeManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GameState/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HelperUtilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helper Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Logger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IL2CPP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IL2CPP & Code Stripping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup &amp; Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup &amp; Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-localizationconfig-asset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Create LocalizationConfig Asset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-configure-improvedgameinitializer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Configure ImprovedGameInitializer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-create-csv-localization-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Create CSV Localization File
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accessing-the-localization-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accessing the Localization Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-text-localization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simple Text Localization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-with-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text with Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changing-languages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changing Languages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Changing Languages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#language-selection-menu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Language Selection Menu
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#programmatic-language-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Programmatic Language Change
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#localizing-ui-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Localizing UI Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Localizing UI Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auto-updating-text-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-Updating Text Component
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-ui-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dynamic UI Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#font-localization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Font Localization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Font Localization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#localizedfontconfig-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LocalizedFontConfig Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automatic-font-switching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Font Switching
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#standalone-font-applier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Standalone Font Applier
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#programmatic-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Programmatic Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plural-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plural Rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Plural Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#csv-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSV Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Categories
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-transforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case Transforms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rtl-language-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RTL Language Support
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RTL Language Support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#per-language-memory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-Language Memory Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Per-Language Memory Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#splitting-csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Splitting CSV
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automatic-build-splitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Build Splitting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#localized-audio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Localized Audio
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Localized Audio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-based" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Component-Based
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extension-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extension Method
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#localized-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Localized Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#number-date-and-currency-formatting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Number, Date, and Currency Formatting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-localization-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complex Localization Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language-fallback-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Language Fallback System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-system-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event System Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-organize-your-keys-hierarchically" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Organize Your Keys Hierarchically
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-use-serviceawaiter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Use ServiceAwaiter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-always-unsubscribe-from-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Always Unsubscribe from Events
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-handle-missing-translations-gracefully" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Handle Missing Translations Gracefully
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-test-with-pseudo-localization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Test With Pseudo-Localization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Tips
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#translations-not-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Translations Not Loading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#language-not-changing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Language Not Changing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-language-not-detected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System Language Not Detected
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asset-localization-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asset Localization Not Working
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#component-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Component Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="lol-engine-localization-system">LoL Engine Localization System<a class="headerlink" href="#lol-engine-localization-system" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The LoL Engine Localization System enables seamless multi-language support for your game with runtime language switching, localized assets, and formatting for numbers, dates, and currencies. It's built for performance with LRU caching and supports language fallback chains for missing translations.</p>
+<h2 id="core-features">Core Features<a class="headerlink" href="#core-features" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Multi-Language Support</strong>: Support for any Unity <code>SystemLanguage</code></li>
+<li><strong>Runtime Language Switching</strong>: Change language dynamically without restarting</li>
+<li><strong>CSV-Based Storage</strong>: Easy-to-edit CSV files for translators</li>
+<li><strong>Language Fallback</strong>: Serializable fallback chain for missing translations</li>
+<li><strong>Asset Localization</strong>: Localized sprites, audio, and other Unity assets</li>
+<li><strong>Font Localization</strong>: Per-language font switching for CJK, Arabic, Cyrillic, etc.</li>
+<li><strong>Plural Rules</strong>: CLDR plural categories (zero/one/two/few/many/other) for 30+ languages</li>
+<li><strong>Case Transforms</strong>: UpperCase, LowerCase, TitleCase, UpperFirst applied after lookup</li>
+<li><strong>RTL Support</strong>: Automatic text direction and alignment flipping for Arabic/Hebrew</li>
+<li><strong>Per-Language Memory</strong>: Split CSV files, load/unload per language, auto-split on build</li>
+<li><strong>Localized Audio</strong>: Component-based audio clip switching on language change</li>
+<li><strong>Text Formatting</strong>: Culture-specific number, date, and currency formatting</li>
+<li><strong>Parameter Substitution</strong>: Dynamic text with named parameters</li>
+<li><strong>LRU Caching</strong>: Performance-optimized with configurable cache size</li>
+<li><strong>Event System Integration</strong>: React to language changes across your game</li>
+<li><strong>ServiceAwaiter Compatible</strong>: Safe initialization with other engine services</li>
+</ul>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
+<ul>
+<li>LoL Engine with ImprovedGameInitializer</li>
+<li>TextMeshPro (recommended for UI text)</li>
+<li>CSV localization file <code>StringTable.csv</code> in <code>Resources/Localization/Tables/</code></li>
+<li>LocalizationConfig asset in <code>Resources/Configs/</code></li>
+</ul>
+<h2 id="setup-configuration">Setup &amp; Configuration<a class="headerlink" href="#setup-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="1-create-localizationconfig-asset">1. Create LocalizationConfig Asset<a class="headerlink" href="#1-create-localizationconfig-asset" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Right-click in Project: <code>Create &gt; LoLEngine &gt; Localization &gt; Config</code></li>
+<li>Name it <code>DefaultLocalizationConfig</code></li>
+<li>Place it in <code>Assets/[YourProject]/Resources/Configs/</code></li>
+</ol>
+<p><strong>IMPORTANT: Config MUST be in Resources folder</strong></p>
+<p>Configure the asset:</p>
+<div class="highlight"><pre><span></span><code>Default Language: English
+Use System Language: [x]
+Supported Languages:
+├── English
+├── Spanish
+├── French
+├── German
+└── Japanese
+
+Localization Format: CSV
+Localization Tables Path: &quot;Localization/Tables&quot;  (within Resources folder)
+
+Language Fallbacks:
+├── Spanish → English
+├── French → English
+├── German → English
+└── Japanese → English
+
+String Cache Size: 1000
+Use Lazy Loading: [x]
+Preload All Languages: (load on-demand for better performance)
+</code></pre></div>
+<h3 id="2-configure-improvedgameinitializer">2. Configure ImprovedGameInitializer<a class="headerlink" href="#2-configure-improvedgameinitializer" title="Permanent link">&para;</a></h3>
+<p>Ensure localization is enabled in <code>ServiceConfiguration</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">Enable</span><span class="w"> </span><span class="n">Localization</span><span class="w"> </span><span class="n">Service</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="3-create-csv-localization-file">3. Create CSV Localization File<a class="headerlink" href="#3-create-csv-localization-file" title="Permanent link">&para;</a></h3>
+<p>Create a CSV file at:
+<div class="highlight"><pre><span></span><code>Assets/[YourProject]/Resources/Localization/Tables/StringTable.csv
+</code></pre></div></p>
+<p><strong>File Structure (editor):</strong>
+<div class="highlight"><pre><span></span><code>Resources/
+└── Localization/
+    └── Tables/
+        └── StringTable.csv   # Monolithic file — source of truth
+</code></pre></div></p>
+<p><strong>At build time</strong> (or via menu: Tools &gt; LoL Engine &gt; Localization &gt; Split CSV by Language), per-language files are generated automatically for better runtime memory:
+<div class="highlight"><pre><span></span><code>Resources/
+└── Localization/
+    └── Tables/
+        ├── StringTable.csv              # Source of truth (editor)
+        ├── StringTable_English.csv      # Auto-generated (Key,Value)
+        ├── StringTable_French.csv
+        └── StringTable_German.csv
+</code></pre></div></p>
+<p><strong>CSV File Format</strong> (<code>StringTable.csv</code>):</p>
+<p>The CSV header must use <strong>SystemLanguage enum names</strong> exactly. All translations for all languages are in ONE file:</p>
+<div class="highlight"><pre><span></span><code>Key,English,Spanish,French,German,Japanese
+UI_PLAY,Play,Jugar,Jouer,Spielen,プレイ
+UI_QUIT,Quit,Salir,Quitter,Beenden,終了
+UI_SETTINGS,Settings,Configuración,Paramètres,Einstellungen,設定
+UI_BACK,Back,Atrás,Retour,Zurück,戻る
+UI_CONTINUE,Continue,Continuar,Continuer,Fortsetzen,続ける
+UI_NEW_GAME,New Game,Nuevo Juego,Nouvelle Partie,Neues Spiel,新しいゲーム
+GAME_PAUSED,Game Paused,Juego Pausado,Jeu en Pause,Spiel Pausiert,一時停止
+GAME_OVER,Game Over,Juego Terminado,Fin du Jeu,Spiel Vorbei,ゲームオーバー
+PLAYER_HEALTH,Health,Salud,Santé,Gesundheit,体力
+PLAYER_SCORE,Score: {0},Puntuación: {0},Score: {0},Punktzahl: {0},スコア: {0}
+ITEM_SWORD_NAME,Iron Sword,Espada de Hierro,Épée de Fer,Eisenschwert,鉄の剣
+ITEM_SWORD_DESC,A sturdy blade for beginners,Una hoja resistente para principiantes,Une lame robuste pour débutants,Eine robuste Klinge für Anfänger,初心者向けの丈夫な刃
+DIALOG_WELCOME,Welcome {name}!,¡Bienvenido {name}!,Bienvenue {name}!,Willkommen {name}!,ようこそ {name}！
+TUTORIAL_MOVE,Use WASD to move,Usa WASD para moverte,Utilisez WASD pour vous déplacer,Verwende WASD zum Bewegen,WASDで移動
+ACHIEVEMENT_UNLOCK,Achievement Unlocked: {achievement},Logro Desbloqueado: {achievement},Succès Débloqué: {achievement},Erfolg Freigeschaltet: {achievement},実績解除: {achievement}
+</code></pre></div>
+<p><strong>Important CSV Rules:</strong>
+1. <strong>Header row</strong> must contain "Key" followed by SystemLanguage enum names (e.g., "English", "Spanish", "French")
+2. <strong>One row per key</strong> with all language translations
+3. Use <code>{parameterName}</code> or <code>{0}</code> for parameter substitution
+4. Use double quotes if your text contains commas: <code>"Hello, world!"</code></p>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<h3 id="accessing-the-localization-service">Accessing the Localization Service<a class="headerlink" href="#accessing-the-localization-service" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Localization.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LocalizedUI</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ILocalizationService</span><span class="w"> </span><span class="n">_localization</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">WaitForServices</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesReady</span><span class="p">,</span><span class="w"> </span><span class="n">OnTimeout</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnServicesReady</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ILocalizationService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_localization</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&quot;Localization Service not found!&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Subscribe to language change events</span>
+<span class="w">        </span><span class="n">_localization</span><span class="p">.</span><span class="n">OnLanguageChanged</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">OnLanguageChanged</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Update UI with current language</span>
+<span class="w">        </span><span class="n">UpdateUIText</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnTimeout</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&quot;Services initialization timeout&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnLanguageChanged</span><span class="p">(</span><span class="n">SystemLanguage</span><span class="w"> </span><span class="n">newLanguage</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Language changed to: {newLanguage}&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">UpdateUIText</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateUIText</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Localized text will be shown in examples below</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_localization</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">_localization</span><span class="p">.</span><span class="n">OnLanguageChanged</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">OnLanguageChanged</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>Canonical API:</strong> Build a <code>LocString</code> (table + key) and call <code>_localization.Format(loc)</code> (add <code>using LoLEngine.Core.Localization.LocString;</code>). The string-key <code>GetText</code> / <code>GetTextFormatted</code> calls are <code>[Obsolete]</code> — still functional (warning-only), but new code should use <code>LocString</code>. See <a href="../LOCALIZATION_MIGRATION/">Localization Migration</a>.</p>
+</blockquote>
+<h3 id="simple-text-localization">Simple Text Localization<a class="headerlink" href="#simple-text-localization" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MenuUI</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ILocalizationService</span><span class="w"> </span><span class="n">_localization</span><span class="p">;</span>
+
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">TextMeshProUGUI</span><span class="w"> </span><span class="n">playButtonText</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">TextMeshProUGUI</span><span class="w"> </span><span class="n">quitButtonText</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">TextMeshProUGUI</span><span class="w"> </span><span class="n">settingsButtonText</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ILocalizationService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">UpdateButtonText</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateButtonText</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Canonical pattern: build a LocString (table + key) and Format it.</span>
+<span class="w">        </span><span class="c1">// Requires: using LoLEngine.Core.Localization.LocString;</span>
+<span class="w">        </span><span class="n">playButtonText</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">LocString</span><span class="p">(</span><span class="n">LocTable</span><span class="p">.</span><span class="n">UI</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UI_PLAY&quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="n">quitButtonText</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">LocString</span><span class="p">(</span><span class="n">LocTable</span><span class="p">.</span><span class="n">UI</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UI_QUIT&quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="n">settingsButtonText</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">LocString</span><span class="p">(</span><span class="n">LocTable</span><span class="p">.</span><span class="n">UI</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UI_SETTINGS&quot;</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="text-with-parameters">Text with Parameters<a class="headerlink" href="#text-with-parameters" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">PlayerUI</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ILocalizationService</span><span class="w"> </span><span class="n">_localization</span><span class="p">;</span>
+
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">TextMeshProUGUI</span><span class="w"> </span><span class="n">scoreText</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">TextMeshProUGUI</span><span class="w"> </span><span class="n">welcomeText</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ILocalizationService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Method 1: Using string.Format style</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateScore</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">score</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// CSV: PLAYER_SCORE,Score: {score}</span>
+<span class="w">        </span><span class="n">scoreText</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">LocString</span><span class="p">(</span><span class="n">LocTable</span><span class="p">.</span><span class="n">UI</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PLAYER_SCORE&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DynamicVar</span><span class="p">(</span><span class="s">&quot;score&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">score</span><span class="p">)));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Method 2: Using named parameters (Dictionary)</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ShowWelcome</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">playerName</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// CSV: DIALOG_WELCOME,Welcome {name}!</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">playerName</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="n">welcomeText</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetText</span><span class="p">(</span><span class="s">&quot;DIALOG_WELCOME&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">parameters</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Complex example with multiple parameters</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ShowAchievement</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">achievementName</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">points</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// CSV: ACHIEVEMENT_DETAILS,You unlocked {achievement} and earned {points} points!</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;achievement&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">achievementName</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;points&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">points</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetText</span><span class="p">(</span><span class="s">&quot;ACHIEVEMENT_DETAILS&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">parameters</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="changing-languages">Changing Languages<a class="headerlink" href="#changing-languages" title="Permanent link">&para;</a></h2>
+<h3 id="language-selection-menu">Language Selection Menu<a class="headerlink" href="#language-selection-menu" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine.UI</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">TMPro</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LanguageSelector</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ILocalizationService</span><span class="w"> </span><span class="n">_localization</span><span class="p">;</span>
+
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">TMP_Dropdown</span><span class="w"> </span><span class="n">languageDropdown</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ILocalizationService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Populate dropdown with available languages</span>
+<span class="w">        </span><span class="n">PopulateLanguageDropdown</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Set current selection</span>
+<span class="w">        </span><span class="n">SetCurrentLanguageInDropdown</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Listen for dropdown changes</span>
+<span class="w">        </span><span class="n">languageDropdown</span><span class="p">.</span><span class="n">onValueChanged</span><span class="p">.</span><span class="n">AddListener</span><span class="p">(</span><span class="n">OnLanguageDropdownChanged</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">PopulateLanguageDropdown</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">languageDropdown</span><span class="p">.</span><span class="n">ClearOptions</span><span class="p">();</span>
+
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">availableLanguages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">AvailableLanguages</span><span class="p">;</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">languageNames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">language</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">availableLanguages</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">languageNames</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">GetLanguageDisplayName</span><span class="p">(</span><span class="n">language</span><span class="p">));</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">languageDropdown</span><span class="p">.</span><span class="n">AddOptions</span><span class="p">(</span><span class="n">languageNames</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SetCurrentLanguageInDropdown</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">currentLanguage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">CurrentLanguage</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">availableLanguages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">AvailableLanguages</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">availableLanguages</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">availableLanguages</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">currentLanguage</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">languageDropdown</span><span class="p">.</span><span class="k">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">                </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnLanguageDropdownChanged</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">availableLanguages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">AvailableLanguages</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">availableLanguages</span><span class="p">.</span><span class="n">Count</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">SystemLanguage</span><span class="w"> </span><span class="n">selectedLanguage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">availableLanguages</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+<span class="w">            </span><span class="n">_localization</span><span class="p">.</span><span class="n">SetLanguage</span><span class="p">(</span><span class="n">selectedLanguage</span><span class="p">);</span>
+
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Language changed to: {selectedLanguage}&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">GetLanguageDisplayName</span><span class="p">(</span><span class="n">SystemLanguage</span><span class="w"> </span><span class="n">language</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Return user-friendly names</span>
+<span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">language</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">English</span><span class="p">:</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;English&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">Spanish</span><span class="p">:</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Español&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">French</span><span class="p">:</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Français&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">German</span><span class="p">:</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Deutsch&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">Japanese</span><span class="p">:</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;日本語&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">ChineseSimplified</span><span class="p">:</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;简体中文&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">ChineseTraditional</span><span class="p">:</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;繁體中文&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">Korean</span><span class="p">:</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;한국어&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">Portuguese</span><span class="p">:</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Português&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">Russian</span><span class="p">:</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Русский&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">default</span><span class="p">:</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">language</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="programmatic-language-change">Programmatic Language Change<a class="headerlink" href="#programmatic-language-change" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LanguageManager</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ILocalizationService</span><span class="w"> </span><span class="n">_localization</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ILocalizationService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SetEnglish</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="p">.</span><span class="n">SetLanguage</span><span class="p">(</span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">English</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SetSpanish</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="p">.</span><span class="n">SetLanguage</span><span class="p">(</span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">Spanish</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SetFrench</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="p">.</span><span class="n">SetLanguage</span><span class="p">(</span><span class="n">SystemLanguage</span><span class="p">.</span><span class="n">French</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">GetCurrentLanguage</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">SystemLanguage</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">CurrentLanguage</span><span class="p">;</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Current language: {current}&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ListAvailableLanguages</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">languages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">AvailableLanguages</span><span class="p">;</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Available languages: {string.Join(&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;, languages)}&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="localizing-ui-components">Localizing UI Components<a class="headerlink" href="#localizing-ui-components" title="Permanent link">&para;</a></h2>
+<h3 id="auto-updating-text-component">Auto-Updating Text Component<a class="headerlink" href="#auto-updating-text-component" title="Permanent link">&para;</a></h3>
+<p>Create a component that automatically updates when language changes:</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Localization.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">TMPro</span><span class="p">;</span>
+
+<span class="na">[RequireComponent(typeof(TextMeshProUGUI))]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LocalizedText</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ILocalizationService</span><span class="w"> </span><span class="n">_localization</span><span class="p">;</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">TextMeshProUGUI</span><span class="w"> </span><span class="n">_textComponent</span><span class="p">;</span>
+
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">localizationKey</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">updateOnLanguageChange</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Awake</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_textComponent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetComponent</span><span class="o">&lt;</span><span class="n">TextMeshProUGUI</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ILocalizationService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_localization</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">updateOnLanguageChange</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">_localization</span><span class="p">.</span><span class="n">OnLanguageChanged</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">OnLanguageChanged</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">UpdateText</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnLanguageChanged</span><span class="p">(</span><span class="n">SystemLanguage</span><span class="w"> </span><span class="n">newLanguage</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">UpdateText</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateText</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_localization</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">localizationKey</span><span class="p">))</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">_textComponent</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetText</span><span class="p">(</span><span class="n">localizationKey</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">SetKey</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">key</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">localizationKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+<span class="w">        </span><span class="n">UpdateText</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_localization</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">_localization</span><span class="p">.</span><span class="n">OnLanguageChanged</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">OnLanguageChanged</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="dynamic-ui-updates">Dynamic UI Updates<a class="headerlink" href="#dynamic-ui-updates" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">DynamicUIManager</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ILocalizationService</span><span class="w"> </span><span class="n">_localization</span><span class="p">;</span>
+
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">TextMeshProUGUI</span><span class="p">[]</span><span class="w"> </span><span class="n">allUIText</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ILocalizationService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_localization</span><span class="p">.</span><span class="n">OnLanguageChanged</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">OnLanguageChanged</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">UpdateAllUI</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnLanguageChanged</span><span class="p">(</span><span class="n">SystemLanguage</span><span class="w"> </span><span class="n">newLanguage</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">UpdateAllUI</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateAllUI</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Find all LocalizedText components in scene</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">localizedComponents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FindObjectsOfType</span><span class="o">&lt;</span><span class="n">LocalizedText</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">component</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">localizedComponents</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Components will auto-update if they&#39;re subscribed</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Manually update other UI elements</span>
+<span class="w">        </span><span class="n">UpdateMenus</span><span class="p">();</span>
+<span class="w">        </span><span class="n">UpdateDialogs</span><span class="p">();</span>
+<span class="w">        </span><span class="n">UpdateTooltips</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateMenus</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* Update menu text */</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateDialogs</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* Update dialog text */</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateTooltips</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* Update tooltip text */</span><span class="w"> </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_localization</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">_localization</span><span class="p">.</span><span class="n">OnLanguageChanged</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">OnLanguageChanged</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="font-localization">Font Localization<a class="headerlink" href="#font-localization" title="Permanent link">&para;</a></h2>
+<p>When switching to a language whose characters don't exist in the current font (e.g., Korean, Japanese, Arabic), you need per-language font switching.</p>
+<h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Create a LocalizedFontConfig asset</strong>: Right-click &gt; <code>Create &gt; LoLEngine &gt; Localization &gt; Font Config</code></li>
+<li>Set a <strong>default TMP font</strong> (used for languages without a specific entry)</li>
+<li>Add per-language entries with the appropriate font, optional fallbacks, and size scale</li>
+<li>Assign the asset to your <code>LocalizationConfig</code>'s <strong>Font Config</strong> field</li>
+</ol>
+<h3 id="localizedfontconfig-fields">LocalizedFontConfig Fields<a class="headerlink" href="#localizedfontconfig-fields" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Default Font: NotoSans-Regular (TMP)        ← used when no language-specific entry
+Default Legacy Font: Arial                   ← for legacy UI.Text components
+
+Language Fonts:
+├── Korean
+│   ├── TMP Font: NotoSansKR-Regular
+│   ├── Fallbacks: [NotoSansCJK]
+│   ├── Legacy Font: (none)
+│   └── Size Scale: 1.2                     ← multiplied with designer-set font size
+├── Japanese
+│   ├── TMP Font: NotoSansJP-Regular
+│   └── Size Scale: 1.1
+└── Arabic
+    ├── TMP Font: NotoSansArabic-Regular
+    └── Size Scale: 1.0
+</code></pre></div>
+<h3 id="automatic-font-switching">Automatic Font Switching<a class="headerlink" href="#automatic-font-switching" title="Permanent link">&para;</a></h3>
+<p><code>LocalizedText</code> components automatically apply the correct font on language change when <code>Update Font</code> is enabled (default). No additional code needed.</p>
+<h3 id="standalone-font-applier">Standalone Font Applier<a class="headerlink" href="#standalone-font-applier" title="Permanent link">&para;</a></h3>
+<p>For dynamic text that builds strings in code (chat, logs, debug), use <code>LocalizedFontApplier</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Add to any GameObject with Text or TMP_Text</span>
+<span class="c1">// The component auto-switches font on language change without text localization</span>
+<span class="na">[AddComponentMenu(&quot;LoL Engine/Localization/Localized Font Applier&quot;)]</span>
+</code></pre></div>
+<h3 id="programmatic-access">Programmatic Access<a class="headerlink" href="#programmatic-access" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">TMP_FontAsset</span><span class="w"> </span><span class="n">font</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetFontForCurrentLanguage</span><span class="p">();</span>
+<span class="n">Font</span><span class="w"> </span><span class="n">legacyFont</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetLegacyFontForCurrentLanguage</span><span class="p">();</span>
+<span class="kt">float</span><span class="w"> </span><span class="n">sizeScale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetFontSizeScale</span><span class="p">();</span><span class="w">  </span><span class="c1">// 1.0 if none configured</span>
+<span class="n">LocalizedFontConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">FontConfig</span><span class="p">;</span><span class="w"> </span><span class="c1">// null if not configured</span>
+</code></pre></div>
+<hr />
+<h2 id="plural-rules">Plural Rules<a class="headerlink" href="#plural-rules" title="Permanent link">&para;</a></h2>
+<p>Languages have different plural forms. English has 2 (one/other), Arabic has 6, Japanese has 1. The system uses CLDR/ICU plural categories.</p>
+<h3 id="csv-format">CSV Format<a class="headerlink" href="#csv-format" title="Permanent link">&para;</a></h3>
+<p>Use bracket suffixes for plural variants:</p>
+<div class="highlight"><pre><span></span><code>Key,English,French,Polish
+ITEM_COUNT[one],{count} item,{count} objet,{count} przedmiot
+ITEM_COUNT[few],,,{count} przedmioty
+ITEM_COUNT[many],,,{count} przedmiotów
+ITEM_COUNT[other],{count} items,{count} objets,{count} przedmiotów
+</code></pre></div>
+<h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Resolves plural category for current language, looks up KEY[category]</span>
+<span class="c1">// Falls back to bare KEY if plural variant is missing</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetPluralText</span><span class="p">(</span><span class="s">&quot;ITEM_COUNT&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">itemCount</span><span class="p">);</span>
+
+<span class="c1">// Extension method</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ITEM_COUNT&quot;</span><span class="p">.</span><span class="n">LocalizePlural</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w">  </span><span class="c1">// → &quot;5 items&quot; (English)</span>
+</code></pre></div>
+<h3 id="supported-categories">Supported Categories<a class="headerlink" href="#supported-categories" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Languages that use it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zero</code></td>
+<td>Arabic</td>
+</tr>
+<tr>
+<td><code>one</code></td>
+<td>English, French, German, Spanish, etc.</td>
+</tr>
+<tr>
+<td><code>two</code></td>
+<td>Arabic</td>
+</tr>
+<tr>
+<td><code>few</code></td>
+<td>Polish, Russian, Czech, Arabic</td>
+</tr>
+<tr>
+<td><code>many</code></td>
+<td>Polish, Russian, Arabic</td>
+</tr>
+<tr>
+<td><code>other</code></td>
+<td>All languages (required fallback)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="case-transforms">Case Transforms<a class="headerlink" href="#case-transforms" title="Permanent link">&para;</a></h2>
+<p>Apply case transforms after text lookup without creating duplicate keys:</p>
+<div class="highlight"><pre><span></span><code>Inspector:
+├── Localization Key: &quot;UI_PLAY&quot;
+├── Text Transform: UpperCase          ← None, UpperCase, LowerCase, UpperFirst, TitleCase
+</code></pre></div>
+<p>Uses <code>CultureInfo</code> for correct casing (handles Turkish İ/i).</p>
+<hr />
+<h2 id="rtl-language-support">RTL Language Support<a class="headerlink" href="#rtl-language-support" title="Permanent link">&para;</a></h2>
+<p>Arabic and Hebrew are automatically detected as RTL. When active:</p>
+<ul>
+<li><strong>TMP text</strong>: <code>isRightToLeftText = true</code>, alignment flipped (Left↔Right)</li>
+<li><strong>Legacy text</strong>: Alignment flipped (Left↔Right)</li>
+<li><strong>Layout groups</strong>: <code>LocalizedLayoutGroup</code> component flips <code>HorizontalLayoutGroup.reverseArrangement</code></li>
+</ul>
+<h3 id="setup_1">Setup<a class="headerlink" href="#setup_1" title="Permanent link">&para;</a></h3>
+<p>No configuration needed — RTL detection is automatic based on <code>SystemLanguage.Arabic</code> and <code>SystemLanguage.Hebrew</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">bool</span><span class="w"> </span><span class="n">isRTL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">IsCurrentLanguageRTL</span><span class="p">;</span>
+</code></pre></div>
+<p>For layout containers, add the <code>LocalizedLayoutGroup</code> component:
+<div class="highlight"><pre><span></span><code>[AddComponentMenu(&quot;LoL Engine/Localization/Localized Layout Group&quot;)]
+// Requires: HorizontalLayoutGroup or VerticalLayoutGroup on same GameObject
+// Auto-flips child order and alignment for RTL languages
+</code></pre></div></p>
+<hr />
+<h2 id="per-language-memory-management">Per-Language Memory Management<a class="headerlink" href="#per-language-memory-management" title="Permanent link">&para;</a></h2>
+<p>By default, the system loads from a single monolithic <code>StringTable.csv</code>. For shipping games with many languages, you can split into per-language files.</p>
+<h3 id="splitting-csv">Splitting CSV<a class="headerlink" href="#splitting-csv" title="Permanent link">&para;</a></h3>
+<p><strong>Menu</strong>: <code>Tools &gt; LoL Engine &gt; Localization &gt; Split CSV by Language</code></p>
+<p>This creates per-language files alongside your CSV:
+<div class="highlight"><pre><span></span><code>Resources/Localization/Tables/
+├── StringTable.csv              ← monolithic (source of truth in editor)
+├── StringTable_English.csv      ← Key,Value only
+├── StringTable_French.csv
+├── StringTable_German.csv
+└── StringTable_Japanese.csv
+</code></pre></div></p>
+<h3 id="automatic-build-splitting">Automatic Build Splitting<a class="headerlink" href="#automatic-build-splitting" title="Permanent link">&para;</a></h3>
+<p>The <code>LanguageSplitBuildPreprocessor</code> runs automatically before every build, ensuring per-language files are up to date.</p>
+<h3 id="runtime-behavior">Runtime Behavior<a class="headerlink" href="#runtime-behavior" title="Permanent link">&para;</a></h3>
+<ol>
+<li><code>CSVStringProvider.LoadLanguage()</code> tries per-language file first (<code>StringTable_English.csv</code>)</li>
+<li>Falls back to monolithic CSV if per-language file doesn't exist</li>
+<li>On language switch, the previous non-default language is unloaded from memory</li>
+<li>Default language is always kept loaded as fallback</li>
+</ol>
+<hr />
+<h2 id="localized-audio">Localized Audio<a class="headerlink" href="#localized-audio" title="Permanent link">&para;</a></h2>
+<h3 id="component-based">Component-Based<a class="headerlink" href="#component-based" title="Permanent link">&para;</a></h3>
+<p>Add <code>LocalizedAudio</code> to a GameObject with an <code>AudioSource</code>:</p>
+<div class="highlight"><pre><span></span><code>Inspector:
+├── Localization Key: &quot;VO_INTRO_NARRATOR&quot;
+├── Auto Update: [x]                    ← reload clip on language change
+├── Auto Play: [x]                      ← play clip after loading
+</code></pre></div>
+<p>Assets should be at:
+<div class="highlight"><pre><span></span><code>Resources/Localization/Tables/Assets/
+├── English/VO_INTRO_NARRATOR
+├── French/VO_INTRO_NARRATOR
+└── Japanese/VO_INTRO_NARRATOR
+</code></pre></div></p>
+<h3 id="extension-method">Extension Method<a class="headerlink" href="#extension-method" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">audioSource</span><span class="p">.</span><span class="n">SetLocalizedAudio</span><span class="p">(</span><span class="s">&quot;VO_INTRO_NARRATOR&quot;</span><span class="p">);</span>
+</code></pre></div>
+<hr />
+<h2 id="advanced-features">Advanced Features<a class="headerlink" href="#advanced-features" title="Permanent link">&para;</a></h2>
+<h3 id="localized-assets">Localized Assets<a class="headerlink" href="#localized-assets" title="Permanent link">&para;</a></h3>
+<p>Localize sprites, audio clips, and other Unity assets:</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LocalizedAssetExample</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ILocalizationService</span><span class="w"> </span><span class="n">_localization</span><span class="p">;</span>
+
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="n">characterPortrait</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">AudioSource</span><span class="w"> </span><span class="n">voiceAudio</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ILocalizationService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">_localization</span><span class="p">.</span><span class="n">OnLanguageChanged</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">OnLanguageChanged</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">LoadLocalizedAssets</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnLanguageChanged</span><span class="p">(</span><span class="n">SystemLanguage</span><span class="w"> </span><span class="n">newLanguage</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">LoadLocalizedAssets</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadLocalizedAssets</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Load localized sprite</span>
+<span class="w">        </span><span class="c1">// Place sprites in: Resources/Localization/Assets/en/, /es/, etc.</span>
+<span class="w">        </span><span class="n">Sprite</span><span class="w"> </span><span class="n">localizedSprite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetLocalizedAsset</span><span class="o">&lt;</span><span class="n">Sprite</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;CHARACTER_PORTRAIT&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">localizedSprite</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">characterPortrait</span><span class="p">.</span><span class="n">sprite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">localizedSprite</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// Load localized audio</span>
+<span class="w">        </span><span class="n">AudioClip</span><span class="w"> </span><span class="n">localizedAudio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetLocalizedAsset</span><span class="o">&lt;</span><span class="n">AudioClip</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;VOICE_GREETING&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">localizedAudio</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">voiceAudio</span><span class="p">.</span><span class="n">clip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">localizedAudio</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_localization</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">_localization</span><span class="p">.</span><span class="n">OnLanguageChanged</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">OnLanguageChanged</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="number-date-and-currency-formatting">Number, Date, and Currency Formatting<a class="headerlink" href="#number-date-and-currency-formatting" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">FormattingExamples</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ILocalizationService</span><span class="w"> </span><span class="n">_localization</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ILocalizationService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">        </span><span class="n">ShowFormattingExamples</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ShowFormattingExamples</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Number formatting (culture-specific)</span>
+<span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1234567.89</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">formattedNumber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">FormatNumber</span><span class="p">(</span><span class="n">number</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// English: &quot;1,234,567.89&quot;</span>
+<span class="w">        </span><span class="c1">// German: &quot;1.234.567,89&quot;</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Number: {formattedNumber}&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Number with custom format</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">percentage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">FormatNumber</span><span class="p">(</span><span class="mf">0.85</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;P&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// 85%</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">currency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">FormatNumber</span><span class="p">(</span><span class="mf">99.99</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="p">);</span><span class="w">  </span><span class="c1">// $99.99</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Percentage: {percentage}, Currency: {currency}&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Date formatting</span>
+<span class="w">        </span><span class="n">DateTime</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">formattedDate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">FormatDateTime</span><span class="p">(</span><span class="n">now</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// English: &quot;12/25/2024&quot;</span>
+<span class="w">        </span><span class="c1">// German: &quot;25.12.2024&quot;</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Date: {formattedDate}&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Date with custom format</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">longDate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">FormatDateTime</span><span class="p">(</span><span class="n">now</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;D&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// English: &quot;Wednesday, December 25, 2024&quot;</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Long Date: {longDate}&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Currency formatting</span>
+<span class="w">        </span><span class="kt">decimal</span><span class="w"> </span><span class="n">amount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">49.99m</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">formattedCurrency</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">FormatCurrency</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// English (USD): &quot;$49.99&quot;</span>
+<span class="w">        </span><span class="c1">// Euro: &quot;49,99 €&quot;</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Currency: {formattedCurrency}&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Currency with specific code</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">euros</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">FormatCurrency</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;EUR&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Euros: {euros}&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="complex-localization-example">Complex Localization Example<a class="headerlink" href="#complex-localization-example" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ItemDescriptionDisplay</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">ILocalizationService</span><span class="w"> </span><span class="n">_localization</span><span class="p">;</span>
+
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">TextMeshProUGUI</span><span class="w"> </span><span class="n">itemNameText</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">TextMeshProUGUI</span><span class="w"> </span><span class="n">itemDescText</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">TextMeshProUGUI</span><span class="w"> </span><span class="n">itemStatsText</span><span class="p">;</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="n">itemIcon</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">DisplayItem</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">itemId</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">damage</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">price</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ILocalizationService</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">        </span><span class="c1">// Get localized item name</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">itemName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetText</span><span class="p">(</span><span class="s">$&quot;ITEM_{itemId}_NAME&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">itemNameText</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">itemName</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Get localized description with parameters</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">descParams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;damage&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">damage</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">itemDesc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetText</span><span class="p">(</span><span class="s">$&quot;ITEM_{itemId}_DESC&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">descParams</span><span class="p">);</span>
+<span class="w">        </span><span class="n">itemDescText</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">itemDesc</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Format stats with localized numbers and currency</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">damageFormatted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">FormatNumber</span><span class="p">(</span><span class="n">damage</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">priceFormatted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">FormatCurrency</span><span class="p">((</span><span class="kt">decimal</span><span class="p">)</span><span class="n">price</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">itemStatsText</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetTextFormatted</span><span class="p">(</span>
+<span class="w">            </span><span class="s">&quot;ITEM_STATS_FORMAT&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">damageFormatted</span><span class="p">,</span>
+<span class="w">            </span><span class="n">priceFormatted</span>
+<span class="w">        </span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Load localized icon</span>
+<span class="w">        </span><span class="n">Sprite</span><span class="w"> </span><span class="n">icon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetLocalizedAsset</span><span class="o">&lt;</span><span class="n">Sprite</span><span class="o">&gt;</span><span class="p">(</span><span class="s">$&quot;ITEM_{itemId}_ICON&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">icon</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">itemIcon</span><span class="p">.</span><span class="n">sprite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">icon</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="language-fallback-system">Language Fallback System<a class="headerlink" href="#language-fallback-system" title="Permanent link">&para;</a></h2>
+<p>The localization system automatically handles missing translations:</p>
+<div class="highlight"><pre><span></span><code>User selects: Japanese
+└─&gt; Key not found in Japanese column of StringTable.csv
+    └─&gt; Check fallback language: English column
+        └─&gt; Key found! Return English translation
+        └─&gt; Key not found! Return &quot;#KEY_NAME#&quot;
+</code></pre></div>
+<p><strong>How it works:</strong>
+1. System looks up the key in the selected language's column
+2. If not found, checks the configured fallback language column
+3. If still not found, uses default language (English)
+4. If nowhere, returns <code>#KEY_NAME#</code> to indicate missing translation</p>
+<p><strong>Example Configuration:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// In LocalizationConfig</span>
+<span class="n">languageFallbacks</span><span class="p">:</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Japanese</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">English</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Korean</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">English</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Spanish</span><span class="w"> </span><span class="p">(</span><span class="n">Mexico</span><span class="p">)</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Spanish</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">English</span>
+<span class="o">-</span><span class="w"> </span><span class="n">French</span><span class="w"> </span><span class="p">(</span><span class="n">Canada</span><span class="p">)</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">French</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">English</span>
+</code></pre></div>
+<h2 id="event-system-integration">Event System Integration<a class="headerlink" href="#event-system-integration" title="Permanent link">&para;</a></h2>
+<p>React to language changes across your game:</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Events.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Events.Providers</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Localization.Events</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">GlobalLanguageListener</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span><span class="p">,</span>
+<span class="w">    </span><span class="n">IEventListener</span><span class="o">&lt;</span><span class="n">LocalizationEvents</span><span class="p">.</span><span class="n">LanguageChangedEvent</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnEnable</span><span class="p">()</span><span class="w">  </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">EventStartListening</span><span class="o">&lt;</span><span class="n">LocalizationEvents</span><span class="p">.</span><span class="n">LanguageChangedEvent</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="k">void</span><span class="w"> </span><span class="nf">OnDisable</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">EventStopListening</span><span class="o">&lt;</span><span class="n">LocalizationEvents</span><span class="p">.</span><span class="n">LanguageChangedEvent</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnGameEvent</span><span class="p">(</span><span class="n">LocalizationEvents</span><span class="p">.</span><span class="n">LanguageChangedEvent</span><span class="w"> </span><span class="n">evt</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Language changed via event system: {evt.NewLanguage}&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">UpdateAudioLanguage</span><span class="p">(</span><span class="n">evt</span><span class="p">.</span><span class="n">NewLanguage</span><span class="p">);</span>
+<span class="w">        </span><span class="n">UpdateUILanguage</span><span class="p">(</span><span class="n">evt</span><span class="p">.</span><span class="n">NewLanguage</span><span class="p">);</span>
+<span class="w">        </span><span class="n">ReloadGameContent</span><span class="p">(</span><span class="n">evt</span><span class="p">.</span><span class="n">NewLanguage</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateAudioLanguage</span><span class="p">(</span><span class="n">SystemLanguage</span><span class="w"> </span><span class="n">language</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">UpdateUILanguage</span><span class="p">(</span><span class="n">SystemLanguage</span><span class="w"> </span><span class="n">language</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ReloadGameContent</span><span class="p">(</span><span class="n">SystemLanguage</span><span class="w"> </span><span class="n">language</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<h3 id="1-organize-your-keys-hierarchically">1. Organize Your Keys Hierarchically<a class="headerlink" href="#1-organize-your-keys-hierarchically" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code># UI Keys
+UI_MAIN_PLAY,Play
+UI_MAIN_QUIT,Quit
+UI_SETTINGS_AUDIO,Audio Settings
+UI_SETTINGS_VIDEO,Video Settings
+
+# Game Keys
+GAME_PAUSED,Game Paused
+GAME_OVER,Game Over
+GAME_VICTORY,Victory!
+
+# Item Keys
+ITEM_WEAPON_SWORD,Sword
+ITEM_WEAPON_AXE,Axe
+ITEM_ARMOR_HELMET,Helmet
+
+# Dialog Keys
+DIALOG_NPC_GREETING,Hello, traveler!
+DIALOG_NPC_QUEST,I have a quest for you
+</code></pre></div>
+<h3 id="2-use-serviceawaiter">2. Use ServiceAwaiter<a class="headerlink" href="#2-use-serviceawaiter" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// GOOD</span>
+<span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">WaitForServices</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">OnServicesReady</span><span class="p">,</span><span class="w"> </span><span class="n">OnTimeout</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// BAD</span>
+<span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_localization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ILocalizationService</span><span class="o">&gt;</span><span class="p">();</span><span class="w"> </span><span class="c1">// May be null</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="3-always-unsubscribe-from-events">3. Always Unsubscribe from Events<a class="headerlink" href="#3-always-unsubscribe-from-events" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">void</span><span class="w"> </span><span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_localization</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_localization</span><span class="p">.</span><span class="n">OnLanguageChanged</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">OnLanguageChanged</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="4-handle-missing-translations-gracefully">4. Handle Missing Translations Gracefully<a class="headerlink" href="#4-handle-missing-translations-gracefully" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetText</span><span class="p">(</span><span class="s">&quot;SOME_KEY&quot;</span><span class="p">);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">text</span><span class="p">.</span><span class="n">StartsWith</span><span class="p">(</span><span class="s">&quot;#&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">text</span><span class="p">.</span><span class="n">EndsWith</span><span class="p">(</span><span class="s">&quot;#&quot;</span><span class="p">))</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Translation missing, use fallback</span>
+<span class="w">    </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Default Text&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogWarning</span><span class="p">(</span><span class="s">$&quot;Translation missing for key: {text}&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="5-test-with-pseudo-localization">5. Test With Pseudo-Localization<a class="headerlink" href="#5-test-with-pseudo-localization" title="Permanent link">&para;</a></h3>
+<p>Create a test language with extra characters to catch UI overflow:</p>
+<div class="highlight"><pre><span></span><code># test.csv - Pseudo-localization for UI testing
+UI_PLAY,[!!! Plâÿ !!!]
+UI_QUIT,[!!! Qüît !!!]
+UI_SETTINGS,[!!! Sëttîñgs !!!]
+</code></pre></div>
+<h2 id="performance-tips">Performance Tips<a class="headerlink" href="#performance-tips" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>LRU Caching</strong>: The service caches 1000 recently used strings automatically</li>
+<li><strong>Language Preloading</strong>: Languages are loaded on-demand and cached</li>
+<li><strong>Avoid Frequent GetText Calls</strong>: Cache frequently used strings</li>
+<li><strong>Use Events</strong>: Subscribe to language changes instead of polling</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">// BAD - Calls GetText every frame</span>
+<span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">scoreText</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetText</span><span class="p">(</span><span class="s">&quot;UI_SCORE&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// GOOD - Updates only when language changes</span>
+<span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_localization</span><span class="p">.</span><span class="n">OnLanguageChanged</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">UpdateScoreText</span><span class="p">;</span>
+<span class="w">    </span><span class="n">UpdateScoreText</span><span class="p">(</span><span class="n">_localization</span><span class="p">.</span><span class="n">CurrentLanguage</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">void</span><span class="w"> </span><span class="nf">UpdateScoreText</span><span class="p">(</span><span class="n">SystemLanguage</span><span class="w"> </span><span class="n">lang</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">scoreText</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetText</span><span class="p">(</span><span class="s">&quot;UI_SCORE&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="translations-not-loading">Translations Not Loading<a class="headerlink" href="#translations-not-loading" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: GetText returns <code>#KEY_NAME#</code></p>
+<p><strong>Solutions</strong>:
+1. Verify <code>StringTable.csv</code> exists at <code>Resources/Localization/Tables/StringTable.csv</code>
+2. Check CSV header uses <strong>exact</strong> SystemLanguage enum names (e.g., "English", "Spanish", not "en", "es")
+3. Ensure first column is named "Key"
+4. Verify LocalizationConfig exists at <code>Resources/Configs/DefaultLocalizationConfig.asset</code>
+5. Check LocalizationConfig's "Localization Tables Path" is set to "Localization/Tables"
+6. Check console for CSV parsing errors
+7. Ensure the language you're using is listed in Supported Languages in LocalizationConfig</p>
+<h3 id="language-not-changing">Language Not Changing<a class="headerlink" href="#language-not-changing" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: SetLanguage() doesn't update UI</p>
+<p><strong>Solutions</strong>:
+1. Subscribe to <code>OnLanguageChanged</code> event
+2. Ensure UI components update in the event handler
+3. Check if language is in Supported Languages list
+4. Verify ServiceLocator has LocalizationService registered</p>
+<h3 id="system-language-not-detected">System Language Not Detected<a class="headerlink" href="#system-language-not-detected" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: Game always uses default language</p>
+<p><strong>Solutions</strong>:
+1. Enable "Use System Language" in LocalizationConfig
+2. Add system language to Supported Languages list
+3. Verify Application.systemLanguage is supported</p>
+<h3 id="asset-localization-not-working">Asset Localization Not Working<a class="headerlink" href="#asset-localization-not-working" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: GetLocalizedAsset returns null</p>
+<p><strong>Solutions</strong>:
+1. Place assets under the configured localization tables path, using <strong>SystemLanguage</strong> folder names:
+   <div class="highlight"><pre><span></span><code>Resources/Localization/Tables/Assets/
+├── English/
+│   └── character_portrait.png
+├── Spanish/
+│   └── character_portrait.png
+└── French/
+    └── character_portrait.png
+</code></pre></div>
+2. Use exact same filename across all language folders
+3. Ensure asset type matches generic type parameter</p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p>The Localization System provides comprehensive multi-language support:</p>
+<ul>
+<li>CSV-based workflow with auto-split per-language files for builds</li>
+<li>Runtime language switching with automatic memory management</li>
+<li>Per-language font switching (TMP + legacy) for CJK, Arabic, Cyrillic</li>
+<li>CLDR plural rules for 30+ languages</li>
+<li>Case transforms (upper, lower, title, upper-first)</li>
+<li>RTL support with automatic alignment flipping</li>
+<li>Localized assets: sprites, audio clips, and other Unity objects</li>
+<li>Culture-specific number, date, and currency formatting</li>
+<li>Serializable fallback chains</li>
+<li>LRU caching with cache-clear on language switch</li>
+<li>Component-based: <code>LocalizedText</code>, <code>LocalizedImage</code>, <code>LocalizedAudio</code>, <code>LocalizedFontApplier</code>, <code>LocalizedLayoutGroup</code></li>
+<li>Event-driven updates via <code>OnLanguageChanged</code> and EventManager integration</li>
+</ul>
+<h3 id="component-reference">Component Reference<a class="headerlink" href="#component-reference" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LocalizedText</code></td>
+<td>Text + font + RTL on TMP/Text</td>
+</tr>
+<tr>
+<td><code>LocalizedImage</code></td>
+<td>Sprite on Image/SpriteRenderer</td>
+</tr>
+<tr>
+<td><code>LocalizedAudio</code></td>
+<td>AudioClip on AudioSource</td>
+</tr>
+<tr>
+<td><code>LocalizedFontApplier</code></td>
+<td>Font-only switching (no text lookup)</td>
+</tr>
+<tr>
+<td><code>LocalizedLayoutGroup</code></td>
+<td>Layout direction for RTL</td>
+</tr>
+</tbody>
+</table>
+<p>For implementation examples, see:
+- <code>Samples~/Localization/LocalizationExample.cs</code>
+- Sample config in <code>Samples~/Localization/Resources/Configs/LocalizationSampleConfig.asset</code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

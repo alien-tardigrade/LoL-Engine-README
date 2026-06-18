@@ -1,0 +1,2359 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Modular Unity 6 game framework — audio, saves, events, localization, deterministic RNG, and more.">
+      
+      
+        <meta name="author" content="MooMoo Games">
+      
+      
+        <link rel="canonical" href="https://alien-tardigrade.github.io/LoL-Engine-README/HelperUtilities/">
+      
+      
+        <link rel="prev" href="../GameState/">
+      
+      
+        <link rel="next" href="../Logger/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Helper Utilities - LoL Engine Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#helper-utilities" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="LoL Engine Documentation" class="md-header__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LoL Engine Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Helper Utilities
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="LoL Engine Documentation" class="md-nav__button md-logo" aria-label="LoL Engine Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    LoL Engine Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_QUICKSTART/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart (5 min)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GettingStarted/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Full Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-SERVICES-CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHEATSHEET-How-To-Use/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceLocator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Locator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImprovedGameInitializer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Initializer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ServiceDependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Game Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AudioHelpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio Helpers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DataPersistence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Persistence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Serialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCALIZATION_MIGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Localization Migration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ResourceManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Input/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilities
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Utilities
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ObjectPool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Pool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TimeManagement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GameState/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game State
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helper Utilities
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helper Utilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#locations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Locations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-helper-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audio Helper Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio Helper Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simpleaudioplayer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SimpleAudioPlayer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advancedaudioplayer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AdvancedAudioPlayer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audiopreloadmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AudioPreloadManager
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shufflebag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ShuffleBag
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typedpoolbag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TypedPoolBag
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odds-helpers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Odds Helpers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-wait-helpers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime Wait Helpers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serviceawaiter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ServiceAwaiter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coroutineextension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CoroutineExtension
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#singleton-base-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Singleton Base Classes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#counter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Counter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Registry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lrucache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LRUCache
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-helpers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logging Helpers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#color-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Color Extensions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-not-currently-included" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Is Not Currently Included
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Logger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IL2CPP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IL2CPP & Code Stripping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CHANGELOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#locations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Locations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-helper-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audio Helper Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio Helper Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simpleaudioplayer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SimpleAudioPlayer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advancedaudioplayer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AdvancedAudioPlayer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audiopreloadmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AudioPreloadManager
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shufflebag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ShuffleBag
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typedpoolbag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TypedPoolBag
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odds-helpers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Odds Helpers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-wait-helpers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime Wait Helpers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serviceawaiter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ServiceAwaiter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coroutineextension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CoroutineExtension
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#singleton-base-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Singleton Base Classes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#counter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Counter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Registry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lrucache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LRUCache
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-helpers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logging Helpers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#color-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Color Extensions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-not-currently-included" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Is Not Currently Included
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="helper-utilities">Helper Utilities<a class="headerlink" href="#helper-utilities" title="Permanent link">&para;</a></h1>
+<p>LoL Engine ships a small set of runtime helpers alongside the core services. This page documents the helpers that currently exist in the package. It intentionally does not list older math, geometry, string, vector, quaternion, or circular-list helpers because those files are not part of the current <code>Assets/LoLEngine/Runtime/Scripts/Helpers</code> surface.</p>
+<h2 id="locations">Locations<a class="headerlink" href="#locations" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Namespace</th>
+<th>Files</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audio helper components</td>
+<td><code>LoLEngine.Helpers.Audio</code></td>
+<td><code>Runtime/Scripts/Helpers/Audio/</code></td>
+</tr>
+<tr>
+<td>Shuffle bag</td>
+<td><code>LoLEngine.Helpers.Extensions</code></td>
+<td><code>Runtime/Scripts/Helpers/Extensions/ShuffleBag.cs</code></td>
+</tr>
+<tr>
+<td>General runtime helpers</td>
+<td><code>LoLEngine.Runtime</code></td>
+<td><code>Runtime/Scripts/Runtime/</code></td>
+</tr>
+<tr>
+<td>Runtime utility types</td>
+<td><code>LoLEngine.Runtime.Utility</code></td>
+<td><code>Runtime/Scripts/Runtime/Utility/</code></td>
+</tr>
+<tr>
+<td>Model registry</td>
+<td><code>LoLEngine.Runtime.Models</code></td>
+<td><code>Runtime/Scripts/Runtime/Models/</code></td>
+</tr>
+<tr>
+<td>Misc utility types</td>
+<td><code>LoLEngine.Utility</code></td>
+<td><code>Runtime/Scripts/Utility/</code></td>
+</tr>
+<tr>
+<td>Odds helpers</td>
+<td><code>LoLEngine.Utility.Odds</code></td>
+<td><code>Runtime/Scripts/Utility/Odds/</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="audio-helper-components">Audio Helper Components<a class="headerlink" href="#audio-helper-components" title="Permanent link">&para;</a></h2>
+<p>These are optional MonoBehaviours that wrap <code>IAudioService</code> for common Inspector-driven workflows. They require the Audio Service to be enabled in <code>ServiceConfiguration</code>.</p>
+<h3 id="simpleaudioplayer">SimpleAudioPlayer<a class="headerlink" href="#simpleaudioplayer" title="Permanent link">&para;</a></h3>
+<p>Add from <strong>Add Component &gt; LoLEngine &gt; Helpers &gt; Simple Audio Player</strong>.</p>
+<p>Use it for a single configured audio ID, such as scene ambience, a looping music bed, or a UI sound.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Helpers.Audio</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Doorbell</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">SimpleAudioPlayer</span><span class="w"> </span><span class="n">player</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Ring</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">player</span><span class="p">.</span><span class="n">SetAudioId</span><span class="p">(</span><span class="s">&quot;Audio/UI/Doorbell&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">playImmediately</span><span class="p">:</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Important public members:</p>
+<ul>
+<li><code>Play()</code> / <code>PlayAsync()</code> starts the configured audio ID.</li>
+<li><code>Stop()</code> fades out the current handle using the configured fade-out duration.</li>
+<li><code>SetAudioId(string newAudioId, bool playImmediately = false)</code> updates the configured ID.</li>
+<li><code>SetAudioIdAsync(string newAudioId)</code> updates and immediately plays with async loading.</li>
+<li><code>IsPlaying</code> reports whether the current handle is still playing.</li>
+<li><code>CurrentAudioId</code> returns the configured audio ID.</li>
+</ul>
+<h3 id="advancedaudioplayer">AdvancedAudioPlayer<a class="headerlink" href="#advancedaudioplayer" title="Permanent link">&para;</a></h3>
+<p>Add from <strong>Add Component &gt; LoLEngine &gt; Helpers &gt; Advanced Audio Player</strong>.</p>
+<p>Use it when you need Inspector-configured playback options such as volume, pitch, looping, spatial settings, fade settings, and track assignment.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Helpers.Audio</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MusicZone</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">AdvancedAudioPlayer</span><span class="w"> </span><span class="n">musicPlayer</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnTriggerEnter</span><span class="p">(</span><span class="n">Collider</span><span class="w"> </span><span class="n">other</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">musicPlayer</span><span class="p">.</span><span class="n">SetAudioId</span><span class="p">(</span><span class="s">&quot;Audio/Music/Forest&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">playImmediately</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">);</span>
+<span class="w">        </span><span class="k">await</span><span class="w"> </span><span class="n">musicPlayer</span><span class="p">.</span><span class="n">PreloadAudio</span><span class="p">();</span>
+<span class="w">        </span><span class="k">await</span><span class="w"> </span><span class="n">musicPlayer</span><span class="p">.</span><span class="n">PlayAsync</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnTriggerExit</span><span class="p">(</span><span class="n">Collider</span><span class="w"> </span><span class="n">other</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">musicPlayer</span><span class="p">.</span><span class="n">Stop</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Important public members:</p>
+<ul>
+<li><code>Play()</code> / <code>PlayAsync()</code> starts the configured clip.</li>
+<li><code>PlaySync()</code> uses the synchronous audio path for already-loaded clips.</li>
+<li><code>Stop()</code> and <code>Stop(float customFadeOut)</code> stop the current handle.</li>
+<li><code>PreloadAudio()</code> preloads the configured audio ID through the audio service.</li>
+<li><code>SetAudioId(...)</code> / <code>SetAudioIdAsync(...)</code> update the configured ID.</li>
+<li><code>GetPerformanceInfo()</code> returns last load time, preload state, and last play time.</li>
+</ul>
+<h3 id="audiopreloadmanager">AudioPreloadManager<a class="headerlink" href="#audiopreloadmanager" title="Permanent link">&para;</a></h3>
+<p>Use this component to preload groups of audio IDs before a scene, encounter, or UI flow needs them.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Helpers.Audio</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">EncounterAudioLoader</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="na">[SerializeField]</span><span class="w"> </span><span class="k">private</span><span class="w"> </span><span class="n">AudioPreloadManager</span><span class="w"> </span><span class="n">preloadManager</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">await</span><span class="w"> </span><span class="n">preloadManager</span><span class="p">.</span><span class="n">PreloadAudioBatchAsync</span><span class="p">(</span>
+<span class="w">            </span><span class="k">new</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;Audio/SFX/Hit&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Audio/SFX/Crit&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Audio/Music/Battle&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="n">AudioPriority</span><span class="p">.</span><span class="n">Important</span><span class="p">,</span>
+<span class="w">            </span><span class="n">progress</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Audio preload: {progress:P0}&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Useful methods:</p>
+<ul>
+<li><code>PreloadAudioAsync(string audioId, AudioPriority priority = AudioPriority.Normal)</code></li>
+<li><code>PreloadAudioBatchAsync(IEnumerable&lt;string&gt; audioIds, AudioPriority priority = AudioPriority.Normal, Action&lt;float&gt; progressCallback = null)</code></li>
+<li><code>IsPreloaded(string audioId)</code></li>
+<li><code>MarkAsUsed(string audioId)</code></li>
+<li><code>UnloadAudio(string audioId)</code></li>
+<li><code>GetStats()</code></li>
+</ul>
+<p>Related enums in <code>LoLEngine.Helpers.Audio</code>:</p>
+<ul>
+<li><code>AudioPriority</code></li>
+<li><code>AudioLoadingStrategy</code></li>
+<li><code>AudioCategory</code></li>
+</ul>
+<p>For direct service usage, see <a href="../Audio/">Audio.md</a> and <a href="../AudioHelpers/">AudioHelpers.md</a>.</p>
+<h2 id="shufflebag">ShuffleBag<a class="headerlink" href="#shufflebag" title="Permanent link">&para;</a></h2>
+<p><code>ShuffleBag&lt;T&gt;</code> provides weighted draws without simply calling <code>Random.Range</code> every time. Add items with quantities, then call <code>Pick()</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Helpers.Extensions</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="kt">var</span><span class="w"> </span><span class="n">bag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ShuffleBag</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">bag</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;Common&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
+<span class="n">bag</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;Rare&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="n">bag</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;Legendary&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="n">bag</span><span class="p">.</span><span class="n">Pick</span><span class="p">());</span>
+</code></pre></div>
+<p>Useful members:</p>
+<ul>
+<li><code>Capacity</code></li>
+<li><code>Size</code></li>
+<li><code>Add(T item, int quantity)</code></li>
+<li><code>Pick()</code></li>
+<li><code>Reset()</code></li>
+<li><code>Clear()</code></li>
+<li><code>Shuffle()</code></li>
+</ul>
+<p><code>Pick()</code> throws <code>InvalidOperationException</code> if the bag is empty.</p>
+<h2 id="typedpoolbag">TypedPoolBag<a class="headerlink" href="#typedpoolbag" title="Permanent link">&para;</a></h2>
+<p><code>TypedPoolBag&lt;TKey, TItem&gt;</code> is a bucketed no-replacement draw helper. It is useful for rewards or content pools where you prefer one bucket, then cascade to lower-priority buckets when the preferred bucket is empty.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Rng</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Utility</span><span class="p">;</span>
+
+<span class="kt">var</span><span class="w"> </span><span class="n">rng</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Rng</span><span class="p">(</span><span class="mi">12345</span><span class="p">);</span>
+
+<span class="kt">var</span><span class="w"> </span><span class="n">rewards</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TypedPoolBag</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="n">AddBucket</span><span class="p">(</span><span class="s">&quot;Rare&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;Relic_A&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Relic_B&quot;</span><span class="w"> </span><span class="p">})</span>
+<span class="w">    </span><span class="p">.</span><span class="n">AddBucket</span><span class="p">(</span><span class="s">&quot;Common&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;Potion&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gold&quot;</span><span class="w"> </span><span class="p">})</span>
+<span class="w">    </span><span class="p">.</span><span class="n">WithFilter</span><span class="p">(</span><span class="n">item</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;Relic_A&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="n">Shuffle</span><span class="p">(</span><span class="k">ref</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
+
+<span class="kt">string</span><span class="w"> </span><span class="n">reward</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rewards</span><span class="p">.</span><span class="n">Draw</span><span class="p">(</span><span class="s">&quot;Rare&quot;</span><span class="p">);</span>
+</code></pre></div>
+<p>Useful members:</p>
+<ul>
+<li><code>AddBucket(TKey key, IEnumerable&lt;TItem&gt; items)</code></li>
+<li><code>WithFilter(Func&lt;TItem, bool&gt; isAllowed)</code></li>
+<li><code>Shuffle(ref Rng rng)</code></li>
+<li><code>Draw(TKey preferredKey)</code></li>
+<li><code>TotalCount</code></li>
+<li><code>CountInBucket(TKey key)</code></li>
+<li><code>IsEmpty(TKey key)</code></li>
+<li><code>IsExhausted</code></li>
+<li><code>GetRemainingItems(TKey key)</code></li>
+<li><code>BucketKeys</code></li>
+</ul>
+<p><code>Draw</code> throws <code>PoolExhaustedException</code> when no allowed items remain.</p>
+<h2 id="odds-helpers">Odds Helpers<a class="headerlink" href="#odds-helpers" title="Permanent link">&para;</a></h2>
+<p><code>LoLEngine.Utility.Odds</code> contains base types for odds-based systems.</p>
+<ul>
+<li><code>AbstractOdds&lt;TOutcome&gt;</code> is the base class for stateful odds rollers.</li>
+<li><code>AntiPityOdds&lt;T&gt;</code> adjusts effective weights after each roll to reduce streaks.</li>
+<li><code>PoolExhaustedException</code> is shared with pool-style draw helpers.</li>
+</ul>
+<p>These helpers use <code>LoLEngine.Core.Rng.Rng</code>, so their output can be deterministic and saveable.</p>
+<h2 id="runtime-wait-helpers">Runtime Wait Helpers<a class="headerlink" href="#runtime-wait-helpers" title="Permanent link">&para;</a></h2>
+<p><code>LoLEngine.Runtime.WaitFor</code> caches common Unity yield instructions.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">System.Collections</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Flash</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IEnumerator</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">yield</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">WaitFor</span><span class="p">.</span><span class="n">Seconds</span><span class="p">(</span><span class="mf">0.25f</span><span class="p">);</span>
+<span class="w">        </span><span class="k">yield</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">WaitFor</span><span class="p">.</span><span class="n">EndOfFrame</span><span class="p">;</span>
+<span class="w">        </span><span class="k">yield</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">WaitFor</span><span class="p">.</span><span class="n">FixedUpdate</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Use <code>WaitFor.Seconds(float seconds)</code> when the same wait durations occur repeatedly and you want to avoid repeated <code>WaitForSeconds</code> allocations.</p>
+<h2 id="serviceawaiter">ServiceAwaiter<a class="headerlink" href="#serviceawaiter" title="Permanent link">&para;</a></h2>
+<p><code>ServiceAwaiter</code> is in <code>LoLEngine.Runtime</code>. Use it before resolving services from <code>ServiceLocator</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Audio.Interfaces</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.ServiceManagement.Service</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UsesAudio</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IAudioService</span><span class="w"> </span><span class="n">_audio</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ServiceAwaiter</span><span class="p">.</span><span class="n">WaitForServices</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">OnReady</span><span class="p">,</span><span class="w"> </span><span class="n">OnTimeout</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnReady</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_audio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAudioService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnTimeout</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&quot;LoL Engine services did not initialize.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Useful members:</p>
+<ul>
+<li><code>WaitForServices(MonoBehaviour monoBehaviour, Action onInitialized)</code></li>
+<li><code>WaitForServices(MonoBehaviour monoBehaviour, Action onInitialized, Action onTimeout, float timeoutSeconds = 10f)</code></li>
+<li><code>AreServicesReady()</code></li>
+</ul>
+<h2 id="coroutineextension">CoroutineExtension<a class="headerlink" href="#coroutineextension" title="Permanent link">&para;</a></h2>
+<p><code>LoLEngine.Runtime.CoroutineExtension</code> provides common coroutine helpers.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">DelayedAction</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">IEnumerator</span><span class="w"> </span><span class="nf">Start</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">yield</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">CoroutineExtension</span><span class="p">.</span><span class="n">WaitForFrames</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="w">        </span><span class="k">yield</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">CoroutineExtension</span><span class="p">.</span><span class="n">WaitFor</span><span class="p">(</span><span class="mf">1f</span><span class="p">);</span>
+<span class="w">        </span><span class="k">yield</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">CoroutineExtension</span><span class="p">.</span><span class="n">WaitForUnscaledTime</span><span class="p">(</span><span class="mf">0.5f</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Useful methods:</p>
+<ul>
+<li><code>WaitForFrames(int frameCount)</code></li>
+<li><code>WaitFor(float seconds)</code></li>
+<li><code>WaitForUnscaledTime(float seconds)</code></li>
+<li><code>WaitUntil(Func&lt;bool&gt; condition)</code></li>
+<li><code>WaitWhile(Func&lt;bool&gt; condition)</code></li>
+<li><code>WaitForCancelable(float seconds, Func&lt;bool&gt; cancelCondition)</code></li>
+</ul>
+<h2 id="singleton-base-classes">Singleton Base Classes<a class="headerlink" href="#singleton-base-classes" title="Permanent link">&para;</a></h2>
+<p>The runtime assembly includes three MonoBehaviour singleton bases:</p>
+<ul>
+<li><code>Singleton&lt;T&gt;</code> for scene-local singleton components.</li>
+<li><code>PersistentSingleton&lt;T&gt;</code> for <code>DontDestroyOnLoad</code> singleton components.</li>
+<li><code>RegulatorSingleton&lt;T&gt;</code> for duplicate regulation.</li>
+</ul>
+<p>Prefer LoL Engine services for engine systems. Use these bases only for simple game-side MonoBehaviours where the service lifecycle would be unnecessary.</p>
+<h2 id="counter">Counter<a class="headerlink" href="#counter" title="Permanent link">&para;</a></h2>
+<p><code>LoLEngine.Utility.Counter</code> is a small countdown helper that steps with <code>Time.deltaTime</code> and resets when complete.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Utility</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">TickExample</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="n">_counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Counter</span><span class="p">(</span><span class="mf">1f</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_counter</span><span class="p">.</span><span class="n">Step</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_counter</span><span class="p">.</span><span class="n">Done</span><span class="p">())</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;One second elapsed.&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Useful members:</p>
+<ul>
+<li><code>Counter(float duration)</code></li>
+<li><code>GetTimeLeft</code></li>
+<li><code>Step()</code></li>
+<li><code>Done()</code></li>
+</ul>
+<h2 id="model-registry">Model Registry<a class="headerlink" href="#model-registry" title="Permanent link">&para;</a></h2>
+<p><code>LoLEngine.Runtime.Models</code> provides an immutable content-model registry.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime.Models</span><span class="p">;</span>
+
+<span class="n">ModelDb</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ModelId</span><span class="p">(</span><span class="s">&quot;Card&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;iron_strike&quot;</span><span class="p">),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IronStrikeCard</span><span class="p">());</span>
+
+<span class="kt">var</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ModelId</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="s">&quot;Card/iron_strike&quot;</span><span class="p">);</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ModelDb</span><span class="p">.</span><span class="n">Require</span><span class="o">&lt;</span><span class="n">IronStrikeCard</span><span class="o">&gt;</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+</code></pre></div>
+<p>Useful types:</p>
+<ul>
+<li><code>ModelId</code> stores IDs as <code>category/entry</code>.</li>
+<li><code>AbstractModel</code> enforces canonical vs mutable instance usage.</li>
+<li><code>ModelDb</code> registers and resolves canonical models.</li>
+<li><code>RegisterInModelDbAttribute</code> can mark model classes for project-side discovery if you build a registrar around it.</li>
+</ul>
+<h2 id="lrucache">LRUCache<a class="headerlink" href="#lrucache" title="Permanent link">&para;</a></h2>
+<p><code>LoLEngine.Runtime.Utility.LRUCache&lt;TKey, TValue&gt;</code> is a small least-recently-used cache.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime.Utility</span><span class="p">;</span>
+
+<span class="kt">var</span><span class="w"> </span><span class="n">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LRUCache</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">capacity</span><span class="p">:</span><span class="w"> </span><span class="mi">32</span><span class="p">);</span>
+<span class="n">cache</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;world&quot;</span><span class="p">);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cache</span><span class="p">.</span><span class="n">TryGetValue</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">var</span><span class="w"> </span><span class="k">value</span><span class="p">))</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Use value.</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Useful members:</p>
+<ul>
+<li><code>LRUCache(int capacity)</code></li>
+<li><code>TryGetValue(TKey key, out TValue value)</code></li>
+<li><code>Add(TKey key, TValue value)</code></li>
+<li><code>Clear()</code></li>
+</ul>
+<h2 id="logging-helpers">Logging Helpers<a class="headerlink" href="#logging-helpers" title="Permanent link">&para;</a></h2>
+<p><code>LoLEngine.Runtime.Logger</code> includes static logging helpers and sinks.</p>
+<p>Common entry points:</p>
+<ul>
+<li><code>LoLLogger.Log(...)</code>, <code>DebugLog(...)</code>, <code>Warning(...)</code>, <code>Error(...)</code></li>
+<li><code>GameLogger.Log(...)</code>, <code>Warning(...)</code>, <code>Error(...)</code></li>
+<li><code>LogChannel</code></li>
+<li><code>LogLevel</code></li>
+<li><code>LoggerConfig</code></li>
+<li><code>HistorySink</code>, <code>UnityConsoleSink</code>, <code>FileSink</code></li>
+</ul>
+<p>For a complete logging walkthrough, see <a href="../Logger/">Logger.md</a>.</p>
+<h2 id="color-extensions">Color Extensions<a class="headerlink" href="#color-extensions" title="Permanent link">&para;</a></h2>
+<p><code>LoLEngine.Runtime.Extensions.ColorExtension</code> provides named colors and color helpers.</p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Runtime.Extensions</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="n">Color</span><span class="w"> </span><span class="n">warning</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ColorExtension</span><span class="p">.</span><span class="n">Orangered</span><span class="p">;</span>
+<span class="kt">string</span><span class="w"> </span><span class="n">hex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ColorExtension</span><span class="p">.</span><span class="n">ColorToHex</span><span class="p">((</span><span class="n">Color32</span><span class="p">)</span><span class="n">warning</span><span class="p">);</span>
+<span class="n">Color</span><span class="w"> </span><span class="n">faded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">warning</span><span class="p">.</span><span class="n">SetAlpha</span><span class="p">(</span><span class="mf">0.5f</span><span class="p">);</span>
+</code></pre></div>
+<p>Useful methods include:</p>
+<ul>
+<li><code>Colorize(...)</code></li>
+<li><code>ColorToHex(Color32 color)</code></li>
+<li><code>GetColor(Color32 color)</code></li>
+<li><code>Blend(...)</code></li>
+<li><code>Invert(...)</code></li>
+<li><code>SetAlpha(...)</code></li>
+<li><code>Add(...)</code></li>
+<li><code>Subtract(...)</code></li>
+<li><code>CreateRandomColor(...)</code></li>
+</ul>
+<h2 id="what-is-not-currently-included">What Is Not Currently Included<a class="headerlink" href="#what-is-not-currently-included" title="Permanent link">&para;</a></h2>
+<p>Earlier internal docs referenced these helpers, but they are not present in the current package:</p>
+<ul>
+<li><code>Helpers/Maths/MathExtension.cs</code></li>
+<li><code>Helpers/Maths/MathfExtension.cs</code></li>
+<li><code>Helpers/Geometry/EdgeHelper.cs</code></li>
+<li><code>Helpers/Extensions/ListExtensions.cs</code></li>
+<li><code>Helpers/Extensions/StringExtension.cs</code></li>
+<li><code>Helpers/Extensions/TimeExtension.cs</code></li>
+<li><code>Helpers/Extensions/VectorExtension.cs</code></li>
+<li><code>Helpers/Extensions/QuaternionExtension.cs</code></li>
+<li><code>Helpers/Extensions/CircularList.cs</code></li>
+</ul>
+<p>Do not rely on those APIs unless you add them in your own project.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
