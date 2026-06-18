@@ -8,15 +8,15 @@ A comprehensive, modular game development framework for Unity 6000.0+. Built on 
 
 ## Documentation
 
-**Full documentation site: https://alien-tardigrade.github.io/LoL-Engine-README/**
+**Full documentation site: https://lol-engine.moomoo.games/**
 
 | Guide | |
 |---|---|
-| [Quickstart (5 min)](https://alien-tardigrade.github.io/LoL-Engine-README/01_QUICKSTART/) | Install to a working scene |
-| [Full Setup Guide](https://alien-tardigrade.github.io/LoL-Engine-README/GettingStarted/) | Every service, step by step |
-| [Cheat Sheet](https://alien-tardigrade.github.io/LoL-Engine-README/CHEATSHEET-How-To-Use/) | Quick reference for every system |
-| [Architecture Guide](https://alien-tardigrade.github.io/LoL-Engine-README/Architecture/) | Design and rationale |
-| [Troubleshooting](https://alien-tardigrade.github.io/LoL-Engine-README/Troubleshooting/) | Common issues |
+| [Quickstart (5 min)](https://lol-engine.moomoo.games/01_QUICKSTART/) | Install to a working scene |
+| [Full Setup Guide](https://lol-engine.moomoo.games/GettingStarted/) | Every service, step by step |
+| [Cheat Sheet](https://lol-engine.moomoo.games/CHEATSHEET-How-To-Use/) | Quick reference for every system |
+| [Architecture Guide](https://lol-engine.moomoo.games/Architecture/) | Design and rationale |
+| [Troubleshooting](https://lol-engine.moomoo.games/Troubleshooting/) | Common issues |
 
 ## Features
 
@@ -27,7 +27,7 @@ A comprehensive, modular game development framework for Unity 6000.0+. Built on 
 - **Determinism & Content** — Deterministic named RNG streams (`IRngService`), the `ModelDb` content registry, the `AbstractModel` canonical/mutable boundary, and `TestMode` test hooks.
 - **Utilities** — `TypedPoolBag`, `AbstractOdds` / `AntiPityOdds` (anti-pity with full save/load round-trip), a Notification system, Encryption & Compression services, and assorted helper classes and extensions.
 
-Per-system guides live on the [documentation site](https://alien-tardigrade.github.io/LoL-Engine-README/).
+Per-system guides live on the [documentation site](https://lol-engine.moomoo.games/).
 
 ## Requirements
 
@@ -38,7 +38,7 @@ Per-system guides live on the [documentation site](https://alien-tardigrade.gith
 | Platform | Status |
 |---|---|
 | Windows / macOS / Linux (Mono & IL2CPP) | Supported |
-| iOS / Android (IL2CPP) | Supported — read the [IL2CPP guide](https://alien-tardigrade.github.io/LoL-Engine-README/IL2CPP/) before shipping (managed code stripping) |
+| iOS / Android (IL2CPP) | Supported — read the [IL2CPP guide](https://lol-engine.moomoo.games/IL2CPP/) before shipping (managed code stripping) |
 | WebGL | Not supported in 1.0 (async save/load and the file log sink use background threads, which WebGL lacks) |
 
 ### Dependencies
@@ -61,4 +61,4 @@ Optional: `com.unity.inputsystem` (use directly in game code via `InputActionAss
 - **License** — see [LICENSE.md](LICENSE.md)
 - **Changelog** — see [CHANGELOG.md](CHANGELOG.md)
 - **Support** — unitysupport@moomoo.games
-- **Documentation** — https://alien-tardigrade.github.io/LoL-Engine-README/
+- **Documentation** — https://lol-engine.moomoo.games/
