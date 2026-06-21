@@ -3151,7 +3151,7 @@ Configs Path: &quot;Configs/&quot;              &lt;-- Where your configs live
 <li><strong>File &gt; New Scene</strong> (Empty scene)</li>
 <li>Save as: <code>Assets/Scenes/Boot.unity</code> (or any name you prefer)</li>
 <li>Create empty GameObject named <code>EngineInitializer</code></li>
-<li>Add component: <strong>LoLEngine &gt; Core &gt; ImprovedGameInitializer</strong></li>
+<li>Add component: click <strong>Add Component</strong>, then type <code>ImprovedGameInitializer</code> in the search box (the component has no custom menu path, so find it by name)</li>
 <li>In Inspector, assign:</li>
 <li><strong>Service Configuration:</strong> Your <code>ServiceConfiguration</code> asset</li>
 <li><strong>Resource Path Config:</strong> Your <code>ResourcePathConfig</code> asset (optional)</li>
@@ -3269,13 +3269,12 @@ Configs Path: &quot;Configs/&quot;              &lt;-- Where your configs live
 <span class="n">GameObject</span><span class="w"> </span><span class="n">enemy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">Spawn</span><span class="p">(</span><span class="n">enemyPrefab</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="n">rotation</span><span class="p">);</span>
 <span class="k">this</span><span class="p">.</span><span class="n">Despawn</span><span class="p">(</span><span class="n">enemy</span><span class="p">);</span>
 
-<span class="c1">// Events</span>
-<span class="k">this</span><span class="p">.</span><span class="n">EventStartListening</span><span class="o">&lt;</span><span class="n">MyEvent</span><span class="o">&gt;</span><span class="p">();</span>
-<span class="k">this</span><span class="p">.</span><span class="n">EventStopListening</span><span class="o">&lt;</span><span class="n">MyEvent</span><span class="o">&gt;</span><span class="p">();</span>
-
 <span class="c1">// Delayed calls</span>
 <span class="k">this</span><span class="p">.</span><span class="n">DelayedCall</span><span class="p">(()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;After 2 seconds&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">);</span>
 </code></pre></div>
+<blockquote>
+<p><strong>Event listening is not a plain MonoBehaviour shortcut.</strong> <code>EventStartListening&lt;T&gt;()</code> / <code>EventStopListening&lt;T&gt;()</code> are extension methods on <code>IEventListener&lt;T&gt;</code>, not on <code>MonoBehaviour</code>, so they only compile from a type that implements that interface — e.g. <code>public class GameOverUI : MonoBehaviour, IEventListener&lt;PlayerDiedEvent&gt;</code>. Inside such a type you can call <code>this.EventStartListening&lt;PlayerDiedEvent&gt;();</code>. See the event-listening example later in this guide.</p>
+</blockquote>
 <hr />
 <h2 id="7-optional-services-setup">7. Optional Services Setup<a class="headerlink" href="#7-optional-services-setup" title="Permanent link">&para;</a></h2>
 <p>Enable these in <code>ServiceConfiguration</code> based on what your game needs.</p>
@@ -3297,8 +3296,8 @@ Configs Path: &quot;Configs/&quot;              &lt;-- Where your configs live
 
 Pool Settings:
 ├── Use Object Pooling: true
-├── Initial Pool Size: 10
-└── Max Pool Size: 50
+├── Initial Pool Size: 16
+└── Max Pool Size: 32
 </code></pre></div></p>
 <p><strong>Usage:</strong>
 <div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">audioService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAudioService</span><span class="o">&gt;</span><span class="p">();</span>
@@ -3565,9 +3564,9 @@ Always unsubscribe listeners in <code>OnDisable</code>/<code>OnDestroy</code> to
 <h3 id="initialization-phases">Initialization Phases<a class="headerlink" href="#initialization-phases" title="Permanent link">&para;</a></h3>
 <p>LoL Engine initializes services in phases for proper dependency ordering:</p>
 <ol>
-<li><strong>Core Phase</strong> — Essential services (EventManager, ResourceService, ObjectPool, TimeService)</li>
-<li><strong>Feature Phase</strong> — Engine services (Audio, Serialization, Compression, Encryption)</li>
-<li><strong>Game Phase</strong> — Game systems (Save System, Localization, Game State)</li>
+<li><strong>Core Phase</strong> — Essential services (EventManager, ResourceService, ObjectPool, TimeService, RNG)</li>
+<li><strong>Feature Phase</strong> — Engine services (Compression, Encryption, Serialization, Save System, Localization, Audio, Notifications)</li>
+<li><strong>Game Phase</strong> — Game systems (Game State, Asset Updater)</li>
 <li><strong>Custom Phase</strong> — Your custom services (via <code>IServiceRegistrar</code> or inspector entries)</li>
 </ol>
 <p>This ensures dependencies are always available when needed. See <a href="../ServiceDependencies/">ServiceDependencies.md</a> for attribute-based ordering hints.</p>
@@ -3581,14 +3580,15 @@ Always unsubscribe listeners in <code>OnDisable</code>/<code>OnDestroy</code> to
 <li>[ ] No console compilation errors</li>
 </ul>
 <h3 id="after-pressing-play">After Pressing Play<a class="headerlink" href="#after-pressing-play" title="Permanent link">&para;</a></h3>
-<p><strong>Expected Console Output:</strong>
-<div class="highlight"><pre><span></span><code>LoLEngine: ServiceLocator initialized
-LoLEngine: Registering core services...
-LoLEngine: EventManager initialized
-LoLEngine: ResourceService initialized
+<p><strong>Expected Console Output:</strong></p>
+<p>Each line is formatted by the engine's console sink as <code>[f{frame}] [MM:SS.mmm] ClassName.MethodName: {message}</code>. The frame numbers, timestamps, and the final service count vary with your configuration:</p>
+<div class="highlight"><pre><span></span><code>[f1] [00:00.012] ImprovedGameInitializer.InitializeEngineAsync: Starting LoL Engine initialization...
+[f1] [00:00.020] ConfigurableServiceInitializer.InitializeServicesAsync: Starting service initialization...
+[f1] [00:00.045] ResourceService.Initialize: ResourceService initialized
 ...
-LoLEngine: All services initialized successfully
-</code></pre></div></p>
+[f1] [00:00.071] ConfigurableServiceInitializer.InitializeServicesAsync: Successfully initialized 14 services
+[f1] [00:00.073] ImprovedGameInitializer.InitializeEngineAsync: LoL Engine initialization completed successfully
+</code></pre></div>
 <h3 id="quick-test-script">Quick Test Script<a class="headerlink" href="#quick-test-script" title="Permanent link">&para;</a></h3>
 <p>Add this to verify everything works:</p>
 <div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>

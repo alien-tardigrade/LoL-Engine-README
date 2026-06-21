@@ -3720,7 +3720,9 @@ ITEM_COUNT[other],{count} items,{count} objets,{count} przedmiotów
 <span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadLocalizedAssets</span><span class="p">()</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// Load localized sprite</span>
-<span class="w">        </span><span class="c1">// Place sprites in: Resources/Localization/Assets/en/, /es/, etc.</span>
+<span class="w">        </span><span class="c1">// Place assets under: Resources/Localization/Tables/Assets/&lt;Language&gt;/&lt;KEY&gt;</span>
+<span class="w">        </span><span class="c1">// Folders use the SystemLanguage enum name (English, Spanish, ...), NOT ISO codes,</span>
+<span class="w">        </span><span class="c1">// e.g. Resources/Localization/Tables/Assets/English/CHARACTER_PORTRAIT</span>
 <span class="w">        </span><span class="n">Sprite</span><span class="w"> </span><span class="n">localizedSprite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_localization</span><span class="p">.</span><span class="n">GetLocalizedAsset</span><span class="o">&lt;</span><span class="n">Sprite</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;CHARACTER_PORTRAIT&quot;</span><span class="p">);</span>
 <span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">localizedSprite</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
 <span class="w">        </span><span class="p">{</span>

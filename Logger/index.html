@@ -2066,7 +2066,7 @@
 </tr>
 </tbody>
 </table>
-<p>Levels are ordered: <code>Debug &lt; Info &lt; Warning &lt; Emphasis &lt; Error</code>. Setting <code>LOGLevel = LogLevel.Warning</code> filters out Debug and Info messages.</p>
+<p>The <code>LogLevel</code> enum is ordered <code>Debug &lt; Info &lt; Warning &lt; Emphasis &lt; Error</code>, but the level filter is <strong>not</strong> a simple ordinal cutoff. Setting <code>LoLLogger.LOGLevel = LogLevel.Warning</code> passes only <code>Warning</code> and <code>Error</code> — it filters out <code>Debug</code>, <code>Info</code>, <strong>and <code>Emphasis</code></strong> (even though <code>Emphasis</code> ranks above <code>Warning</code> in the enum). To keep milestone (<code>Emphasis</code>) logs while hiding <code>Debug</code>/<code>Info</code>, set the level to <code>LogLevel.Emphasis</code>, which passes <code>Emphasis</code>, <code>Warning</code>, and <code>Error</code>.</p>
 <h3 id="release-build-stripping">Release Build Stripping<a class="headerlink" href="#release-build-stripping" title="Permanent link">&para;</a></h3>
 <p><code>Log</code>, <code>DebugLog</code>, and <code>LogEmphasis</code> methods are decorated with <code>[Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]</code>. In release builds (where neither symbol is defined), the <strong>entire call site is stripped by the compiler</strong> — including argument evaluation. This means:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// In a release build, this line compiles to nothing — ExpensiveDebugInfo() is never called</span>

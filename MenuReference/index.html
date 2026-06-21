@@ -1890,7 +1890,7 @@
 </tr>
 <tr>
 <td><strong>Localization &gt; Create Asset Folders</strong></td>
-<td>Creates the <code>Resources</code> folder layout the localization system expects (localized text, images, audio).</td>
+<td>Creates <code>Assets/Resources/Localization/Tables/Assets/&lt;Language&gt;/</code> folders for six languages (English, French, German, Japanese, Spanish, Chinese). Localized assets are keyed under these per-language folders — there are no per-type (text/image/audio) subfolders.</td>
 </tr>
 <tr>
 <td><strong>Localization &gt; Split CSV by Language</strong></td>
@@ -1916,7 +1916,7 @@
 </tr>
 <tr>
 <td><strong>Validate Localization Tables</strong></td>
-<td>Confirms that every key in each localization CSV exists in all of that file's language columns, logging an error per missing translation. Returns silently when all tables are complete.</td>
+<td>Confirms that every key in each localization CSV exists in all of that file's language columns, logging an error per missing translation. On success it logs an informational Console message (<code>[LocValidator] All N localization table(s) valid — no missing translations.</code>).</td>
 </tr>
 </tbody>
 </table>
@@ -1941,7 +1941,7 @@
 </tr>
 <tr>
 <td><strong>Audio &gt; Mark Audio Assets as Addressable</strong></td>
-<td>Scans <code>Assets/Audio</code>, <code>Assets/Sounds</code>, and <code>Assets/Music</code> for <code>AudioClip</code>s, registers each as an Addressable addressed by file name, and labels it by folder (Music / SFX / UI).</td>
+<td>Scans <code>Assets/Audio</code>, <code>Assets/Sounds</code>, and <code>Assets/Music</code> for <code>AudioClip</code>s, registers each as an Addressable addressed by file name, and labels it by path substring: <code>Audio_Music</code>, <code>Audio_SFX</code> (also matches <code>Effects</code>), <code>Audio_UI</code>, or <code>Audio_Voice</code> (also matches <code>Dialog</code>).</td>
 </tr>
 <tr>
 <td><strong>Audio &gt; Create Audio Snapshot - Normal</strong></td>

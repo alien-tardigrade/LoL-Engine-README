@@ -2664,7 +2664,7 @@
 <li><code>saveDirectory</code>, <code>saveFileExtension</code>, <code>obfuscatedSaveFileExtension</code>, <code>encryptedSaveFileExtension</code></li>
 <li><code>compressSaveFiles</code>, <code>compressionLevelForSaveFiles</code></li>
 <li>
-<p><code>obfuscateSaveFiles</code> (default), <code>encryptSaveFiles</code>, <code>defaultEncryptionKey</code>, <code>encryptionKeySeed</code></p>
+<p><code>obfuscateSaveFiles</code> (default), <code>encryptSaveFiles</code>, <code>encryptionKeySeed</code> (the key source for both); <code>defaultEncryptionKey</code> is deprecated/unused</p>
 </li>
 <li>
 <p><code>SaveConfig</code> (Resources/Configs/DefaultSaveConfig):</p>
@@ -2800,7 +2800,7 @@
 </tr>
 <tr>
 <td><strong>Encryption</strong></td>
-<td><code>.esav</code></td>
+<td><code>.esave</code></td>
 <td>Payment data, PII, compliance requirements</td>
 </tr>
 <tr>
@@ -2842,16 +2842,17 @@
 <span class="n">obfuscateSaveFiles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w">   </span><span class="c1">// on by default</span>
 <span class="n">encryptSaveFiles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span><span class="w">      </span><span class="c1">// only for sensitive data</span>
 </code></pre></div>
+<p><strong>Set a unique key seed.</strong> Both obfuscation and encryption derive their key from <code>LoLEngineConfig.encryptionKeySeed</code>. If you leave it empty, the engine falls back to a fixed salt that ships inside the package — i.e. the same, publicly-derivable default key for every game that doesn't set one. Set <code>encryptionKeySeed</code> to a value unique to your game and keep it stable across releases (changing it invalidates existing saves). Treat a production seed as a secret: inject it via CI / environment at build time rather than committing it. See <a href="../Config/#security-best-practices">Config — Security Best Practices</a>.</p>
 <p><strong>Obfuscation</strong> — automatic when enabled; no extra code at save sites:</p>
 <div class="highlight"><pre><span></span><code><span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">SaveGameAsync</span><span class="p">(</span><span class="s">&quot;save1&quot;</span><span class="p">);</span><span class="w">  </span><span class="c1">// writes save1.osav</span>
-<span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">LoadGameAsync</span><span class="p">(</span><span class="s">&quot;save1&quot;</span><span class="p">);</span><span class="w">  </span><span class="c1">// auto-detects .osav / .esav / .sav</span>
+<span class="k">await</span><span class="w"> </span><span class="n">_saveSystem</span><span class="p">.</span><span class="n">LoadGameAsync</span><span class="p">(</span><span class="s">&quot;save1&quot;</span><span class="p">);</span><span class="w">  </span><span class="c1">// auto-detects .osav / .esave / .sav</span>
 </code></pre></div>
 <p>Direct service access (advanced):</p>
 <div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">obfuscation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IObfuscationService</span><span class="o">&gt;</span><span class="p">();</span>
 <span class="kt">string</span><span class="w"> </span><span class="n">obfuscated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obfuscation</span><span class="p">.</span><span class="n">Obfuscate</span><span class="p">(</span><span class="n">plainText</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
 <span class="kt">string</span><span class="w"> </span><span class="n">restored</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obfuscation</span><span class="p">.</span><span class="n">Deobfuscate</span><span class="p">(</span><span class="n">obfuscated</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
 </code></pre></div>
-<p><strong>Encryption</strong> — enable <code>encryptSaveFiles</code> in <code>LoLEngineConfig</code>. Keys come from <code>SecureKeyProvider</code> + optional <code>encryptionKeySeed</code>. <strong>Never commit production keys</strong> — inject via CI/environment at build time.</p>
+<p><strong>Encryption</strong> — enable <code>encryptSaveFiles</code> in <code>LoLEngineConfig</code>. Keys come from <code>SecureKeyProvider</code>, derived from your <code>encryptionKeySeed</code> (set a unique per-game seed — see the note above). <strong>Never commit production keys/seeds</strong> — inject via CI/environment at build time.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Keys are wired by ConfigurableServiceInitializer from LoLEngineConfig</span>
 <span class="kt">var</span><span class="w"> </span><span class="n">encryption</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IEncryptionService</span><span class="o">&gt;</span><span class="p">();</span>
 <span class="kt">string</span><span class="w"> </span><span class="n">encrypted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">encryption</span><span class="p">.</span><span class="n">EncryptString</span><span class="p">(</span><span class="n">sensitiveData</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">);</span>
@@ -2861,7 +2862,7 @@
 <ul>
 <li>Obfuscation does not stop determined reverse engineering — validate loaded data (sanity checks, checksums).</li>
 <li>For multiplayer, validate critical values server-side.</li>
-<li>Migrating encryption → obfuscation: new saves use <code>.osav</code>; old <code>.esav</code> / <code>.sav</code> files still load.</li>
+<li>Migrating encryption → obfuscation: new saves use <code>.osav</code>; old <code>.esave</code> / <code>.sav</code> files still load.</li>
 </ul>
 <h3 id="compression-icompressionservice">Compression (<code>ICompressionService</code>)<a class="headerlink" href="#compression-icompressionservice" title="Permanent link">&para;</a></h3>
 <p>Enable in <code>ServiceConfiguration</code>: <strong>Enable Compression Service</strong>. Toggle save compression in <strong><code>LoLEngineConfig</code></strong> (<code>compressSaveFiles</code>, <code>compressionLevelForSaveFiles</code>).</p>

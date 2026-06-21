@@ -1285,55 +1285,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#45-thread-safety" class="md-nav__link">
+  <a href="#45-threading-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.5 Thread Safety
+        4.5 Threading Model
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="4.5 Thread Safety">
+    <nav class="md-nav" aria-label="4.5 Threading Model">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#thread-safe-operations" class="md-nav__link">
+  <a href="#defensive-locking-not-a-concurrency-promise" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Thread-Safe Operations:
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#implementation-details" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Implementation Details:
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#thread-safe-usage-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Thread-Safe Usage Example:
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#performance-characteristics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Performance Characteristics:
+        Defensive locking (not a concurrency promise)
       
     </span>
   </a>
@@ -2063,55 +2030,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#45-thread-safety" class="md-nav__link">
+  <a href="#45-threading-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.5 Thread Safety
+        4.5 Threading Model
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="4.5 Thread Safety">
+    <nav class="md-nav" aria-label="4.5 Threading Model">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#thread-safe-operations" class="md-nav__link">
+  <a href="#defensive-locking-not-a-concurrency-promise" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Thread-Safe Operations:
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#implementation-details" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Implementation Details:
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#thread-safe-usage-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Thread-Safe Usage Example:
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#performance-characteristics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Performance Characteristics:
+        Defensive locking (not a concurrency promise)
       
     </span>
   </a>
@@ -2424,42 +2358,24 @@
 <li><code>PreloadPool(this MonoBehaviour behaviour, GameObject prefab, int count)</code>: Preloads a specified number of objects for a prefab.</li>
 <li><code>PreloadPoolWithConfig(this MonoBehaviour behaviour, GameObject prefab, int count, int? maxSize = null, bool? collectionChecks = null)</code>: Preloads a specified number of objects for a prefab, allowing configuration of pool parameters.</li>
 </ul>
-<h3 id="45-thread-safety">4.5 Thread Safety<a class="headerlink" href="#45-thread-safety" title="Permanent link">&para;</a></h3>
-<p>The Object Pool system is <strong>fully thread-safe</strong> and supports concurrent access from multiple threads.</p>
-<h4 id="thread-safe-operations">Thread-Safe Operations:<a class="headerlink" href="#thread-safe-operations" title="Permanent link">&para;</a></h4>
-<p><strong>Get()</strong> - Safe for concurrent calls
-<strong>Return()</strong> - Safe for concurrent calls
-<strong>PreloadPool()</strong> - Safe for concurrent calls
-<strong>All Count properties</strong> - Safe for concurrent reads
-<strong>UpdateCallbacks()</strong> - Safe for concurrent updates
-<strong>UpdateMaxSize()</strong> - Safe for concurrent updates</p>
-<h4 id="implementation-details">Implementation Details:<a class="headerlink" href="#implementation-details" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>Lock Optimization</strong>: Locks are held for minimal duration to maximize performance</li>
-<li><strong>Unity API Isolation</strong>: Unity API calls (SetActive, transform operations) happen <strong>outside locks</strong> to prevent blocking</li>
-<li><strong>Callback Safety</strong>: onGet/onReturn callbacks execute <strong>outside locks</strong> to prevent deadlocks</li>
-<li><strong>No Deadlock Risk</strong>: Even if callbacks access the pool, they won't cause deadlocks</li>
-</ul>
-<h4 id="thread-safe-usage-example">Thread-Safe Usage Example:<a class="headerlink" href="#thread-safe-usage-example" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">// Safe to call from multiple threads simultaneously</span>
-<span class="n">Task</span><span class="p">.</span><span class="n">Run</span><span class="p">(()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">bullet1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poolService</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">Bullet</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;BulletPool&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">bulletPrefab</span><span class="p">);</span>
-<span class="w">    </span><span class="c1">// Use bullet1</span>
-<span class="p">});</span>
-
-<span class="n">Task</span><span class="p">.</span><span class="n">Run</span><span class="p">(()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">bullet2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">poolService</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">Bullet</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;BulletPool&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">bulletPrefab</span><span class="p">);</span>
-<span class="w">    </span><span class="c1">// Use bullet2</span>
-<span class="p">});</span>
-
-<span class="c1">// Both threads can safely access the same pool</span>
-</code></pre></div>
-<h4 id="performance-characteristics">Performance Characteristics:<a class="headerlink" href="#performance-characteristics" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>Lock Overhead</strong>: &lt; 1% in typical usage (measured with 1000 concurrent operations)</li>
-<li><strong>Lock Contention</strong>: Minimal due to short critical sections</li>
-<li><strong>Scalability</strong>: Linear performance up to 8+ concurrent threads</li>
-</ul>
+<h3 id="45-threading-model">4.5 Threading Model<a class="headerlink" href="#45-threading-model" title="Permanent link">&para;</a></h3>
+<p><strong>The Object Pool system is main-thread-only.</strong> Call <code>Get</code>, <code>Return</code>, <code>PreloadPool</code>, <code>ClearPool</code>,
+<code>ClearAllPools</code>, <code>GetPoolStats</code>, <code>GetPoolIds</code>, and the <code>Spawn</code> / <code>Despawn</code> extensions only from the
+Unity main thread.</p>
+<p>This is a hard Unity constraint, not a library limitation: pool operations instantiate, activate,
+deactivate, and reparent <code>GameObject</code>s, and Unity's scene/<code>GameObject</code> APIs (<code>Instantiate</code>,
+<code>SetActive</code>, <code>transform</code> mutation) throw <code>UnityException</code> ("can only be called from the main thread")
+when called from a background thread. There is no way to make these operations run off the main
+thread, so do <strong>not</strong> call pool methods from <code>Task.Run</code>, <code>System.Threading.Thread</code>, or any worker.</p>
+<h4 id="defensive-locking-not-a-concurrency-promise">Defensive locking (not a concurrency promise)<a class="headerlink" href="#defensive-locking-not-a-concurrency-promise" title="Permanent link">&para;</a></h4>
+<p>For robustness, the service's internal pool/prefab/callback dictionaries and each pool's internal
+active/inactive collections are guarded by locks. This means an accidental concurrent call will not
+silently corrupt the pool's bookkeeping. It does <strong>not</strong> make pool operations safe to run off the
+main thread — the Unity API calls inside them would still throw. Treat the locks as a safety net,
+not a license for multithreaded spawning.</p>
+<p>If you need to drive spawning from background work, compute on the worker thread and marshal the
+actual <code>Get</code> / <code>Return</code> call back to the main thread (e.g. via a main-thread dispatcher, an
+<code>Awaitable</code>, or by queuing the request for your update loop).</p>
 <h3 id="46-advanced-pool-management">4.6 Advanced Pool Management<a class="headerlink" href="#46-advanced-pool-management" title="Permanent link">&para;</a></h3>
 <h4 id="custom-pool-ids">Custom Pool IDs<a class="headerlink" href="#custom-pool-ids" title="Permanent link">&para;</a></h4>
 <p>You can create <strong>multiple pools</strong> for the same prefab with different configurations:</p>
@@ -2521,8 +2437,10 @@
 </code></pre></div></li>
 <li>
 <p>Spawning Objects:
-   <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="c1">// Get a component from a pooled object with pool configuration</span>
-<span class="w"> </span><span class="n">BulletComponent</span><span class="w"> </span><span class="n">bullet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">Spawn</span><span class="o">&lt;</span><span class="n">BulletComponent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">bulletPrefab</span><span class="p">,</span><span class="w"> </span><span class="n">capacity</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="n">collectionChecks</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="p">:</span><span class="w"> </span><span class="n">spawnPosition</span><span class="p">,</span><span class="w"> </span><span class="n">rotation</span><span class="p">:</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
+   <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="c1">// Get a component from a pooled object with pool configuration.</span>
+<span class="w"> </span><span class="c1">// Use SpawnWithConfig&lt;T&gt; for the capacity/maxSize/collectionChecks options;</span>
+<span class="w"> </span><span class="c1">// the plain Spawn&lt;T&gt; overload only takes position and rotation.</span>
+<span class="w"> </span><span class="n">BulletComponent</span><span class="w"> </span><span class="n">bullet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="n">SpawnWithConfig</span><span class="o">&lt;</span><span class="n">BulletComponent</span><span class="o">&gt;</span><span class="p">(</span><span class="n">bulletPrefab</span><span class="p">,</span><span class="w"> </span><span class="n">capacity</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">maxSize</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="n">collectionChecks</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="p">:</span><span class="w"> </span><span class="n">spawnPosition</span><span class="p">,</span><span class="w"> </span><span class="n">rotation</span><span class="p">:</span><span class="w"> </span><span class="n">Quaternion</span><span class="p">.</span><span class="n">identity</span><span class="p">);</span>
 <span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">bullet</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
 <span class="w"> </span><span class="p">{</span>
 <span class="w">     </span><span class="c1">// Initialize bullet</span>

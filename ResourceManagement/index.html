@@ -2646,7 +2646,7 @@
 <ul>
 <li><strong>Unified Asset Loading API</strong> - Load assets from Resources, AssetBundles, or Addressables with a single API</li>
 <li><strong>AssetReference Support</strong> - Type-safe asset loading with Unity's AssetReference system</li>
-<li><strong>Thread-Safe Operations</strong> - Production-ready thread safety with ReaderWriterLockSlim for concurrent access</li>
+<li><strong>Thread-Safe Operations</strong> - Production-ready thread safety using <code>lock</code>-based (Monitor) synchronization around the cache and handle tables</li>
 <li><strong>Handle Leak Prevention</strong> - Comprehensive Addressables handle tracking prevents memory leaks</li>
 <li><strong>Addressables Integration</strong> - First-class support for Unity Addressables with automatic initialization</li>
 <li><strong>Asynchronous Loading</strong> - Full support for asynchronous operations using Tasks</li>
@@ -2670,7 +2670,7 @@
 <ul>
 <li><strong>Thread-Safe Handle Tracking</strong>: All Addressables AsyncOperationHandle objects are tracked thread-safely</li>
 <li><strong>Leak Prevention</strong>: Comprehensive handle lifecycle management prevents memory leaks</li>
-<li><strong>Concurrent Access</strong>: ReaderWriterLockSlim enables multiple concurrent readers for better performance</li>
+<li><strong>Synchronized Access</strong>: The cache and handle tables are guarded by exclusive <code>lock</code> (Monitor) sections, so concurrent calls from multiple threads are serialized safely</li>
 <li><strong>Resource Cleanup</strong>: Automatic handle cleanup during service shutdown</li>
 <li><strong>Handle Monitoring</strong>: Debug handle counts and detect potential leaks early</li>
 </ul>

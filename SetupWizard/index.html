@@ -1963,6 +1963,7 @@
 <li><code>DefaultResourceManagementConfig</code> — when Resource Service is on.</li>
 </ul>
 <p>Click <strong>Create Config Assets</strong> to generate them. Each row shows <code>[ ]</code> before creation and <code>[created]</code> after.</p>
+<p><strong>Unique save key seed.</strong> If you enable <strong>Data Persistence</strong> or <strong>Encryption</strong>, the wizard writes a unique <code>encryptionKeySeed</code> into a freshly created <code>DefaultLoLEngineConfig</code>. This ensures your obfuscated/encrypted saves use a key unique to your game rather than the shared package-default key (which is casual-edit protection only). The wizard <strong>never overwrites a seed you already have</strong> — re-running it, or choosing <strong>Keep Existing</strong>, leaves your current seed alone so existing saves stay valid. Keep the seed stable across releases (changing it invalidates existing saves), and treat a production seed as a secret — see <a href="../Config/#security-best-practices">Config — Security Best Practices</a>.</p>
 <p>If an asset already exists at the target path, the wizard asks before replacing it:</p>
 <p><img alt="Setup Wizard overwrite prompt for an existing asset" src="../images/wizard-3b-overwrite-prompt.png" /></p>
 <p>Choose <strong>Keep Existing</strong> to preserve your current asset (recommended when re-running the wizard on a configured project), or <strong>Overwrite</strong> to replace it with a fresh default. Either way the wizard records the asset as present and lets you continue.</p>
@@ -2006,6 +2007,7 @@
 </tbody>
 </table>
 <p>The validator checks that every expected asset exists, runs <code>ValidateConfiguration()</code> on the <code>ServiceConfiguration</code> and <code>ResourcePathConfig</code>, and confirms the scene initializer has both configs assigned. Use <strong>Re-run Validation</strong> after fixing an issue. The <code>[ERROR]</code> lines above are expected when scene setup was skipped — complete Step 4 (or assign the configs to your initializer manually) and re-run to clear them.</p>
+<p>When you enable <strong>Data Persistence</strong> or <strong>Encryption</strong>, the validator also checks <code>DefaultLoLEngineConfig.encryptionKeySeed</code>. If it's empty you'll get a <code>[WARN]</code>: saves still work but fall back to the shared package-default key (casual-edit protection only) instead of a key unique to your game. The wizard auto-fills a unique seed when it creates a fresh config (Step 3), so you'll usually see <code>[OK]</code> here — but if you kept an existing config with an empty seed, set a unique <code>encryptionKeySeed</code> and re-run. See <a href="../Config/#security-best-practices">Config — Security Best Practices</a>.</p>
 <p>Click <strong>Finish</strong> to close the wizard.</p>
 <hr />
 <h2 id="after-the-wizard">After the Wizard<a class="headerlink" href="#after-the-wizard" title="Permanent link">&para;</a></h2>

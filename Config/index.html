@@ -2487,8 +2487,8 @@
   - Use for sensitive data only (payment info, personal data)
   - Slower but stronger security
   - Overrides obfuscation if both are enabled
-- <code>defaultEncryptionKey</code> - Default key for save encryption (if <code>encryptSaveFiles = true</code>)
-- <code>encryptionKeySeed</code> - Custom seed for key generation</p>
+- <code>defaultEncryptionKey</code> - <strong>Deprecated / not used in 1.0</strong> — has no effect; the save key is derived from <code>encryptionKeySeed</code>. Slated for removal in 2.0.
+- <code>encryptionKeySeed</code> - <strong>The</strong> save key source. Both obfuscation and encryption derive their key from this seed. Set a value unique to your game (see <a href="#security-best-practices">Security Best Practices</a>).</p>
 <p><strong>Compression</strong>:
 - <code>compressSaveFiles</code> - Whether to compress save files by default (recommended: true)
 - <code>compressionLevelForSaveFiles</code> - Level of compression to use (Fastest, Optimal, SmallestSize)</p>
@@ -2629,19 +2629,21 @@
 <p>Use <code>encryptionKeySeed</code> instead of direct encryption keys</p>
 </li>
 <li>
-<p><strong>Using Secure Key Generation:</strong></p>
+<p><strong>Set a unique <code>encryptionKeySeed</code> per game:</strong></p>
 </li>
-<li>Instead of hardcoded encryption keys, use the <code>encryptionKeySeed</code> property</li>
-<li>The <code>SecureKeyProvider</code> will generate secure keys from this seed</li>
-<li>Leave <code>encryptionKeySeed</code> empty to use the internal secure mechanism</li>
+<li>Instead of hardcoded keys, set the <code>encryptionKeySeed</code> property to a value unique to your game; <code>SecureKeyProvider</code> derives the key from it.</li>
+<li><strong>Set this even if you only use obfuscation (the default).</strong> If you leave <code>encryptionKeySeed</code> empty, the key is derived from a fixed salt that ships inside the LoL Engine package source — so every game that leaves it empty derives the <em>same</em>, publicly-derivable default key. That is casual-edit protection only, not real security.</li>
+<li>Treat the seed like a secret: don't commit a production seed to a public repo; inject it via environment variables / CI at build time and write it into <code>LoLEngineConfig</code> at startup.</li>
+<li><strong>Migration:</strong> the derived key depends on the seed, so changing the seed (or upgrading from an engine version with a different internal default salt) changes the key — saves written with the old key will fail to load. Choose your seed before you ship and keep it stable.</li>
 </ol>
 <p>Example:
 <div class="highlight"><pre><span></span><code><span class="c1">// Wired by ConfigurableServiceInitializer from LoLEngineConfig</span>
 <span class="kt">string</span><span class="w"> </span><span class="n">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engineConfig</span><span class="p">.</span><span class="n">encryptionKeySeed</span><span class="p">;</span>
 <span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">secureKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SecureKeyProvider</span><span class="p">.</span><span class="n">GetEncryptionKey</span><span class="p">(</span><span class="n">seed</span><span class="p">);</span>
 
-<span class="c1">// Create encryption service with secure key</span>
-<span class="kt">var</span><span class="w"> </span><span class="n">encryptionService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AesEncryptionService</span><span class="p">(</span><span class="n">secureKey</span><span class="p">);</span>
+<span class="c1">// Create encryption service — the constructor takes the service locator first,</span>
+<span class="c1">// then an optional explicit key (omit the key to derive one from encryptionKeySeed)</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">encryptionService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AesEncryptionService</span><span class="p">(</span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">,</span><span class="w"> </span><span class="n">secureKey</span><span class="p">);</span>
 </code></pre></div></p>
 
 

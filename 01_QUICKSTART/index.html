@@ -1817,7 +1817,7 @@
 </blockquote>
 <hr />
 <h2 id="step-3-open-a-demo-scene-10-seconds">Step 3 — Open a Demo Scene (10 seconds)<a class="headerlink" href="#step-3-open-a-demo-scene-10-seconds" title="Permanent link">&para;</a></h2>
-<p>Five demo scenes <strong>ship pre-wired</strong> under <code>Assets/LoLEngine/Samples~/</code>:</p>
+<p>Seven demo scenes <strong>ship pre-wired</strong> under <code>Assets/LoLEngine/Samples~/</code>:</p>
 <table>
 <thead>
 <tr>
@@ -1846,12 +1846,20 @@
 <td>Localization</td>
 <td><code>Localization/Scenes/LocalizedText.unity</code></td>
 </tr>
+<tr>
+<td>RNG Demo</td>
+<td><code>Rng/Scenes/RngDemo.unity</code></td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td><code>NotificationSystem/Scenes/Notifications.unity</code></td>
+</tr>
 </tbody>
 </table>
-<p><strong>Optional — regenerate scenes:</strong> If you changed config output paths in Step 2, run <strong>Tools → LoL Engine → Create Sample Scenes</strong> to re-wire scenes against your <code>ServiceConfiguration</code>. This overwrites the bundled <code>.unity</code> files.</p>
+<p><strong>Optional — regenerate scenes:</strong> Run <strong>Tools → LoL Engine → Create Sample Scenes</strong> to rebuild the bundled <code>.unity</code> files (for example after a Unity upgrade reserializes them). This overwrites the existing scenes.</p>
 <blockquote>
-<p>Scenes reference the <code>ServiceConfiguration</code> from Step 2. If the wizard wrote configs elsewhere, drag your asset onto the <strong>EngineInitializer</strong> component or re-run Create Sample Scenes.</p>
-<p><strong>Package Manager → Samples → Import</strong> adds optional sample folders (scripts, audio, CSVs). The five <code>.unity</code> scenes above are already in the package; import is not required to open them.</p>
+<p>Each demo scene is self-contained: it references its own bundled per-sample <code>ServiceConfiguration</code> (in that sample's <code>Configs/</code> folder), not the project config you created in Step 2. The scenes open and run standalone — you do <strong>not</strong> need to re-wire them to your Step 2 asset.</p>
+<p><strong>Package Manager → Samples → Import</strong> adds optional sample folders (scripts, audio, CSVs). The <code>.unity</code> scenes above are already in the package; import is not required to open them.</p>
 </blockquote>
 <hr />
 <h2 id="step-4-press-play-on-the-audio-demo-60-seconds">Step 4 — Press Play on the Audio Demo (60 seconds)<a class="headerlink" href="#step-4-press-play-on-the-audio-demo-60-seconds" title="Permanent link">&para;</a></h2>

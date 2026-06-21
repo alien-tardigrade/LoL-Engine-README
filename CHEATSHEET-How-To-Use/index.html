@@ -3756,11 +3756,12 @@ Support Services:
 <span class="p">};</span>
 <span class="kt">var</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_audioService</span><span class="p">.</span><span class="n">PlaySound</span><span class="p">(</span><span class="s">&quot;Audio/Music&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">);</span>
 
-<span class="c1">// Control playback</span>
-<span class="n">handle</span><span class="p">.</span><span class="n">SetVolume</span><span class="p">(</span><span class="mf">0.5f</span><span class="p">);</span>
-<span class="n">handle</span><span class="p">.</span><span class="n">Pause</span><span class="p">();</span>
-<span class="n">handle</span><span class="p">.</span><span class="n">Resume</span><span class="p">();</span>
-<span class="n">handle</span><span class="p">.</span><span class="n">Stop</span><span class="p">();</span>
+<span class="c1">// Control playback — Volume is a property on the handle;</span>
+<span class="c1">// pause/resume/stop are service methods that take the handle</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">Volume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">;</span>
+<span class="n">_audioService</span><span class="p">.</span><span class="n">PauseSound</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
+<span class="n">_audioService</span><span class="p">.</span><span class="n">ResumeSound</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
+<span class="n">_audioService</span><span class="p">.</span><span class="n">StopSound</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span><span class="w">   </span><span class="c1">// or handle.Dispose() to stop and release</span>
 
 <span class="c1">// Track control</span>
 <span class="n">_audioService</span><span class="p">.</span><span class="n">SetTrackVolume</span><span class="p">(</span><span class="n">_audioService</span><span class="p">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="s">&quot;Music&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">0.7f</span><span class="p">);</span>
@@ -3937,27 +3938,19 @@ Bus-processing path: create an AudioMixer asset, add a <code>Music</code> group 
 <li><strong>Assign to ServiceConfiguration</strong>: In ResourceManagementConfig field</li>
 </ol>
 <h3 id="resourcemanagementconfig-options">ResourceManagementConfig Options<a class="headerlink" href="#resourcemanagementconfig-options" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>Loading Settings:
-├─ Enable Addressables: true/false - Use Addressables system
-├─ Preferred Source: Addressables/Resources/AssetBundles - Primary loading method
+<div class="highlight"><pre><span></span><code>Asset Updater Settings:
+├─ Remote Catalog Url: &quot;https://moomoo.games/LoLEngine/version.json&quot; - URL of the remote version catalog JSON
+├─ Local Catalog File Name: &quot;version_catalog.json&quot; - Local catalog path (relative to persistentDataPath)
+├─ Asset Download Sub Path: &quot;UpdatedAssets&quot; - Where updated assets are stored (relative to persistentDataPath)
+│
+Addressables Settings:
+├─ Enable Addressables: true/false - Use Addressables as the primary loading system
+├─ Preferred Source: Auto/Resources/AssetBundle/Addressables - Which source to try first
 ├─ Fallback To Resources: true/false - Try Resources if Addressables fails
 │
-Memory Management:
-├─ Max Memory Budget MB: 512 - Maximum cached assets in memory
-├─ Enable Reference Counting: true/false - Track asset usage
-├─ Auto Unload Unused: true/false - Clean up unreferenced assets
-├─ Unload Interval: 60 - Seconds between cleanup checks
-│
-Performance:
-├─ Preload On Start: true/false - Load common assets at startup
-├─ Async Loading Priority: High/Normal/Low - Default load priority
-├─ Max Concurrent Loads: 4 - Simultaneous async operations
-│
-Addressables Settings (if enabled):
-├─ Remote Catalog URL: &quot;&quot; - URL for remote content catalog
-├─ Asset Download Path: &quot;&quot; - Where to download remote assets
-├─ Check For Updates: true/false - Check for catalog updates
-└─ Auto Release Handles: true/false - Automatic memory cleanup
+Resource Service Settings:
+├─ Max Memory Budget MB: 512 - Memory budget for resources, in MB (0 or negative = unlimited)
+└─ Max Cache Entries: 100 - Maximum entries in the resource cache (0 or negative = default 100)
 </code></pre></div>
 <h3 id="addressables-setup-recommended">Addressables Setup (Recommended)<a class="headerlink" href="#addressables-setup-recommended" title="Permanent link">&para;</a></h3>
 <ol>
@@ -4166,36 +4159,23 @@ Note: Engine-wide save directory, file extensions, compression, obfuscation, and
 <li><strong>Assign to ServiceConfiguration</strong>: In LocalizationConfig field</li>
 </ol>
 <h3 id="localizationconfig-options">LocalizationConfig Options<a class="headerlink" href="#localizationconfig-options" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>Language Settings:
-├─ Default Language: English - Fallback language
-├─ Use System Language: true/false - Auto-detect from OS
-├─ Supported Languages: List&lt;SystemLanguage&gt; - Available languages
-│  └─ Add languages your game supports
-│
-Table Settings:
-├─ Localization Tables Path: &quot;Localization/&quot; - Path in Resources
-├─ Table Format: CSV/JSON - File format for translations
-├─ Auto Load Tables: true/false - Load all tables on init
-├─ Missing Key Behavior: ShowKey/ShowError/UseDefault
-│  ├─ ShowKey - Display the key itself
-│  ├─ ShowError - Show error message
-│  └─ UseDefault - Use default language
-│
-Text Processing:
-├─ Enable Text Formatting: true/false - Support {0} placeholders
-├─ Enable Rich Text: true/false - Support TextMeshPro tags
-├─ RTL Language Support: true/false - Right-to-left languages
-│
-Performance:
-├─ Cache Translations: true/false - Keep in memory
-├─ Lazy Load Languages: true/false - Load only when needed
-├─ Max Cache Size: 1000 - Maximum cached strings
-│
-Debug:
-├─ Show Language Debug: true/false - Display language codes
-├─ Highlight Missing: true/false - Highlight untranslated text
-└─ Export Missing Keys: true/false - Log missing translations
+<div class="highlight"><pre><span></span><code>Default Language: English - Used when the system language is not supported
+Use System Language: true/false - Auto-detect the language from the OS
+Supported Languages: List&lt;SystemLanguage&gt; - Languages your game ships
+│  └─ Add an entry per language you support
+Localization Tables Path: &quot;Localization/Tables&quot; - Path relative to a Resources folder
+Localization Format: CSV/JSON - File format for the translation tables
+Preload All Languages: true/false - Eager-load every supported language at startup
+Language Fallbacks: List&lt;LanguageFallback&gt; - Per-language fallback chain
+│  └─ e.g. Canadian French -&gt; French -&gt; English
+String Cache Size: 1000 - Max resolved/formatted strings kept in the LRU cache (per language)
+Use Lazy Loading: true/false - Not implemented in 1.0; languages always load lazily
+│  └─ Retained for .asset compatibility; slated for removal in 2.0
+Font Config: LocalizedFontConfig - Optional per-language font switching (leave empty to skip)
 </code></pre></div>
+<blockquote>
+<p>Right-to-left (RTL) handling is automatic — <code>LocalizationService.IsCurrentLanguageRTL</code> drives it for languages like Arabic and Hebrew, so there is no RTL config toggle. A missing key (after the fallback chain is exhausted) renders as <code>#key#</code> and logs a warning; there is no "missing key behavior" setting.</p>
+</blockquote>
 <h3 id="create-localization-tables">Create Localization Tables<a class="headerlink" href="#create-localization-tables" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Create CSV files in Resources/Localization/</li>

@@ -3199,8 +3199,8 @@
 </ol>
 <p><strong>Alternative (Resources fallback):</strong>
 If not using Addressables, place the AudioMixer at:
-- Path: <code>Assets/Resources/LoLEngine/Audio/MainAudioMixer.mixer</code>
-- The engine will automatically fallback to Resources loading</p>
+- Path: <code>Assets/Resources/Audio/MainAudioMixer.mixer</code>
+- The engine will automatically fallback to Resources loading (it loads <code>Audio/MainAudioMixer</code> from a <code>Resources</code> folder)</p>
 <h3 id="step-4-service-configuration">Step 4: Service Configuration<a class="headerlink" href="#step-4-service-configuration" title="Permanent link">&para;</a></h3>
 <h4 id="41-enable-audio-services">4.1 Enable Audio Services<a class="headerlink" href="#41-enable-audio-services" title="Permanent link">&para;</a></h4>
 <ol>
@@ -3756,16 +3756,21 @@ If not using Addressables, place the AudioMixer at:
 - <strong>No throttle on Pick / Snap / Solved</strong> — picks are discrete grab-and-release events, snaps and solves are rare. Only continuous-input actions need this.</p>
 <p><strong>Starting value for tuning:</strong> ~50 ms (20 plays/sec max) is a reasonable anchor for rotation-style continuous input. Below ~30 ms it still sounds mashy even with pitch jitter; above ~100 ms you can hear the throttle kick in as "skipped" feedback. Adjust by ear. A live example of this pattern is in the Tangrams project at <code>Assets/Tangrams/Features/Puzzle/Scripts/PuzzleAudio.cs</code> (<code>PlayRotate</code>).</p>
 <h3 id="runtime-sound-control">Runtime Sound Control<a class="headerlink" href="#runtime-sound-control" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">// Control individual sounds</span>
-<span class="n">handle</span><span class="p">.</span><span class="n">SetVolume</span><span class="p">(</span><span class="mf">0.5f</span><span class="p">);</span>
-<span class="n">handle</span><span class="p">.</span><span class="n">SetPitch</span><span class="p">(</span><span class="mf">0.8f</span><span class="p">);</span>
-<span class="n">handle</span><span class="p">.</span><span class="n">Pause</span><span class="p">();</span>
-<span class="n">handle</span><span class="p">.</span><span class="n">Resume</span><span class="p">();</span>
-<span class="n">handle</span><span class="p">.</span><span class="n">Stop</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">audioService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IAudioService</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">audioService</span><span class="p">.</span><span class="n">PlaySound</span><span class="p">(</span><span class="s">&quot;Audio/SFX/Explosion&quot;</span><span class="p">);</span>
 
-<span class="c1">// Subscribe to events</span>
-<span class="n">handle</span><span class="p">.</span><span class="n">OnComplete</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Sound finished!&quot;</span><span class="p">);</span>
-<span class="n">handle</span><span class="p">.</span><span class="n">OnDestroyed</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Handle cleaned up&quot;</span><span class="p">);</span>
+<span class="c1">// Adjust playback live — Volume and Pitch are properties on the handle</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">Volume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">;</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">Pitch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">;</span>
+
+<span class="c1">// Pause / resume / stop are service methods that take the handle</span>
+<span class="n">audioService</span><span class="p">.</span><span class="n">PauseSound</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
+<span class="n">audioService</span><span class="p">.</span><span class="n">ResumeSound</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
+<span class="n">audioService</span><span class="p">.</span><span class="n">StopSound</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span><span class="w">   </span><span class="c1">// or handle.Dispose() to stop and release the sound</span>
+
+<span class="c1">// Subscribe to events — handlers receive the IAudioHandle that fired them</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">OnComplete</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">$&quot;Sound finished: {h.AudioId}&quot;</span><span class="p">);</span>
+<span class="n">handle</span><span class="p">.</span><span class="n">OnDestroyed</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Handle cleaned up&quot;</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="track-management-volume-control">Track Management &amp; Volume Control<a class="headerlink" href="#track-management-volume-control" title="Permanent link">&para;</a></h3>
 <p><strong>Understanding Volume Control:</strong></p>
@@ -3925,7 +3930,7 @@ Use <code>SimpleAudioPlayer</code> with manual Audio ID configuration per scene,
 1. <strong>Select your AudioMixer</strong> asset in Project window
 2. <strong>Check "Addressable"</strong> checkbox in Inspector
 3. <strong>Set address to</strong>: <code>LoLEngine/Audio/MainAudioMixer</code> (exactly)
-4. <strong>Alternative</strong>: Move AudioMixer to <code>Assets/Resources/LoLEngine/Audio/MainAudioMixer.mixer</code></p>
+4. <strong>Alternative</strong>: Move AudioMixer to <code>Assets/Resources/Audio/MainAudioMixer.mixer</code> (the Resources fallback loads <code>Audio/MainAudioMixer</code>)</p>
 <p><strong>Common mistake:</strong> Creating the AudioMixer but forgetting to mark it as Addressable. The engine requires either Addressables OR Resources folder placement.</p>
 <h3 id="invalidkeyexception-no-location-found-for-key-audio-assets">"InvalidKeyException: No Location found for Key" (Audio Assets)<a class="headerlink" href="#invalidkeyexception-no-location-found-for-key-audio-assets" title="Permanent link">&para;</a></h3>
 <p><strong>This error indicates invalid Addressable keys for audio files:</strong>

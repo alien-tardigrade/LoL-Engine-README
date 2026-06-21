@@ -2884,7 +2884,7 @@
 <li>Be mindful of <code>unscaledDeltaTime</code> vs. channel-specific <code>DeltaTime</code> when dealing with UI animations or effects that should not be affected by gameplay time scaling. The <code>TimeService</code> provides <code>UnscaledDeltaTime</code>.</li>
 <li>Smooth time scale transitions (<code>duration &gt; 0</code>) use unscaled time to ensure they complete correctly even if the target time scale is very low or zero.</li>
 <li>Clean up timers by calling <code>Cancel()</code> or <code>Dispose()</code> when they are no longer needed, especially for long-running or periodic timers, to prevent unnecessary updates.</li>
-<li>Use the <code>TimeManager</code>'s <code>unscaledUpdateMode</code> if the primary update loop for timers and scheduler needs to run based on real-world time rather than scaled game time (rare, but available).</li>
+<li>For timing that must ignore the game time scale (real-world time), put those timers and scheduled tasks on the built-in <strong>"Unscaled"</strong> time channel — it reads Unity's unscaled clock and is immune to both the engine's global time scale and <code>UnityEngine.Time.timeScale</code>. (Note: <code>TimeManager.unscaledUpdateMode</code> is <strong>not implemented in 1.0 and has no effect</strong> — it only logs a warning. It is retained for serialization compatibility and is slated for removal in 2.0. Do not rely on it.)</li>
 </ul>
 <h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
 <ul>

@@ -2143,7 +2143,7 @@
 <p>It supports different notification priorities, categories, custom data payloads, and automatic dismissal, making it suitable for a wide range of use cases from simple system messages to complex gameplay alerts.</p>
 <h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Enable <strong>Enable Notification Service</strong> in your <code>ServiceConfiguration</code> asset. <code>ImprovedGameInitializer</code> registers the service and creates the <code>NotificationHelper</code> automatically.</li>
+<li>Enable <strong>Enable Notification Service</strong> in your <code>ServiceConfiguration</code> asset. <code>ImprovedGameInitializer</code> registers the service automatically when the toggle is on. Auto-dismiss timing runs on the Time Service (enabled by default), so there is nothing else to wire up.</li>
 <li>Send a notification from any MonoBehaviour via the extension method:</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">LoLEngine.Core.Notifications.Extensions</span><span class="p">;</span>
@@ -2183,7 +2183,7 @@
 <h3 id="notificationextensions-extensionsnotificationextensionscs"><code>NotificationExtensions</code> (<code>Extensions/NotificationExtensions.cs</code>)<a class="headerlink" href="#notificationextensions-extensionsnotificationextensionscs" title="Permanent link">&para;</a></h3>
 <p>Provides convenient extension methods for <code>MonoBehaviour</code>s to easily send and subscribe/unsubscribe to notifications without needing to directly fetch the <code>INotificationService</code> instance every time.</p>
 <h3 id="notificationhelper-servicenotificationservicecs"><code>NotificationHelper</code> (<code>Service/NotificationService.cs</code>)<a class="headerlink" href="#notificationhelper-servicenotificationservicecs" title="Permanent link">&para;</a></h3>
-<p>A simple <code>MonoBehaviour</code> singleton used by the <code>NotificationService</code> to run coroutines, specifically for auto-dismissing notifications after their specified duration.</p>
+<p>An internal <code>MonoBehaviour</code> singleton that <code>NotificationService</code> creates on-demand <strong>only as a fallback</strong> — to run the auto-dismiss coroutine when no <code>ITimeService</code> is available. Under the default configuration (Time Service enabled) it is never created, and it is <code>internal</code>, so game code neither creates nor references it. It self-applies <code>DontDestroyOnLoad</code> and is destroyed on service shutdown.</p>
 <h2 id="key-features">Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Flexible Sending:</strong> Send notifications by providing full <code>INotification</code> objects or by specifying individual parameters (title, message, category, etc.).</li>
@@ -2208,7 +2208,7 @@
 </ul>
 </li>
 <li><strong>Auto-Dismissal:</strong><ul>
-<li>Notifications with a <code>Duration &gt; 0</code> and <code>IsPersistent = false</code> will automatically be dismissed after their duration. This is handled via the <code>NotificationHelper</code> coroutine.</li>
+<li>Notifications with a <code>Duration &gt; 0</code> and <code>IsPersistent = false</code> are automatically dismissed after their duration — except <code>Critical</code>-priority notifications, which never auto-dismiss. Auto-dismiss is driven by the <code>ITimeService</code> scheduler; the internal <code>NotificationHelper</code> coroutine is used only as a fallback when no Time Service is registered.</li>
 </ul>
 </li>
 <li><strong>Custom Data Payloads:</strong> Attach arbitrary data to notifications using a <code>Dictionary&lt;string, object&gt;</code>.</li>
@@ -2217,9 +2217,9 @@
 <li><strong>Ease of Use:</strong> Extension methods simplify common operations for <code>MonoBehaviour</code> scripts.</li>
 </ul>
 <h2 id="setup-and-registration">Setup and Registration<a class="headerlink" href="#setup-and-registration" title="Permanent link">&para;</a></h2>
-<p>To use the <code>NotificationService</code>, it needs to be instantiated and registered with your <code>ServiceLocator</code> (or equivalent dependency injection system). The <code>NotificationHelper</code> also needs to be present in the scene.</p>
+<p>To use the <code>NotificationService</code>, it needs to be instantiated and registered with your <code>ServiceLocator</code> (or equivalent dependency injection system). You do not create or place a <code>NotificationHelper</code> — the service manages auto-dismiss itself (via the Time Service, or an internally-created fallback helper when no Time Service is present).</p>
 <p><strong>Example Registration (in your bootstrapper, or via <code>ImprovedGameInitializer</code>):</strong></p>
-<p><strong>Note</strong>: With <code>ImprovedGameInitializer</code>, the <code>NotificationService</code> is automatically registered when enabled in <code>ServiceConfiguration</code>. The <code>NotificationHelper</code> is also automatically created during initialization. You typically don't need to manually register the service.</p>
+<p><strong>Note</strong>: With <code>ImprovedGameInitializer</code>, the <code>NotificationService</code> is automatically registered when enabled in <code>ServiceConfiguration</code>. Auto-dismiss runs on the Time Service (enabled by default), so no <code>NotificationHelper</code> is created. You typically don't need to manually register the service.</p>
 <div class="highlight"><pre><span></span><code>// In ServiceConfiguration ScriptableObject
 Enable Notification Service: [x]
 </code></pre></div>
@@ -2247,19 +2247,15 @@ Enable Notification Service: [x]
 <span class="w">        </span><span class="n">ServiceLocator</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Register</span><span class="o">&lt;</span><span class="n">INotificationService</span><span class="o">&gt;</span><span class="p">(</span><span class="n">notificationService</span><span class="p">);</span>
 <span class="w">        </span><span class="n">notificationService</span><span class="p">.</span><span class="n">Initialize</span><span class="p">();</span>
 
-<span class="w">        </span><span class="c1">// Create NotificationHelper for coroutines (auto-dismissal)</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">NotificationHelper</span><span class="p">.</span><span class="n">Instance</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="p">)</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="n">GameObject</span><span class="w"> </span><span class="n">helperObj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GameObject</span><span class="p">(</span><span class="s">&quot;NotificationHelper&quot;</span><span class="p">);</span>
-<span class="w">            </span><span class="n">helperObj</span><span class="p">.</span><span class="n">AddComponent</span><span class="o">&lt;</span><span class="n">NotificationHelper</span><span class="o">&gt;</span><span class="p">();</span>
-<span class="w">            </span><span class="n">DontDestroyOnLoad</span><span class="p">(</span><span class="n">helperObj</span><span class="p">);</span><span class="w"> </span><span class="c1">// Persist across scenes</span>
-<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// Auto-dismiss is handled by the service itself: it uses the ITimeService scheduler when one</span>
+<span class="w">        </span><span class="c1">// is registered, and otherwise creates its own internal fallback helper on demand. You do not</span>
+<span class="w">        </span><span class="c1">// create or persist a NotificationHelper (it is internal to the engine).</span>
 
-<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;NotificationService registered and NotificationHelper created.&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;NotificationService registered.&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<strong>Note:</strong> Ensure the <code>NotificationHelper</code> GameObject is set up to persist (e.g., <code>DontDestroyOnLoad</code>) if your notifications or the service itself need to function across scene loads.</p>
+<strong>Note:</strong> The service persists across scene loads through the <code>ServiceLocator</code>. If a fallback helper is ever created (no Time Service registered), it self-applies <code>DontDestroyOnLoad</code> and is cleaned up on service shutdown — there is nothing for you to manage.</p>
 <h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">&para;</a></h2>
 <h3 id="sending-notifications">Sending Notifications<a class="headerlink" href="#sending-notifications" title="Permanent link">&para;</a></h3>
 <p><strong>From a MonoBehaviour (using extension methods):</strong></p>
@@ -2419,14 +2415,16 @@ Enable Notification Service: [x]
 <li><strong>Custom Data for Context:</strong> Use the <code>Data</code> dictionary to pass along any relevant contextual information with your notifications.</li>
 <li><strong>Global Events for Broad Impact:</strong> Use the <code>IEventManager</code> integration if many unrelated systems need to be aware of notification lifecycle events without direct coupling.</li>
 <li><strong>Keep Payloads Lean:</strong> While flexible, avoid putting excessively large objects directly into the <code>Data</code> dictionary if performance is critical. Consider passing IDs or references instead.</li>
-<li><strong><code>NotificationHelper</code> Persistence:</strong> Ensure <code>NotificationHelper.Instance.gameObject</code> is configured with <code>DontDestroyOnLoad(gameObject)</code> if notifications need to auto-dismiss across scene loads.</li>
+<li><strong>Leave Auto-Dismiss to the Service:</strong> Keep the Time Service enabled and let the service drive auto-dismiss. You do not need to create, place, or persist any helper object — that is handled internally.</li>
 </ul>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <p><strong>Notifications are never received</strong>
 - Confirm <strong>Enable Notification Service</strong> is on in <code>ServiceConfiguration</code>, and resolve via the interface: <code>ServiceLocator.Instance.Get&lt;INotificationService&gt;()</code>.
 - The target <code>NotificationCategory</code> may be disabled at runtime — notifications sent to a disabled category are ignored.</p>
 <p><strong>Auto-dismiss (duration) doesn't fire</strong>
-- The <code>NotificationHelper</code> MonoBehaviour runs the dismissal coroutine. With <code>ImprovedGameInitializer</code> it is created automatically; in a custom bootstrap, ensure it exists and persists (<code>DontDestroyOnLoad</code>).</p>
+- Under the default configuration, auto-dismiss is driven by the <code>ITimeService</code> scheduler, so confirm <strong>Enable Time Service</strong> is on in <code>ServiceConfiguration</code> (it is by default).
+- When no Time Service is registered, the service falls back to an internal coroutine helper, which requires the main thread — sending a notification from a background thread skips auto-dismiss with a warning.
+- <code>Critical</code>-priority notifications never auto-dismiss by design; lower the priority (or dismiss manually) if you expect it to expire.</p>
 <h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../Events/">Events</a> — <code>NotificationSent</code> / <code>NotificationDismissed</code> / <code>NotificationExpired</code> events</li>
