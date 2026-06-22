@@ -564,6 +564,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tested-unity-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tested Unity Versions
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2450,6 +2461,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tested-unity-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tested Unity Versions
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2772,6 +2794,7 @@
 
 
 <h1 id="lol-engine-documentation">LoL Engine Documentation<a class="headerlink" href="#lol-engine-documentation" title="Permanent link">&para;</a></h1>
+<p><strong>Version <code>1.0.0-rc.13</code></strong> — see the <a href="CHANGELOG/">Changelog</a> for what changed.</p>
 <p>Welcome to the complete documentation for LoL Engine - a comprehensive, modular Unity game engine framework.</p>
 <h2 id="quick-links">Quick Links<a class="headerlink" href="#quick-links" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2900,6 +2923,38 @@
 <li><strong>Unity Audio Mixer</strong> (for advanced audio bus routing)</li>
 <li><strong>TextMeshPro</strong> (for sample UI labels)</li>
 </ul>
+<h3 id="tested-unity-versions">Tested Unity Versions<a class="headerlink" href="#tested-unity-versions" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Unity version</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6000.0 (LTS — minimum)</td>
+<td>Tested</td>
+</tr>
+<tr>
+<td>6000.1</td>
+<td>Tested</td>
+</tr>
+<tr>
+<td>6000.4</td>
+<td>Tested</td>
+</tr>
+<tr>
+<td>6000.5</td>
+<td>Tested</td>
+</tr>
+<tr>
+<td>6000.6 (Unity 6.6)</td>
+<td>Verification pending</td>
+</tr>
+</tbody>
+</table>
+<p>LoL Engine is built against the Unity 6000.0 API and routes its scene lookups through an internal cross-version shim, so it compiles cleanly on later Unity 6 minors with no <code>FindObjectsByType</code> / <code>FindObjectsSortMode</code> deprecation warnings on 6000.5+. Unity 6.6 makes <strong>Fast Enter Play Mode</strong> (entering Play with no domain reload) the default; the engine is designed to reset its static state on every Play-enter so it starts clean either way — see <a href="EnterPlayMode/">Fast Enter Play Mode</a>. Full Unity 6.6 test-suite verification is pending.</p>
 <hr />
 <h2 id="platform-support">Platform Support<a class="headerlink" href="#platform-support" title="Permanent link">&para;</a></h2>
 <table>
