@@ -12,11 +12,13 @@
         <meta name="author" content="MooMoo Games">
       
       
-        <link rel="canonical" href="https://lol-engine.moomoo.games/LICENSE/">
+        <link rel="canonical" href="https://lol-engine.moomoo.games/EnterPlayMode/">
       
       
-        <link rel="prev" href="../CHANGELOG/">
+        <link rel="prev" href="../IL2CPP/">
       
+      
+        <link rel="next" href="../Architecture/">
       
       
         
@@ -27,7 +29,7 @@
     
     
       
-        <title>License - LoL Engine Documentation</title>
+        <title>Fast Enter Play Mode - LoL Engine Documentation</title>
       
     
     
@@ -80,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#end-user-license-agreement-eula-for-lol-engine-for-unity-software" class="md-skip">
+        <a href="#fast-enter-play-mode-and-domain-reload" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              License
+              Fast Enter Play Mode
             
           </span>
         </div>
@@ -1285,8 +1287,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -1297,11 +1301,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
@@ -1322,7 +1326,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1365,10 +1369,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../EnterPlayMode/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fast Enter Play Mode
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1384,6 +1415,81 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-lol-engine-already-handles-you-do-not-need-to-do-this" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What LoL Engine already handles (you do not need to do this)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-write-your-own-static-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        If you write your own static state
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verifying" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1400,8 +1506,6 @@
       
   
   
-    
-  
   
   
     
@@ -1414,11 +1518,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
         
           
           <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
@@ -1439,7 +1543,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1510,37 +1614,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    License
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
         
   
   
@@ -1556,136 +1633,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#license-grant" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        License Grant
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#permitted-uses" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Permitted Uses
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#restrictions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restrictions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#updates-and-license-term" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Updates and License Term
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#termination" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Termination
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#governing-law" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Governing Law
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#limitation-of-liability" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Limitation of Liability
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#disclaimer-of-warranties" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Disclaimer of Warranties
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#waiver-and-severability" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Waiver and Severability
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#entire-agreement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Entire Agreement
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1725,10 +1672,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#license-grant" class="md-nav__link">
+  <a href="#why-this-matters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        License Grant
+        Why this matters
       
     </span>
   </a>
@@ -1736,10 +1683,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#permitted-uses" class="md-nav__link">
+  <a href="#what-lol-engine-already-handles-you-do-not-need-to-do-this" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Permitted Uses
+        What LoL Engine already handles (you do not need to do this)
       
     </span>
   </a>
@@ -1747,10 +1694,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#restrictions" class="md-nav__link">
+  <a href="#if-you-write-your-own-static-state" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Restrictions
+        If you write your own static state
       
     </span>
   </a>
@@ -1758,10 +1705,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#updates-and-license-term" class="md-nav__link">
+  <a href="#verifying" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Updates and License Term
+        Verifying
       
     </span>
   </a>
@@ -1769,65 +1716,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#termination" class="md-nav__link">
+  <a href="#see-also" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Termination
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#governing-law" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Governing Law
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#limitation-of-liability" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Limitation of Liability
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#disclaimer-of-warranties" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Disclaimer of Warranties
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#waiver-and-severability" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Waiver and Severability
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#entire-agreement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Entire Agreement
+        See Also
       
     </span>
   </a>
@@ -1851,45 +1743,94 @@
 
 
 
-<h1 id="end-user-license-agreement-eula-for-lol-engine-for-unity-software">End User License Agreement ("EULA") for LoL Engine for Unity ("Software")<a class="headerlink" href="#end-user-license-agreement-eula-for-lol-engine-for-unity-software" title="Permanent link">&para;</a></h1>
-<p>Please read this End User License Agreement ("Agreement") carefully before purchasing, downloading, or using LoL Engine for Unity ("Software").</p>
-<p>By purchasing, downloading, or using the Software, you, the individual or entity ("End-User"), agree to be bound by the terms of this Agreement. If End-User does not agree to these terms, do not purchase, download, or use the Software.</p>
-<p>The Software is licensed, not sold.</p>
-<h2 id="license-grant">License Grant<a class="headerlink" href="#license-grant" title="Permanent link">&para;</a></h2>
-<p>MooMoo Games ("Licensor") grants End-User a non-exclusive, worldwide, non-transferable license to use the Software for personal and commercial purposes, subject to the terms of this Agreement and the Unity Asset Store End User License Agreement.</p>
-<p>All title, ownership rights, and intellectual property rights in and to the Software remain with MooMoo Games. This Agreement confers no ownership of the Software and should not be construed as a sale of any rights therein. Any copies of the Software must include the same proprietary notices found in the original.</p>
-<h2 id="permitted-uses">Permitted Uses<a class="headerlink" href="#permitted-uses" title="Permanent link">&para;</a></h2>
-<p>End-User may:</p>
+<h1 id="fast-enter-play-mode-and-domain-reload">Fast Enter Play Mode and Domain Reload<a class="headerlink" href="#fast-enter-play-mode-and-domain-reload" title="Permanent link">&para;</a></h1>
+<p>LoL Engine is designed to be safe with Unity's <strong>Configurable Enter Play Mode</strong> when
+<strong>Reload Domain is disabled</strong> — the default for new projects starting in <strong>Unity 6.6</strong>.
+You can turn on Fast Enter Play Mode for quicker iteration and the engine still starts
+each Play session from a clean state. You do not need to do anything; this page explains
+how it works and what to follow if you add your own static state.</p>
+<hr />
+<h2 id="why-this-matters">Why this matters<a class="headerlink" href="#why-this-matters" title="Permanent link">&para;</a></h2>
+<p>Entering Play mode normally rebuilds the scripting (C#) domain, which resets every <code>static</code>
+field to its initial value and clears every <code>static</code> event's subscribers. <strong>Fast Enter Play
+Mode skips that domain reload</strong> to enter Play faster — so without care, static state would
+<em>survive</em> between Play sessions in the editor: a service registry still holding last
+session's services, a static event still holding handlers attached to destroyed objects, a
+singleton field pointing at a destroyed GameObject, an "initialized" flag stuck <code>true</code>.</p>
+<p>This affects the <strong>in-editor iterate loop only</strong>. A built player always launches as a fresh
+process, so static state always starts clean in a build regardless of this setting.</p>
+<hr />
+<h2 id="what-lol-engine-already-handles-you-do-not-need-to-do-this">What LoL Engine already handles (you do not need to do this)<a class="headerlink" href="#what-lol-engine-already-handles-you-do-not-need-to-do-this" title="Permanent link">&para;</a></h2>
+<p>Every piece of static state the engine owns is reset on <strong>each Play-enter</strong>, using the
+mechanism Unity provides for exactly this purpose — a method marked
+<code>[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]</code>, which
+runs at the start of every Play session <strong>whether or not the domain was reloaded</strong>. Each
+system resets itself independently and idempotently (the engine's distributed-reset pattern),
+covering for example:</p>
 <ul>
-<li>Integrate and use the Software in personal and commercial Unity projects, including video games, educational software, and other interactive applications.</li>
-<li>Modify the Software's source code for the purpose of integration into End-User's own projects.</li>
-<li>Distribute compiled applications and games that incorporate the Software, provided the Software itself is not separately extractable or redistributable from those applications.</li>
-<li>Create extensions, plugins, and scripts that build upon the Software, provided they do not violate the terms of this Agreement.</li>
+<li>the logger (sinks, history, file sink, cached main-thread id);</li>
+<li>the <code>ServiceLocator</code> (instance and registrations);</li>
+<li>the event bus subscriber tables and the <code>EventRegister</code> / <code>EventStartListening</code> plumbing;</li>
+<li>the <code>ModelDb</code> content registry;</li>
+<li>localization <code>LocString</code> formatters;</li>
+<li>the <code>TestMode</code> gate;</li>
+<li>the engine-initialization registry used by <code>ServiceAwaiter</code> / <code>WaitForServices</code>;</li>
+<li>the built-in singleton base classes (<code>Singleton&lt;T&gt;</code>, <code>PersistentSingleton&lt;T&gt;</code>,
+  <code>RegulatorSingleton&lt;T&gt;</code>) and <code>ImprovedGameInitializer</code>.</li>
 </ul>
-<h2 id="restrictions">Restrictions<a class="headerlink" href="#restrictions" title="Permanent link">&para;</a></h2>
-<p>End-User may not:</p>
+<p>So enabling Fast Enter Play Mode is safe with the engine: on the second and later Play
+sessions, services re-initialize, event subscriptions start empty, and singletons resolve
+to the live instance — exactly as they would after a full domain reload.</p>
+<hr />
+<h2 id="if-you-write-your-own-static-state">If you write your own static state<a class="headerlink" href="#if-you-write-your-own-static-state" title="Permanent link">&para;</a></h2>
+<p>The same rule applies to <em>your</em> game code: any <code>static</code> mutable field, <code>static</code> event, or
+custom singleton you add must reset on Play-enter, or it will hold stale values when Reload
+Domain is off. Two options:</p>
+<p><strong>1. Reset it explicitly (non-generic types):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyGameState</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Score</span><span class="p">;</span>
+<span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">event</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Action</span><span class="w"> </span><span class="n">OnScoreChanged</span><span class="p">;</span>
+
+<span class="w">    </span><span class="na">[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ResetStatics</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="n">OnScoreChanged</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">;</span><span class="w"> </span><span class="c1">// drop subscribers from the previous Play session</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>Note: <code>[RuntimeInitializeOnLoadMethod]</code> does <strong>not</strong> fire for an open generic type
+(<code>Foo&lt;T&gt;</code>), because Unity has no concrete <code>T</code> to call it on. For a generic singleton,
+clear the static field from an instance <code>OnDestroy()</code> instead — which is how the engine's
+<code>RegulatorSingleton&lt;T&gt;</code> does it.</p>
+</blockquote>
+<p><strong>2. Derive from an engine singleton base class</strong> (<code>Singleton&lt;T&gt;</code>, <code>PersistentSingleton&lt;T&gt;</code>,
+or <code>RegulatorSingleton&lt;T&gt;</code>) — they already null their static instance on destroy, so your
+singleton is Fast-Enter-Play-Mode-safe for free.</p>
+<hr />
+<h2 id="verifying">Verifying<a class="headerlink" href="#verifying" title="Permanent link">&para;</a></h2>
+<p>To confirm your project (engine + your code) is clean under this setting:</p>
+<ol>
+<li><strong>Edit → Project Settings → Editor → Enter Play Mode Settings</strong>: enable <em>Enter Play Mode
+   Options</em> and <strong>uncheck <em>Reload Domain</em></strong> (this is the Unity 6.6 default).</li>
+<li>Press Play, then Stop, then Play again — at least twice.</li>
+<li>Confirm the second run behaves like the first: services re-initialize, no duplicated
+   event handlers firing on destroyed objects, no <code>MissingReferenceException</code> or
+   <code>ObjectDisposedException</code> from leftover references, and no "already initialized" warnings.</li>
+</ol>
+<p>If your own code misbehaves only on the second-plus Play, an unreset static is almost always
+the cause — apply one of the patterns above.</p>
+<hr />
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Redistribute, resell, sublicense, rent, lease, or lend the Software or its source code as a standalone product, asset, package, or tool, in original or modified form.</li>
-<li>Publish, upload, or otherwise make the Software or its source code available to third parties outside of compiled application binaries.</li>
-<li>Remove or alter any proprietary notices, labels, or marks on the Software.</li>
-<li>Use the Software in any manner that could damage, disable, overburden, or impair it, or interfere with any other party's use of the Software.</li>
-<li>Use the Software for any purpose prohibited by applicable law, including the development, design, manufacture, or production of weapons of mass destruction.</li>
+<li><a href="https://docs.unity3d.com/Manual/ConfigurableEnterPlayMode.html">Unity Manual — Configurable Enter Play Mode</a></li>
+<li><a href="../Architecture/">Architecture Guide</a> — the engine's distributed static-reset design</li>
+<li><a href="../ServiceLocator/">Service Locator</a>, <a href="../Events/">Events</a></li>
 </ul>
-<p>End-User agrees to comply with all applicable laws and regulations in connection with use of the Software.</p>
-<h2 id="updates-and-license-term">Updates and License Term<a class="headerlink" href="#updates-and-license-term" title="Permanent link">&para;</a></h2>
-<p>Once End-User's active license is terminated, End-User will not receive further updates to the Software, and may not download, install, or use versions of the Software released thereafter, unless a new license is activated.</p>
-<h2 id="termination">Termination<a class="headerlink" href="#termination" title="Permanent link">&para;</a></h2>
-<p>This Agreement will terminate automatically if End-User fails to comply with any of its terms. Upon termination, End-User must immediately cease using the Software and destroy all copies in End-User's possession or control.</p>
-<h2 id="governing-law">Governing Law<a class="headerlink" href="#governing-law" title="Permanent link">&para;</a></h2>
-<p>This Agreement shall be governed by the laws of the United States of America, without regard to its conflict of law provisions. Licensor reserves the right to terminate or suspend End-User's license, without notice or liability, for breach of this Agreement.</p>
-<h2 id="limitation-of-liability">Limitation of Liability<a class="headerlink" href="#limitation-of-liability" title="Permanent link">&para;</a></h2>
-<p>To the maximum extent permitted by applicable law, MooMoo Games and its affiliates shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation loss of profits, data, goodwill, or other intangible losses, arising from End-User's use of or inability to use the Software. This limitation applies regardless of the legal theory on which a claim is based, even if MooMoo Games has been advised of the possibility of such damages.</p>
-<h2 id="disclaimer-of-warranties">Disclaimer of Warranties<a class="headerlink" href="#disclaimer-of-warranties" title="Permanent link">&para;</a></h2>
-<p>The Software is provided "as is" and "as available" without warranties of any kind, either express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement. MooMoo Games does not warrant that the Software will be uninterrupted, error-free, or free of defects.</p>
-<h2 id="waiver-and-severability">Waiver and Severability<a class="headerlink" href="#waiver-and-severability" title="Permanent link">&para;</a></h2>
-<p>Failure by Licensor to enforce any provision of this Agreement shall not constitute a waiver of that provision. If any provision of this Agreement is held invalid or unenforceable, the remaining provisions shall remain in full force and effect.</p>
-<h2 id="entire-agreement">Entire Agreement<a class="headerlink" href="#entire-agreement" title="Permanent link">&para;</a></h2>
-<p>This Agreement, together with the Unity Asset Store End User License Agreement, constitutes the entire agreement between End-User and Licensor regarding the Software and supersedes all prior agreements and understandings, whether written or oral.</p>
 
 
 

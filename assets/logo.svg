@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="LoL Engine">
+  <title>LoL Engine</title>
+  <!-- White recreation of the MooMoo Games "M" / envelope mark, for the brand-blue docs header.
+       Transparent background so it sits cleanly on the Material header (primary colour #44749D).
+       Best-effort rebuild of the supplied raster icon — replace with the official vector if available. -->
+  <polygon points="6,18 50,53 94,18 94,86 6,86" fill="#ffffff"/>
+</svg>
