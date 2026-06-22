@@ -43,6 +43,16 @@ Per-system guides live on the [documentation site](https://lol-engine.moomoo.gam
 
 ### Dependencies
 
+| Unity version          | Status               |
+|------------------------|----------------------|
+| 6000.0 (LTS — minimum) | Tested               |
+| 6000.1                 | Tested               |
+| 6000.4                 | Tested               |
+| 6000.5                 | Tested               |
+| 6000.6 (Unity 6.6)     | Verification pending |
+
+LoL Engine is built against the Unity 6000.0 API and routes its scene lookups through an internal cross-version shim, so it compiles cleanly on later Unity 6 minors with no `FindObjectsByType` / `FindObjectsSortMode` deprecation warnings on 6000.5+. Unity 6.6 makes **Fast Enter Play Mode** (entering Play with no domain reload) the default; the engine is designed to reset its static state on every Play-enter so it starts clean either way. Full Unity 6.6 test-suite verification is pending.
+
 | Package | Version | Purpose |
 |---|---|---|
 | `com.unity.addressables` | 2.5.0+ | Asset loading via `IResourceService` |
