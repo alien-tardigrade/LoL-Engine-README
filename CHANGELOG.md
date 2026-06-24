@@ -5,6 +5,23 @@ All notable changes to the LoL Engine package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-06-23
+
+First official stable release — Unity Asset Store launch.
+
+### Added
+- **Docs**: the documentation home/Overview now includes a "Tested Unity Versions" table
+- **Basic Audio sample**: added a runtime master-volume slider and mute toggle.
+
+### Changed
+- Bundled samples now compile in their own assembly definition (`LoLEngine-Samples.asmdef`) instead of the importing project's `Assembly-CSharp`, and the test assemblies moved out of the shipped package folder.
+
+### Fixed
+- **Input**: the engine and its samples no longer depend on the legacy Input Manager, so they work under any Player → "Active Input Handling" setting (Input Manager, Input System package, or Both).
+- **Samples**: importing the samples into a clean project no longer emits compiler warnings.
+- **Tests**: `LoLEngine-Tests-Edit` / `LoLEngine-Tests-PlayMode` now auto-define `UNITY_ADDRESSABLES` via asmdef `versionDefines` (mirroring `LoLEngine-Core` / `LoLEngine-Helpers`) instead of relying on a global scripting-define symbol.
+- **The Resource Management script sample** (`03_ResourceManagementSample`) no longer breaks compilation in a project without the Addressables package installed.
+- **Clean import**: two compiler warnings no longer appear when the package is imported into a project that does not have the Addressables package installed.
 
 ## [1.0.0-rc.13] - 2026-06-21
 
