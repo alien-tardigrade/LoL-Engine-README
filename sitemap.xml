@@ -2,130 +2,130 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://lol-engine.moomoo.games/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/01_QUICKSTART/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/02-SERVICES-CHECKLIST/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/Architecture/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/Audio/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/AudioHelpers/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/CHANGELOG/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/CHEATSHEET-How-To-Use/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/Config/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/DataPersistence/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/EnterPlayMode/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/Events/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/GameState/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/GettingStarted/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/HelperUtilities/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/IL2CPP/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/ImprovedGameInitializer/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/Input/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/LICENSE/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/LOCALIZATION_MIGRATION/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/Localization/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/Logger/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/MenuReference/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/Notifications/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/ObjectPool/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/ResourceManagement/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/Serialization/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/ServiceDependencies/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/ServiceLocator/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/SetupWizard/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/TimeManagement/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
     <url>
          <loc>https://lol-engine.moomoo.games/Troubleshooting/</loc>
-         <lastmod>2026-06-23</lastmod>
+         <lastmod>2026-06-24</lastmod>
     </url>
 </urlset>
